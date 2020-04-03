@@ -1,0 +1,41 @@
+<?php
+
+include_once dirname(__FILE__) . '/HtmlView.php';
+
+/**
+ * Class CloserHtmlView
+ * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ */
+class CloserHtmlView extends HtmlView {
+
+    /**
+     * CloserHtmlView constructor.
+     * @param array $classes
+     */
+    public function __construct(array $classes = array()) {
+        parent::__construct(array_merge(array('closer'), $classes));
+
+        $coreClasses = array_diff($this->classes, $classes);
+        $coreSelector = '.' . implode('.', $coreClasses);
+
+        $this->style(Tools::css($coreSelector, '', 'display: flex', 'align-items: center'));
+
+        $this->style(Tools::css($coreSelector, '::after', 'content: \'X\'',
+            'width: 100%', 'text-align: center', 'cursor: pointer'));
+
+        $this->style(Tools::css($coreSelector, ':hover', 'font-weight: bold'));
+    }
+
+    // Short cuts
+
+    /**
+     * Return a new closer html view.
+     * @param array $classes Classes.
+     * @return CloserHtmlView
+     */
+    public static function _new(array $classes) {
+        return new CloserHtmlView($classes);
+    }
+
+}
+?>

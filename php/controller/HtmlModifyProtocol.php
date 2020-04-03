@@ -1,0 +1,228 @@
+<?php
+
+include_once dirname(__FILE__) . '/../../../ship/php/ModifyProtocol.php';
+
+/**
+ * Class HtmlModifyProtocol
+ * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ */
+class HtmlModifyProtocol extends ModifyProtocol {
+
+    /**
+     * @inheritDoc
+     */
+    public function __construct($parent) {
+        parent::__construct($parent, "HtmlActionProtocol");
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function generate() {
+        $code = '';
+        $code .= implode(array_map(function(array $modify) {
+            switch ($modify["operation"]) {
+                case 'action': {
+                    return $modify["protocol"]->generate();
+                } break;
+                case 'setCookie': {
+                    $c = 'let d = new Date();';
+                    if ($modify["value"] !== '') {
+                        $c .= 'd.setTime(d.getTime() + 86400);';
+                    }
+                    $c .= 'document.cookie = ' .
+                        ($modify["value"] ? $modify["value"] : 'result') .
+                        ' + ";expires=" + d.toUTCString() + ";path=/"' . ';';
+                    return $c;
+                } break;
+                case 'set': {
+                    if ($modify["value"] && $modify["value"] instanceof View) {
+                        $scope = $modify["scope"];
+                        $selector = '$("' . $modify["value"]->idc() . '")';
+                        if ($scope === "value") {
+                            $selector .= '.val()';
+                        } else if (!$scope) {
+                            $selector .= '.attr("' . $scope . '")';
+                        }
+                        $modify["value"] = $selector;
+                    } else {
+                        $modify["value"] = (is_string($modify["value"]) ? '"' . $modify["value"] . '"' : $modify["value"]);
+                    }
+                    return 'context.' . $modify["key"] . ' = ' .
+                        ($modify["value"] ?
+                            $modify["value"]
+                            : 'result') . ';';
+                } break;
+                case 'event': {
+                    $view = $this->reduceView($modify["view"]);
+                    if ($view) {
+                        return '$("' . $view . '").trigger("' . $modify["event"] . '");';
+                    } else {
+                        return '';
+                    }
+                } break;
+                case 'get': {
+                    return 'context.' . $modify["key"] . ';';
+                } break;
+                case 'delete': {
+                    $view = $this->reduceView($modify["view"]);
+                    if ($view) {
+                        return '$("' . $view . '").remove();';
+                    } else {
+                        return '';
+                    }
+                } break;
+                case 'add':
+                case 'replace':
+                case 'before':
+                case 'after': {
+                    return $this->generateDomAction($modify);
+                } break;
+                case 'throw': {
+                    $view = $this->reduceView($modify["view"]);
+                    if ($view) {
+                        return '$("' . $view . '").trigger("' . $modify["event"] . '");';
+                    } else {
+                        return '';
+                    }
+                }
+                case 'clear': {
+                    $view = $this->reduceView($modify["view"]);
+                    if ($view) {
+                        return '$("' . $view . '").each((i,d) => d.reset());';
+                    } else {
+                        return '';
+                    }
+                } break;
+                case 'addClasses': {
+                    $view = $this->reduceView($modify["view"]);
+                    if ($view) {
+                        return '$("' . $view . '").addClass("' . implode(' ', $modify["classes"]) . '");';
+                    } else {
+                        return '';
+                    }
+                } break;
+                case 'removeClasses': {
+                    $view = $this->reduceView($modify["view"]);
+                    if ($view) {
+                        return '$("' . $view . '").removeClass("' . implode(' ', $modify["classes"]) . '");';
+                    } else {
+                        return '';
+                    }
+                } break;
+                case 'removeClassesSiblings': {
+                    $view = $this->reduceView($modify["view"]);
+                    if ($view) {
+                        return '$("' . $view . '").find(".' . implode(',.', $modify["classes"]) . '").removeClass("' . implode(' ', $modify["classes"]) . '");';
+                    } else {
+                        return '';
+                    }
+                } break;
+                case 'toggleClasses': {
+                    $view = $this->reduceView($modify["view"]);
+                    if ($view) {
+                        return '$("' . $view . '").toggleClass("' . implode(' ', $modify["classes"]) . '");';
+                    } else {
+                        return '';
+                    }
+                } break;
+                /*case 'each': {
+                    $array = $modify["array"];
+                    $array = array_map(function($el) {
+                        if (is_string($el)) $el = $this->innerView()->get($el, true)["view"];
+                        if ($el !== null) return $el->idc();
+                        else return "";
+                    }, $array);
+                    return '$("' . implode(',', $array) . '").each(function(i,e)"' . implode(' ', $modify["classes"]) . '");';
+                } break;*/
+            }
+            return "";
+        }, $this->protocol));
+
+        return $code;
+    }
+
+    /**
+     * Reduces the view to a string representation (if available)
+     * @param string|array|DirectView $view The view(s).
+     * @param boolean $class Whether the idc or id is returned.
+     * @return array|DirectView|bool|string
+     */
+    private function reduceView($view, $class = true) {
+        if (is_array($view)) {
+            $view = array_filter(array_map(function($v) use ($class) {
+                return $this->reduceSingleView($v, $class);
+            }, $view), function($v) { return ($v ? true: false);});
+            if (count($view) > 0) return ($class ? implode(',', $view) : $view);
+            return false;
+        } else return $this->reduceSingleView($view, $class);
+    }
+
+    /**
+     * Reduces a single view to a string representation.
+     * @param string|DirectView $view The view.
+     * @return bool|DirectView|string
+     */
+    private function reduceSingleView($view, $class = true) {
+        if (is_string($view)) $view = $this->innerView()->get($view, true)["view"];
+        if ($view !== null) return ($class ? $view->idc() : $view);
+        else return false;
+    }
+
+    /**
+     * Generate the dom action.
+     * @param array $modify The associative array with information.
+     * @return string
+     */
+    private function generateDomAction($modify) {
+        $c = 'let res = $(';
+        if (!array_key_exists("new", $modify)) {
+            // Nothing
+        } else {
+            $new = $modify["new"];
+            if (!$new || $new === null) {
+                $c .= 'result';
+            } else if ($new instanceof View) {
+                $c .= '\'' . $new->generate();
+                if ($new instanceof HtmlView) {
+                    $c .= '<style type="text/css">' . $new->generateStyle() . '</style>' .
+                        '<script>' . $new->generateJS() . '</script>';
+                }
+                $c .= '\'';
+            }
+        }
+        $c .= ');';
+
+        $view = $this->reduceView($modify["view"], false);
+        if ($view) {
+            if (!is_array($view)) $view = array($view);
+            if ($modify["operation"] === 'replace') {
+                $c .= 'res.filter(":not(style):not(script)").addClass("' . implode(' ', array_map(function($v) { return $v->id(); }, $view)) . '");';
+            }
+            $c .= '$("' . implode(',', array_map(function($v) { return $v->idc(); }, $view)) . '").';
+            switch ($modify["operation"]) {
+                case 'after':
+                    $c .= 'after';
+                    break;
+                case 'before':
+                    $c .= 'before';
+                    break;
+                case 'replace':
+                    $c .= 'replaceWith';
+                    break;
+                case 'add':
+                    $c .= 'append';
+                    break;
+                case 'delete':
+                    $c .= 'remove';
+                    break;
+            }
+            $c .= '(';
+            $c .= 'res';
+            $c .= ');';
+        }
+        return $c;
+    }
+
+}
+?>
