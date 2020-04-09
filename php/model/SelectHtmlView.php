@@ -77,10 +77,11 @@ class SelectHtmlView extends HtmlView {
      * Add an option.
      * @param string $value The value.
      * @param array $classes Classes.
+     * @param boolean $selected Whether it is selected.
      * @return OptionHtmlView
      */
-    public function option($value, array $classes = array()) {
-        $option = new OptionHtmlView($value, $classes);
+    public function option($value, array $classes = array(), $selected = false) {
+        $option = new OptionHtmlView($value, $classes, $selected);
         $this->add($option);
         return $option;
     }
