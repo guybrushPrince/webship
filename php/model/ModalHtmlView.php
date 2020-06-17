@@ -19,15 +19,16 @@ class ModalHtmlView extends HtmlView {
 
         $this->add(new ContainerHtmlView(array('modal-overlay')))->ref('overlay')->
             protocol(Event::CLICK)->
-                toggleClass($this, 'invisible');
+                toggleClass('invisible', $this);
         $this->add(new ContainerHtmlView(array('modal-container')));
 
         $this->style(Tools::css($coreSelector, '', 'display: flex', ''));
         $this->style(Tools::css('.modal.invisible', '', 'display: none !important'));
-        $this->style(Tools::css('.modal', array(' > ', '.modal-overlay'), 'position: absolute',
+        $this->style(Tools::css('.modal', array(' > ', '.modal-overlay'), 'position: fixed',
             'top: 0', 'left: 0', 'width: 100%', 'height: 100%', 'background: rgba(0, 0, 0, 0.5)', 'z-index: 100001'));
-        $this->style(Tools::css('.modal', array(' > ', '.modal-container'), 'position: absolute',
-            'left: 12.5%', 'width: 75%', 'background: rgba(255, 255, 255, 1.0)', 'z-index: 100002'));
+        $this->style(Tools::css('.modal', array(' > ', '.modal-container'), 'position: fixed',
+            'left: 12.5%', 'top: 10%', 'width: 75%',
+            'background: rgba(255, 255, 255, 1.0)', 'z-index: 100002'));
     }
 
     // Short cuts

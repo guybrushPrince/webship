@@ -101,6 +101,7 @@ class HtmlActionProtocol extends ActionProtocol {
         $isGet = (preg_match('/@get(.*)/', $reflection->getDocComment(), $matches) >= 1);
         $without = (preg_match('/@without(.*)/', $reflection->getDocComment(), $matches) >= 1);
         $isCSV = (preg_match('/@CSV(.*)/', $reflection->getDocComment(), $matches) >= 1);
+        $isPDF = (preg_match('/@PDF(.*)/', $reflection->getDocComment(), $matches) >= 1);
         $code = 'let data = { ' . implode(',', $data) . ' };/*console.log(data);*/' .
             'let taskId = context.currentTaskId++;' .
             '$(".system-tasks").trigger("' . Event::NEW_TASK . '", ["' . $this->title[View::getLanguage()] .'", taskId]);' .
@@ -109,18 +110,21 @@ class HtmlActionProtocol extends ActionProtocol {
             'url: "' . HtmlActionProtocol::$serverURL . '/sunstone/api/index.php/v1/"' .
                 (!$without ? ' + context["user"] + "/" + context["group"] + "/"' : '') . ' + "api/' .
             $this->method . '",' .
-            (!$isCSV ? 'contentType: "application/json; charset=utf-8",' : 'contentType: "text/csv; charset=utf-8",') .
+            (!$isCSV && !$isPDF ? 'contentType: "application/json; charset=utf-8",' :
+                ($isCSV ? 'contentType: "text/csv; charset=utf-8",' : 'contentType: "application/pdf",')) .
             'data: JSON.stringify(data),' .
-            'encoding: "UTF-8",' .
+            (!$isPDF ? 'encoding: "UTF-8",' : '') .
             'xhrFields: { withCredentials:true },' .
             'cache: false' .
             '})';
 
-        $code .= implode(array_map(function(array $p) use ($isCSV) {
+        $code .= implode(array_map(function(array $p) use ($isCSV, $isPDF) {
             if ($p["operation"] === "success") {
                 return '.done(function(result) {(function(result) {' . $p["protocol"]->generate() . '})(result);' .
-                    ($isCSV ? 'let uri = "data:application/csv;charset=UTF-8," + encodeURIComponent(result);' .
-                    'window.open(uri, "data.csv");' : '') .
+                    /*($isCSV || $isPDF ? 'let uri = "data:' . ($isPDF ? 'application/pdf' : 'text/csv;charset=UTF-8') . '," + encodeURIComponent(result);' .
+                    'window.open(uri, "' . ($isPDF ? 'download.pdf' : 'data.csv') . '");' : '') .*/
+                    //($isCSV || $isPDF ? 'download(result, ' . ($isPDF ? '"download.pdf"' : '"data.csv"') . ',  ' . ($isPDF ? '"application/pdf"' : '"text/csv"') . ');' : '') .
+                    ($isCSV || $isPDF ? 'downloadFile(result, ' . ($isPDF ? '"download.pdf"' : '"data.csv"') . ');' : '') .
                     '$(".system-tasks").trigger("' . Event::REMOVE_TASK . '", [taskId]);})';
             } else if ($p["operation"] === "error") {
                 return '.fail(function(result) {(function(result) {' . $p["protocol"]->generate() . '})(result);' .

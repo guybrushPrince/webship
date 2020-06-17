@@ -19,6 +19,11 @@ class ChipContainerItemHtmlView extends ContainerItemHtmlView {
         $coreSelector = '.' . implode('.', $coreClasses);
 
         $this->style(Tools::css($coreSelector, array(' > ', '.closer'), 'width: 10px', 'margin-left: 10px'));
+        $this->style(Tools::css($coreSelector, array(' ', '.container'), 'height: auto', 'padding-top: 0',
+            'padding-bottom: 0'));
+        $this->style(Tools::css($coreSelector, array(' ', '.container-item'), 'height: auto', 'padding-top: 0',
+            'padding-bottom: 0'));
+        $this->style(Tools::css($coreSelector, array(' ', 'select'), 'height: auto'));
     }
 
     /**

@@ -46,8 +46,8 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
         $this->js('$("' . $this->idc() . ' > .tab-header").click(function(event) {' .
             'let max = Math.max.apply(Math, $(this).parent().parent().children(".tab").map((i, c) => parseInt($(c).css("z-index"))));' .
             '$(event.target).parent().css("z-index", max + 1);' .
-            '$(this).parent().parent().children(".tab").find(".tab-content").css("visibility", "hidden");' .
-            '$(this).parent().find(".tab-content").css("visibility", "visible");' .
+            '$(this).parent().parent().children(".tab").find(".tab-content").hide();'/*.css("visibility", "hidden");'*/ .
+            '$(this).parent().find(".tab-content").show();'/*.css("visibility", "visible");'*/ .
             '});');
 
 

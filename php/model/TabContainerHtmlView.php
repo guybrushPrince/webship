@@ -28,7 +28,7 @@ class TabContainerHtmlView extends ContainerHtmlView {
             '$(event.target).css("z-index", max + 1);' .
             'let tabHeader = $(event.target).find(".tab-header");' .
             '$(tabHeader).css("left", (width - parseInt($(tabHeader).css("width"))) + 5);' .
-            '$(this).children(".tab").not(event.target).find(".tab-content").css("visibility", "hidden");' .
+            '$(this).children(".tab").not(event.target).find(".tab-content").hide();' . // css("visibility", "hidden") ?
             '});');
 
         $this->js('$("' . $this->idc() . '").on("' . Event::CLOSE_TAB . '", function(event) {' .
@@ -38,7 +38,7 @@ class TabContainerHtmlView extends ContainerHtmlView {
             'next.find(".tab-header").each((i, t) => $(t).css("left", parseInt($(t).css("left")) - missing));' .
             'let childrenWithZ = $(this).children(".tab").map((i, c) => {return {v: c, z: parseInt($(c).css("z-index"))};});' .
             'let max = Math.max.apply(Math, childrenWithZ.map((i, c) => c.z));' .
-            'childrenWithZ.each((i, c) => (c.z === max ? $(c.v).find(".tab-content").css("visibility", "visible") : ""));' .
+            'childrenWithZ.each((i, c) => (c.z === max ? $(c.v).find(".tab-content").show()' . /*'.css("visibility", "visible")' . */' : ""));' .
             '});');
     }
 

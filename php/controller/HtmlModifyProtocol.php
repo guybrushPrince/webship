@@ -119,9 +119,23 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     }
                 } break;
                 case 'toggleClasses': {
+                    $c = 'if (typeof res === "undefined") {var res = $(result);}';
+                    if ($modify["view"]) {
+                        $view = $this->reduceView($modify["view"]);
+                        if ($view) {
+                            return '$("' . $view . '").toggleClass("' . implode(' ', $modify["classes"]) . '");';
+                        } else {
+                            return '';
+                        }
+                    } else {
+                        return $c . 'res.toggleClass("' . implode(' ', $modify["classes"]) . '");';
+                    }
+                } break;
+                case 'mousePosition': {
+
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        return '$("' . $view . '").toggleClass("' . implode(' ', $modify["classes"]) . '");';
+                        return '$("' . $view . '").css("top", e.pageY + $(e.target).scrollTop()).css("left", e.pageX + $(e.target).scrollTop());';
                     } else {
                         return '';
                     }
@@ -175,7 +189,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
      * @return string
      */
     private function generateDomAction($modify) {
-        $c = 'let res = $(';
+        $c = 'if (typeof(res) === "undefined") {var res = $(';
         if (!array_key_exists("new", $modify)) {
             // Nothing
         } else {
@@ -191,7 +205,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 $c .= '\'';
             }
         }
-        $c .= ');';
+        $c .= ');}';
 
         $view = $this->reduceView($modify["view"], false);
         if ($view) {
