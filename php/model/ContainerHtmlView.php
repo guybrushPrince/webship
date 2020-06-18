@@ -17,8 +17,9 @@ class ContainerHtmlView extends HtmlView {
         $coreClasses = array_diff($this->classes, $classes);
         $coreSelector = '.' . implode('.', $coreClasses);
 
-        $this->style(Tools::css($coreSelector, '', 'display: flex', 'flex-wrap: wrap',
-            'width: 100%'));
+        $this->style(Tools::css($coreSelector, '', 'display: flex',
+            'flex-wrap: wrap', 'align-items: flex-start', 'width: 100%',
+            'box-sizing: border-box'));
     }
 
     // Short cuts

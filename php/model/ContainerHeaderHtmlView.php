@@ -18,8 +18,9 @@ class ContainerHeaderHtmlView extends HtmlView {
         $coreClasses = array_diff($this->classes, $classes);
         $coreSelector = '.' . implode('.', $coreClasses);
 
-        $this->style(Tools::css($coreSelector, '', 'font-size: 20px', 'text-transform: uppercase',
-            'font-weight: lighter', 'width: 100%'));
+        $this->style(Tools::css($coreSelector, '', 'font-size: 20px',
+            'text-transform: uppercase', 'font-weight: lighter', 'width: 100%',
+            'box-sizing: border-box'));
     }
 
     // Short cuts

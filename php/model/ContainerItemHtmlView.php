@@ -18,10 +18,10 @@ class ContainerItemHtmlView extends HtmlView {
         $coreClasses = array_diff($this->classes, $classes);
         $coreSelector = '.' . implode('.', $coreClasses);
 
-        $this->style(Tools::css($coreSelector, '', 'display: flex', 'flex-wrap: wrap',
-            'padding: 5px'));
+        $this->style(Tools::css($coreSelector, '', 'display: flex',
+            'flex-wrap: wrap', 'padding: 5px', 'box-sizing: border-box'));
         $this->style(Tools::css($coreSelector, '.long', 'flex-wrap: wrap',
-            'flex-direction: column'));
+            'flex-direction: row'));
     }
 
     // Short cuts

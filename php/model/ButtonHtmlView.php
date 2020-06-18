@@ -31,12 +31,12 @@ class ButtonHtmlView extends HtmlView {
         $this->id = $id;
         $this->type = $type;
 
-        /*$coreClasses = array_diff($this->classes, $classes);
+        $coreClasses = array_diff($this->classes, $classes);
         $coreSelector = '.' . implode('.', $coreClasses);
 
         $this->style(Tools::css($coreSelector, '', 'box-sizing: border-box', 'padding: 5px',
             'height: 50px', 'width: 100%', 'font-family: Roboto Condensed, Roboto, HelveticaNeue, sans-serif',
-            'font-size: 16px'));*/
+            'font-size: 16px'));
     }
 
     /**

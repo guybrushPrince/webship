@@ -21,26 +21,32 @@ class DashboardHtmlView extends HtmlView {
             'width: 100%', 'justify-content: space-around'));
 
         $this->style(Tools::css($coreSelector, array(' > ', '.dashboard-item'), 'position: relative',
-            'width: 45%', 'height: 0', 'padding-bottom: 45%', 'box-sizing: border-box', 'margin-top: 2.5%',
+            'width: 45%', 'height: 0', 'padding-top: 45%', 'box-sizing: border-box', 'margin-top: 2.5%',
             'margin-bottom: 2.5%', 'overflow: hidden', 'border: solid 1px rgba(200, 200, 200, 1.0)',
             'cursor: pointer', '-webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.3)',
             '-moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.3)', 'box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.3)'));
 
-        $this->style(Tools::css($coreSelector, array(' > ', '.dashboard-item', ' > ', ':last-child'),
-            'width: 100%', 'margin-bottom: -100%'));
+        $this->style(Tools::css($coreSelector, array(' > ', '.dashboard-item', ':before'), 'content: ""',
+            'display: block', 'padding-top: 45%;'));
 
-        $this->style(Tools::css($coreSelector, array(' > ', '.dashboard-item.plus'), 'display: flex',
+        $this->style(Tools::css($coreSelector, array(' > ', '.dashboard-item', ' ', '.box'), 'position: absolute',
+            'left: 0', 'top: 0', 'right: 0', 'bottom: 0', 'box-sizing: border-box'));
+
+        $this->style(Tools::css($coreSelector, array(' > ', '.dashboard-item', ' > ', ':last-child'),
+            'width: 100%'/*, 'margin-bottom: -100%'*/));
+
+        $this->style(Tools::css($coreSelector, array(' > ', '.dashboard-item.plus', ' > ', ' .box'), 'display: flex',
             'align-items: center', 'justify-content: center', 'background: rgba(170, 170, 170, 1.0)',
             'opacity: 0.5', 'transition: opacity 1s'));
 
-        $this->style(Tools::css($coreSelector, array(' > ', '.dashboard-item.plus', ' > ', '.plus'),
-            'display: inline-block', 'width: 30px', 'height: 30px', 'padding: 6px', 'box-sizing: border-box',
+        $this->style(Tools::css($coreSelector, array(' > ', '.dashboard-item.plus', ' > ', ' .box ', ' > ' , '.plus'),
+            'display: inline-block', 'padding: 6px', 'box-sizing: border-box',
                      'background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 1)) content-box,
                         linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 1)) content-box,
                         rgba(255,255,255,0)', 'background-position: center', 'background-size: 100% 5px, 5px 100%',
                      'background-repeat: no-repeat', 'width: 100px', 'height: 100px'));
 
-        $this->style(Tools::css($coreSelector, array(' > ', '.dashboard-item.plus', ':hover'),
+        $this->style(Tools::css($coreSelector, array(' > ', '.dashboard-item.plus', ' > ', ' .box', ':hover'),
                     'opacity: 1.0'));
     }
 

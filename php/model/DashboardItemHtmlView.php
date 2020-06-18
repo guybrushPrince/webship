@@ -21,10 +21,30 @@ class DashboardItemHtmlView extends HtmlView {
         $this->style(Tools::css($coreSelector, '', 'display: flex', 'flex-wrap: wrap',
             'padding: 5px'));
 
-        $this->style(Tools::css($coreSelector, array(' > ' , '*'), 'padding: 10px'));
+        $this->style(Tools::css($coreSelector, array(' > ', '.box', ' > ',  '*'), 'box-sizing: border-box',
+            'padding: 10px'));
 
-        $this->style(Tools::css($coreSelector, array(' > ' , '.closer'), 'position: absolute',
+        $this->style(Tools::css($coreSelector, array(' > ', '.box'), 'overflow-y: auto'));
+
+        $this->style(Tools::css($coreSelector, array(' > ', '.box', ' > ', '.closer'), 'position: absolute',
             'right: 0', 'top: 0'));
+
+        $this->style(Tools::css($coreSelector, array(' > ', '.box', ' > ', '.pencil'), 'position: absolute',
+            'right: 20px', 'top: -2px'));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function generateOpeningTag() {
+        return parent::generateOpeningTag() . '<div class="box">';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function generateClosingTag() {
+        return '</div>' . parent::generateClosingTag();
     }
 
     // Short cuts
@@ -50,6 +70,17 @@ class DashboardItemHtmlView extends HtmlView {
         $closer = new CloserHtmlView($classes);
         $this->add($closer);
         return $closer;
+    }
+
+    /**
+     * Generate a closer view.
+     * @param array $classes The classes.
+     * @return PencilHtmlView
+     */
+    public function pencil(array $classes = array()) {
+        $pencil = new PencilHtmlView($classes);
+        $this->add($pencil);
+        return $pencil;
     }
 
     /**

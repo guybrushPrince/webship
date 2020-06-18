@@ -19,7 +19,7 @@ class ModalHtmlView extends HtmlView {
 
         $this->add(new ContainerHtmlView(array('modal-overlay')))->ref('overlay')->
             protocol(Event::CLICK)->
-                toggleClass('invisible', $this);
+                toggleClass($this, 'invisible');
         $this->add(new ContainerHtmlView(array('modal-container')));
 
         $this->style(Tools::css($coreSelector, '', 'display: flex', ''));
