@@ -23,6 +23,13 @@ class SubmitHtmlView extends ButtonHtmlView {
     public function __construct($id, $formId, array $classes = array()) {
         parent::__construct($id, 'button', array_merge(array('submit'), $classes));
         $this->formId = $formId;
+
+        $coreClasses = array_diff($this->classes, $classes);
+        $coreSelector = '.' . implode('.', $coreClasses);
+
+        $this->style(Tools::css($coreSelector, '', 'background: rgba(21, 140, 17, 0.6)',
+            'border: none', 'cursor: pointer'));
+        $this->style(Tools::css($coreSelector, ':hover', 'background: rgba(21, 140, 17, 1.0)'));
     }
 
     // Short cuts
