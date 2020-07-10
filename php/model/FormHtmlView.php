@@ -34,7 +34,8 @@ class FormHtmlView extends HtmlView {
         $coreClasses = array_diff($this->classes, $classes);
         $coreSelector = '.' . implode('.', $coreClasses);
 
-        $this->style(Tools::css($coreSelector, '', 'display: inherit', 'flex-wrap: inherit', 'margin: inherit'));
+        $this->style(Tools::css($coreSelector, '', 'display: inherit',
+            'flex-wrap: inherit', 'margin: inherit', 'width: inherit'));
     }
 
     /**

@@ -39,6 +39,7 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::CONTENTMODIFY) $code .= '.on("' . Event::CONTENTMODIFY . '", ';
                 if ($this->event === Event::MOVEUP) $code .= '.on("' . Event::MOVEUP . '", ';
                 if ($this->event === Event::MOVEDOWN) $code .= '.on("' . Event::MOVEDOWN . '", ';
+                if ($this->event === Event::MOVEDELETE) $code .= '.on("' . Event::MOVEDELETE . '", ';
                 if ($this->event === Event::CLICK_OUTSIDE) $code = '$(window).click';
                 if ($this->event === Event::ONLOAD) $code = '';
                 $code .= '(function(e,' . $this->parent->id() . ') {';
@@ -54,6 +55,7 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::CONTENTMODIFY) $code .= ')';
                 if ($this->event === Event::MOVEUP) $code .= ')';
                 if ($this->event === Event::MOVEDOWN) $code .= ')';
+                if ($this->event === Event::MOVEDELETE) $code .= ')';
                 $code .= ';';
             } else {
                 $submitView = $this->parent;

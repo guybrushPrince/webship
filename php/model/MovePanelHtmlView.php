@@ -43,11 +43,12 @@ class MovePanelHtmlView extends PanelHtmlView {
 
     /**
      * Create an item.
+     * @param boolean $hasDelete Whether the item has a delete or not.
      * @param array $classes A set of classes.
      * @return MovePanelItemHtmlView
      */
-    public function item(array $classes = array()) {
-        $itemView = new MovePanelItemHtmlView($classes);
+    public function item($hasDelete = false, array $classes = array()) {
+        $itemView = new MovePanelItemHtmlView($hasDelete, $classes);
         $this->add($itemView);
         return $itemView;
     }

@@ -23,6 +23,9 @@ class ContainerItemHtmlView extends HtmlView {
         $this->style(Tools::css($coreSelector, '.long', 'flex-wrap: wrap',
             'flex-direction: row'));
         $this->style(Tools::css($coreSelector, '.w100', 'width: 100%'));
+        $this->style(Tools::css($coreSelector, '.h-c', 'justify-content: center',
+            'align-items: center'));
+        $this->style(Tools::css($coreSelector, '.p-0', 'padding: 0'));
     }
 
     // Short cuts

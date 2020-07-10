@@ -9,11 +9,18 @@ include_once dirname(__FILE__) . '/HtmlView.php';
 class MovePanelItemHtmlView extends PanelItemHtmlView {
 
     /**
+     * Whether it has a delete button or not.
+     * @var bool
+     */
+    private $hasDelete = false;
+
+    /**
      * MovePanelItemHtmlView constructor.
      * @param array $classes
      */
-    public function __construct(array $classes = array()) {
+    public function __construct($hasDelete = false, array $classes = array()) {
         parent::__construct(array_merge(array('movable'), $classes));
+        $this->hasDelete = $hasDelete;
 
         $coreClasses = array_diff($this->classes, $classes);
         $coreSelector = '.' . implode('.', $coreClasses);
@@ -22,11 +29,16 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
             'width: 95%'));
         $this->style(Tools::css($coreSelector, ' > .move.up', 'position: absolute',
             'left: 100%', 'top: 0', 'width: 5%', 'box-sizing: border-box', 'height: 30px'));
-        $this->style(Tools::css($coreSelector, array(' > .move.up', ':after'), 'content: "\0025B2"', // &#x25B2;
+        $this->style(Tools::css($coreSelector, array(' > .move.up', ':after'), 'content: "\0025B2"',
             'width: 100%'));
         $this->style(Tools::css($coreSelector, ' > .move.down', 'position: absolute',
             'left: 100%', 'top: calc(100% - 30px)', 'width: 5%', 'box-sizing: border-box', 'height: 30px'));
-        $this->style(Tools::css($coreSelector, array(' > .move.down', ':after'), 'content: "\0025BC"', // &#x25bc;
+        $this->style(Tools::css($coreSelector, array(' > .move.down', ':after'), 'content: "\0025BC"',
+            'width: 100%'));
+
+        $this->style(Tools::css($coreSelector, ' > .move.delete', 'position: absolute',
+            'left: 100%', 'top: calc(50% - 15px)', 'width: 5%', 'box-sizing: border-box', 'height: 30px'));
+        $this->style(Tools::css($coreSelector, array(' > .move.delete', ':after'), 'content: "X"',
             'width: 100%'));
 
         $this->style(Tools::css($coreSelector, array(' > .move'), 'cursor: pointer', 'text-align: center',
@@ -36,15 +48,23 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
 
 
 
-        $this->js('$("' . $this->idc() . '.move.up").click(function(event) {' .
+
+        $this->js('$("' . $this->idc() . '-up' . '.move.up").click(function(event) {' .
             '$(event.target).parent().insertBefore($(event.target).parent().prev());' .
             '$(event.target).trigger("' . Event::MOVEUP . '");' .
             '});');
 
-        $this->js('$("' . $this->idc() . '.move.down").click(function(event) {' .
+        $this->js('$("' . $this->idc() . '-down' . '.move.down").click(function(event) {' .
             '$(event.target).parent().insertAfter($(event.target).parent().next());' .
             '$(event.target).trigger("' . Event::MOVEDOWN . '");' .
             '});');
+
+        if ($hasDelete) {
+            $this->js('$("' . $this->idc() . '-delete' . '.move.delete").click(function(event) {' .
+                '$(event.target).trigger("' . Event::MOVEDELETE . '");' .
+                '$(event.target).parent().remove();' .
+                '});');
+        }
     }
 
     /**
@@ -52,8 +72,9 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
      */
     public function generateOpeningTag() {
         return parent::generateOpeningTag() .
-            '<div class="' . implode(' ', array('move', 'up', $this->id())) . '"></div>' .
-            '<div class="' . implode(' ', array('move', 'down', $this->id())) . '"></div>';
+            '<div class="' . implode(' ', array('move', 'up', $this->id() . '-up')) . '"></div>' .
+            ($this->hasDelete ? '<div class="' . implode(' ', array('move', 'delete', $this->id() . '-delete')) . '"></div>' : '') .
+            '<div class="' . implode(' ', array('move', 'down', $this->id() . '-down')) . '"></div>';
     }
 
 }
