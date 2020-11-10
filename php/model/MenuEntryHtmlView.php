@@ -10,9 +10,10 @@ class MenuEntryHtmlView extends HtmlView {
 
     /**
      * MenuEntryHtmlView constructor.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct(array $classes = array()) {
+    public function __construct($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('menu-entry'), $classes));
 
         $coreClasses = array_diff($this->classes, $classes);
@@ -46,10 +47,11 @@ class MenuEntryHtmlView extends HtmlView {
 
     /**
      * Create a menu entry.
-     * @param array $classes A set of classes.
+     * @param array|string $classes A set of classes.
      * @return MenuEntryHtmlView
      */
-    public function entry(array $classes = array()) {
+    public function entry($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $entry = new MenuEntryHtmlView($classes);
         $this->add($entry);
         return $entry;
@@ -57,10 +59,11 @@ class MenuEntryHtmlView extends HtmlView {
 
     /**
      * Return a new menu entry html view.
-     * @param array $classes Classes.
+     * @param array|string $classes Classes.
      * @return MenuEntryHtmlView
      */
-    public static function _new(array $classes) {
+    public static function _new($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         return new MenuEntryHtmlView($classes);
     }
 }

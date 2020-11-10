@@ -10,9 +10,10 @@ class CloserHtmlView extends HtmlView {
 
     /**
      * CloserHtmlView constructor.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct(array $classes = array()) {
+    public function __construct($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('closer'), $classes));
 
         $coreClasses = array_diff($this->classes, $classes);
@@ -30,10 +31,11 @@ class CloserHtmlView extends HtmlView {
 
     /**
      * Return a new closer html view.
-     * @param array $classes Classes.
+     * @param array|string $classes Classes.
      * @return CloserHtmlView
      */
-    public static function _new(array $classes) {
+    public static function _new($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         return new CloserHtmlView($classes);
     }
 

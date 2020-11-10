@@ -29,9 +29,10 @@ abstract class HtmlView extends View {
 
     /**
      * HtmlView constructor.
-     * @param array $classes (optional) Possible classes
+     * @param array|string $classes (optional) Possible classes
      */
-    public function __construct(array $classes = array()) {
+    public function __construct($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct();
         $this->classes = array_merge(array('sunstone'), $classes);
     }
@@ -178,9 +179,11 @@ abstract class HtmlView extends View {
 
     /**
      * Generate a panel.
+     * @param string|array|string $classes One or more classes.
      * @return PanelHtmlView
      */
-    public function panel(array $classes = array()) {
+    public function panel($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $panelView = new PanelHtmlView($classes);
         $this->add($panelView);
         return $panelView;
@@ -188,9 +191,11 @@ abstract class HtmlView extends View {
 
     /**
      * Generate a container.
+     * @param string|array|string $classes One or more classes.
      * @return ContainerHtmlView
      */
-    public function container(array $classes = array()) {
+    public function container($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $containerView = new ContainerHtmlView($classes);
         $this->add($containerView);
         return $containerView;
@@ -198,9 +203,11 @@ abstract class HtmlView extends View {
 
     /**
      * Generate a menu.
+     * @param string|array|string $classes One or more classes.
      * @return MenuHtmlView
      */
-    public function menu(array $classes = array()) {
+    public function menu($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $menuView = new MenuHtmlView($classes);
         $this->add($menuView);
         return $menuView;
@@ -208,11 +215,11 @@ abstract class HtmlView extends View {
 
     /**
      * Add a described sub item.
-     * @param array $classes Classes.
+     * @param array|string $classes Classes.
      * @param string|boolean $labelFor A label.
      * @return DescribedHtmlView
      */
-    public function described(array $classes = array(), $labelFor = false) {
+    public function described($classes = array(), $labelFor = false) {
         $described = new DescribedHtmlView($classes, $labelFor);
         $this->add($described);
         return $described;
@@ -222,10 +229,11 @@ abstract class HtmlView extends View {
      * Add a form.
      * @param string $action The action to perform.
      * @param string $method The method.
-     * @param array $classes Classes.
+     * @param array|string $classes Classes.
      * @return FormHtmlView
      */
-    public function form($action, $method, array $classes = array()) {
+    public function form($action, $method, $classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $formView = new FormHtmlView($action, $method, $classes);
         $this->add($formView);
         return $formView;

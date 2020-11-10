@@ -23,7 +23,7 @@ class DescribedHtmlView extends HtmlView {
     /**
      * DescribedHtmlView constructor.
      */
-    public function __construct(array $classes = array(), $labelFor = false) {
+    public function __construct($classes = array(), $labelFor = false) {
         parent::__construct(array_merge(array('described'), $classes));
         $this->descriptionView = $this->texts();
         $this->labelFor = $labelFor;

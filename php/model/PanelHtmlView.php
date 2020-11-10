@@ -10,9 +10,10 @@ class PanelHtmlView extends HtmlView {
 
     /**
      * PanelHtmlView constructor.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct(array $classes = array()) {
+    public function __construct($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('panel'), $classes));
 
         $coreClasses = array_diff($this->classes, $classes);
@@ -31,10 +32,11 @@ class PanelHtmlView extends HtmlView {
 
     /**
      * Create a header.
-     * @param array $classes A set of classes.
+     * @param array|string $classes A set of classes.
      * @return PanelHeaderHtmlView
      */
-    public function header(array $classes = array()) {
+    public function header($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $headerView = new PanelHeaderHtmlView($classes);
         $this->add($headerView);
         return $headerView;
@@ -42,10 +44,11 @@ class PanelHtmlView extends HtmlView {
 
     /**
      * Create an item.
-     * @param array $classes A set of classes.
+     * @param array|string $classes A set of classes.
      * @return PanelItemHtmlView
      */
-    public function item(array $classes = array()) {
+    public function item($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $itemView = new PanelItemHtmlView($classes);
         $this->add($itemView);
         return $itemView;

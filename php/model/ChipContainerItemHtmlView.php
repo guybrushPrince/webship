@@ -10,9 +10,10 @@ class ChipContainerItemHtmlView extends ContainerItemHtmlView {
 
     /**
      * ContainerItemHtmlView constructor.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct(array $classes = array()) {
+    public function __construct($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('chip'), $classes));
 
         $coreClasses = array_diff($this->classes, $classes);
@@ -40,10 +41,11 @@ class ChipContainerItemHtmlView extends ContainerItemHtmlView {
 
     /**
      * Generate a closer view.
-     * @param array $classes The classes.
+     * @param array|string $classes The classes.
      * @return CloserHtmlView
      */
-    public function closer(array $classes = array()) {
+    public function closer($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $closer = new CloserHtmlView($classes);
         $this->add($closer);
         return $closer;

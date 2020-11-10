@@ -10,9 +10,10 @@ class DashboardHeaderHtmlView extends HtmlView {
 
     /**
      * DashboardHeaderHtmlView constructor.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct(array $classes = array()) {
+    public function __construct($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('dashboard-header'), $classes));
 
         $coreClasses = array_diff($this->classes, $classes);

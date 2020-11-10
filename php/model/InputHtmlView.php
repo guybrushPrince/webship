@@ -52,9 +52,10 @@ class InputHtmlView extends HtmlView {
      * @param integer|boolean $min The minimum.
      * @param integer|boolean $max The maximum.
      * @param integer|boolean $step The step.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct($id, $name, $type, $min = false, $max = false, $step = false, array $classes = array()) {
+    public function __construct($id, $name, $type, $min = false, $max = false, $step = false, $classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('input'), $classes));
         $this->id = $id;
         $this->name = $name;

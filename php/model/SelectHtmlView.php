@@ -24,9 +24,10 @@ class SelectHtmlView extends HtmlView {
      * SelectHtmlView constructor.
      * @param string $id The id.
      * @param string $name The name.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct($id, $name, array $classes = array()) {
+    public function __construct($id, $name, $classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('select'), $classes));
         $this->id = $id;
         $this->name = $name;
@@ -76,11 +77,11 @@ class SelectHtmlView extends HtmlView {
     /**
      * Add an option.
      * @param string $value The value.
-     * @param array $classes Classes.
+     * @param array|string $classes Classes.
      * @param boolean $selected Whether it is selected.
      * @return OptionHtmlView
      */
-    public function option($value, array $classes = array(), $selected = false) {
+    public function option($value, $classes = array(), $selected = false) {
         $option = new OptionHtmlView($value, $classes, $selected);
         $this->add($option);
         return $option;

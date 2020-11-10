@@ -10,9 +10,10 @@ class ContextSubMenuHtmlView extends SubMenuHtmlView {
 
     /**
      * ContextSubMenuHtmlView constructor.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct(array $classes = array()) {
+    public function __construct($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('context'), $classes));
 
         $coreClasses = array_diff($this->classes, $classes);
@@ -36,10 +37,11 @@ class ContextSubMenuHtmlView extends SubMenuHtmlView {
 
     /**
      * Create a context menu entry.
-     * @param array $classes A set of classes.
+     * @param array|string $classes A set of classes.
      * @return ContextMenuEntryHtmlView
      */
-    public function entry(array $classes = array()) {
+    public function entry($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $entry = new ContextMenuEntryHtmlView($classes);
         $this->add($entry);
         return $entry;
@@ -47,10 +49,11 @@ class ContextSubMenuHtmlView extends SubMenuHtmlView {
 
     /**
      * Create a context sub menu entry.
-     * @param array $classes A set of classes.
+     * @param array|string $classes A set of classes.
      * @return ContextSubMenuHtmlView
      */
-    public function submenu(array $classes = array()) {
+    public function submenu($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $entry = new ContextSubMenuHtmlView($classes);
         $this->add($entry);
         return $entry;
@@ -58,10 +61,11 @@ class ContextSubMenuHtmlView extends SubMenuHtmlView {
 
     /**
      * Return a new context sub menu html view.
-     * @param array $classes Classes.
+     * @param array|string $classes Classes.
      * @return ContextSubMenuHtmlView
      */
-    public static function _new(array $classes) {
+    public static function _new($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         return new ContextSubMenuHtmlView($classes);
     }
 }

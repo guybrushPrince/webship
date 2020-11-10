@@ -10,9 +10,10 @@ class ChipContainerHtmlView extends ContainerHtmlView {
 
     /**
      * ChipContainerHtmlView constructor.
-     * @param array $classes An array of additional classes.
+     * @param array|string $classes An array of additional classes.
      */
-    public function __construct(array $classes = array()) {
+    public function __construct($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('chip-container'), $classes));
 
         $coreClasses = array_diff($this->classes, $classes);
@@ -27,17 +28,19 @@ class ChipContainerHtmlView extends ContainerHtmlView {
 
     /**
      * Create a new chip.
-     * @param array $classes An array of additional classes.
+     * @param array|string $classes An array of additional classes.
      * @return ContainerItemHtmlView
      */
-    public function chip(array $classes = array()) {
+    public function chip($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         return $this->add(new ChipContainerItemHtmlView($classes));
     }
 
     /**
      * @inheritdoc
      */
-    public function item(array $classes = array()) {
+    public function item($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         return $this->chip($classes);
     }
 }

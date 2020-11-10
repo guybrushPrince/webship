@@ -10,9 +10,10 @@ class DashboardItemHtmlView extends HtmlView {
 
     /**
      * DashboardItemHtmlView constructor.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct(array $classes = array()) {
+    public function __construct($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('dashboard-item'), $classes));
 
         $coreClasses = array_diff($this->classes, $classes);
@@ -63,10 +64,11 @@ class DashboardItemHtmlView extends HtmlView {
 
     /**
      * Generate a closer view.
-     * @param array $classes The classes.
+     * @param array|string $classes The classes.
      * @return CloserHtmlView
      */
-    public function closer(array $classes = array()) {
+    public function closer($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $closer = new CloserHtmlView($classes);
         $this->add($closer);
         return $closer;
@@ -74,10 +76,11 @@ class DashboardItemHtmlView extends HtmlView {
 
     /**
      * Generate a closer view.
-     * @param array $classes The classes.
+     * @param array|string $classes The classes.
      * @return PencilHtmlView
      */
-    public function pencil(array $classes = array()) {
+    public function pencil($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $pencil = new PencilHtmlView($classes);
         $this->add($pencil);
         return $pencil;
@@ -86,10 +89,11 @@ class DashboardItemHtmlView extends HtmlView {
     /**
      * Create a view from the dashboard items.
      * @param DashboardItem $item The dashboard item.
-     * @param array $classes (optional) The classes.
+     * @param array|string $classes (optional) The classes.
      * @return DashboardItemHtmlView
      */
-    public static function _new(DashboardItem $item, array $classes = array()) {
+    public static function _new(DashboardItem $item, $classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         return $item->createView($classes);
     }
 }

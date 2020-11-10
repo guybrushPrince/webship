@@ -12,7 +12,8 @@ class PencilHtmlView extends HtmlView {
      * PencilHtmlView constructor.
      * @param string $target The target.
      */
-    public function __construct(array $classes = array()) {
+    public function __construct($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('pencil'), $classes));
 
         $coreClasses = array_diff($this->classes, $classes);
@@ -30,10 +31,11 @@ class PencilHtmlView extends HtmlView {
 
     /**
      * Return a new pencil html view.
-     * @param array $classes Classes.
+     * @param array|string $classes Classes.
      * @return PencilHtmlView
      */
-    public static function _new(array $classes) {
+    public static function _new($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         return new PencilHtmlView($classes);
     }
 

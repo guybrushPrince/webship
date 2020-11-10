@@ -10,9 +10,10 @@ class ContainerItemHtmlView extends HtmlView {
 
     /**
      * ContainerItemHtmlView constructor.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct(array $classes = array()) {
+    public function __construct($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('container-item'), $classes));
 
         $coreClasses = array_diff($this->classes, $classes);

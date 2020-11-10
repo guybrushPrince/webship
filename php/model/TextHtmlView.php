@@ -38,9 +38,10 @@ class TextHtmlView extends HtmlView {
      * @param string $name The name.
      * @param string $rows The rows.
      * @param integer|boolean $max The maximum.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct($id, $name, $rows = 3, $max = false, array $classes = array()) {
+    public function __construct($id, $name, $rows = 3, $max = false, $classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('text-input'), $classes));
         $this->id = $id;
         $this->name = $name;

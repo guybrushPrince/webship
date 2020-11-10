@@ -17,9 +17,10 @@ class MarkdownHtmlView extends HtmlView {
     /**
      * MarkdownHtmlView constructor.
      * @param string $file The file.
-     * @param array $classes Some classes.
+     * @param array|string $classes Some classes.
      */
-    public function __construct($file, array $classes = array()) {
+    public function __construct($file, $classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('markdown'), $classes));
         $this->file = $file;
 
@@ -51,10 +52,11 @@ class MarkdownHtmlView extends HtmlView {
     /**
      * Return a new container html view.
      * @param string $file The file.
-     * @param array $classes Classes.
+     * @param array|string $classes Classes.
      * @return MarkdownHtmlView
      */
-    public static function _new($file, array $classes) {
+    public static function _new($file, $classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         return new MarkdownHtmlView($file, $classes);
     }
 }

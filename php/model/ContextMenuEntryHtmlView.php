@@ -10,9 +10,10 @@ class ContextMenuEntryHtmlView extends MenuEntryHtmlView {
 
     /**
      * ContextMenuEntryHtmlView constructor.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct(array $classes = array()) {
+    public function __construct($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('context'), $classes));
 
         $coreClasses = array_diff($this->classes, $classes);
@@ -30,10 +31,11 @@ class ContextMenuEntryHtmlView extends MenuEntryHtmlView {
 
     /**
      * Create a context menu entry.
-     * @param array $classes A set of classes.
+     * @param array|string $classes A set of classes.
      * @return ContextMenuEntryHtmlView
      */
-    public function entry(array $classes = array()) {
+    public function entry($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $entry = new ContextMenuEntryHtmlView($classes);
         $this->add($entry);
         return $entry;
@@ -41,10 +43,11 @@ class ContextMenuEntryHtmlView extends MenuEntryHtmlView {
 
     /**
      * Return a new context menu entry html view.
-     * @param array $classes Classes.
+     * @param array|string $classes Classes.
      * @return ContextMenuEntryHtmlView
      */
-    public static function _new(array $classes) {
+    public static function _new($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         return new ContextMenuEntryHtmlView($classes);
     }
 }

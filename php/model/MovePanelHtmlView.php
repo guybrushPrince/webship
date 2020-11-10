@@ -10,9 +10,10 @@ class MovePanelHtmlView extends PanelHtmlView {
 
     /**
      * MovePanelHtmlView constructor.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct(array $classes = array()) {
+    public function __construct($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('movable'), $classes));
     }
 
@@ -44,10 +45,11 @@ class MovePanelHtmlView extends PanelHtmlView {
     /**
      * Create an item.
      * @param boolean $hasDelete Whether the item has a delete or not.
-     * @param array $classes A set of classes.
+     * @param array|string $classes A set of classes.
      * @return MovePanelItemHtmlView
      */
-    public function item($hasDelete = false, array $classes = array()) {
+    public function item($hasDelete = false, $classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $itemView = new MovePanelItemHtmlView($hasDelete, $classes);
         $this->add($itemView);
         return $itemView;

@@ -12,7 +12,8 @@ class CircleHtmlView extends HtmlView {
      * CircleHtmlView constructor.
      * @param string $target The target.
      */
-    public function __construct(array $classes = array()) {
+    public function __construct($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('circle'), $classes));
 
         $coreClasses = array_diff($this->classes, $classes);
@@ -25,10 +26,11 @@ class CircleHtmlView extends HtmlView {
 
     /**
      * Return a new circle html view.
-     * @param array $classes Classes.
+     * @param array|string $classes Classes.
      * @return CircleHtmlView
      */
-    public static function _new(array $classes) {
+    public static function _new($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         return new CircleHtmlView($classes);
     }
 

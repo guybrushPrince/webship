@@ -23,10 +23,10 @@ class OptionHtmlView extends HtmlView {
     /**
      * OptionHtmlView constructor.
      * @param string $value The value.
-     * @param array $classes
+     * @param array|string $classes
      * @param boolean $selected Whether this option is selected.
      */
-    public function __construct($value, array $classes = array(), $selected = false) {
+    public function __construct($value, $classes = array(), $selected = false) {
         parent::__construct(array_merge(array('option'), $classes));
         $this->value = $value;
         $this->selected = $selected;

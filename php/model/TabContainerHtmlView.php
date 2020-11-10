@@ -9,9 +9,10 @@ include_once dirname(__FILE__) . '/ContainerHtmlView.php';
 class TabContainerHtmlView extends ContainerHtmlView {
     /**
      * TabContainerHtmlView constructor.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct(array $classes = array()) {
+    public function __construct($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('tabbed'), $classes));
 
         $coreClasses = array_diff($this->classes, $classes);
@@ -47,10 +48,11 @@ class TabContainerHtmlView extends ContainerHtmlView {
     /**
      * Create a tab that can be closed.
      * @param array $headers Headers.
-     * @param array $classes Classes.
+     * @param array|string $classes Classes.
      * @return TabContainerItemHtmlView
      */
-    public function closingTab(array $headers = array(), array $classes = array()) {
+    public function closingTab(array $headers = array(), $classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $view = new TabContainerItemHtmlView($classes);
         $view->ref('tab');
         foreach ($headers as $language => $header) {
@@ -65,10 +67,11 @@ class TabContainerHtmlView extends ContainerHtmlView {
 
     /**
      * Return a new tab container html view.
-     * @param array $classes Classes.
+     * @param array|string $classes Classes.
      * @return TabContainerHtmlView
      */
-    public static function _new(array $classes) {
+    public static function _new($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         return new TabContainerHtmlView($classes);
     }
 }

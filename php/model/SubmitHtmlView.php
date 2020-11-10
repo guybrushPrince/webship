@@ -18,9 +18,10 @@ class SubmitHtmlView extends ButtonHtmlView {
      * SubmitHtmlView constructor.
      * @param string $id The id.
      * @param string $formId The id of the formular to submit.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct($id, $formId, array $classes = array()) {
+    public function __construct($id, $formId, $classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct($id, 'button', array_merge(array('submit'), $classes));
         $this->formId = $formId;
 

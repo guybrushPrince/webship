@@ -9,9 +9,10 @@ include_once dirname(__FILE__) . '/HtmlView.php';
 class DashboardHtmlView extends HtmlView {
     /**
      * DashboardHtmlView constructor.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct(array $classes = array()) {
+    public function __construct($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('dashboard'), $classes));
 
         $coreClasses = array_diff($this->classes, $classes);
@@ -54,10 +55,11 @@ class DashboardHtmlView extends HtmlView {
 
     /**
      * Create a header.
-     * @param array $classes A set of classes.
+     * @param array|string $classes A set of classes.
      * @return DashboardHeaderHtmlView
      */
-    public function header(array $classes = array()) {
+    public function header($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $headerView = new DashboardHeaderHtmlView($classes);
         $this->add($headerView);
         return $headerView;
@@ -65,10 +67,11 @@ class DashboardHtmlView extends HtmlView {
 
     /**
      * Create an item.
-     * @param array $classes A set of classes.
+     * @param array|string $classes A set of classes.
      * @return DashboardItemHtmlView
      */
-    public function item(array $classes = array()) {
+    public function item($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $itemView = new DashboardItemHtmlView($classes);
         $this->add($itemView);
         return $itemView;
@@ -76,10 +79,11 @@ class DashboardHtmlView extends HtmlView {
 
     /**
      * Add a plus dashboard item.
-     * @param array $classes Additional classes.
+     * @param array|string $classes Additional classes.
      * @return DashboardItemHtmlView
      */
-    public function plus(array $classes = array()) {
+    public function plus($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $itemView = new DashboardItemHtmlView(array('plus') + $classes);
         $itemView->add(new PlusHtmlView());
         $this->add($itemView);
@@ -88,10 +92,11 @@ class DashboardHtmlView extends HtmlView {
 
     /**
      * Return a new container html view.
-     * @param array $classes Classes.
+     * @param array|string $classes Classes.
      * @return DashboardHtmlView
      */
-    public static function _new(array $classes) {
+    public static function _new($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         return new DashboardHtmlView($classes);
     }
 }

@@ -17,9 +17,10 @@ class ImageHtmlView extends HtmlView {
     /**
      * ImageHtmlView constructor.
      * @param string $src The src.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct($src, array $classes = array()) {
+    public function __construct($src, $classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('image'), $classes));
         $this->src = $src;
 

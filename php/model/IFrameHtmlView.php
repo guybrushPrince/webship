@@ -24,9 +24,10 @@ class IFrameHtmlView extends HtmlView {
      * InputHtmlView constructor.
      * @param string|boolean|View $content The id.
      * @param string|boolean $url The url.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct($content = false, $url = false, array $classes = array()) {
+    public function __construct($content = false, $url = false, $classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('iframe'), $classes));
         $this->content = $content;
         $this->url = $url;

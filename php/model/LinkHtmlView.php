@@ -29,11 +29,11 @@ class LinkHtmlView extends HtmlView {
     /**
      * LinkHtmlView constructor.
      * @param string $url The url.
-     * @param array $classes
+     * @param array|string $classes
      * @param boolean $download Whether the result should be downloaded.
      * @param string $target The target.
      */
-    public function __construct($url, array $classes = array(), $download = false, $target = '_blank') {
+    public function __construct($url, $classes = array(), $download = false, $target = '_blank') {
         parent::__construct(array_merge(array('a'), $classes));
         $this->url = $url;
         $this->download = $download;

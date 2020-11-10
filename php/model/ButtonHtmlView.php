@@ -24,9 +24,10 @@ class ButtonHtmlView extends HtmlView {
      * ButtonHtmlView constructor.
      * @param string $id The id.
      * @param string $type The type.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct($id, $type, array $classes = array()) {
+    public function __construct($id, $type, $classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('button'), $classes));
         $this->id = $id;
         $this->type = $type;

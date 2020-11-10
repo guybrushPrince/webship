@@ -16,9 +16,10 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
 
     /**
      * MovePanelItemHtmlView constructor.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct($hasDelete = false, array $classes = array()) {
+    public function __construct($hasDelete = false, $classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('movable'), $classes));
         $this->hasDelete = $hasDelete;
 

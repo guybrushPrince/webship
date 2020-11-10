@@ -9,9 +9,10 @@ include_once dirname(__FILE__) . '/HtmlView.php';
 class ModalHtmlView extends HtmlView {
     /**
      * ModalHtmlView constructor.
-     * @param array $classes
+     * @param array|string $classes
      */
-    public function __construct(array $classes = array()) {
+    public function __construct($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('modal', 'invisible'), $classes));
 
         $coreClasses = array_diff($this->classes, $classes);
@@ -46,10 +47,11 @@ class ModalHtmlView extends HtmlView {
 
     /**
      * Create a header.
-     * @param array $classes A set of classes.
+     * @param array|string $classes A set of classes.
      * @return ContainerHeaderHtmlView
      */
-    public function header(array $classes = array()) {
+    public function header($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $headerView = new ContainerHeaderHtmlView($classes);
         $this->subviews[1]->add($headerView);
         return $headerView;
@@ -57,10 +59,11 @@ class ModalHtmlView extends HtmlView {
 
     /**
      * Generate a closer view.
-     * @param array $classes The classes.
+     * @param array|string $classes The classes.
      * @return CloserHtmlView
      */
-    public function closer(array $classes = array()) {
+    public function closer($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $closer = new CloserHtmlView($classes);
         $this->add($closer);
         $closer->
@@ -73,10 +76,11 @@ class ModalHtmlView extends HtmlView {
      * Generate a submit button view.
      * @param string $id The id.
      * @param string $formId The id of the formular.
-     * @param array $classes The classes.
+     * @param array|string $classes The classes.
      * @return SubmitHtmlView
      */
-    public function submit($id, $formId, array $classes = array()) {
+    public function submit($id, $formId, $classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $submitter = new SubmitHtmlView($id, $formId, $classes);
         $this->subviews[1]->add($submitter);
         return $submitter;
@@ -85,10 +89,11 @@ class ModalHtmlView extends HtmlView {
     /**
      * Generate a abort button view.
      * @param string $id The id.
-     * @param array $classes The classes.
+     * @param array|string $classes The classes.
      * @return AbortHtmlView
      */
-    public function abort($id, array $classes = array()) {
+    public function abort($id, $classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         $abort = new AbortHtmlView($id, $classes);
         $this->subviews[1]->add($abort);
         $abort->
@@ -109,10 +114,11 @@ class ModalHtmlView extends HtmlView {
 
     /**
      * Return a new container html view.
-     * @param array $classes Classes.
+     * @param array|string $classes Classes.
      * @return ModalHtmlView
      */
-    public static function _new(array $classes) {
+    public static function _new($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
         return new ModalHtmlView($classes);
     }
 }
