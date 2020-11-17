@@ -31,6 +31,7 @@ class HtmlEventProtocol extends EventProtocol {
             if (!($this->parent instanceof SubmitHtmlView && $this->event === Event::CLICK)) {
                 $code .= '$("' . $this->parent->idc() . '")';
                 if ($this->event === Event::CLICK) $code .= '.click';
+                if ($this->event === Event::CHANGE) $code .= '.change';
                 if ($this->event === Event::ONMOUSEOVER) $code .= '.mouseover';
                 if ($this->event === Event::ONMOUSEOUT) $code .= '.mouseout';
                 if ($this->event === Event::ONFOCUSOUT) $code .= '.focusout';
@@ -45,9 +46,7 @@ class HtmlEventProtocol extends EventProtocol {
                 $code .= '(function(e,' . $this->parent->id() . ') {';
                 if ($this->delay) $code .= 'let p = lastDelay.length;' . 'let l = function() {' .
                     'if (p === lastDelay.length) { console.log(p); console.log(lastDelay.length);';
-                $code .= implode(array_map(function (Protocol $p) {
-                    return $p->generate();
-                }, $this->children));
+                if ($this->event !== Event::ONLOADCONTENT) $code .= $this->generateCode($this->children);
                 $code .= 'if (typeof e.stopPropagation === "function") { e.stopPropagation(); }';
                 if ($this->delay) $code .= '}};' . 'lastDelay.push(l);' . 'delay(lastDelay, ' . $this->delay . ');';
                 $code .= '})';
@@ -57,6 +56,7 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::MOVEDOWN) $code .= ')';
                 if ($this->event === Event::MOVEDELETE) $code .= ')';
                 $code .= ';';
+                if ($this->event === Event::ONLOADCONTENT) $code = $this->generateCode($this->children);;
             } else {
                 $submitView = $this->parent;
                 $v = $submitView->submitForm();
@@ -86,6 +86,12 @@ class HtmlEventProtocol extends EventProtocol {
             }
         }
         return $code;
+    }
+
+    private function generateCode(array $protocols) {
+        return implode(array_map(function (Protocol $p) {
+            return $p->generate();
+        }, $protocols));
     }
 }
 ?>

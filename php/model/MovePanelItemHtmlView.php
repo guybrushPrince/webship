@@ -74,9 +74,17 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
     public function generateOpeningTag() {
         return parent::generateOpeningTag() .
             '<div class="' . implode(' ', array('move', 'up', $this->id() . '-up')) . '"></div>' .
-            ($this->hasDelete ? '<div class="' . implode(' ', array('move', 'delete', $this->id() . '-delete')) . '"></div>' : '') .
-            '<div class="' . implode(' ', array('move', 'down', $this->id() . '-down')) . '"></div>';
+            ($this->hasDelete ? '<div class="' . implode(' ', array('move', 'delete', $this->id() . '-delete')) . '"></div>' : '');
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function generateClosingTag() {
+        return '<div class="' . implode(' ', array('move', 'down', $this->id() . '-down')) . '"></div>' .
+            parent::generateClosingTag();
+    }
+
 
 }
 ?>

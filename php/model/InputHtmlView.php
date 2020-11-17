@@ -70,6 +70,7 @@ class InputHtmlView extends HtmlView {
         $this->style(Tools::css($coreSelector, '', 'box-sizing: border-box', 'padding: 5px',
             'height: 50px', 'width: 100%', 'font-family: Roboto Condensed, Roboto, HelveticaNeue, sans-serif',
             'font-size: 16px'));
+        $this->style(Tools::css($coreSelector, '[type="checkbox"]', 'height: 25px'));
     }
 
     /**
@@ -93,6 +94,20 @@ class InputHtmlView extends HtmlView {
      */
     public function generateClosingTag() {
         return ($this->type !== 'checkbox' ? '">' : '>');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function generate($complete = false) {
+        $code = $this->generateOpeningTag();
+        $code .= implode(array_map(function(View $view) { return $view->generateSafe(); }, $this->subviews));
+        $code .= $this->generateClosingTag();
+        if ($complete) {
+            $code .= '<style type="text/css">' . $this->generateStyle() . '</style>' .
+                '<script>' . $this->generateJS() . '</script>';
+        }
+        return $code;
     }
 
     // Short cuts

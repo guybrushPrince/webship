@@ -34,7 +34,7 @@ abstract class HtmlView extends View {
     public function __construct($classes = array()) {
         $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct();
-        $this->classes = array_merge(array('sunstone'), $classes);
+        $this->classes = $classes;
     }
 
     /**

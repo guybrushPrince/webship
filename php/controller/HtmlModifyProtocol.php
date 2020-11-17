@@ -72,10 +72,22 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         return '';
                     }
                 } break;
+                case 'resize': {
+                    $view = $this->reduceView($modify["view"]);
+                    if ($view) {
+                        return 'try { document.getElementsByClassName("' . substr($view, 1) . '")[0].onload = function() { ' .
+                            '$(this).height($(this).contents().find("div[id]").height() + 20);' .
+                            '$(this).contents().find("body").css("overflow-y", "hidden");' .
+                            '}; } catch (e) {}';
+                    } else {
+                        return '';
+                    }
+                } break;
                 case 'add':
                 case 'replace':
                 case 'before':
-                case 'after': {
+                case 'after':
+                case 'text': {
                     return $this->generateDomAction($modify);
                 } break;
                 case 'throw': {
@@ -132,7 +144,6 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     }
                 } break;
                 case 'mousePosition': {
-
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
                         return '$("' . $view . '").css("top", e.pageY + $(e.target).scrollTop()).css("left", e.pageX + $(e.target).scrollTop());';
@@ -189,10 +200,12 @@ class HtmlModifyProtocol extends ModifyProtocol {
      * @return string
      */
     private function generateDomAction($modify) {
-        $c = 'if (typeof(res) === "undefined") {var res = $(';
+        $c = 'if (typeof(res) === "undefined") {var res = ';
         if (!array_key_exists("new", $modify)) {
-            // Nothing
+            if (!array_key_exists("value", $modify)) $c .= 'result';
+            else $c .= '"' . $modify["value"] . '"';
         } else {
+            $c .= '$(';
             $new = $modify["new"];
             if (!$new || $new === null) {
                 $c .= 'result';
@@ -204,8 +217,9 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 }
                 $c .= '\'';
             }
+            $c .= ')';
         }
-        $c .= ');}';
+        $c .= ';}';
 
         $view = $this->reduceView($modify["view"], false);
         if ($view) {
@@ -229,6 +243,9 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     break;
                 case 'delete':
                     $c .= 'remove';
+                    break;
+                case 'text':
+                    $c .= 'text';
                     break;
             }
             $c .= '(';

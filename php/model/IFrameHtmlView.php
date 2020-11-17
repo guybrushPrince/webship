@@ -34,8 +34,6 @@ class IFrameHtmlView extends HtmlView {
 
         $coreClasses = array_diff($this->classes, $classes);
         $coreSelector = '.' . implode('.', $coreClasses);
-
-        //$this->style(Tools::css('div.iframe', '', 'all: initial'));
     }
 
     /**
@@ -48,20 +46,13 @@ class IFrameHtmlView extends HtmlView {
                 str_replace("\"", "'",
                     ($this->content instanceof View ? $this->content->generateSafe() : $this->content)) . '"' : '') .
             '>';
-        /*if ($this->url) {
-            return '<iframe class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' .
-                'src="' . $this->url . '"' . '>';
-        }
-        return '<div class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '">' .
-            ($this->content instanceof View ? $this->content->generateSafe() : $this->content);*/
     }
 
     /**
      * @inheritDoc
      */
     public function generateClosingTag() {
-        if ($this->url) return '</iframe>';
-        return '</div>';
+        return '</iframe>';
     }
 
     // Short cuts
