@@ -40,9 +40,9 @@ class TextHtmlView extends HtmlView {
      * @param integer|boolean $max The maximum.
      * @param array|string $classes
      */
-    public function __construct($id, $name, $rows = 3, $max = false, $classes = array()) {
+    public function __construct($id, $name, $rows = 3, $max = false, $classes = array(), $resizable = false) {
         $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct(array_merge(array('text-input'), $classes));
+        parent::__construct(array_merge(array('text-input'), ($resizable ? array('resizable') : array()) , $classes));
         $this->id = $id;
         $this->name = $name;
         $this->rows = $rows;
@@ -54,6 +54,12 @@ class TextHtmlView extends HtmlView {
         $this->style(Tools::css($coreSelector, '', 'box-sizing: border-box', 'padding: 5px',
             'height: ' . ($rows * 50) . 'px', 'width: 100%', 'font-family: Roboto Condensed, Roboto, HelveticaNeue, sans-serif',
             'font-size: 16px'));
+
+        $this->style(Tools::css($coreSelector, '.resizable', 'height: 31px', 'overflow: hidden'));
+
+        if ($resizable) {
+            $this->protocol(Event::INPUT)->reheight($this);
+        }
     }
 
     /**

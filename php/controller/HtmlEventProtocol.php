@@ -37,6 +37,7 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::ONFOCUSOUT) $code .= '.focusout';
                 if ($this->event === Event::ONFOCUSIN) $code .= '.focusin';
                 if ($this->event === Event::ONKEYUP) $code .= '.keyup';
+                if ($this->event === Event::INPUT) $code .= '.on("input", ';
                 if ($this->event === Event::CONTENTMODIFY) $code .= '.on("' . Event::CONTENTMODIFY . '", ';
                 if ($this->event === Event::MOVEUP) $code .= '.on("' . Event::MOVEUP . '", ';
                 if ($this->event === Event::MOVEDOWN) $code .= '.on("' . Event::MOVEDOWN . '", ';
@@ -51,6 +52,7 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->delay) $code .= '}};' . 'lastDelay.push(l);' . 'delay(lastDelay, ' . $this->delay . ');';
                 $code .= '})';
                 if ($this->event === Event::ONLOAD) $code .= '($("' . $this->parent->idc() . '"))';
+                if ($this->event === Event::INPUT) $code .= ')';
                 if ($this->event === Event::CONTENTMODIFY) $code .= ')';
                 if ($this->event === Event::MOVEUP) $code .= ')';
                 if ($this->event === Event::MOVEDOWN) $code .= ')';

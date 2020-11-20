@@ -11,6 +11,11 @@ class SpanTextHtmlView extends HtmlView {
      */
     protected $texts = array();
 
+    public function __construct($classes = array()) {
+        $classes = is_array($classes) ? $classes : array($classes);
+        parent::__construct($classes);
+    }
+
     /**
      * @inheritDoc
      */
@@ -50,7 +55,7 @@ class SpanTextHtmlView extends HtmlView {
      * @inheritDoc
      */
     public function generateOpeningTag() {
-        $code = '<span class="' . $this->id() . '">';
+        $code = '<span class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '">';
         if (array_key_exists(TextView::$language, $this->texts)) {
             $code .= $this->texts[TextView::$language];
         }

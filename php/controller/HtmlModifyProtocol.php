@@ -83,6 +83,23 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         return '';
                     }
                 } break;
+                case 'reheight': {
+                    $view = $this->reduceView($modify["view"]);
+                    if ($view) {
+                        $code = 'let v = $("' . $view . '");';
+                        $code .= 'let pt = v.css("padding-top");';
+                        $code .= 'let pb = v.css("padding-bottom");';
+                        $code .= 'pt = parseInt(pt.substr(0, pt.length - 2));pb = parseInt(pb.substr(0, pb.length - 2));';
+                        $code .= 'v.height(v.prop("scrollHeight") - (pt + pb));';
+                        return $code;
+                    } else return '';
+                } break;
+                case 'reset': {
+                    $view = $this->reduceView($modify["view"]);
+                    if ($view) {
+                        return '$("' . $view . '").removeAttr("style")';
+                    } else return '';
+                } break;
                 case 'add':
                 case 'replace':
                 case 'before':

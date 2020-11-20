@@ -7,7 +7,7 @@ include_once dirname(__FILE__) . '/../../../ship/php/model/View.php';
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  */
-abstract class HtmlView extends View {
+class HtmlView extends View {
 
     /**
      * Styling code.
