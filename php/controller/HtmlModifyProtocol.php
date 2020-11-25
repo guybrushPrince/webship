@@ -210,7 +210,10 @@ class HtmlModifyProtocol extends ModifyProtocol {
      */
     private function reduceSingleView($view, $class = true) {
         $tmp_view = $view;
-        if (is_string($view)) $view = $this->innerView()->get($view, true)["view"]; // true is important!
+        if (is_string($view)) {
+            $view = $this->innerView()->get($view, true); // true is important!
+            if ($view !== null) $view = $view["view"];
+        }
         if ($view !== null) {
             if ($view instanceof TemplateObject) {
                 $view->setIsView(true);
