@@ -44,11 +44,11 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::MOVEDELETE) $code .= '.on("' . Event::MOVEDELETE . '", ';
                 if ($this->event === Event::CLICK_OUTSIDE) $code = '$(window).click';
                 if ($this->event === Event::ONLOAD) $code = '';
-                $code .= '(function(e,' . $this->parent->id() . ') {';
+                $code .= '(function(e) {';
                 if ($this->delay) $code .= 'let p = lastDelay.length;' . 'let l = function() {' .
                     'if (p === lastDelay.length) { console.log(p); console.log(lastDelay.length);';
                 if ($this->event !== Event::ONLOADCONTENT) $code .= $this->generateCode($this->children);
-                $code .= 'if (typeof e.stopPropagation === "function") { e.stopPropagation(); }';
+                $code .= 'sp(e);';
                 if ($this->delay) $code .= '}};' . 'lastDelay.push(l);' . 'delay(lastDelay, ' . $this->delay . ');';
                 $code .= '})';
                 if ($this->event === Event::ONLOAD) $code .= '($("' . $this->parent->idc() . '"))';
@@ -58,7 +58,7 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::MOVEDOWN) $code .= ')';
                 if ($this->event === Event::MOVEDELETE) $code .= ')';
                 $code .= ';';
-                if ($this->event === Event::ONLOADCONTENT) $code = $this->generateCode($this->children);;
+                if ($this->event === Event::ONLOADCONTENT) $code = $this->generateCode($this->children);
             } else {
                 $submitView = $this->parent;
                 $v = $submitView->submitForm();
@@ -71,17 +71,13 @@ class HtmlEventProtocol extends EventProtocol {
                 $code .= '(function(' . $v->id() . ') {';
                 $code .= 'var keycode = (event.keyCode ? event.keyCode : event.which);';
                 $code .= 'if(keycode == \'13\') {';
-                $code .= implode(array_map(function (Protocol $p) {
-                    return $p->generate();
-                }, $this->children));
+                $code .= $this->generateCode($this->children);
                 $code .= '}';
                 $code .= '});';
                 if (!($v instanceof SubmitHtmlView)) {
                     $code .= '$("' . $submitView->idc() . '").click';
                     $code .= '(function(' . $submitView->id() . ') {';
-                    $code .= implode(array_map(function (Protocol $p) {
-                        return $p->generate();
-                    }, $this->children));
+                    $code .= $this->generateCode($this->children);
                     $code .= '});';
                 }
 

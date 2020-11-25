@@ -25,6 +25,9 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'action': {
                     return $modify["protocol"]->generate();
                 } break;
+                case 'doIt': {
+                    return $modify["protocol"]->generate($modify['context'], $modify['entry']);
+                } break;
                 case 'setCookie': {
                     $c = 'let d = new Date();';
                     if ($modify["value"] !== '') {
@@ -56,7 +59,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'event': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        return '$("' . $view . '").trigger("' . $modify["event"] . '");';
+                        return $this->createViewSelector($view) . '.trigger("' . $modify["event"] . '");';
                     } else {
                         return '';
                     }
@@ -67,7 +70,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'delete': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        return '$("' . $view . '").remove();';
+                        return $this->createViewSelector($view) . '.remove();';
                     } else {
                         return '';
                     }
@@ -86,7 +89,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'reheight': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        $code = 'let v = $("' . $view . '");';
+                        $code = 'let v = ' . $this->createViewSelector($view) . ';';
                         $code .= 'let pt = v.css("padding-top");';
                         $code .= 'let pb = v.css("padding-bottom");';
                         $code .= 'pt = parseInt(pt.substr(0, pt.length - 2));pb = parseInt(pb.substr(0, pb.length - 2));';
@@ -97,7 +100,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'reset': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        return '$("' . $view . '").removeAttr("style")';
+                        return $this->createViewSelector($view) . '.removeAttr("style")';
                     } else return '';
                 } break;
                 case 'add':
@@ -110,7 +113,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'throw': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        return '$("' . $view . '").trigger("' . $modify["event"] . '");';
+                        return $this->createViewSelector($view) . '.trigger("' . $modify["event"] . '");';
                     } else {
                         return '';
                     }
@@ -118,7 +121,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'clear': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        return '$("' . $view . '").each((i,d) => d.reset());';
+                        return $this->createViewSelector($view) . '.each((i,d) => d.reset());';
                     } else {
                         return '';
                     }
@@ -126,7 +129,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'addClasses': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        return '$("' . $view . '").addClass("' . implode(' ', $modify["classes"]) . '");';
+                        return $this->createViewSelector($view) . '.addClass("' . implode(' ', $modify["classes"]) . '");';
                     } else {
                         return '';
                     }
@@ -134,7 +137,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'removeClasses': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        return '$("' . $view . '").removeClass("' . implode(' ', $modify["classes"]) . '");';
+                        return $this->createViewSelector($view) . '.removeClass("' . implode(' ', $modify["classes"]) . '");';
                     } else {
                         return '';
                     }
@@ -142,7 +145,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'removeClassesSiblings': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        return '$("' . $view . '").find(".' . implode(',.', $modify["classes"]) . '").removeClass("' . implode(' ', $modify["classes"]) . '");';
+                        return $this->createViewSelector($view) . '.find(".' . implode(',.', $modify["classes"]) . '").removeClass("' . implode(' ', $modify["classes"]) . '");';
                     } else {
                         return '';
                     }
@@ -152,7 +155,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     if ($modify["view"]) {
                         $view = $this->reduceView($modify["view"]);
                         if ($view) {
-                            return '$("' . $view . '").toggleClass("' . implode(' ', $modify["classes"]) . '");';
+                            return $this->createViewSelector($view) . '.toggleClass("' . implode(' ', $modify["classes"]) . '");';
                         } else {
                             return '';
                         }
@@ -163,7 +166,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'mousePosition': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        return '$("' . $view . '").css("top", e.pageY + $(e.target).scrollTop()).css("left", e.pageX + $(e.target).scrollTop());';
+                        return $this->createViewSelector($view) . '.css("top", e.pageY + $(e.target).scrollTop()).css("left", e.pageX + $(e.target).scrollTop());';
                     } else {
                         return '';
                     }
@@ -206,9 +209,43 @@ class HtmlModifyProtocol extends ModifyProtocol {
      * @return bool|DirectView|string
      */
     private function reduceSingleView($view, $class = true) {
-        if (is_string($view)) $view = $this->innerView()->get($view, true)["view"];
-        if ($view !== null) return ($class ? $view->idc() : $view);
+        $tmp_view = $view;
+        if (is_string($view)) $view = $this->innerView()->get($view, true)["view"]; // true is important!
+        if ($view !== null) {
+            if ($view instanceof TemplateObject) {
+                $view->setIsView(true);
+                return $view;
+            } else return ($class ? $view->idc() : $view);
+        }
         else return false;
+    }
+
+    /**
+     * Create the view selector.
+     * @param array|string|TemplateObject $view The view.
+     * @return string
+     */
+    private function createViewSelector($view) {
+        if (is_string($view)) return '$("' . $view . '")';
+        if (is_array($view)) return '$("' . rtrim(implode(',', array_map(function($v) {
+            return $this->createInnerViewSelector($v);
+        }, $view)), ' + "') . '")';
+        if ($view instanceof TemplateObject) return '$(con["' . $view->getName() . '"])';
+        return '';
+    }
+
+    /**
+     * Create an inner view selector.
+     * @param array|string|TemplateObject $view The view.
+     * @return string
+     */
+    private function createInnerViewSelector($view) {
+        if (is_string($view)) return $view;
+        if (is_array($view)) return implode(',', array_map(function($v) {
+            return $this->createInnerViewSelector($v);
+        }, $view));
+        if ($view instanceof TemplateObject) return '" + con["' . $view->getName() . '"] + "';
+        return '';
     }
 
     /**
@@ -242,9 +279,16 @@ class HtmlModifyProtocol extends ModifyProtocol {
         if ($view) {
             if (!is_array($view)) $view = array($view);
             if ($modify["operation"] === 'replace') {
-                $c .= 'res.filter(":not(style):not(script)").addClass("' . implode(' ', array_map(function($v) { return $v->id(); }, $view)) . '");';
+                $c .= 'res.filter(":not(style):not(script)").addClass("' .
+                    implode(' ', array_map(function($v) {
+                        if ($v instanceof View) return $v->id();
+                        else return '" + con["' . $v->getName() . '"] + "';
+                    }, $view)) . '");';
             }
-            $c .= '$("' . implode(',', array_map(function($v) { return $v->idc(); }, $view)) . '").';
+            $c .= '$("' . implode(',', array_map(function($v) {
+                if ($v instanceof View) return $v->idc();
+                else return '" + con["' . $v->getName() . '"] + "';
+            }, $view)) . '").';
             switch ($modify["operation"]) {
                 case 'after':
                     $c .= 'after';

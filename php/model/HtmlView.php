@@ -56,14 +56,22 @@ class HtmlView extends View {
     /**
      * @inheritDoc
      */
-    public function generate($complete = false) {
+    public function generate($complete = false, $templates = false) {
         $code = $this->generateOpeningTag();
         $code .= implode(array_map(function(View $view) { return $view->generateSafe(); }, $this->subviews));
         if ($complete) {
-            $code .= '<style type="text/css">' . $this->generateStyle() . '</style>' .
+            if ($templates) {
+                if (isset($_SESSION)) {
+                    if (!array_key_exists('templates', $_SESSION)) $_SESSION['templates'] = array();
+                    $context = &$_SESSION['templates'];
+                } else $context = array();
+                $code .= '<script>' . TemplateProtocol::generateAll($context) . '</script>';
+            }
+            $code .= /*'<style type="text/css">' . $this->generateStyle() . '</style>' .*/
                 '<script>' . $this->generateJS() . '</script>';
         }
         $code .= $this->generateClosingTag();
+        $code .= ($complete ? '<style type="text/css">' . $this->generateStyle() . '</style>' : '');
         return $code;
     }
 
@@ -87,8 +95,18 @@ class HtmlView extends View {
     public function addStyle($style) {
         if (!is_array($style)) $style = array( $style );
         foreach ($style as $s) {
-            if (!in_array($s, $this->styles)) {
-                $this->styles[] = $s;
+            if (isset($_SESSION)) {
+                if (!array_key_exists('styles', $_SESSION)) $_SESSION['styles'] = array();
+                if (!in_array($s, $_SESSION['styles'])) {
+                    $_SESSION['styles'][] = $s;
+                }
+                if (!in_array($s, $this->styles)) {
+                    $this->styles[] = $s;
+                }
+            } else {
+                if (!in_array($s, $this->styles)) {
+                    $this->styles[] = $s;
+                }
             }
         }
     }
@@ -98,23 +116,25 @@ class HtmlView extends View {
      * @return string
      */
     public function generateStyle() {
-        return implode("\n", array_unique($this->collectStyles()));
+        $styles = array();
+        return implode("\n", array_unique($this->collectStyles($styles)));
     }
 
     /**
      * Collect the styles.
+     * @param array $styles The styles.
      * @return array
      */
-    private function collectStyles() {
+    private function collectStyles(&$styles) {
         if ($this->isSafe()) {
-            return array_merge(array_reduce($this->subviews, function (array $styles, View $subView) {
-                if ($subView instanceof HtmlView) {
-                    return array_merge($styles, $subView->collectStyles());
-                } else {
-                    return $styles;
-                }
-            }, array()), $this->styles);
-        } else return array();
+            foreach ($this->styles as $s) {
+                if (!in_array($s, $styles)) $styles[] = $s;
+            }
+            foreach ($this->subviews as $subView) {
+                if ($subView instanceof HtmlView) $subView->collectStyles($styles);
+            }
+        }
+        return $styles;
     }
 
     /**
