@@ -26,7 +26,7 @@ class ParameterSerializer {
             if (!array_key_exists($name, $parameters)) {
                 return ParameterSerializer::findValueInView($protocol, $param, $entry);
             } else {
-                return ParameterSerializer::serializeValue($protocol, $param, $parameters[$name], $entry);
+                return ParameterSerializer::serializeValue($protocol, $param, $parameters[$name], $entry, $parameters);
             }
         }, $definitions);
         return $data;
@@ -45,22 +45,24 @@ class ParameterSerializer {
         else $innerView = $protocol->innerView();
         if ($innerView !== null) {
             $info = $innerView->get($param);
-            $view = $info["view"];
-            $scope = $info["scope"];
-            $selector = "";
-            if ($view instanceof View) {
-                $selector .= '$("' . $view->idc() . '")';
-                if ($scope === "value") {
-                    if ($view instanceof InputHtmlView && $view->type() === 'checkbox') {
-                        $selector .= '.is(":checked")';
-                    } else {
-                        $selector .= '.val()';
+            if ($info !== null) {
+                $view = $info["view"];
+                $scope = $info["scope"];
+                $selector = "";
+                if ($view instanceof View) {
+                    $selector .= '$("' . $view->idc() . '")';
+                    if ($scope === "value") {
+                        if ($view instanceof InputHtmlView && $view->type() === 'checkbox') {
+                            $selector .= '.is(":checked")';
+                        } else {
+                            $selector .= '.val()';
+                        }
+                    } else if (!$scope) {
+                        $selector .= '.attr("' . $scope . '")';
                     }
-                } else if (!$scope) {
-                    $selector .= '.attr("' . $scope . '")';
                 }
-            }
-            return $param . ': ' . $selector;
+                return $param . ': ' . $selector;
+            } else return $param . ': undefined';
         } else {
             // There is no view, we have to assume that the specific parameter will be set from the thrower.
             // Create a new template object for it.
@@ -76,9 +78,10 @@ class ParameterSerializer {
      * @param string|TemplateObject $param The parameter.
      * @param string|array|bool|Context|CObject $value The value.
      * @param DirectView|null $entry The entry / context view.
+     * @param array $parameters The parameters.
      * @return string
      */
-    private static function serializeValue(Protocol $protocol, $param, $value, $entry) {
+    private static function serializeValue(Protocol $protocol, $param, $value, $entry, array $parameters) {
         if ($param instanceof TemplateObject) {
             $isView = $param->isView();
             $param = $param->getName();
@@ -120,6 +123,14 @@ class ParameterSerializer {
             return $param . ': "' . $value->idc() . '"';
         } else if ($value instanceof TemplateObject) {
             return $param . ': con["' . $value->getName() . '"]';
+        } else if ($value instanceof Protocol) {
+            $reducedParameters = array_reduce(array_keys($parameters), function($pm, $p) use ($param, $parameters) {
+                if ($p !== $param) $pm[$p] = $parameters[$p];
+                return $pm;
+            }, array());
+            if (!$protocol->innerView()) $innerView = $entry;
+            else $innerView = $protocol->innerView();
+            return $param . ': () => {' . $value->generate($reducedParameters, $innerView) . '}';
         } else if (is_object($value)) {
             $key = $value->getKey();
             return $param . ': ' . (is_string($key) ? '"' . $key . '"' : $key);

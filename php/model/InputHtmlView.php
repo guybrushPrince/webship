@@ -10,7 +10,7 @@ class InputHtmlView extends HtmlView {
 
     /**
      * An id.
-     * @var string
+     * @var string|false
      */
     private $id;
 
@@ -46,7 +46,7 @@ class InputHtmlView extends HtmlView {
 
     /**
      * InputHtmlView constructor.
-     * @param string $id The id.
+     * @param string|false $id The id.
      * @param string $name The name.
      * @param string $type The type.
      * @param integer|boolean $min The minimum.
@@ -77,7 +77,8 @@ class InputHtmlView extends HtmlView {
      * @inheritDoc
      */
     public function generateOpeningTag() {
-        return '<input class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '" id="' . $this->id . '" name="' . $this->name .
+        return '<input class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' .
+            ($this->id ? ' id="' . $this->id . '"' : '') . ' name="' . $this->name .
             '" type="' . $this->type . '"' .
             ($this->type === 'number' && $this->min ? ' min="' . $this->min . '"' : '') .
             ($this->type === 'number' && $this->max ? ' max="' . $this->max . '"' : '') .

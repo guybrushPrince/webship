@@ -10,7 +10,7 @@ class TextHtmlView extends HtmlView {
 
     /**
      * An id.
-     * @var string
+     * @var string|false
      */
     private $id;
 
@@ -34,7 +34,7 @@ class TextHtmlView extends HtmlView {
 
     /**
      * InputHtmlView constructor.
-     * @param string $id The id.
+     * @param string|false $id The id.
      * @param string $name The name.
      * @param string $rows The rows.
      * @param integer|boolean $max The maximum.
@@ -66,7 +66,8 @@ class TextHtmlView extends HtmlView {
      * @inheritDoc
      */
     public function generateOpeningTag() {
-        return '<textarea class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '" id="' . $this->id . '" name="' . $this->name .
+        return '<textarea class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' .
+            ($this->id ? 'id="' . $this->id . '"' : '') . ' name="' . $this->name .
             '" rows="' . $this->rows . '"' .
             ($this->max ? ' maxlength="' . $this->max . '"' : '') .
             (in_array(View::$language, $this->hints) ?

@@ -28,6 +28,13 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'doIt': {
                     return $modify["protocol"]->generate($modify['context'], $modify['entry']);
                 } break;
+                case 'virtualDoIt': {
+                    // Idea: The appended protocol is wrapped in an anonymous function that is called.
+                    $anonymousProtocol = $modify["protocol"]; // It is a template object
+                    if ($anonymousProtocol instanceof TemplateObject) {
+                        return 'con["' . $anonymousProtocol->getName() . '"]();';
+                    } else return '';
+                }
                 case 'setCookie': {
                     $c = 'let d = new Date();';
                     if ($modify["value"] !== '') {

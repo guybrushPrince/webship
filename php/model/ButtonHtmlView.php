@@ -10,7 +10,7 @@ class ButtonHtmlView extends HtmlView {
 
     /**
      * An id.
-     * @var string
+     * @var string|false
      */
     private $id;
 
@@ -22,7 +22,7 @@ class ButtonHtmlView extends HtmlView {
 
     /**
      * ButtonHtmlView constructor.
-     * @param string $id The id.
+     * @param string|false $id The id.
      * @param string $type The type.
      * @param array|string $classes
      */
@@ -44,8 +44,8 @@ class ButtonHtmlView extends HtmlView {
      * @inheritDoc
      */
     public function generateOpeningTag() {
-        return '<button class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '" id="' . $this->id .
-            '" type="' . $this->type . '">';
+        return '<button class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' .
+            ($this->id ? ' id="' . $this->id . '"' : '') . ' type="' . $this->type . '">';
     }
 
     /**
