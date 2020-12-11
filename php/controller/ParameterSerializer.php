@@ -133,6 +133,8 @@ class ParameterSerializer {
             return $param . ': () => {' . $value->generate($reducedParameters, $innerView) . '}';
         } else if (is_object($value)) {
             $key = $value->getKey();
+            // Convert it
+            $key = ActionRegister::convertKey($key);
             return $param . ': ' . (is_string($key) ? '"' . $key . '"' : $key);
         } else if ($value === null) {
             return $param . ': null';
