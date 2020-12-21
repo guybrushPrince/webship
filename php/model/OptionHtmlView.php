@@ -22,12 +22,13 @@ class OptionHtmlView extends HtmlView {
 
     /**
      * OptionHtmlView constructor.
-     * @param string $value The value.
+     * @param string|CObject $value The value.
      * @param array|string $classes
      * @param boolean $selected Whether this option is selected.
      */
     public function __construct($value, $classes = array(), $selected = false) {
         parent::__construct(array_merge(array('option'), $classes));
+        if ($value instanceof CObject) $value = ActionRegister::convertKey($value->getKey());
         $this->value = $value;
         $this->selected = $selected;
     }
@@ -35,14 +36,14 @@ class OptionHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         return '<option value="' . $this->value . '"' . ($this->selected ? ' selected' : '') . '>';
     }
 
     /**
      * @inheritDoc
      */
-    public function generateClosingTag() {
+    public function generateClosingTag() : string {
         return '</option>';
     }
 

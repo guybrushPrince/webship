@@ -134,7 +134,7 @@ class ParameterSerializer {
         } else if (is_object($value)) {
             $key = $value->getKey();
             // Convert it
-            $key = ActionRegister::convertKey($key);
+            $key = (is_integer($key) ? ActionRegister::convertKey($key) : $key);
             return $param . ': ' . (is_string($key) ? '"' . $key . '"' : $key);
         } else if ($value === null) {
             return $param . ': null';
