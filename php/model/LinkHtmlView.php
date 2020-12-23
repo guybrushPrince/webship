@@ -34,7 +34,7 @@ class LinkHtmlView extends HtmlView {
      * @param string $target The target.
      */
     public function __construct($url, $classes = array(), $download = false, $target = '_blank') {
-        parent::__construct(array_merge(array('a'), $classes));
+        parent::__construct(array_merge(array('a'), is_array($classes) ? $classes : [$classes]));
         $this->url = $url;
         $this->download = $download;
         $this->target = $target;
