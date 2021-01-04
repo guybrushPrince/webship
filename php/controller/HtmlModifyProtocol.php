@@ -107,7 +107,13 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'reset': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        return $this->createViewSelector($view) . '.removeAttr("style")';
+                        return $this->createViewSelector($view) . '.removeAttr("style");';
+                    } else return '';
+                } break;
+                case 'focus': {
+                    $view = $this->reduceView($modify["view"]);
+                    if ($view) {
+                        return $this->createViewSelector($view) . '.focus();';
                     } else return '';
                 } break;
                 case 'add':
@@ -173,7 +179,16 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'mousePosition': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        return $this->createViewSelector($view) . '.css("top", e.pageY + $(e.target).scrollTop()).css("left", e.pageX + $(e.target).scrollTop());';
+                        $code = '(function() {';
+                        $code .= 'let s = ' . $this->createViewSelector($view) . ';';
+                        $code .= 'let w = s.width(), d = $(document).width();';
+                        $code .= 'let l = e.pageX + $(e.target).scrollTop();';
+                        $code .= 'l = (l + w > d ? d - w : l);';
+                        $code .= 's' .
+                            '.css("top", e.pageY + $(e.target).scrollTop())' .
+                            '.css("left", l);';
+                        $code .= '})();';
+                        return $code;
                     } else {
                         return '';
                     }

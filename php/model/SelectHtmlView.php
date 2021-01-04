@@ -76,7 +76,7 @@ class SelectHtmlView extends HtmlView {
 
     /**
      * Add an option.
-     * @param string|CObject $value The value.
+     * @param string|CObject|BObject $value The value.
      * @param array|string $classes Classes.
      * @param boolean $selected Whether it is selected.
      * @return OptionHtmlView

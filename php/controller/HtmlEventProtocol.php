@@ -45,6 +45,9 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::CLICK_OUTSIDE) $code = '$(window).click';
                 if ($this->event === Event::ONLOAD) $code = '';
                 $code .= '(function(e) {';
+                if ($this->event === Event::ONFOCUSOUT) {
+                    $code .= 'if (this.contains(e.relatedTarget)) return;';
+                }
                 if ($this->delay) $code .= 'let p = lastDelay.length;' . 'let l = function() {' .
                     'if (p === lastDelay.length) { console.log(p); console.log(lastDelay.length);';
                 if ($this->event !== Event::ONLOADCONTENT) $code .= $this->generateCode($this->children);

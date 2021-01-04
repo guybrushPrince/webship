@@ -14,7 +14,7 @@ class ParameterSerializer {
      * @return array|string[]
      */
     public static function serialize(Protocol $protocol, array $definitions, array $parameters, DirectView $entry = null) {
-        $data = array_map(function($definition) use ($protocol, $parameters, $entry) {
+        $data = Tools::flatten(array_map(function($definition) use ($protocol, $parameters, $entry) {
             if ($definition instanceof ReflectionParameter) $param = $definition->getName();
             else if ($definition instanceof TemplateObject) {
                 if ($definition->isView()) $param = $definition;
@@ -28,7 +28,7 @@ class ParameterSerializer {
             } else {
                 return ParameterSerializer::serializeValue($protocol, $param, $parameters[$name], $entry, $parameters);
             }
-        }, $definitions);
+        }, $definitions));
         return $data;
     }
 
@@ -79,7 +79,7 @@ class ParameterSerializer {
      * @param string|array|bool|Context|CObject $value The value.
      * @param DirectView|null $entry The entry / context view.
      * @param array $parameters The parameters.
-     * @return string
+     * @return string|array
      */
     private static function serializeValue(Protocol $protocol, $param, $value, $entry, array $parameters) {
         if ($param instanceof TemplateObject) {
@@ -135,7 +135,10 @@ class ParameterSerializer {
             $key = $value->getKey();
             // Convert it
             $key = (is_integer($key) ? ActionRegister::convertKey($key) : $key);
-            return $param . ': ' . (is_string($key) ? '"' . $key . '"' : $key);
+            // Convert the type of the object
+            $type = get_class($value);
+            return [$param . ': ' . (is_string($key) ? '"' . $key . '"' : $key),
+                $param . 'IClass' . ': "' . $type . '"'];
         } else if ($value === null) {
             return $param . ': null';
         } else if (is_string($value)) {
