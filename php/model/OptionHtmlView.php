@@ -28,7 +28,8 @@ class OptionHtmlView extends HtmlView {
      */
     public function __construct($value, $classes = array(), $selected = false) {
         parent::__construct(array_merge(array('option'), $classes));
-        if ($value instanceof CObject || $value instanceof BObject || !is_string($value) && !is_int($value)) {
+        if ($value instanceof CObject || $value instanceof BObject ||
+            (!is_string($value) && !is_int($value) && !is_float($value) && !is_numeric($value))) {
             $key = $value->getKey();
             $value = (is_integer($key) ? ActionRegister::convertKey($key) : $key);
         }
