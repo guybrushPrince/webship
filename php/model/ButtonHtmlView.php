@@ -21,6 +21,12 @@ class ButtonHtmlView extends HtmlView {
     private $type;
 
     /**
+     * Set the button disabled or not.
+     * @var bool
+     */
+    private $disabled = false;
+
+    /**
      * ButtonHtmlView constructor.
      * @param string|false $id The id.
      * @param string $type The type.
@@ -45,7 +51,7 @@ class ButtonHtmlView extends HtmlView {
      */
     public function generateOpeningTag() {
         return '<button class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' .
-            ($this->id ? ' id="' . $this->id . '"' : '') . ' type="' . $this->type . '">';
+            ($this->id ? ' id="' . $this->id . '"' : '') . ' type="' . $this->type . '"' . ($this->disabled ? ' disabled' : '') . '>';
     }
 
     /**
@@ -57,5 +63,14 @@ class ButtonHtmlView extends HtmlView {
 
     // Short cuts
 
+    /**
+     * Set disabled.
+     * @param bool $disabled The new value.
+     * @return $this
+     */
+    public function disabled(bool $disabled): ButtonHtmlView {
+        $this->disabled = $disabled;
+        return $this;
+    }
 }
 ?>

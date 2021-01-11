@@ -12,10 +12,17 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
      * Whether it has a delete button or not.
      * @var bool
      */
-    private $hasDelete = false;
+    private bool $hasDelete = false;
+
+    /**
+     * Show the move items.
+     * @var bool
+     */
+    private bool $showMoves = true;
 
     /**
      * MovePanelItemHtmlView constructor.
+     * @param bool $hasDelete
      * @param array|string $classes
      */
     public function __construct($hasDelete = false, $classes = array()) {
@@ -73,7 +80,7 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
      */
     public function generateOpeningTag() {
         return parent::generateOpeningTag() .
-            '<div class="' . implode(' ', array('move', 'up', $this->id() . '-up')) . '"></div>' .
+            ($this->showMoves ? '<div class="' . implode(' ', array('move', 'up', $this->id() . '-up')) . '"></div>' : '') .
             ($this->hasDelete ? '<div class="' . implode(' ', array('move', 'delete', $this->id() . '-delete')) . '"></div>' : '');
     }
 
@@ -81,10 +88,29 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
      * @inheritDoc
      */
     public function generateClosingTag() {
-        return '<div class="' . implode(' ', array('move', 'down', $this->id() . '-down')) . '"></div>' .
+        return ($this->showMoves ? '<div class="' . implode(' ', array('move', 'down', $this->id() . '-down')) . '"></div>' : '') .
             parent::generateClosingTag();
     }
 
+    /**
+     * Disable the move keys.
+     * @param bool $movable
+     * @return $this
+     */
+    public function movable(bool $movable = true): MovePanelItemHtmlView {
+        $this->showMoves = $movable;
+        return $this;
+    }
+
+    /**
+     * Disable the delete keys.
+     * @param bool $deletable
+     * @return $this
+     */
+    public function deletable(bool $deletable = false): MovePanelItemHtmlView {
+        $this->hasDelete = $deletable;
+        return $this;
+    }
 
 }
 ?>

@@ -33,6 +33,12 @@ class TextHtmlView extends HtmlView {
     private $max;
 
     /**
+     * Set the button disabled or not.
+     * @var bool
+     */
+    private $disabled = false;
+
+    /**
      * InputHtmlView constructor.
      * @param string|false $id The id.
      * @param string $name The name.
@@ -73,6 +79,7 @@ class TextHtmlView extends HtmlView {
             (in_array(View::$language, $this->hints) ?
                 ' placeholder="' . implode(' ',$this->hints[View::$language]) . '"' :
                 '') .
+            ($this->disabled ? ' disabled' : '') .
             '>';
     }
 
@@ -84,6 +91,15 @@ class TextHtmlView extends HtmlView {
     }
 
     // Short cuts
+    /**
+     * Set disabled.
+     * @param bool $disabled The new value.
+     * @return $this
+     */
+    public function disabled(bool $disabled): TextHtmlView {
+        $this->disabled = $disabled;
+        return $this;
+    }
 
 }
 ?>

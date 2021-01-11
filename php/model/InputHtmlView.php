@@ -45,6 +45,12 @@ class InputHtmlView extends HtmlView {
     private $step;
 
     /**
+     * Set the button disabled or not.
+     * @var bool
+     */
+    private $disabled = false;
+
+    /**
      * InputHtmlView constructor.
      * @param string|false $id The id.
      * @param string $name The name.
@@ -87,6 +93,7 @@ class InputHtmlView extends HtmlView {
             (in_array(View::$language, $this->hints) ?
                 ' placeholder="' . implode(' ',$this->hints[View::$language]) . '"' :
                 '') .
+            ($this->disabled ? ' disabled' : '') .
             ($this->type !== 'checkbox' ? ' value="' : '');
     }
 
@@ -119,6 +126,16 @@ class InputHtmlView extends HtmlView {
      */
     public function type() {
         return $this->type;
+    }
+
+    /**
+     * Set disabled.
+     * @param bool $disabled The new value.
+     * @return $this
+     */
+    public function disabled(bool $disabled): InputHtmlView {
+        $this->disabled = $disabled;
+        return $this;
     }
 }
 ?>
