@@ -93,7 +93,7 @@ class InputHtmlView extends HtmlView {
             (in_array(View::$language, $this->hints) ?
                 ' placeholder="' . implode(' ',$this->hints[View::$language]) . '"' :
                 '') .
-            ($this->disabled ? ' disabled' : '') .
+            ($this->disabled ? ' disabled ' : '') .
             ($this->type !== 'checkbox' ? ' value="' : '');
     }
 
