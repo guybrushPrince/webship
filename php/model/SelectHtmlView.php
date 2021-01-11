@@ -21,6 +21,12 @@ class SelectHtmlView extends HtmlView {
     private $name;
 
     /**
+     * Set the button disabled or not.
+     * @var bool
+     */
+    private $disabled = false;
+
+    /**
      * SelectHtmlView constructor.
      * @param string $id The id.
      * @param string $name The name.
@@ -60,7 +66,7 @@ class SelectHtmlView extends HtmlView {
                 $this->classes[] = "singleton";
             }
             return '<select class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '" id="' . $this->id .
-                '" name="' . $this->name . '">';
+                '" name="' . $this->name . '"' . ($this->disabled ? ' disabled' : '') . '>';
         }
     }
 
@@ -85,6 +91,16 @@ class SelectHtmlView extends HtmlView {
         $option = new OptionHtmlView($value, $classes, $selected);
         $this->add($option);
         return $option;
+    }
+
+    /**
+     * Set disabled.
+     * @param bool $disabled The new value.
+     * @return $this
+     */
+    public function disabled(bool $disabled): SelectHtmlView {
+        $this->disabled = $disabled;
+        return $this;
     }
 }
 ?>
