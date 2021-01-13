@@ -26,6 +26,9 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     return $modify["protocol"]->generate();
                 } break;
                 case 'doIt': {
+                    if ($modify['protocol'] === null) {
+                        $modify['protocol'] = TemplateProtocol::get($modify['name'], $modify['environment']);
+                    }
                     return $modify["protocol"]->generate($modify['context'], $modify['entry']);
                 } break;
                 case 'virtualDoIt': {
