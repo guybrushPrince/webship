@@ -17,8 +17,8 @@ class HtmlActionProtocol extends ActionProtocol {
     /**
      * @inheritDoc
      */
-    public function __construct(ModifyProtocol $parent, $controller, $method, $parameters = array(), $title = array()) {
-        parent::__construct($parent, $controller, $method, "HtmlModifyProtocol", $parameters, $title);
+    public function __construct(ModifyProtocol $parent, $controller, $method, $parameters = array(), $title = array(), $seaStar = false) {
+        parent::__construct($parent, $controller, $method, "HtmlModifyProtocol", $parameters, $title, $seaStar);
         if (!HtmlActionProtocol::$serverURL) {
             $ini = parse_ini_file(dirname(__FILE__) . "/../../../cfg.ini", TRUE);
             $urls = $ini["urls"];
@@ -32,39 +32,62 @@ class HtmlActionProtocol extends ActionProtocol {
      * @inheritDoc
      */
     public function generate() {
-        $reflection = new ReflectionClass($this->controller);
-        $reflection = $reflection->getMethod($this->method);
-        $parameters = $reflection->getParameters();
-        $data = ParameterSerializer::serialize($this, $parameters, $this->parameters);
+        if ($this->seaStar !== SeaStarMethod::EVENT) {
+            $reflection = new ReflectionClass($this->controller);
+            $reflection = $reflection->getMethod($this->method);
+            $parameters = $reflection->getParameters();
+            $data = ParameterSerializer::serialize($this, $parameters, $this->parameters);
+        }
 
-        $isGet = (preg_match('/@get(.*)/', $reflection->getDocComment(), $matches) >= 1);
-        $without = (preg_match('/@without(.*)/', $reflection->getDocComment(), $matches) >= 1);
-        $isCSV = (preg_match('/@CSV(.*)/', $reflection->getDocComment(), $matches) >= 1);
-        $isPDF = (preg_match('/@PDF(.*)/', $reflection->getDocComment(), $matches) >= 1);
+        if (!$this->seaStar) { // AJAX Call
+            $isGet = (preg_match('/@get(.*)/', $reflection->getDocComment(), $matches) >= 1);
+            $without = (preg_match('/@without(.*)/', $reflection->getDocComment(), $matches) >= 1);
+            $isCSV = (preg_match('/@CSV(.*)/', $reflection->getDocComment(), $matches) >= 1);
+            $isPDF = (preg_match('/@PDF(.*)/', $reflection->getDocComment(), $matches) >= 1);
 
-        $code  = 'let taskId = nId();';
-        $code .= 'request({ ' . implode(',', $data) . ' },';
-        $code .= ($isGet ? '"GET",' : '"POST",');
-        $code .= 'context["api' . (!$without ? 'Safe' : '') . '"](),';
-        $code .= '"' . $this->method . '",';
-        $code .= ($isCSV ? 'true' : 'false') . ',';
-        $code .= ($isPDF ? 'true' : 'false') . ',';
-        $code .= 'sysTask,';
-        $code .= '{taskId: taskId, title: "' . $this->title[View::getLanguage()] . '"})';
+            $code = 'let taskId = nId();';
+            $code .= 'request({ ' . implode(',', $data) . ' },';
+            $code .= ($isGet ? '"GET",' : '"POST",');
+            $code .= 'context["api' . (!$without ? 'Safe' : '') . '"](),';
+            $code .= '"' . $this->method . '",';
+            $code .= ($isCSV ? 'true' : 'false') . ',';
+            $code .= ($isPDF ? 'true' : 'false') . ',';
+            $code .= 'sysTask,';
+            $code .= '{taskId: taskId, title: "' . $this->title[View::getLanguage()] . '"})';
 
-        $code .= implode(array_map(function(array $p) use ($isCSV, $isPDF) {
-            if ($p["operation"] === "success") {
-                return '.done(function(result) {(function(result) {' . $p["protocol"]->generate() . '})(result);' .
-                    ($isCSV || $isPDF ? 'downloadFile(result, ' . ($isPDF ? '"download.pdf"' : '"data.csv"') . ');' : '') .
-                    'sysTF(taskId);})';
-            } else if ($p["operation"] === "error") {
-                return '.fail(function(result) {(function(result) {' . $p["protocol"]->generate() . '})(result);' .
-                    'sysTF(taskId);})';
-            } else {
-                return '.always(function(result) {(function(result) {' . $p["protocol"]->generate() . '})(result);' .
-                    'sysTF(taskId);})';
+            $code .= implode(array_map(function (array $p) use ($isCSV, $isPDF) {
+                    if ($p["operation"] === "success") {
+                        return '.done(function(result) {(function(result) {' . $p["protocol"]->generate() . '})(result);' .
+                            ($isCSV || $isPDF ? 'downloadFile(result, ' . ($isPDF ? '"download.pdf"' : '"data.csv"') . ');' : '') .
+                            'sysTF(taskId);})';
+                    } else if ($p["operation"] === "error") {
+                        return '.fail(function(result) {(function(result) {' . $p["protocol"]->generate() . '})(result);' .
+                            'sysTF(taskId);})';
+                    } else {
+                        return '.always(function(result) {(function(result) {' . $p["protocol"]->generate() . '})(result);' .
+                            'sysTF(taskId);})';
+                    }
+                }, $this->protocol)) . ';';
+        } else { // WebSocket Call
+            $code = 'seastar.';
+            // Add the method
+            switch ($this->seaStar) {
+                case SeaStarMethod::CALL: { $code .= 'call'; break; }
+                case SeaStarMethod::START: { $code .= 'atStart'; break; }
+                case SeaStarMethod::EVENT: { $code .= 'regListener'; break; }
+                default: { $code .= ''; break; }
             }
-        }, $this->protocol)) . ';';
+            // Add controller, method and context, event respectively.
+            $code .= '("' . $this->controller . '","' . $this->method . '"' . ',';
+            if ($this->seaStar === SeaStarMethod::CALL || $this->seaStar === SeaStarMethod::START) {
+                $code .= '{' . implode(',', $data) . '},';
+            }
+            // Add callbacks.
+            $code .= implode(',', array_map(function (array $p) {
+                    return 'function(result) {' . $p["protocol"]->generate() . '}';
+                }, $this->protocol));
+            $code .= ');';
+        }
 
         return $code;
     }

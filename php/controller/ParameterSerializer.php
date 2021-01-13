@@ -10,7 +10,7 @@ class ParameterSerializer {
      * @param Protocol $protocol The protocol.
      * @param array $definitions The defined parameters.
      * @param array $parameters The values of the parameters.
-     * @param DirectView $entry The entry / context view.
+     * @param DirectView|null $entry The entry / context view.
      * @return array|string[]
      */
     public static function serialize(Protocol $protocol, array $definitions, array $parameters, DirectView $entry = null) {

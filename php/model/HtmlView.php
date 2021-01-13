@@ -154,13 +154,13 @@ class HtmlView extends View {
             $this->javaScripts = array_merge($this->javaScripts, array_map(function (HtmlEventProtocol $p) {
                 return $p->generate();
             }, $this->protocols));
-            return array_merge(array_reduce($this->subviews, function (array $jss, View $subView) {
+            return array_merge($this->javaScripts, array_reduce($this->subviews, function (array $jss, View $subView) {
                 if ($subView instanceof HtmlView) {
                     return array_merge($jss, $subView->collectJS());
                 } else {
                     return $jss;
                 }
-            }, array()), $this->javaScripts);
+            }, array()));
         } else return array();
     }
 
