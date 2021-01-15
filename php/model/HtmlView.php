@@ -13,13 +13,13 @@ class HtmlView extends View {
      * Styling code.
      * @var array: string
      */
-    protected $styles = array();
+    protected array $styles = array();
 
     /**
      * JavaScript codes.
      * @var array: string
      */
-    protected $javaScripts = array();
+    protected array $javaScripts = array();
 
     /**
      * An array of strings.
@@ -57,6 +57,24 @@ class HtmlView extends View {
      * @inheritDoc
      */
     public function generate($complete = false, $templates = false) {
+        if (!Tools::isEmpty($this->hints) && !Tools::isEmpty($this->hint(View::getLanguage()))) {
+            $this->js(
+                '(() => {' .
+                    'let hTO;' .
+                    'let h;' .
+                    '$("' . $this->idc() . '").hover(function(event) {' .
+                        'sp(event); if (event.target !== this) return;' .
+                        'hTO = setTimeout(() => {' .
+                            'h = showHint("' . $this->idc() . '", "' . '<ul>' . implode(array_map(function ($str) {
+                                return '<li>' . $str . '</li>';
+                            }, $this->hint(View::getLanguage()))) . '</ul>' . '");
+                        }, 2000);
+                    }, () => {
+                        clearTimeout(hTO);
+                        hideHint(h);
+                    });' .
+                '})();');
+        }
         $code = $this->generateOpeningTag();
         $code .= implode(array_map(function(View $view) { return $view->generateSafe(); }, $this->subviews));
         if ($complete) {

@@ -1,4 +1,4 @@
-let context = { currentTaskId: 0 };
+let context = { currentTaskId: 0, currentHintId: 0 };
 
 let lastDelay = [];
 let delay = (function () {
@@ -33,6 +33,10 @@ let nId = function() {
     return context.currentTaskId++;
 };
 
+let hId = function() {
+    return context.currentHintId++;
+};
+
 let request = function(
     data = {},
     type = "GET",
@@ -54,3 +58,17 @@ let request = function(
         cache: false,
     });
 };
+
+let showHint = (e, content) => { let i = hId(); $(".hints").trigger("19", [e, content, i]); return i; };
+let hideHint = (hintId) => { $(".hints").trigger("20", [hintId]);};
+
+let ms = (s,e) => {
+    try {
+        let w = s.width(), d = $(document).width();
+        let l = $(e.target).scrollTop();
+        if (e.pageX !== undefined) l += e.pageX;
+        else l += $(e.target).offset().left + 50;
+        l = (l + w > d ? d - w : l);
+        s.css("top", (e.pageY !== undefined ? e.pageY : $(e.target).offset().top + 50) + $(e.target).scrollTop()).css("left", l);
+    } catch (e) {}
+}

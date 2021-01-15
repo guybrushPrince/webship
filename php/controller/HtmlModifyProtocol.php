@@ -183,13 +183,14 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
                         $code = '(function() {';
-                        $code .= 'let s = ' . $this->createViewSelector($view) . ';';
+                        $code .= 'ms(' . $this->createViewSelector($view) . ', e);';
+                        /*$code .= 'let s = ' . $this->createViewSelector($view) . ';';
                         $code .= 'let w = s.width(), d = $(document).width();';
                         $code .= 'let l = e.pageX + $(e.target).scrollTop();';
                         $code .= 'l = (l + w > d ? d - w : l);';
                         $code .= 's' .
                             '.css("top", e.pageY + $(e.target).scrollTop())' .
-                            '.css("left", l);';
+                            '.css("left", l);';*/
                         $code .= '})();';
                         return $code;
                     } else {
