@@ -38,7 +38,8 @@ class HintHtmlView extends HtmlView {
         $this->style(Tools::css('.hints', [' > ', '.hint'], 'width: 250px', 'min-height: 40px',
             'background: rgba(255, 254, 222, 0.95)', 'width: 100%',
             'padding: 10px', 'font-size: 12px', 'font-style: normal', 'text-transform: none'));
-        $this->style(Tools::css('.hints', [' > ', '.hint', ' > ', 'ul'], 'list-style-type: none'));
+        $this->style(Tools::css('.hints', [' > ', '.hint', ' > ', 'ul'], 'list-style-type: none',
+            'padding-left: 10px'));
     }
 
     /**

@@ -66,7 +66,7 @@ class HtmlView extends View {
                         'sp(event); if (event.target !== this) return;' .
                         'hTO = setTimeout(() => {' .
                             'h = showHint("' . $this->idc() . '", "' . '<ul>' . implode(array_map(function ($str) {
-                                return '<li>' . $str . '</li>';
+                                return '<li>' . str_replace('"', "'", $str) . '</li>';
                             }, $this->hint(View::getLanguage()))) . '</ul>' . '");
                         }, 2000);
                     }, () => {
