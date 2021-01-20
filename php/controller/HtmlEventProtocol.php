@@ -42,9 +42,13 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::MOVEUP) $code .= '.on("' . Event::MOVEUP . '", ';
                 if ($this->event === Event::MOVEDOWN) $code .= '.on("' . Event::MOVEDOWN . '", ';
                 if ($this->event === Event::MOVEDELETE) $code .= '.on("' . Event::MOVEDELETE . '", ';
+                if ($this->event === Event::CONTEXTMENU) $code .= '.on("contextmenu", ';
                 if ($this->event === Event::CLICK_OUTSIDE) $code = '$(window).click';
                 if ($this->event === Event::ONLOAD) $code = '';
                 $code .= '(function(e) {';
+                if ($this->event === Event::CONTEXTMENU) {
+                    $code .= 'e.preventDefault();';
+                }
                 if ($this->event === Event::ONFOCUSOUT) {
                     $code .= 'if (this.contains(e.relatedTarget)) return;';
                 }
@@ -60,6 +64,7 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::MOVEUP) $code .= ')';
                 if ($this->event === Event::MOVEDOWN) $code .= ')';
                 if ($this->event === Event::MOVEDELETE) $code .= ')';
+                if ($this->event === Event::CONTEXTMENU) $code .= ')';
                 $code .= ';';
                 if ($this->event === Event::ONLOADCONTENT) $code = $this->generateCode($this->children);
             } else {

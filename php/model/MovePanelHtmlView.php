@@ -29,6 +29,7 @@ class MovePanelHtmlView extends PanelHtmlView {
             }
         }
         $lastPos = false;
+        $subview = null;
         for ($i = count($this->subviews) - 1; $i >= 0; $i--) {
             $subview = $this->subviews[$i];
             if ($subview instanceof HtmlView && in_array('movable', $subview->classes)) {
@@ -39,12 +40,12 @@ class MovePanelHtmlView extends PanelHtmlView {
 
 
         if ($firstPos) {
-            $this->style(Tools::css('.movable',
+            $this->style(Tools::css($this->idc() . '.movable',
                 array(':nth-child(' . ($firstPos + 1) . ')', ' > ', '.move.up'),
                 'display: none'));
         }
         if ($subview instanceof HtmlView && in_array('movable', $subview->classes)) {
-            $this->style(Tools::css('.movable',
+            $this->style(Tools::css($subview->idc() . '.movable',
                 array(':nth-last-child(' . $lastPos . ')', ' > ', '.move.down'),
                 'display: none'));
         }
