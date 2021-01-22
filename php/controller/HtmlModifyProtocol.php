@@ -308,11 +308,11 @@ class HtmlModifyProtocol extends ModifyProtocol {
         if ($view) {
             if (!is_array($view)) $view = array($view);
             if ($modify["operation"] === 'replace') {
-                $c .= 'res.filter(":not(style):not(script)").addClass("' .
+                $c .= 'res.filter(":not(style):not(script)").addClass(("' .
                     implode(' ', array_map(function($v) {
                         if ($v instanceof View) return $v->id();
                         else return '" + con["' . $v->getName() . '"] + "';
-                    }, $view)) . '");';
+                    }, $view)) . '").replace(/\./g, ""));';
             }
             $c .= '$("' . implode(',', array_map(function($v) {
                 if ($v instanceof View) return $v->idc();
@@ -335,7 +335,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     $c .= 'remove';
                     break;
                 case 'text':
-                    $c .= 'text';
+                    $c .= 'html';
                     break;
             }
             $c .= '(';

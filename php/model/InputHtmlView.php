@@ -45,10 +45,16 @@ class InputHtmlView extends HtmlView {
     private $step;
 
     /**
-     * Set the button disabled or not.
+     * Set the input disabled or not.
      * @var bool
      */
-    private $disabled = false;
+    private bool $disabled = false;
+
+    /**
+     * Autocomplete.
+     * @var bool
+     */
+    private bool $autoComplete = true;
 
     /**
      * InputHtmlView constructor.
@@ -94,6 +100,7 @@ class InputHtmlView extends HtmlView {
                 ' placeholder="' . implode(' ',$this->hints[View::$language]) . '"' :
                 '') .
             ($this->disabled ? ' disabled ' : '') .
+            (!$this->autoComplete ? ' autocomplete="off"' : '') .
             ($this->type !== 'checkbox' ? ' value="' : '');
     }
 
@@ -135,6 +142,16 @@ class InputHtmlView extends HtmlView {
      */
     public function disabled(bool $disabled): InputHtmlView {
         $this->disabled = $disabled;
+        return $this;
+    }
+
+    /**
+     * Set auto complete.
+     * @param bool $autoComplete The autocomplete property.
+     * @return $this
+     */
+    public function autoComplete(bool $autoComplete): InputHtmlView {
+        $this->autoComplete = $autoComplete;
         return $this;
     }
 }

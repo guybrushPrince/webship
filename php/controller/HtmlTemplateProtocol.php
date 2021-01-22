@@ -41,12 +41,8 @@ class HtmlTemplateProtocol extends TemplateProtocol {
      * @inheritDoc
      */
     public function createThrower(array $context = array(), DirectView $entryView = null) {
-        DebugLogger::instance()->debug('Try to create thrower');
         $data = ParameterSerializer::serialize($this, $this->collectParameters(), $context, $entryView);
-
-        $code = $this->getCallName() . '({' . implode(',', $data) . '});';
-        DebugLogger::instance()->debug('Thrower', $code);
-        return $code;
+        return $this->getCallName() . '({' . implode(',', $data) . '});';
     }
 
     private function generateCode(array $protocols) {

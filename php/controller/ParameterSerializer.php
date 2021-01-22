@@ -91,7 +91,9 @@ class ParameterSerializer {
                     $field = $value[$key];
                     if (!$protocol->innerView()) $innerView = $entry;
                     else $innerView = $protocol->innerView();
-                    if ($innerView) $info = $innerView->get($field);
+                    if ($innerView) {
+                        $info = $innerView->get($key);
+                    }
                     else $info = false;
                     if ($info) {
                         $view = $info["view"];
@@ -109,7 +111,7 @@ class ParameterSerializer {
                                 $selector .= '.attr("' . $scope . '")';
                             }
                         }
-                        return $field . ': ' . $selector;
+                        return $key . ': ' . $selector;
                     } else {
                         if (is_int($key)) $key = 'i' . $key;
                         if (is_string($field)) $field = '"' . $field . '"';
