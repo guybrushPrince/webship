@@ -21,32 +21,29 @@ class MovePanelHtmlView extends PanelHtmlView {
      * @inheritDoc
      */
     public function generateOpeningTag() {
-        $firstPos = 1;
+        $firstSubview = null;
         foreach($this->subviews as $i => $subview) {
             if ($subview instanceof HtmlView && in_array('movable', $subview->classes)) {
-                $firstPos++;
+                $firstSubview = $subview;
                 break;
             }
         }
-        $lastPos = false;
-        $subview = null;
+        $lastSubview = null;
         for ($i = count($this->subviews) - 1; $i >= 0; $i--) {
             $subview = $this->subviews[$i];
             if ($subview instanceof HtmlView && in_array('movable', $subview->classes)) {
-                $lastPos = count($this->subviews) - $i;
+                $lastSubview = $subview;
                 break;
             }
         }
 
 
-        if ($firstPos) {
-            $this->style(Tools::css($subview->idc() . '.movable',
-                array(':nth-child(' . ($firstPos) . ')', ' > ', '.move.up'),
+        if ($firstSubview) {
+            $this->style(Tools::css($firstSubview->idc() . '.movable', [' > ', '.move.up'],
                 'display: none'));
         }
-        if ($subview instanceof HtmlView && in_array('movable', $subview->classes)) {
-            $this->style(Tools::css($subview->idc() . '.movable',
-                array(':nth-last-child(' . $lastPos . ')', ' > ', '.move.down'),
+        if ($lastSubview) {
+            $this->style(Tools::css($lastSubview->idc() . '.movable', [' > ', '.move.down'],
                 'display: none'));
         }
         return parent::generateOpeningTag();
