@@ -91,7 +91,11 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         return 'try { document.getElementsByClassName("' . substr($view, 1) . '")[0].onload = function() { ' .
                             '$(this).height($(this).contents().find("div[id]").height() + 20);' .
                             '$(this).contents().find("body").css("overflow-y", "hidden");' .
-                            '}; } catch (e) {}';
+                            '}; } catch (e) {}' .
+                            'try { let x = $("' . $view . '");' .
+                            'x.height(x.contents().find("div[id]").height() + 20);' .
+                            'x.contents().find("body").css("overflow-y", "hidden");' .
+                            '} catch (ex) {}';
                     } else {
                         return '';
                     }
