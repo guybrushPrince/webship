@@ -21,10 +21,10 @@ class MovePanelHtmlView extends PanelHtmlView {
      * @inheritDoc
      */
     public function generateOpeningTag() {
-        $firstPos = false;
+        $firstPos = 1;
         foreach($this->subviews as $i => $subview) {
             if ($subview instanceof HtmlView && in_array('movable', $subview->classes)) {
-                $firstPos = $i;
+                $firstPos++;
                 break;
             }
         }
@@ -41,7 +41,7 @@ class MovePanelHtmlView extends PanelHtmlView {
 
         if ($firstPos) {
             $this->style(Tools::css($subview->idc() . '.movable',
-                array(':nth-child(' . ($firstPos + 1) . ')', ' > ', '.move.up'),
+                array(':nth-child(' . ($firstPos) . ')', ' > ', '.move.up'),
                 'display: none'));
         }
         if ($subview instanceof HtmlView && in_array('movable', $subview->classes)) {
