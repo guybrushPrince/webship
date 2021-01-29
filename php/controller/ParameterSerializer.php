@@ -132,7 +132,7 @@ class ParameterSerializer {
             }, array());
             if (!$protocol->innerView()) $innerView = $entry;
             else $innerView = $protocol->innerView();
-            return $param . ': () => {' . $value->generate($reducedParameters, $innerView) . '}';
+            return $param . ': function(result = undefined) {' . $value->generate($reducedParameters, $innerView) . '}';
         } else if (is_object($value)) {
             $key = $value->getKey();
             // Convert it
