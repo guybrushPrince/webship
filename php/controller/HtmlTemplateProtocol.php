@@ -31,9 +31,12 @@ class HtmlTemplateProtocol extends TemplateProtocol {
      * @inheritDoc
      */
     protected function createListener() {
-        $code = 'let ' . $this->getCallName() . ' = function(con) {';
+        $name = $this->getCallName();
+        $code = 'if (typeof ' . $name . ' === "undefined") {';
+        $code .= 'var ' . $name . ' = function(con) {';
         $code .= $this->generateCode($this->children);
         $code .= '};';
+        $code .= '}';
         return $code;
     }
 
