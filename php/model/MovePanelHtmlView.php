@@ -40,7 +40,7 @@ class MovePanelHtmlView extends PanelHtmlView {
 
 
         if ($firstPos) {
-            $this->style(Tools::css($this->idc() . '.movable',
+            $this->style(Tools::css($subview->idc() . '.movable',
                 array(':nth-child(' . ($firstPos + 1) . ')', ' > ', '.move.up'),
                 'display: none'));
         }
