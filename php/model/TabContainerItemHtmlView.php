@@ -47,8 +47,13 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
         $this->js('$("' . $this->idc() . ' > .tab-header").click(function(event) {' .
             'let max = Math.max.apply(Math, $(this).parent().parent().children(".tab").map((i, c) => parseInt($(c).css("z-index"))));' .
             '$(event.target).parent().css("z-index", max + 1);' .
-            '$(this).parent().parent().children(".tab").find(".tab-content").hide();'/*.css("visibility", "hidden");'*/ .
-            '$(this).parent().find(".tab-content").show();'/*.css("visibility", "visible");'*/ .
+            'let conOld = $(this).parent().parent().children(".tab").find(".tab-content");' .
+            'conOld.filter(":visible").toArray().forEach((e) => { let p = $(e).parent(); context.tabOffset[p.attr("tabId")] = p.scrollTop(); });' .
+            'conOld.hide();' .
+            'let conNew = $(this).parent().find(".tab-content");' .
+            'conNew.show();' .
+            'let p = conNew.parent(); let tabId = p.attr("tabId");' .
+            'if (tabId in context.tabOffset) p.scrollTop(context.tabOffset[tabId]);' .
             '});');
 
 
