@@ -1,3 +1,6 @@
+$.fn.exists = function () {
+    return this.length !== 0;
+}
 let context = { currentTaskId: 0, currentHintId: 0, tabId: 0, tabOffset: [] };
 
 let lastDelay = [];

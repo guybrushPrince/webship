@@ -24,7 +24,7 @@ class ContextMenuHtmlView extends MenuHtmlView {
             'z-index: 100', 'border: 1px solid rgba(200, 200, 200, 1.0)'));
         $this->style(Tools::css('nav' . $coreSelector, '.active', 'display: flex'));
         $this->style(Tools::css('ul' . $coreSelector, '', 'list-style-type: none',
-            'display: flex', 'margin: 0', 'flex-wrap: wrap', 'padding: 0'));
+            'display: flex', 'margin: 0', 'flex-wrap: nowrap', 'padding: 0', 'flex-direction: column'));
         $this->style(Tools::css('ul' . $coreSelector, array(' > ', 'li'), 'width: fit-content',
             'min-height: 30px', 'height: auto', 'padding: 5px 20px', 'box-sizing: border-box', 'position: relative'));
     }

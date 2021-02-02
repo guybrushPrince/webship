@@ -61,17 +61,18 @@ class HtmlView extends View {
             $this->js(
                 '(() => {' .
                     'let hTO;' .
-                    'let h;' .
+                    'let h = false;' .
                     '$("' . $this->idc() . '").hover(function(event) {' .
                         'sp(event); if (event.target !== this) return;' .
                         'hTO = setTimeout(() => {' .
+                            'if (!$("' . $this->idc() . '").exists()) return;' .
                             'h = showHint("' . $this->idc() . '", "' . '<ul>' . implode(array_map(function ($str) {
                                 return '<li>' . str_replace('"', "'", $str) . '</li>';
                             }, $this->hint(View::getLanguage()))) . '</ul>' . '");
                         }, 2000);
                     }, () => {
                         clearTimeout(hTO);
-                        hideHint(h);
+                        if (h !== false) hideHint(h);
                     });' .
                 '})();');
         }
