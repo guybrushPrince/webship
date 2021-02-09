@@ -25,7 +25,7 @@ class HtmlEventProtocol extends EventProtocol {
     /**
      * @inheritDoc
      */
-    public function generate() {
+    public function generate() : string {
         $code = '';
         if ($this->parent instanceof HtmlView) {
             if (!($this->parent instanceof SubmitHtmlView && $this->event === Event::CLICK)) {

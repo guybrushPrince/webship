@@ -31,7 +31,7 @@ class HtmlActionProtocol extends ActionProtocol {
     /**
      * @inheritDoc
      */
-    public function generate() {
+    public function generate() : string {
         if ($this->seaStar !== SeaStarMethod::EVENT) {
             $reflection = new ReflectionClass($this->controller);
             $reflection = $reflection->getMethod($this->method);

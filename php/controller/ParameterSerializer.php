@@ -150,7 +150,7 @@ class ParameterSerializer {
                 else $innerView = $protocol->innerView();
                 $info = $innerView->get($value, true);
                 if ($info) return $param . ': "' . $info["view"]->idc() . '"';
-                else return '';
+                else return $param . ': ""';
             }
         } else {
             return $param . ': ' . (is_bool($value) ? ($value ? 'true' : 'false') : $value);

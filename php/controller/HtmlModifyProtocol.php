@@ -18,19 +18,19 @@ class HtmlModifyProtocol extends ModifyProtocol {
     /**
      * @inheritDoc
      */
-    public function generate() {
+    public function generate() : string {
         $code = '';
         $code .= implode(array_map(function(array $modify) {
             switch ($modify["operation"]) {
                 case 'action': {
                     return $modify["protocol"]->generate();
-                } break;
+                }
                 case 'doIt': {
                     if ($modify['protocol'] === null) {
                         $modify['protocol'] = TemplateProtocol::get($modify['name'], $modify['environment']);
                     }
-                    return $modify["protocol"]->generate($modify['context'], $modify['entry']);
-                } break;
+                    return $modify["protocol"]->generate($modify['context'], $this->innerView());
+                }
                 case 'virtualDoIt': {
                     // Idea: The appended protocol is wrapped in an anonymous function that is called.
                     $anonymousProtocol = $modify["protocol"]; // It is a template object
@@ -47,7 +47,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         ($modify["value"] ? $modify["value"] : 'result') .
                         ' + ";expires=" + d.toUTCString() + ";path=/"' . ';';
                     return $c;
-                } break;
+                }
                 case 'set': {
                     if ($modify["value"] && $modify["value"] instanceof View) {
                         $scope = $modify["scope"];
@@ -65,7 +65,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         ($modify["value"] ?
                             $modify["value"]
                             : 'result') . ';';
-                } break;
+                }
                 case 'event': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
@@ -73,10 +73,10 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     } else {
                         return '';
                     }
-                } break;
+                }
                 case 'get': {
                     return 'context.' . $modify["key"] . ';';
-                } break;
+                }
                 case 'delete': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
@@ -84,7 +84,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     } else {
                         return '';
                     }
-                } break;
+                }
                 case 'resize': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
@@ -99,7 +99,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     } else {
                         return '';
                     }
-                } break;
+                }
                 case 'reheight': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
@@ -110,26 +110,26 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         $code .= 'v.height(v.prop("scrollHeight") - (pt + pb));';
                         return $code;
                     } else return '';
-                } break;
+                }
                 case 'reset': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
                         return $this->createViewSelector($view) . '.removeAttr("style");';
                     } else return '';
-                } break;
+                }
                 case 'focus': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
                         return $this->createViewSelector($view) . '.focus();';
                     } else return '';
-                } break;
+                }
                 case 'add':
                 case 'replace':
                 case 'before':
                 case 'after':
                 case 'text': {
                     return $this->generateDomAction($modify);
-                } break;
+                }
                 case 'throw': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
@@ -236,6 +236,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
     /**
      * Reduces a single view to a string representation.
      * @param string|DirectView $view The view.
+     * @param bool $class Whether the view or its class/id should be returned.
      * @return bool|DirectView|string
      */
     private function reduceSingleView($view, $class = true) {
