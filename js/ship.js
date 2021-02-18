@@ -75,3 +75,11 @@ let ms = (s,e) => {
         s.css("top", (e.pageY !== undefined ? e.pageY : $(e.target).offset().top + 50) + $(e.target).scrollTop()).css("left", l);
     } catch (e) {}
 }
+
+let slug = (z) => {
+    z = z.toLowerCase();
+    z = z.replace(/[^a-z0-9 -]+/, '');
+    z = z.trim();
+    z = z.replace(' ', '-');
+    return z;
+}
