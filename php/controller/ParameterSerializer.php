@@ -124,7 +124,10 @@ class ParameterSerializer {
         } else if ($value instanceof View) {
             return $param . ': "' . $value->idc() . '"';
         } else if ($value instanceof TemplateObject) {
-            return $param . ': con["' . $value->getName() . '"]';
+            $ifClass = $param . 'IClass';
+            $ifClassVal = $value->getName() . 'IClass';
+            return [$param . ': con["' . $value->getName() . '"]',
+                $ifClass . ': ("' . $ifClassVal . '" in con ? con["' . $ifClassVal . '"] : undefined)'];
         } else if ($value instanceof Protocol) {
             $reducedParameters = array_reduce(array_keys($parameters), function($pm, $p) use ($param, $parameters) {
                 if ($p !== $param) $pm[$p] = $parameters[$p];
@@ -155,6 +158,15 @@ class ParameterSerializer {
         } else {
             return $param . ': ' . (is_bool($value) ? ($value ? 'true' : 'false') : $value);
         }
+    }
+
+    /**
+     * Collects the fields that are bounded as reference.
+     * @param array $fields The fields.
+     * @return array
+     */
+    public static function collect(array $fields = []) {
+        return array_fill_keys($fields, $fields);
     }
 }
 ?>

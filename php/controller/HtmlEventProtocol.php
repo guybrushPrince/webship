@@ -15,11 +15,18 @@ class HtmlEventProtocol extends EventProtocol {
     private $delay = false;
 
     /**
+     * Additional parameters.
+     * @var array
+     */
+    private array $parameters;
+
+    /**
      * @inheritDoc
      */
-    public function __construct($event, DirectView $parent, $delay = false) {
+    public function __construct(int $event, DirectView $parent, array $params = []) {
         parent::__construct($event, $parent, "HtmlModifyProtocol");
-        $this->delay = $delay;
+        $this->delay = (array_key_exists('delay', $params) ? $params['delay'] : false);
+        $this->parameters = $params;
     }
 
     /**
@@ -42,6 +49,7 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::MOVEUP) $code .= '.on("' . Event::MOVEUP . '", ';
                 if ($this->event === Event::MOVEDOWN) $code .= '.on("' . Event::MOVEDOWN . '", ';
                 if ($this->event === Event::MOVEDELETE) $code .= '.on("' . Event::MOVEDELETE . '", ';
+                if ($this->event === Event::NEW_FILE) $code .= '.on("' . Event::NEW_FILE . '", ';
                 if ($this->event === Event::CONTEXTMENU) $code .= '.on("contextmenu", ';
                 if ($this->event === Event::CLICK_OUTSIDE) $code = '$(window).click';
                 if ($this->event === Event::ONLOAD) $code = '';
@@ -55,7 +63,7 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->delay) $code .= 'let p = lastDelay.length;' . 'let l = function() {' .
                     'if (p === lastDelay.length) { console.log(p); console.log(lastDelay.length);';
                 if ($this->event !== Event::ONLOADCONTENT) $code .= $this->generateCode($this->children);
-                $code .= 'sp(e);';
+                if (!array_key_exists('include children', $this->parameters) || !$this->parameters["include children"]) $code .= 'sp(e);';
                 if ($this->delay) $code .= '}};' . 'lastDelay.push(l);' . 'delay(lastDelay, ' . $this->delay . ');';
                 $code .= '})';
                 if ($this->event === Event::ONLOAD) $code .= '($("' . $this->parent->idc() . '"))';
@@ -64,6 +72,7 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::MOVEUP) $code .= ')';
                 if ($this->event === Event::MOVEDOWN) $code .= ')';
                 if ($this->event === Event::MOVEDELETE) $code .= ')';
+                if ($this->event === Event::NEW_FILE) $code .= ')';
                 if ($this->event === Event::CONTEXTMENU) $code .= ')';
                 $code .= ';';
                 if ($this->event === Event::ONLOADCONTENT) $code = $this->generateCode($this->children);

@@ -133,7 +133,9 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'throw': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        return $this->createViewSelector($view) . '.trigger("' . $modify["event"] . '");';
+                        $data = '';
+                        if ($modify["data"]) $data = ', ' . Tools::jsonEncode($modify["data"]);
+                        return $this->createViewSelector($view) . '.trigger("' . $modify["event"] . '"' . $data . ');';
                     } else {
                         return '';
                     }
