@@ -19,8 +19,12 @@ class ContainerHtmlView extends HtmlView {
         $coreSelector = '.' . implode('.', $coreClasses);
 
         $this->style(Tools::css($coreSelector, '', 'display: flex',
-            'flex-wrap: wrap', 'align-items: flex-start', 'width: 100%',
+            'flex-wrap: wrap', 'align-items: flex-start', 'align-content: flex-start', 'width: 100%',
             'box-sizing: border-box'));
+        $this->style(Tools::css('.container', '.ver', 'flex-direction: column'));
+        $this->style(Tools::css('.container', '.hor', 'flex-direction: row'));
+        $this->style(Tools::css('.container', [' > ', '.container-item', '.ver'], 'flex-direction: column'));
+        $this->style(Tools::css('.container', [' > ', '.container-item', '.hor'], 'flex-direction: row'));
     }
 
     // Short cuts

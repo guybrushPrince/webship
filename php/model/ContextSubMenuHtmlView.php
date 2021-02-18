@@ -27,7 +27,8 @@ class ContextSubMenuHtmlView extends SubMenuHtmlView {
             'border: 1px solid rgba(200, 200, 200, 1.0)', 'padding: 0'));
 
         $this->style(Tools::css('ul' . $coreSelector, array(' > ', 'li'), 'width: fit-content',
-            'min-height: 30px', 'height: auto', 'padding: 5px 20px', 'box-sizing: border-box', 'position: relative', 'flex-basis: 100%'));
+            'min-height: 30px', 'height: auto', 'padding: 5px 20px', 'box-sizing: border-box', 'position: relative',
+            'flex-basis: 100%', 'width: -moz-fit-content'));
 
         $this->style(Tools::css('ul' . $coreSelector, array(' > ', 'li', ':hover'),
             'background: rgba(200, 200, 200, 1.0)'));

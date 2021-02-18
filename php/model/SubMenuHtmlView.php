@@ -27,7 +27,8 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
             'padding: 0'));
 
         $this->style(Tools::css('ul' . $coreSelector, array(' > ', 'li'), 'width: fit-content',
-            'height: 50px', 'padding: 10px 20px', 'box-sizing: border-box', 'position: relative', 'flex-basis: 100%'));
+            'height: 50px', 'padding: 10px 20px', 'box-sizing: border-box', 'position: relative', 'flex-basis: 100%',
+            'width: -moz-fit-content'));
 
         $this->style(Tools::css('ul' . $coreSelector, array(' > ', 'li', ':hover'),
             'background: rgba(150, 202, 214, 1.0)'));
