@@ -16,7 +16,7 @@ class CodeEditorHtmlView extends TextHtmlView {
      * @param string $id The id.
      * @param array $classes The classes.
      */
-    public function __construct(string $id, array $classes = array()) {
+    public function __construct(string $id, int $language, array $classes = array()) {
         $classes = is_array($classes) ? $classes : [$classes];
         $classes[] = 'code-editor';
         $this->coreClasses = $classes;
@@ -32,6 +32,18 @@ class CodeEditorHtmlView extends TextHtmlView {
 
         $this->style(Tools::css('.code-editor', [' > ', 'textarea.text-input.resizable'],
             'height: inherit', 'overflow-y: auto'));
+
+        $this->ref('textarea');
+        $this->js('CodeMirror.fromTextArea($("' . $this->idc() . '")[0], { ' .
+            'mode: "' . [
+                ProgrammingLanguage::CSS => 'css',
+                ProgrammingLanguage::R => 'r',
+                ProgrammingLanguage::HTML => 'html',
+                ProgrammingLanguage::PHP => 'php',
+                ProgrammingLanguage::JS => 'javascript'
+            ][(array_key_exists($language, ProgrammingLanguage::$PROGRAMMING_LANGUAGE) ?
+                $language : ProgrammingLanguage::PHP)] . '",' .
+            'lineNumbers: true, lineWrapping: true });');
     }
 
     /**
