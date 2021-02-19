@@ -35,7 +35,8 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     // Idea: The appended protocol is wrapped in an anonymous function that is called.
                     $anonymousProtocol = $modify["protocol"]; // It is a template object
                     if ($anonymousProtocol instanceof TemplateObject) {
-                        return 'con["' . $anonymousProtocol->getName() . '"](result);';
+                        $f = 'con["' . $anonymousProtocol->getName() . '"]';
+                        return 'if (isFunction(' . $f . ')) ' . $f . '(result);';
                     } else return '';
                 }
                 case 'setCookie': {

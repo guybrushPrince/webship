@@ -83,3 +83,5 @@ let slug = (z) => {
     z = z.replace(' ', '-');
     return z;
 }
+
+let isFunction = (f) => { return typeof f === 'function'; };
