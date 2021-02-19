@@ -20,7 +20,7 @@ class MovePanelHtmlView extends PanelHtmlView {
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         $firstSubview = null;
         foreach($this->subviews as $i => $subview) {
             if ($subview instanceof HtmlView && in_array('movable', $subview->classes)) {
@@ -57,7 +57,7 @@ class MovePanelHtmlView extends PanelHtmlView {
      * @param array|string $classes A set of classes.
      * @return MovePanelItemHtmlView
      */
-    public function item($hasDelete = false, $classes = array()) {
+    public function item($hasDelete = false, $classes = array()) : MovePanelItemHtmlView {
         $classes = is_array($classes) ? $classes : array($classes);
         $itemView = new MovePanelItemHtmlView($hasDelete, $classes);
         $this->add($itemView);
