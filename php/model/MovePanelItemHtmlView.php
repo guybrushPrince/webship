@@ -35,24 +35,35 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
 
         $this->style(Tools::css($coreSelector, '', 'position: relative',
             'width: 95%'));
-        $this->style(Tools::css($coreSelector, ' > .move.up', 'position: absolute',
-            'left: 100%', 'top: 0', 'width: 5%', 'box-sizing: border-box', 'height: 30px'));
+        $this->style(Tools::css($coreSelector, ' > .move.up', 'top: 0'));
         $this->style(Tools::css($coreSelector, array(' > .move.up', ':after'), 'content: "\0025B2"',
             'width: 100%'));
-        $this->style(Tools::css($coreSelector, ' > .move.down', 'position: absolute',
-            'left: 100%', 'top: calc(100% - 30px)', 'width: 5%', 'box-sizing: border-box', 'height: 30px'));
+        $this->style(Tools::css($coreSelector, ' > .move.down', 'top: calc(100% - 30px)'));
         $this->style(Tools::css($coreSelector, array(' > .move.down', ':after'), 'content: "\0025BC"',
             'width: 100%'));
 
-        $this->style(Tools::css($coreSelector, ' > .move.delete', 'position: absolute',
-            'left: 100%', 'top: calc(50% - 15px)', 'width: 5%', 'box-sizing: border-box', 'height: 30px'));
+        $this->style(Tools::css($coreSelector, ' > .move.delete', 'top: calc(50% - 15px)'));
         $this->style(Tools::css($coreSelector, array(' > .move.delete', ':after'), 'content: "X"',
             'width: 100%'));
 
         $this->style(Tools::css($coreSelector, array(' > .move'), 'cursor: pointer', 'text-align: center',
-            'font-size: 25px', 'color: rgba(0, 0, 0, 0.5)'));
+            'font-size: 25px', 'color: rgba(0, 0, 0, 0.5)', 'position: absolute',
+            'left: 100%', 'width: 5%', 'box-sizing: border-box', 'height: 30px'));
         $this->style(Tools::css($coreSelector, array(' > .move', ':hover'), 'background: rgba(0, 0, 0, 0.25)',
             'color: rgba(0, 0, 0, 1.0)'));
+
+        $this->style(Tools::css('.movable.outside', [' ', '.panel-item'], 'width: 100%'));
+        $this->style(Tools::css('.movable.outside', [' ', '.panel-item', ' ', '.move'], 'display: none',
+            'right: -15px', 'left: initial', 'background: rgba(150, 150, 150, 1.0)', 'width: 20px', 'font-size: 20px',
+            'height: 20px', 'z-index: 100000'));
+        $this->style(Tools::css('.movable.outside', [' ', '.panel-item', ' ', '.move.up'],
+            'top: calc(50% - 30px)'));
+        $this->style(Tools::css('.movable.outside', [' ', '.panel-item', ' ', '.move.down'],
+            'top: calc(50% + 10px)'));
+        $this->style(Tools::css('.movable.outside', [' ', '.panel-item', ' ', '.move.delete'],
+            'top: calc(50% - 10px)'));
+        $this->style(Tools::css('.movable.outside', [' ', '.panel-item', ':hover', ' .move'],
+            'display: inherit'));
 
 
 

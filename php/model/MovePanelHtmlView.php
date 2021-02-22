@@ -9,6 +9,12 @@ include_once dirname(__FILE__) . '/PanelHtmlView.php';
 class MovePanelHtmlView extends PanelHtmlView {
 
     /**
+     * Outside.
+     * @var bool
+     */
+    private bool $outside = false;
+
+    /**
      * MovePanelHtmlView constructor.
      * @param array|string $classes
      */
@@ -40,12 +46,13 @@ class MovePanelHtmlView extends PanelHtmlView {
 
         if ($firstSubview) {
             $this->style(Tools::css($firstSubview->idc() . '.movable', [' > ', '.move.up'],
-                'display: none'));
+                'display: none !important'));
         }
         if ($lastSubview) {
             $this->style(Tools::css($lastSubview->idc() . '.movable', [' > ', '.move.down'],
-                'display: none'));
+                'display: none !important'));
         }
+        if ($this->outside) $this->classes[] = 'outside';
         return parent::generateOpeningTag();
     }
 
@@ -62,6 +69,14 @@ class MovePanelHtmlView extends PanelHtmlView {
         $itemView = new MovePanelItemHtmlView($hasDelete, $classes);
         $this->add($itemView);
         return $itemView;
+    }
+
+    /**
+     * Sets the move icons outside the panel.
+     * @param $outside
+     */
+    public function outside($outside) {
+        $this->outside = $outside;
     }
 }
 ?>
