@@ -19,7 +19,7 @@ class SpanTextHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function add(View $view) { }
+    public function add(View $view) : View { return $this; }
 
     /**
      * Add a text.

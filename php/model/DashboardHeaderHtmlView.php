@@ -27,9 +27,9 @@ class DashboardHeaderHtmlView extends HtmlView {
 
     /**
      * Get the parent.
-     * @return DashboardHtmlView
+     * @return ?DashboardHtmlView
      */
-    public function parent() {
+    public function parent() : ?DashboardHtmlView {
         $p = $this->getParent();
         if ($p instanceof DashboardHtmlView) {
             return $p;

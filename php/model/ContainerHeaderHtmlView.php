@@ -28,9 +28,9 @@ class ContainerHeaderHtmlView extends HtmlView {
 
     /**
      * Get the parent.
-     * @return ContainerHtmlView
+     * @return ?ContainerHtmlView
      */
-    public function parent() {
+    public function parent() : ?ContainerHtmlView {
         $p = $this->getParent();
         if ($p instanceof ContainerHtmlView) {
             return $p;

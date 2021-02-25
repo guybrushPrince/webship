@@ -30,9 +30,9 @@ class PanelItemHtmlView extends HtmlView {
     // Short cuts
 
     /**
-     * @return PanelHtmlView
+     * @return ?PanelHtmlView
      */
-    public function parent() {
+    public function parent() : ?PanelHtmlView {
         $p = $this->getParent();
         if ($p instanceof PanelHtmlView) {
             return $p;

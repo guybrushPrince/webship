@@ -31,9 +31,9 @@ class TableRowHtmlView extends HtmlView {
     }
 
     /**
-     * @return TableHtmlView
+     * @return ?TableHtmlView
      */
-    public function parent(): TableHtmlView {
+    public function parent(): ?TableHtmlView {
         return $this->getParent();
     }
 

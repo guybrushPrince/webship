@@ -32,9 +32,9 @@ class ContainerItemHtmlView extends HtmlView {
     // Short cuts
 
     /**
-     * @return ContainerHtmlView
+     * @return ?ContainerHtmlView
      */
-    public function parent() {
+    public function parent() : ?ContainerHtmlView {
         $p = $this->getParent();
         if ($p instanceof ContainerHtmlView) {
             return $p;

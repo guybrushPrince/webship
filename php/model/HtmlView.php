@@ -56,7 +56,7 @@ class HtmlView extends View {
     /**
      * @inheritDoc
      */
-    public function generate($complete = false, $templates = false) {
+    public function generate($complete = false, $templates = false) : string {
         if (!Tools::isEmpty($this->hints) && !Tools::isEmpty($this->hint(View::getLanguage()))) {
             $this->js(
                 '(() => {' .
@@ -291,7 +291,7 @@ class HtmlView extends View {
     /**
      * @return HtmlView
      */
-    public function parent() {
+    public function parent() : ?HtmlView {
         $p = $this->getParent();
         if ($p instanceof HtmlView) {
             return $p;

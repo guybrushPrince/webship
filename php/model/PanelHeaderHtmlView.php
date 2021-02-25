@@ -27,9 +27,9 @@ class PanelHeaderHtmlView extends HtmlView {
 
     /**
      * Get the parent.
-     * @return PanelHtmlView
+     * @return ?PanelHtmlView
      */
-    public function parent() {
+    public function parent() : ?PanelHtmlView {
         $p = $this->getParent();
         if ($p instanceof PanelHtmlView) {
             return $p;
