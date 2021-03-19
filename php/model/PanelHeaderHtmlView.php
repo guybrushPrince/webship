@@ -19,8 +19,8 @@ class PanelHeaderHtmlView extends HtmlView {
         $coreClasses = array_diff($this->classes, $classes);
         $coreSelector = '.' . implode('.', $coreClasses);
 
-        $this->style(Tools::css($coreSelector, '', 'font-size: 30px', 'text-transform: uppercase',
-            'font-weight: lighter', 'border-bottom: solid 1px rgba(200, 200, 200, 1.0)'));
+        $this->style(Tools::css($coreSelector, '', 'font-family: Roboto, sans-serif', 'text-transform: none', 'padding: 0 0 16px 0',
+            'font-size: 1.75em', 'font-weight: lighter', 'border-bottom: solid 1px rgba(200, 200, 200, 1.0)'));
     }
 
     // Short cuts

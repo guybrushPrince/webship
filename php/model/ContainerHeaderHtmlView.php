@@ -20,7 +20,7 @@ class ContainerHeaderHtmlView extends HtmlView {
         $coreSelector = '.' . implode('.', $coreClasses);
 
         $this->style(Tools::css($coreSelector, '', 'font-size: 20px',
-            'text-transform: uppercase', 'font-weight: lighter', 'width: 100%',
+            'text-transform: none', 'font-weight: lighter', 'font-family: Roboto, sans-serif', 'width: 100%',
             'box-sizing: border-box'));
     }
 
