@@ -21,7 +21,7 @@ class AbortHtmlView extends ButtonHtmlView {
         $coreSelector = '.' . implode('.', $coreClasses);
 
         $this->style(Tools::css($coreSelector, '', 'background: rgba(168, 44, 22, 0.6)',
-            'border: none', 'cursor: pointer'));
+            'border: none', 'cursor: pointer', 'transition: background 0.5s'));
         $this->style(Tools::css($coreSelector, ':hover', 'background: rgba(168, 44, 22, 1.0)'));
     }
 

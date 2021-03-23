@@ -19,8 +19,13 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
         $coreClasses = array_diff($this->classes, $classes);
         $coreSelector = '.' . implode('.', $coreClasses);
 
+        // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from
+        // <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
         $this->style(Tools::css('li' . $coreSelector, array(':after'),
-            'content: ">"', 'padding-left: 5px'));
+            'content: ""', 'margin-left: 5px', 'background-image: url("' .
+                HtmlActionProtocol::$serverURL . '/webship/pic/arrow-down-sign-to-navigate.svg")',
+            'background-repeat: no-repeat', 'width: 10px', 'height: 10px', 'background-size: cover',
+            'box-sizing: border-box'));
 
         $this->style(Tools::css('ul' . $coreSelector, '',
             'display: none', 'list-style-type: none', 'margin: 0', 'background: rgba(211, 234, 240, 1.0)',
