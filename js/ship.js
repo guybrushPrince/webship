@@ -85,3 +85,8 @@ let slug = (z) => {
 }
 
 let isFunction = (f) => { return typeof f === 'function'; };
+let addScript = (res) => {
+    let s = $('<script>' + res + '</script>');
+    $("body").append(s);
+    s.remove();
+};

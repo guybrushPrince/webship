@@ -44,6 +44,7 @@ class HtmlActionProtocol extends ActionProtocol {
             $without = (preg_match('/@without(.*)/', $reflection->getDocComment(), $matches) >= 1);
             $isCSV = (preg_match('/@CSV(.*)/', $reflection->getDocComment(), $matches) >= 1);
             $isPDF = (preg_match('/@PDF(.*)/', $reflection->getDocComment(), $matches) >= 1);
+            $isJS = (preg_match('/@JS(.*)/', $reflection->getDocComment(), $matches) >= 1);
 
             $code = 'let taskId = nId();';
             $code .= 'request({ ' . implode(',', $data) . ' },';
@@ -55,11 +56,15 @@ class HtmlActionProtocol extends ActionProtocol {
             $code .= 'sysTask,';
             $code .= '{taskId: taskId, title: "' . $this->title[View::getLanguage()] . '"})';
 
-            $code .= implode(array_map(function (array $p) use ($isCSV, $isPDF) {
+            $code .= implode(array_map(function (array $p) use ($isCSV, $isPDF, $isJS) {
                     if ($p["operation"] === "success") {
-                        return '.done(function(result) {(function(result) {' . $p["protocol"]->generate() . '})(result);' .
-                            ($isCSV || $isPDF ? 'downloadFile(result, ' . ($isPDF ? '"download.pdf"' : '"data.csv"') . ');' : '') .
-                            'sysTF(taskId);})';
+                        $func = '.done(function(result) {';
+                        if (!$isJS) $func .= '(function(result) {' . $p["protocol"]->generate() . '})(result);';
+                        else $func .= '(function(result) {addScript(result);result="";' . $p["protocol"]->generate() . '})(result);';
+                        if ($isCSV || $isPDF)
+                            $func .= 'downloadFile(result, ' . ($isPDF ? '"download.pdf"' : '"data.csv"') . ');';
+                        $func .= 'sysTF(taskId);})';
+                        return $func;
                     } else if ($p["operation"] === "error") {
                         return '.fail(function(result) {(function(result) {' . $p["protocol"]->generate() . '})(result);' .
                             'sysTF(taskId);})';
