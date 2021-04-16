@@ -20,7 +20,7 @@ class ContextSubMenuHtmlView extends SubMenuHtmlView {
         $coreSelector = '.' . implode('.', $coreClasses);
 
         $this->style(Tools::css('li' . $coreSelector, array(':after'),
-            'content: ">"', 'padding-left: 5px'));
+            'content: ""', 'padding-left: 5px'));
 
         $this->style(Tools::css('ul' . $coreSelector, '',
             'display: none', 'list-style-type: none', 'margin: 0', 'background: rgba(250, 250, 250, 1.0)',
