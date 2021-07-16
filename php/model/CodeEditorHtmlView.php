@@ -14,6 +14,7 @@ class CodeEditorHtmlView extends TextHtmlView {
     /**
      * CodeEditorHtmlView constructor.
      * @param string $id The id.
+     * @param int $language The programming language.
      * @param array $classes The classes.
      */
     public function __construct(string $id, int $language, array $classes = array()) {
@@ -40,7 +41,8 @@ class CodeEditorHtmlView extends TextHtmlView {
                 ProgrammingLanguage::R => 'r',
                 ProgrammingLanguage::HTML => 'html',
                 ProgrammingLanguage::PHP => 'php',
-                ProgrammingLanguage::JS => 'javascript'
+                ProgrammingLanguage::JS => 'javascript',
+                ProgrammingLanguage::LATEX => 'latex'
             ][(array_key_exists($language, ProgrammingLanguage::$PROGRAMMING_LANGUAGE) ?
                 $language : ProgrammingLanguage::PHP)] . '",' .
             'lineNumbers: true, lineWrapping: true });');

@@ -14,9 +14,11 @@ class PlainHtmlView extends HtmlView {
     /**
      * PlainHtmlView constructor.
      * @param string $content The plain html content.
+     * @param array|string $classes Additional classes.
      */
-    public function __construct(string $content) {
-        parent::__construct([]);
+    public function __construct(string $content, $classes = []) {
+        $classes = is_array($classes) ? $classes : array($classes);
+        parent::__construct(array_merge(['plain'], $classes));
         $this->content = $content;
     }
 

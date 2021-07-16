@@ -78,14 +78,14 @@ class HtmlView extends View {
         }
         $code = $this->generateOpeningTag();
         $code .= implode(array_map(function(View $view) { return $view->generateSafe(); }, $this->subviews));
+        if ($templates) {
+            if (isset($_SESSION)) {
+                if (!array_key_exists('templates', $_SESSION)) $_SESSION['templates'] = array();
+                $context = &$_SESSION['templates'];
+            } else $context = array();
+            $code .= '<script>' . TemplateProtocol::generateAll($context) . '</script>';
+        }
         if ($complete) {
-            if ($templates) {
-                if (isset($_SESSION)) {
-                    if (!array_key_exists('templates', $_SESSION)) $_SESSION['templates'] = array();
-                    $context = &$_SESSION['templates'];
-                } else $context = array();
-                $code .= '<script>' . TemplateProtocol::generateAll($context) . '</script>';
-            }
             $code .= /*'<style type="text/css">' . $this->generateStyle() . '</style>' .*/
                 '<script>' . $this->generateJS() . '</script>';
         }

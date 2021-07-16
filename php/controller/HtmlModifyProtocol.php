@@ -167,6 +167,14 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         return '';
                     }
                 } break;
+                case 'empty': {
+                    $view = $this->reduceView($modify["view"]);
+                    if ($view) {
+                        return $this->createViewSelector($view) . '.empty();';
+                    } else {
+                        return '';
+                    }
+                } break;
                 case 'removeClassesSiblings': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {

@@ -54,6 +54,8 @@ class ParameterSerializer {
                     if ($scope === "value") {
                         if ($view instanceof InputHtmlView && $view->type() === 'checkbox') {
                             $selector .= '.is(":checked")';
+                        } else if ($view instanceof EditableHtmlView) {
+                            $selector .= '.html()';
                         } else {
                             $selector .= '.val()';
                         }
