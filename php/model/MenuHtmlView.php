@@ -23,7 +23,7 @@ class MenuHtmlView extends HtmlView {
             'top: 0', 'width: 100%', 'display: flex', 'flex-direction: column', 'background: rgba(150, 202, 214, 1.0)',
             'z-index: 100'));
         $this->style(Tools::css('ul' . $coreSelector, '', 'list-style-type: none',
-            'display: flex', 'margin: 0', 'flex-wrap: wrap', 'padding: 0'));
+            'display: flex', 'margin: 0', 'flex-wrap: nowrap', 'padding: 0'));
         $this->style(Tools::css('ul' . $coreSelector, array(' > ', 'li'), 'width: fit-content',
             'height: 50px', 'padding: 10px 20px', 'box-sizing: border-box', 'position: relative',
             'width: -moz-fit-content'));

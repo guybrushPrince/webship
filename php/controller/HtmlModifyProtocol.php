@@ -185,15 +185,21 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 } break;
                 case 'toggleClasses': {
                     $c = 'if (typeof res === "undefined") {var res = $(result);}';
+                    $classes = implode(' ', array_map(function($c) {
+                        if (is_string($c)) return $c;
+                        else if ($c instanceof TemplateObject) {
+                            return '" + con["' . $c->getName() . '"] + "';
+                        }
+                    }, $modify["classes"]));
                     if ($modify["view"]) {
                         $view = $this->reduceView($modify["view"]);
                         if ($view) {
-                            return $this->createViewSelector($view) . '.toggleClass("' . implode(' ', $modify["classes"]) . '");';
+                            return $this->createViewSelector($view) . '.toggleClass("' . $classes . '");';
                         } else {
                             return '';
                         }
                     } else {
-                        return $c . 'res.toggleClass("' . implode(' ', $modify["classes"]) . '");';
+                        return $c . 'res.toggleClass("' . $classes . '");';
                     }
                 } break;
                 case 'mousePosition': {
