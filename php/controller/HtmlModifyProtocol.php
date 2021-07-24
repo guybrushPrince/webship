@@ -154,7 +154,13 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'addClasses': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        return $this->createViewSelector($view) . '.addClass("' . implode(' ', $modify["classes"]) . '");';
+                        $classes = array_map(function($c) {
+                            if (is_string($c)) return $c;
+                            else if ($c instanceof TemplateObject) {
+                                return '" + con["' . $c->getName() . '"] + "';
+                            }
+                        }, $modify["classes"]);
+                        return $this->createViewSelector($view) . '.addClass("' . implode(' ', $classes) . '");';
                     } else {
                         return '';
                     }
@@ -178,7 +184,13 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'removeClassesSiblings': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        return $this->createViewSelector($view) . '.find(".' . implode(',.', $modify["classes"]) . '").removeClass("' . implode(' ', $modify["classes"]) . '");';
+                        $classes = array_map(function($c) {
+                            if (is_string($c)) return $c;
+                            else if ($c instanceof TemplateObject) {
+                                return '" + con["' . $c->getName() . '"] + "';
+                            }
+                        }, $modify["classes"]);
+                        return $this->createViewSelector($view) . '.find(".' . implode(',.', $classes) . '").removeClass("' . implode(' ', $classes) . '");';
                     } else {
                         return '';
                     }
