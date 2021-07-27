@@ -127,6 +127,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     } else return '';
                 }
                 case 'add':
+                case 'prepend':
                 case 'replace':
                 case 'before':
                 case 'after':
@@ -366,6 +367,9 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     break;
                 case 'add':
                     $c .= 'append';
+                    break;
+                case 'prepend':
+                    $c .= 'prepend';
                     break;
                 case 'delete':
                     $c .= 'remove';
