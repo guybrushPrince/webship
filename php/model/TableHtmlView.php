@@ -13,17 +13,14 @@ class TableHtmlView extends HtmlView {
      */
     public function __construct($classes = array()) {
         $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct(['table'] + $classes);
+        parent::__construct(array_merge(['table'], $classes));
 
-        $coreClasses = array_diff($this->classes, $classes);
-        $coreSelector = '.' . implode('.', $coreClasses);
-
-        $this->style(Tools::css($coreSelector, '', 'display: flex',
+        $this->style(Tools::css('.table', '', 'display: flex',
             'flex-wrap: wrap', 'flex-direction: column', 'align-items: flex-start', 'width: 100%',
             'box-sizing: border-box'));
-        $this->style(Tools::css($coreSelector, [' > ', '.row'], 'display: flex',
+        $this->style(Tools::css('.table', [' > ', '.row'], 'display: flex',
             'flex-wrap: nowrap', 'flex-direction: row', 'padding: 5px', 'box-sizing: border-box'));
-        $this->style(Tools::css($coreSelector, [' > ', '.row.header'], 'font-weight: bold'));
+        $this->style(Tools::css('.table', [' > ', '.row.header'], 'font-weight: bold'));
     }
 
     // Short cuts
@@ -33,8 +30,8 @@ class TableHtmlView extends HtmlView {
      * @param array|string $classes A set of classes.
      * @return TableRowHtmlView
      */
-    public function header($classes = array()) {
-        $headerView = new TableRowHtmlView(['header'] + $classes);
+    public function header($classes = array()) : TableRowHtmlView {
+        $headerView = new TableRowHtmlView(array_merge(['header'], $classes));
         $this->add($headerView);
         return $headerView;
     }
@@ -44,7 +41,7 @@ class TableHtmlView extends HtmlView {
      * @param array|string $classes A set of classes.
      * @return TableRowHtmlView
      */
-    public function row($classes = array()) {
+    public function row($classes = array()) : TableRowHtmlView {
         $rowView = new TableRowHtmlView($classes);
         $this->add($rowView);
         return $rowView;
@@ -55,7 +52,7 @@ class TableHtmlView extends HtmlView {
      * @param array|string $classes Classes.
      * @return TableHtmlView
      */
-    public static function _new($classes = array()) {
+    public static function _new($classes = array()) : TableHtmlView {
         return new TableHtmlView($classes);
     }
 }

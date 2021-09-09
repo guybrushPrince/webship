@@ -14,7 +14,7 @@ class TableRowHtmlView extends HtmlView {
      */
     public function __construct($classes = array()) {
         $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct(['table', 'row'] + $classes);
+        parent::__construct(array_merge(['table', 'row'], $classes));
     }
 
     // Short cuts
@@ -24,14 +24,15 @@ class TableRowHtmlView extends HtmlView {
      * @param array $classes
      * @return HtmlView
      */
-    public function cell($classes = array()) {
-        $cellView = new HtmlView(['cell'] + $classes);
+    public function cell($classes = array()) : HtmlView {
+        $classes = is_array($classes) ? $classes : array($classes);
+        $cellView = new HtmlView(array_merge(['cell'], $classes));
         $this->add($cellView);
         return $cellView;
     }
 
     /**
-     * @return ?TableHtmlView
+     * @return ?TableHtmlView|?View
      */
     public function parent(): ?TableHtmlView {
         return $this->getParent();
