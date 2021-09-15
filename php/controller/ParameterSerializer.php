@@ -117,7 +117,8 @@ class ParameterSerializer {
                     } else {
                         if (is_int($key)) $key = 'i' . $key;
                         if (is_string($field)) $field = '"' . $field . '"';
-                        if (is_bool($field)) $field = ($field ? 'true' : 'false');
+                        else if (is_bool($field)) $field = ($field ? 'true' : 'false');
+                        else if (is_object($field)) $field = Tools::jsonEncode(self::handleObject($field));
                         return $key . ': ' . $field;
                     }
                 }, array_keys($value))) . '}';
@@ -139,13 +140,7 @@ class ParameterSerializer {
             else $innerView = $protocol->innerView();
             return $param . ': function(result = undefined) {' . $value->generate($reducedParameters, $innerView) . '}';
         } else if (is_object($value)) {
-            $key = $value->getKey();
-            // Convert it
-            $key = (is_integer($key) ? ActionRegister::convertKey($key) : $key);
-            // Convert the type of the object
-            $type = get_class($value);
-            return [$param . ': ' . (is_string($key) ? '"' . $key . '"' : $key),
-                $param . 'IClass' . ': "' . $type . '"'];
+            return self::handleObject($value, $param);
         } else if ($value === null) {
             return $param . ': null';
         } else if (is_string($value)) {
@@ -159,6 +154,26 @@ class ParameterSerializer {
             }
         } else {
             return $param . ': ' . (is_bool($value) ? ($value ? 'true' : 'false') : $value);
+        }
+    }
+
+    /**
+     * Handles an object.
+     * @param object $value The object.
+     * @param string|null $param The parameter.
+     * @return string[]
+     */
+    private static function handleObject(object $value, ?string $param = null) : array {
+        $key = $value->getKey();
+        // Convert it
+        $key = (is_integer($key) ? ActionRegister::convertKey($key) : $key);
+        // Convert the type of the object
+        $type = get_class($value);
+        if ($param !== null) {
+            return [$param . ': ' . (is_string($key) ? '"' . $key . '"' : $key),
+                $param . 'IClass' . ': "' . $type . '"'];
+        } else {
+            return ['value' => $key, 'IClass' => $type];
         }
     }
 

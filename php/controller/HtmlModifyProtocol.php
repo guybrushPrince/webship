@@ -319,7 +319,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
      * @param array $modify The associative array with information.
      * @return string
      */
-    private function generateDomAction($modify) {
+    private function generateDomAction(array $modify) : string {
         $c = 'if (typeof(res) === "undefined") {var res = ';
         if (!array_key_exists("new", $modify)) {
             if (!array_key_exists("value", $modify)) $c .= 'result';
@@ -379,7 +379,8 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     break;
             }
             $c .= '(';
-            $c .= 'res';
+            //$c .= 'res';
+            $c .= '() => { let r = $(res); $("body").append(r.filter("style")); return r.filter(":not(style)"); }';
             $c .= ');';
         }
         return $c;
