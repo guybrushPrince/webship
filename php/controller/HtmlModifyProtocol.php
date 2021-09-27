@@ -379,8 +379,8 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     break;
             }
             $c .= '(';
-            //$c .= 'res';
-            $c .= '() => { let r = $(res); $("body").append(r.filter("style")); return r.filter(":not(style)"); }';
+            if ($modify["operation"] === 'text') $c .= 'res';
+            else $c .= '() => { let r = $(res); $("body").append(r.filter("style")); return r.filter(":not(style)"); }';
             $c .= ');';
         }
         return $c;
