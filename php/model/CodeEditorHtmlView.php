@@ -35,7 +35,7 @@ class CodeEditorHtmlView extends TextHtmlView {
             'height: inherit', 'overflow-y: auto'));
 
         $this->ref('textarea');
-        $this->js('CodeMirror.fromTextArea($("' . $this->idc() . '")[0], { ' .
+        $this->js('let cm' . $this->id() . ' = CodeMirror.fromTextArea($("' . $this->idc() . '")[0], { ' .
             'mode: "' . [
                 ProgrammingLanguage::CSS => 'css',
                 ProgrammingLanguage::R => 'r',
@@ -47,6 +47,10 @@ class CodeEditorHtmlView extends TextHtmlView {
             ][(array_key_exists($language, ProgrammingLanguage::$PROGRAMMING_LANGUAGE) ?
                 $language : ProgrammingLanguage::PHP)] . '",' .
             'lineNumbers: true, lineWrapping: true });');
+
+        $this->js('$("' . $this->idc() . '").on("' . Event::CONTENTMODIFY . '", function(event) {' .
+            'cm' . $this->id() . '.save();' .
+            '});');
     }
 
     /**
