@@ -55,10 +55,12 @@ class CardHtmlView extends HtmlView {
 
     /**
      * Creates a content view.
+     * @param string|string[] $classes Some classes.
      * @return HtmlView
      */
-    public function content() : HtmlView {
-        $contentView = new HtmlView('content');
+    public function content($classes = []) : HtmlView {
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        $contentView = new HtmlView(array_merge($classes, ['content']));
         $this->add($contentView);
         return $contentView;
     }
