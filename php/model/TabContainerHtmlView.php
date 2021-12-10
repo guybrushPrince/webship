@@ -19,9 +19,9 @@ class TabContainerHtmlView extends ContainerHtmlView {
         $coreSelector = '.' . implode('.', $coreClasses);
 
         $this->style(Tools::css($coreSelector, '', 'position: relative',
-            'width: 100%', 'height: calc(100% - 80px)', 'overflow-y: hidden'));
-        $this->style(Tools::css($coreSelector, ' > .tab', 'position: absolute', 'left: 0', 'top: 0',
-            'width: 100%', 'box-sizing: border-box', 'overflow-y: auto', 'height: 100%'));
+            'width: 100%', 'height: 100%', 'overflow-y: hidden'));
+        $this->style(Tools::css($coreSelector, ' > .tab', 'position: absolute', 'left: 0', 'top: 30px',
+            'width: 100%', 'box-sizing: border-box', 'overflow-y: visible', 'height: 100%'));
 
         $this->js('$("' . $this->idc() . '").on("' . Event::NEW_TAB . '", function(event) {' .
             'let max = Math.max.apply(Math, $(this).children(".tab").map((i, c) => parseInt($(c).css("z-index"))));' .

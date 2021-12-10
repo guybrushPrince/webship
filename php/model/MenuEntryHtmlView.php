@@ -20,11 +20,11 @@ class MenuEntryHtmlView extends HtmlView {
         $coreSelector = '.' . implode('.', $coreClasses);
 
         $this->style(Tools::css($coreSelector, '', 'display: flex', 'flex-wrap: wrap',
-            'cursor: pointer', 'font-size: 15px', 'text-transform: uppercase', 'font-weight: normal',
+            'cursor: pointer', 'font-size: 15px', 'font-weight: normal',
             'align-items: center'));
         $this->style(Tools::css($coreSelector, ':hover', 'background: rgba(211, 234, 240, 1.0)'));
         $this->style(Tools::css($coreSelector, array(':hover', ' > ', ' ul.sub-menu-entry'),
-            'display: flex', 'flex-wrap: wrap', 'position: absolute', 'left: 0', 'top: 50px'));
+            'display: flex', 'flex-wrap: wrap', 'position: absolute', 'left: 0', 'top: 35px'));
     }
 
     /**

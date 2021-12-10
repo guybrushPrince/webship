@@ -91,17 +91,20 @@ class HtmlEventProtocol extends EventProtocol {
             } else {
                 $submitView = $this->parent;
                 $v = $submitView->submitForm();
-                $method = 'keypress';
+                if ($submitView instanceof SubmitHtmlView) $method = 'submit keypress';
+                else $method = 'keypress';
                 if (!$v) {
                     $method = 'click';
                     $v = $submitView;
                 }
-                $code .= '$("' . $v->idc() . '").' . $method;
-                $code .= '(function(' . $v->id() . ') {';
+                $code .= '$("' . $v->idc() . '").on("' . $method . '", ';
+                $code .= 'function(' . $v->id() . ') {';
                 $code .= 'var keycode = (event.keyCode ? event.keyCode : event.which);';
-                $code .= 'if(keycode == \'13\') {';
+                $code .= 'if(keycode == \'13\' || event.type === "submit") {';
                 $code .= $this->generateCode($this->children);
+                $code .= 'return false;';
                 $code .= '}';
+                $code .= 'return true;';
                 $code .= '});';
                 if (!($v instanceof SubmitHtmlView)) {
                     $code .= '$("' . $submitView->idc() . '").click';

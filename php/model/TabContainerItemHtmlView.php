@@ -25,7 +25,7 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
         $this->style(Tools::css($coreSelector, '','z-index: 0'));
 
         $this->style(Tools::css($coreSelector, array(' > ', '.tab-header'),
-            'position: fixed', 'top: 55px', 'height: 25px', 'z-index: 2',
+            'position: absolute', 'top: -25px', 'height: 25px', 'z-index: 2',
             'background: rgba(255, 255, 255, 1.0)', 'border: solid 1px rgba(0, 0, 0, 1.0)',
             'border-bottom: none', 'display: flex', 'align-items: center', 'padding: 0 5px',
             'box-sizing: border-box', 'cursor: pointer'));
@@ -34,12 +34,12 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
             'width: 25px', 'height: 25px'));
 
         $this->style(Tools::css($coreSelector, array(' > ', '.tab-separator'),
-            'position: fixed', 'left: 0', 'top: 79px', 'width: 100%', 'box-sizing: border-box',
+            'position: absolute', 'left: 0', 'top: -1px', 'width: 100%', 'box-sizing: border-box',
             'border-bottom: solid 1px rgba(0, 0, 0, 1.0)', 'z-index: 1'));
 
         $this->style(Tools::css($coreSelector, array(' > ', '.tab-content'),
             'position: absolute', 'width: calc(100% - 5px)', 'top: 0', 'background: rgba(255, 255, 255, 1.0)',
-            'min-height: 100%'));
+            'height: calc(100% - 30px)', 'overflow-y: auto'));
 
         $this->style(Tools::css($coreSelector, array(' > ', '.tab-content', ' > ', '.panel'),
             'border: none'));
