@@ -66,7 +66,9 @@ class ModalHtmlView extends HtmlView {
         $classes = is_array($classes) ? $classes : array($classes);
         $closer = new CloserHtmlView($classes);
         $this->add($closer);
-        $closer->protocol(Event::CLICK)->delete($this);
+        $closer->protocol(Event::CLICK)->
+            throwevent(Event::CONTENTMODIFY, $this)->
+            delete($this);
         return $closer;
     }
 
@@ -96,7 +98,8 @@ class ModalHtmlView extends HtmlView {
         $this->subviews[1]->add($abort);
         $abort->
             protocol(Event::CLICK)->
-                toggleClass($this, 'invisible');
+                throwevent(Event::CONTENTMODIFY, $this)->
+                delete($this);
         return $abort;
     }
 
