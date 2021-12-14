@@ -32,6 +32,9 @@ class DashboardItemHtmlView extends HtmlView {
 
         $this->style(Tools::css($coreSelector, array(' > ', '.box', ' > ', '.pencil'), 'position: absolute',
             'right: 20px', 'top: -2px'));
+
+        $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item', '.h-0-20'], 'padding-top: 20%'));
+        $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item', '.w-1'], 'width: 95%'));
     }
 
     /**
