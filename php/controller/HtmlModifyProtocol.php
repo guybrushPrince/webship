@@ -127,6 +127,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     } else return '';
                 }
                 case 'add':
+                case 'addWithFallback':
                 case 'prepend':
                 case 'replace':
                 case 'before':
@@ -342,6 +343,8 @@ class HtmlModifyProtocol extends ModifyProtocol {
         $c .= ';}';
 
         $view = $this->reduceView($modify["view"], false);
+        if (!$view && $modify["operation"] === 'addWithFallback')
+            $view = $this->reduceView($modify["fallback"], false);
         if ($view) {
             if (!is_array($view)) $view = array($view);
             if ($modify["operation"] === 'replace') {
@@ -365,6 +368,17 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'replace':
                     $c .= 'replaceWith';
                     break;
+                case 'addWithFallback': {
+                    $fallback = $this->reduceView($modify["fallback"], false);
+                    if ($fallback) {
+                        $sel = '$("' . implode(',', array_map(function ($v) {
+                                if ($v instanceof View) return $v->idc();
+                                else return '" + con["' . $v->getName() . '"] + "';
+                            }, [$fallback])) . '")';
+                        $c .= 'existsGetElse(() => { return ' . $sel . '; }).';
+                    }
+                    $c .= 'append';
+                } break;
                 case 'add':
                     $c .= 'append';
                     break;

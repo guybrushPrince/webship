@@ -1,6 +1,10 @@
 $.fn.exists = function () {
     return this.length !== 0;
 }
+$.fn.existsGetElse = function (e = () => {}) {
+    if (this.exists()) return this;
+    else return e();
+}
 let context = { currentTaskId: 0, currentHintId: 0, tabId: 0, tabOffset: [] };
 
 let lastDelay = [];
