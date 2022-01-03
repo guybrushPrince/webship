@@ -24,27 +24,31 @@ class TabContainerHtmlView extends ContainerHtmlView {
             'width: 100%', 'box-sizing: border-box', 'overflow-y: visible', 'height: 100%'));
 
         $this->js('$("' . $this->idc() . '").on("' . Event::NEW_TAB . '", function(event) {' .
+            'if ($(event.target).parent("' . $this->idc() . '").length) {' .
             'let max = Math.max.apply(Math, $(this).children(".tab").map((i, c) => parseInt($(c).css("z-index"))));' .
-            'let width = $(this).children(".tab").find(".tab-header").toArray().reduce((acc, c) => acc + parseInt($(c).css("width")) + 5, 0) - 5;' .
+            'let width = $(this).children(".tab").children(".tab-header").toArray().reduce((acc, c) => acc + parseInt($(c).css("width")) + 5, 0) - 5;' .
             '$(event.target).css("z-index", max + 1);' .
             '$(event.target).attr("tabId", "t" + context.tabId++);' .
-            'let tabHeader = $(event.target).find(".tab-header");' .
+            'let tabHeader = $(event.target).children(".tab-header");' .
             '$(tabHeader).css("left", (width - parseInt($(tabHeader).css("width"))) + 5);' .
-            'let conOld = $(this).children(".tab").not(event.target).find(".tab-content");' .
+            'let conOld = $(this).children(".tab").not(event.target).children(".tab-content");' .
             'conOld.filter(":visible").toArray().forEach((e) => { let p = $(e).parent(); context.tabOffset[p.attr("tabId")] = p.scrollTop(); });' .
             'conOld.hide();' .
+            '}' .
             '});');
 
         $this->js('$("' . $this->idc() . '").on("' . Event::CLOSE_TAB . '", function(event) {' .
-            'let missing = parseInt($(event.target).find(".tab-header").css("width")) + 5;' .
+            'if ($(event.target).parent("' . $this->idc() . '").length) {' .
+            'let missing = parseInt($(event.target).children(".tab-header").css("width")) + 5;' .
             'let next = $(event.target).nextAll();' .
             '$(event.target).remove();' .
-            'next.find(".tab-header").each((i, t) => $(t).css("left", parseInt($(t).css("left")) - missing));' .
+            'next.children(".tab-header").each((i, t) => $(t).css("left", parseInt($(t).css("left")) - missing));' .
             'let childrenWithZ = $(this).children(".tab").map((i, c) => {return {v: c, z: parseInt($(c).css("z-index"))};});' .
             'let max = Math.max.apply(Math, childrenWithZ.map((i, c) => c.z));' .
-            'childrenWithZ.each((i, c) => (c.z === max ? (() => { $(c.v).find(".tab-content").show();' .
+            'childrenWithZ.each((i, c) => (c.z === max ? (() => { $(c.v).children(".tab-content").show();' .
                 'let tabId = $(c.v).attr("tabId");' .
                 'if (tabId in context.tabOffset) $(c.v).scrollTop(context.tabOffset[tabId]); })()' . ' : ""));' .
+            '}' .
             '});');
     }
 
