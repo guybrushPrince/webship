@@ -10,9 +10,10 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
 
     /**
      * TabContainerItemHtmlView constructor.
-     * @param array|string $classes
+     * @param string[]|string $classes Some classes.
+     * @param bool $knownParent
      */
-    public function __construct($classes = array()) {
+    public function __construct($classes = array(), bool $knownParent = false) {
         $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('tab'), $classes));
 
@@ -44,7 +45,7 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
         $this->style(Tools::css($coreSelector, array(' > ', '.tab-content', ' > ', '.panel'),
             'border: none'));
 
-        $this->js('$("' . $this->idc() . '").trigger("' . Event::NEW_TAB . '");');
+        if (!$knownParent) $this->js('$("' . $this->idc() . '").trigger("' . Event::NEW_TAB . '");');
         $this->js('$("' . $this->idc() . ' > .tab-header").click(function(event) {' .
             'let max = Math.max.apply(Math, $(this).parent().parent().children(".tab").map((i, c) => parseInt($(c).css("z-index"))));' .
             '$(event.target).parent().css("z-index", max + 1);' .

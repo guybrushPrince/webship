@@ -50,27 +50,59 @@ class TabContainerHtmlView extends ContainerHtmlView {
                 'if (tabId in context.tabOffset) $(c.v).scrollTop(context.tabOffset[tabId]); })()' . ' : ""));' .
             '}' .
             '});');
+
+        $this->js('(() => {' .
+            'let that = $("' . $this->idc() . '");' .
+            'that.children(".tab").each((i,tab) => {' .
+            'let max = Math.max.apply(Math, $(tab).prevAll(".tab").add(tab).map((i, c) => parseInt($(c).css("z-index"))));' .
+            'let width = $(tab).prevAll(".tab").add(tab).children(".tab-header").toArray().reduce((acc, c) => acc + parseInt($(c).css("width")) + 5, 0) - 5;' .
+            '$(tab).css("z-index", max + 1);' .
+            '$(tab).attr("tabId", "t" + context.tabId++);' .
+            'let tabHeader = $(tab).children(".tab-header");' .
+            '$(tabHeader).css("left", (width - parseInt($(tabHeader).css("width"))) + 5);' .
+            '});' .
+            'let f = that.children(".tab").first();' .
+            'let max = Math.max.apply(Math, $(that).children(".tab").map((i, c) => parseInt($(c).css("z-index"))));' .
+            '$(f).css("z-index", max + 1);' .
+            'let conOld = $(that).children(".tab").children(".tab-content");' .
+            'conOld.filter(":visible").toArray().forEach((e) => { let p = $(e).parent(); context.tabOffset[p.attr("tabId")] = p.scrollTop(); });' .
+            'conOld.hide();' .
+            'let conNew = $(f).children(".tab-content");' .
+            'conNew.show();' .
+            'let p = conNew.parent(); let tabId = p.attr("tabId");' .
+            'if (tabId in context.tabOffset) p.scrollTop(context.tabOffset[tabId]);' .
+            '})();');
     }
 
     // Short cuts
 
     /**
-     * Create a tab that can be closed.
-     * @param array $headers Headers.
-     * @param array|string $classes Classes.
+     * Creates a new tab.
+     * @param array $headers The headers.
+     * @param string[]|string $classes The classes.
      * @return TabContainerItemHtmlView
      */
-    public function closingTab(array $headers = array(), $classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        $view = new TabContainerItemHtmlView($classes);
+    public function tab(array $headers = [], $classes = []) : TabContainerItemHtmlView {
+        $view = new TabContainerItemHtmlView($classes, true);
         $view->ref('tab');
         foreach ($headers as $language => $header) {
             $view->header($language, $header);
         }
+        $this->add($view);
+        return $view;
+    }
+
+    /**
+     * Create a tab that can be closed.
+     * @param array $headers Headers.
+     * @param string[]|string $classes Classes.
+     * @return TabContainerItemHtmlView
+     */
+    public function closingTab(array $headers = [], $classes = []) : TabContainerItemHtmlView {
+        $view = $this->tab($headers, $classes);
         $view->closer()->
             protocol(Event::CLICK)->
                 event(Event::CLOSE_TAB, 'tab');
-        $this->add($view);
         return $view;
     }
 
