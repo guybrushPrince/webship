@@ -38,7 +38,7 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
             'position: absolute', 'left: 0', 'top: -1px', 'width: 100%', 'box-sizing: border-box',
             'border-bottom: solid 1px rgba(0, 0, 0, 1.0)', 'z-index: 1'));
 
-        $this->style(Tools::css($coreSelector, array(' > ', '.tab-content'),
+        $this->style(Tools::css($coreSelector, array(' > ', '.tab-content'), 'box-sizing: border-box',
             'position: absolute', 'width: calc(100% - 5px)', 'top: 0', 'background: rgba(255, 255, 255, 1.0)',
             'height: calc(100% - 30px)', 'overflow-y: auto'));
 

@@ -19,7 +19,7 @@ class TabContainerHtmlView extends ContainerHtmlView {
         $coreSelector = '.' . implode('.', $coreClasses);
 
         $this->style(Tools::css($coreSelector, '', 'position: relative',
-            'width: 100%', 'height: 100%', 'overflow-y: hidden'));
+            'width: 100%', 'height: 100%', 'overflow-y: clip'));
         $this->style(Tools::css($coreSelector, ' > .tab', 'position: absolute', 'left: 0', 'top: 30px',
             'width: 100%', 'box-sizing: border-box', 'overflow-y: visible', 'height: 100%'));
 
