@@ -15,7 +15,7 @@ class TreeHtmlView extends HtmlView {
         parent::__construct(array_merge(['tree'], $classes));
         $this->ref('tree');
 
-        $this->style(Tools::css('ul.tree', ''));
+        $this->style(Tools::css('ul.tree', '', 'padding-top: 0', 'padding-bottom: 0'));
         $this->style(Tools::css('ul.tree', [' > ', 'li', ' ', 'a'], 'text-align: left',
             'justify-content: flex-start'));
         $this->style(Tools::css('ul.tree', [' > ', 'li'], 'min-height: 20px', 'list-style-type: none'));
