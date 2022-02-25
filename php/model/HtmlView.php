@@ -29,9 +29,9 @@ class HtmlView extends View {
 
     /**
      * HtmlView constructor.
-     * @param array|string $classes (optional) Possible classes
+     * @param string[]|string $classes (optional) Possible classes
      */
-    public function __construct($classes = array()) {
+    public function __construct($classes = []) {
         $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct();
         $this->classes = $classes;
