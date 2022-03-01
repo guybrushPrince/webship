@@ -46,6 +46,8 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::ONKEYUP) $code .= '.keyup';
                 if ($this->event === Event::INPUT) $code .= '.on("input", ';
                 if ($this->event === Event::CONTENTMODIFY) $code .= '.on("' . Event::CONTENTMODIFY . '", ';
+                if ($this->event === Event::OPEN_LIST) $code .= '.on("' . Event::OPEN_LIST . '", ';
+                if ($this->event === Event::CLOSE_LIST) $code .= '.on("' . Event::CLOSE_LIST . '", ';
                 if ($this->event === Event::MOVEUP) $code .= '.on("' . Event::MOVEUP . '", ';
                 if ($this->event === Event::MOVEDOWN) $code .= '.on("' . Event::MOVEDOWN . '", ';
                 if ($this->event === Event::MOVEDELETE) $code .= '.on("' . Event::MOVEDELETE . '", ';
@@ -77,6 +79,8 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::ONLOAD) $code .= '($("' . $this->parent->idc() . '"))';
                 if ($this->event === Event::INPUT) $code .= ')';
                 if ($this->event === Event::CONTENTMODIFY) $code .= ')';
+                if ($this->event === Event::OPEN_LIST) $code .= ')';
+                if ($this->event === Event::CLOSE_LIST) $code .= ')';
                 if ($this->event === Event::MOVEUP) $code .= ')';
                 if ($this->event === Event::MOVEDOWN) $code .= ')';
                 if ($this->event === Event::MOVEDELETE) $code .= ')';

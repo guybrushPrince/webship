@@ -66,7 +66,11 @@ class TreeHtmlView extends HtmlView {
      */
     public function generateClosingTag() : string {
         return '<script>' .
-            '$("' . $this->idc() . '").children("li.sub").click((e) => { $(e.currentTarget).parent().toggleClass("open")});' .
+            '$("' . $this->idc() . '").children("li.sub").click((e) => { ' .
+                'let p = $(e.currentTarget).parent();' .
+                'if (p.children().length <= 1) p.trigger((p.hasClass("open") ? "' . Event::CLOSE_LIST . '" : "' . Event::OPEN_LIST . '"));' .
+                'p.toggleClass("open");' .
+            '});' .
             '$("' . $this->idc() . '").children("script").remove();' .
             '</script></ul>';
     }
