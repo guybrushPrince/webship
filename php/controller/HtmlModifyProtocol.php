@@ -139,7 +139,19 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
                         $data = '';
-                        if ($modify["data"]) $data = ', ' . Tools::jsonEncode($modify["data"]);
+                        if ($modify["data"])
+                            $data = ', ' . Tools::jsonEncode(array_reduce(array_keys($modify["data"]),
+                                function (array $values, $param) use ($modify) {
+                                    $value = $modify["data"][$param];
+                                    if ($value instanceof CObject) {
+                                        $value = ParameterSerializer::handleObject($value);
+                                        $values[$param] = $value["value"];
+                                        $values[$param . 'IClass'] = $value["IClass"];
+                                    } else {
+                                        $values[$param] = $value;
+                                    }
+                                    return $values;
+                                }, []));
                         return $this->createViewSelector($view) . '.trigger("' . $modify["event"] . '"' . $data . ');';
                     } else {
                         return '';
@@ -348,11 +360,17 @@ class HtmlModifyProtocol extends ModifyProtocol {
         if ($view) {
             if (!is_array($view)) $view = array($view);
             if ($modify["operation"] === 'replace') {
-                $c .= 'res.filter(":not(style):not(script)").addClass(("' .
+                $c .= 'let ids = ' . '[' . implode(',', array_map(function($v) {
+                        if ($v instanceof View) return '"' . $v->idc() . '"';
+                        else return 'con["' . $v->getName() . '"]';
+                    }, $view)) . '].map(i => $(i).data("id")).join(" ");';
+                $c .= 'let sel = res.filter(":not(style):not(script)");';
+                $c .= 'sel.data("id", sel.data("id") + " " + ids);';
+                $c .= 'sel.addClass(("' .
                     implode(' ', array_map(function($v) {
                         if ($v instanceof View) return $v->id();
                         else return '" + con["' . $v->getName() . '"] + "';
-                    }, $view)) . '").replace(/\./g, ""));';
+                    }, $view)) . ' " + ids).replace(/\./g, ""));';
             }
             $c .= '$("' . implode(',', array_map(function($v) {
                 if ($v instanceof View) return $v->idc();

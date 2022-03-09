@@ -46,7 +46,7 @@ class HtmlTemplateProtocol extends TemplateProtocol {
     public function createThrower(array $context = array(), $entryView = null) : string {
         $view = ($entryView instanceof DirectView || $entryView === null) ? $entryView : $entryView->innerView();
         $data = ParameterSerializer::serialize($this, $this->collectParameters(), $context, $view);
-        return $this->getCallName() . '({' . implode(',', $data) . '});';
+        return $this->getCallName() . '(Object.assign({' . implode(',', $data) . '}, (typeof eData !== "undefined" ? eData : {})));';
     }
 
     private function generateCode(array $protocols) {

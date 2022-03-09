@@ -163,7 +163,7 @@ class ParameterSerializer {
      * @param string|null $param The parameter.
      * @return string[]
      */
-    private static function handleObject(object $value, ?string $param = null) : array {
+    public static function handleObject(object $value, ?string $param = null) : array {
         $key = $value->getKey();
         // Convert it
         $key = (is_integer($key) ? ActionRegister::convertKey($key) : $key);
