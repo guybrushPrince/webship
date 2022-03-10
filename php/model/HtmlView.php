@@ -42,8 +42,9 @@ class HtmlView extends View {
      * @return string
      */
     public function generateOpeningTag() {
-        return '<div class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' .
-            ' data-id="' . $this->id() . '"' . '>';
+        $id = $this->id();
+        return '<div class="' . implode(' ', array_merge($this->classes, array($id))) . '"' .
+            ($id ? ' data-id="' . $id . '"' : '') . '>';
     }
 
     /**
