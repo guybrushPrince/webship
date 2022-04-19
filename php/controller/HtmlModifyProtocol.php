@@ -12,7 +12,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
      * @inheritDoc
      */
     public function __construct($parent) {
-        parent::__construct($parent, "HtmlActionProtocol");
+        parent::__construct($parent, "HtmlActionProtocol", "HtmlDialogProtocol");
     }
 
     /**
@@ -38,6 +38,9 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         $f = 'con["' . $anonymousProtocol->getName() . '"]';
                         return 'if (isFunction(' . $f . ')) ' . $f . '(result);';
                     } else return '';
+                }
+                case 'alert': {
+                    return $modify["protocol"]->generate();
                 }
                 case 'setCookie': {
                     $c = 'let d = new Date();';
