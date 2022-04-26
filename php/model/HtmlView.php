@@ -311,5 +311,14 @@ class HtmlView extends View {
         return '.' . $this->id();
     }
 
+    /**
+     * Adds a class to this view.
+     * @param string $class The class.
+     * @return void
+     */
+    public function addClass(string $class) {
+        $this->classes[] = $class;
+    }
+
 }
 ?>
