@@ -13,7 +13,7 @@ class ParameterSerializer {
      * @param DirectView|null $entry The entry / context view.
      * @return array|string[]
      */
-    public static function serialize(Protocol $protocol, array $definitions, array $parameters, DirectView $entry = null) {
+    public static function serialize(Protocol $protocol, array $definitions, array $parameters, DirectView $entry = null) : array {
         $data = Tools::flatten(array_map(function($definition) use ($protocol, $parameters, $entry) {
             if ($definition instanceof ReflectionParameter) $param = $definition->getName();
             else if ($definition instanceof TemplateObject) {
@@ -39,7 +39,7 @@ class ParameterSerializer {
      * @param DirectView|null $entry The entry / context view.
      * @return string
      */
-    private static function findValueInView(Protocol $protocol, $param, $entry = null) {
+    private static function findValueInView(Protocol $protocol, $param, ?DirectView $entry = null) : string {
         if ($param instanceof TemplateObject) $param = $param->getName();
         if (!$protocol->innerView()) $innerView = $entry;
         else $innerView = $protocol->innerView();
@@ -83,7 +83,7 @@ class ParameterSerializer {
      * @param array $parameters The parameters.
      * @return string|array
      */
-    private static function serializeValue(Protocol $protocol, $param, $value, $entry, array $parameters) {
+    private static function serializeValue(Protocol $protocol, $param, $value, ?DirectView $entry, array $parameters) {
         if ($param instanceof TemplateObject) {
             $isView = $param->isView();
             $param = $param->getName();
@@ -152,6 +152,8 @@ class ParameterSerializer {
                 if ($info) return $param . ': "' . $info["view"]->idc() . '"';
                 else return $param . ': ""';
             }
+        } else if (is_array($value)) {
+            return $param . ': "' . Tools::jsonEncode($value) . '"';
         } else {
             return $param . ': ' . (is_bool($value) ? ($value ? 'true' : 'false') : $value);
         }
