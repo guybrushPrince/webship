@@ -198,24 +198,5 @@ class ParameterSerializer {
             return $c;
         }, []);
     }
-
-    /**
-     * Unpreserve the keys of a preserved array.
-     * @param array $a The array.
-     * @return array
-     */
-    public static function unpreserveArrayKeys(array $a) : array {
-        return array_reduce(array_keys($a), function (array $c, $k) use ($a) {
-            $v = (is_array($a[$k]) ? self::unpreserveArrayKeys($a[$k]) : $a[$k]);
-            if (Tools::startsWith('i', $k)) {
-                $n = substr($k, 1);
-                if (intval($n) . '' === $n) $c[intval($n)] = $v;
-                else $c[$k] = $v;
-            } else $c[$k] = $v;
-
-            $c[is_int($k) ? 'i' . $k : $k] = (is_array($a[$k]) ? self::preserveArrayKeys($a[$k]) : $a[$k]);
-            return $c;
-        }, []);
-    }
 }
 ?>
