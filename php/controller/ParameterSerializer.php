@@ -119,6 +119,7 @@ class ParameterSerializer {
                         if (is_string($field)) $field = '"' . $field . '"';
                         else if (is_bool($field)) $field = ($field ? 'true' : 'false');
                         else if (is_object($field)) $field = Tools::jsonEncode(self::handleObject($field));
+                        else if (is_array($field)) $field = Tools::jsonEncode($field);
                         return $key . ': ' . $field;
                     }
                 }, array_keys($value))) . '}';
@@ -152,8 +153,6 @@ class ParameterSerializer {
                 if ($info) return $param . ': "' . $info["view"]->idc() . '"';
                 else return $param . ': ""';
             }
-        } else if (is_array($value)) {
-            return $param . ': "' . Tools::jsonEncode($value) . '"';
         } else {
             return $param . ': ' . (is_bool($value) ? ($value ? 'true' : 'false') : $value);
         }
