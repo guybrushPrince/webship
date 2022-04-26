@@ -119,7 +119,7 @@ class ParameterSerializer {
                         if (is_string($field)) $field = '"' . $field . '"';
                         else if (is_bool($field)) $field = ($field ? 'true' : 'false');
                         else if (is_object($field)) $field = Tools::jsonEncode(self::handleObject($field));
-                        else if (is_array($field)) $field = Tools::jsonEncode($field);
+                        else if (is_array($field)) $field = Tools::jsonEncode(self::preserveArrayKeys($field));
                         return $key . ': ' . $field;
                     }
                 }, array_keys($value))) . '}';
@@ -185,6 +185,37 @@ class ParameterSerializer {
      */
     public static function collect(array $fields = []) {
         return array_fill_keys($fields, $fields);
+    }
+
+    /**
+     * Preserves the keys of an array.
+     * @param array $a The array.
+     * @return array
+     */
+    private static function preserveArrayKeys(array $a) : array {
+        return array_reduce(array_keys($a), function (array $c, $k) use ($a) {
+            $c[is_int($k) ? 'i' . $k : $k] = (is_array($a[$k]) ? self::preserveArrayKeys($a[$k]) : $a[$k]);
+            return $c;
+        }, []);
+    }
+
+    /**
+     * Unpreserve the keys of a preserved array.
+     * @param array $a The array.
+     * @return array
+     */
+    public static function unpreserveArrayKeys(array $a) : array {
+        return array_reduce(array_keys($a), function (array $c, $k) use ($a) {
+            $v = (is_array($a[$k]) ? self::unpreserveArrayKeys($a[$k]) : $a[$k]);
+            if (Tools::startsWith('i', $k)) {
+                $n = substr($k, 1);
+                if (intval($n) . '' === $n) $c[intval($n)] = $v;
+                else $c[$k] = $v;
+            } else $c[$k] = $v;
+
+            $c[is_int($k) ? 'i' . $k : $k] = (is_array($a[$k]) ? self::preserveArrayKeys($a[$k]) : $a[$k]);
+            return $c;
+        }, []);
     }
 }
 ?>
