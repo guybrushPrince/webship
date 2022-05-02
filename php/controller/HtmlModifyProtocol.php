@@ -36,7 +36,8 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     $anonymousProtocol = $modify["protocol"]; // It is a template object
                     if ($anonymousProtocol instanceof TemplateObject) {
                         $f = 'con["' . $anonymousProtocol->getName() . '"]';
-                        return 'if (isFunction(' . $f . ')) ' . $f . '(result);';
+                        return 'result = (typeof result !== "undefined") ? result : undefined;' .
+                            'if (isFunction(' . $f . ')) ' . $f . '(result);';
                     } else return '';
                 }
                 case 'alert': {

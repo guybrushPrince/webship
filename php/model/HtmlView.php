@@ -196,6 +196,17 @@ class HtmlView extends View {
         return $pro;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function firstProtocol(int $event, array $params = []) {
+        $pro = new HtmlEventProtocol($event, $this, $params);
+        if (!$this->uniqueId) $this->uniqueId = $this->generateId();
+        array_unshift($this->protocols, $pro);
+        $pro = $pro->modify();
+        return $pro;
+    }
+
     // Short cuts
 
     /**
