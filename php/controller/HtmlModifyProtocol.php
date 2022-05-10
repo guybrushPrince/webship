@@ -143,7 +143,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
                         $data = '';
-                        if ($modify["data"])
+                        if ($modify["data"]) {
                             $data = ', ' . Tools::jsonEncode(array_reduce(array_keys($modify["data"]),
                                 function (array $values, $param) use ($modify) {
                                     $value = $modify["data"][$param];
@@ -156,7 +156,10 @@ class HtmlModifyProtocol extends ModifyProtocol {
                                     }
                                     return $values;
                                 }, []));
-                        return $this->createViewSelector($view) . '.trigger("' . $modify["event"] . '"' . $data . ');';
+                        }
+                        $event = $modify["event"];
+                        if ($event instanceof TemplateObject) $event = '" + con["' . $event->getName() . '"] + "';
+                        return $this->createViewSelector($view) . '.trigger("' . $event . '"' . $data . ');';
                     } else {
                         return '';
                     }
@@ -186,7 +189,13 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'removeClasses': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        return $this->createViewSelector($view) . '.removeClass("' . implode(' ', $modify["classes"]) . '");';
+                        $classes = array_map(function($c) {
+                            if (is_string($c)) return $c;
+                            else if ($c instanceof TemplateObject) {
+                                return '" + con["' . $c->getName() . '"] + "';
+                            }
+                        }, $modify["classes"]);
+                        return $this->createViewSelector($view) . '.removeClass("' . implode(' ', $classes) . '");';
                     } else {
                         return '';
                     }
