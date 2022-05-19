@@ -284,7 +284,7 @@ class HtmlView extends View {
      * @param array|string $classes Classes.
      * @return FormHtmlView
      */
-    public function form($action, $method, $classes = array()) {
+    public function form(string $action = '', string $method = '', $classes = array()) {
         $classes = is_array($classes) ? $classes : array($classes);
         $formView = new FormHtmlView($action, $method, $classes);
         $this->add($formView);
