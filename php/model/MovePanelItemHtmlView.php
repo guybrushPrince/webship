@@ -9,7 +9,7 @@ include_once dirname(__FILE__) . '/HtmlView.php';
 class MovePanelItemHtmlView extends PanelItemHtmlView {
 
     /**
-     * Whether it has a delete button or not.
+     * If the delete-symbol is shown.
      * @var bool
      */
     private bool $hasDelete = false;
@@ -22,10 +22,11 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
 
     /**
      * MovePanelItemHtmlView constructor.
-     * @param bool $hasDelete
-     * @param array|string $classes
+     * @param bool $hasDelete If it has the delete button.
+     * @param bool $autoDelete If the delete button automatically removes this item.
+     * @param string[]|string $classes Some classes.
      */
-    public function __construct($hasDelete = false, $classes = array()) {
+    public function __construct(bool $hasDelete = false, bool $autoDelete = false, $classes = []) {
         $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('movable'), $classes));
         $this->hasDelete = $hasDelete;
@@ -81,7 +82,7 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
         if ($hasDelete) {
             $this->js('$("' . $this->idc() . '-delete' . '.move.delete").click(function(event) {' .
                 '$(event.target).trigger("' . Event::MOVEDELETE . '");' .
-                '$(event.target).parent().remove();' .
+                ($autoDelete ? '$(event.target).parent().remove();' : '') .
                 '});');
         }
     }

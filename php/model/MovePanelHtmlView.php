@@ -60,13 +60,14 @@ class MovePanelHtmlView extends PanelHtmlView {
 
     /**
      * Create an item.
-     * @param boolean $hasDelete Whether the item has a delete or not.
-     * @param array|string $classes A set of classes.
+     * @param bool $hasDelete Whether the item has a delete or not.
+     * @param bool $autoDelete If the delete button automatically removes the item.
+     * @param array $classes A set of classes.
      * @return MovePanelItemHtmlView
      */
-    public function item($hasDelete = false, $classes = array()) : MovePanelItemHtmlView {
+    public function item($hasDelete = false, bool $autoDelete = false, $classes = []) : MovePanelItemHtmlView {
         $classes = is_array($classes) ? $classes : array($classes);
-        $itemView = new MovePanelItemHtmlView($hasDelete, $classes);
+        $itemView = new MovePanelItemHtmlView($hasDelete, $autoDelete, $classes);
         $this->add($itemView);
         return $itemView;
     }
