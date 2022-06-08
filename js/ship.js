@@ -94,3 +94,7 @@ let addScript = (res) => {
     $("body").append(s);
     s.remove();
 };
+
+$(document).bind("DOMNodeRemoved", function(e) {
+    $(e.target).trigger("remove");
+});
