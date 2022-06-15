@@ -56,6 +56,8 @@ class ParameterSerializer {
                             $selector .= '.is(":checked")';
                         } else if ($view instanceof EditableHtmlView) {
                             $selector .= '.html()';
+                        } else if ($view instanceof CodeEditorHtmlView) {
+                            $selector = 'cm' . $view->id() . '.getValue()';
                         } else {
                             $selector .= '.val()';
                         }

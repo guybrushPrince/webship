@@ -94,3 +94,11 @@ let addScript = (res) => {
     $("body").append(s);
     s.remove();
 };
+let clearPaste = (e) => {
+    let paste = (e.clipboardData || window.clipboardData).getData('text');
+    let i = e.target;
+    let st = i.selectionStart;
+    let en = i.selectionEnd;
+    i.value = i.value.substring(0, st) + paste + i.value.substring(en, i.value.length);
+    e.preventDefault();
+};

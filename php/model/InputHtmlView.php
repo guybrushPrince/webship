@@ -83,6 +83,7 @@ class InputHtmlView extends HtmlView {
             'height: 50px', 'width: 100%', 'font-family: Roboto Condensed, Roboto, HelveticaNeue, sans-serif',
             'font-size: 16px'));
         $this->style(Tools::css($coreSelector, '[type="checkbox"]', 'height: 25px'));
+        $this->js('$("' . $this->idc() . '").on("paste", clearPaste);');
     }
 
     /**
