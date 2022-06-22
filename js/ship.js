@@ -95,10 +95,22 @@ let addScript = (res) => {
     s.remove();
 };
 let clearPaste = (e) => {
+    e = (e.originalEvent || e);
     let paste = (e.clipboardData || window.clipboardData).getData('text');
     let i = e.target;
     let st = i.selectionStart;
     let en = i.selectionEnd;
-    i.value = i.value.substring(0, st) + paste + i.value.substring(en, i.value.length);
+    let val = '';
+    if ('value' in i) val = i.value;
+    else val = i.innerHTML;
+    val = val.substring(0, st) + paste + val.substring(en, val.length);
+    if ('value' in i) i.value = val;
+    else i.innerHTML = val;
     e.preventDefault();
+};
+let resizeHeight = function(e) {
+    if ('target' in e) e = this;
+    let min = 14.5
+    $(e).height(min + "px");
+    $(e).height(Math.max(min, e.scrollHeight) + "px");
 };
