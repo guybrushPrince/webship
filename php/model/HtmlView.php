@@ -331,5 +331,18 @@ class HtmlView extends View {
         $this->classes[] = $class;
     }
 
+    /**
+     * Find a set of views by a selector.
+     * @param string $selector The selector.
+     * @return HtmlView[]
+     */
+    public function find(string $selector) : array {
+        $classes = (!Tools::isEmpty($this->classes) ? '.' : '') . implode('.', $this->classes);
+        $res = strpos($selector, $classes) >= 0 ? [$this] : [];
+        return array_reduce($this->subviews, function($res, HtmlView $view) use ($selector) {
+            return array_merge($res, $view->find($selector));
+        }, $res);
+    }
+
 }
 ?>
