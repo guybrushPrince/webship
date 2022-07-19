@@ -118,7 +118,7 @@ abstract class DashboardItem extends CObject {
             text(Language::GERMAN,  'Breite');
         $selXDim = $view->add(new SelectHtmlView('xDimension', 'xDimension'))->ref('xDimension', 'value');
         $selXDim->each(range(1, $cols), function (SelectHtmlView $select, int $col) use ($item) {
-            $select->option($col, [], $item && $item->getXPosition() === $col)->
+            $select->option($col, [], $item && $item->getXDimension() === $col)->
                 texts()->text(View::getLanguage(), $col);
         });
 
@@ -127,7 +127,7 @@ abstract class DashboardItem extends CObject {
             text(Language::GERMAN,  'Höhe');
         $selYDim = $view->add(new SelectHtmlView('yDimension', 'yDimension'))->ref('yDimension', 'value');
         $selYDim->each(range(1, $rows), function (SelectHtmlView $select, int $row) use ($item) {
-            $select->option($row, [], $item && $item->getYPosition() === $row)->
+            $select->option($row, [], $item && $item->getYDimension() === $row)->
                 texts()->text(View::getLanguage(), $row);
         });
 
@@ -136,7 +136,7 @@ abstract class DashboardItem extends CObject {
             text(Language::GERMAN,  'X-Position');
         $selXPos = $view->add(new SelectHtmlView('xPosition', 'xPosition'))->ref('xPosition', 'value');
         $selXPos->each(range(1, $cols), function (SelectHtmlView $select, int $col) use ($item) {
-            $select->option($col, [], $item && $item->getXDimension() === $col)->
+            $select->option($col, [], $item && $item->getXPosition() === $col)->
                 texts()->text(View::getLanguage(), $col);
         });
 
@@ -145,7 +145,7 @@ abstract class DashboardItem extends CObject {
             text(Language::GERMAN,  'Y-Position');
         $selYPos = $view->add(new SelectHtmlView('yPosition', 'yPosition'))->ref('yPosition', 'value');
         $selYPos->each(range(1, $rows), function (SelectHtmlView $select, int $row) use ($item) {
-            $select->option($row, [], $item && $item->getYDimension() === $row)->
+            $select->option($row, [], $item && $item->getYPosition() === $row)->
                 texts()->text(View::getLanguage(), $row);
         });
 
