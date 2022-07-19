@@ -1,57 +1,55 @@
 <?php
 
-include_once dirname(__FILE__) . '/HtmlView.php';
-
 /**
  * Class DashboardItemHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  */
 class DashboardItemHtmlView extends HtmlView {
 
+    private ?int $colPos;
+    private int $colSpan;
+    private ?int $rowPos;
+    private int $rowSpan;
+
     /**
      * DashboardItemHtmlView constructor.
-     * @param array|string $classes
+     * @param string[]|string $classes
      */
-    public function __construct($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct(array_merge(array('dashboard-item'), $classes));
+    public function __construct(array|string $classes = [], ?int $colPos = null, int $colSpan = 1, ?int $rowPos = null,
+                                int $rowSpan = 1) {
+        $classes = is_array($classes) ? $classes : [$classes];
+        parent::__construct(array_merge(['dashboard-item'], $classes));
+        $this->colPos = $colPos;
+        $this->colSpan = $colSpan;
+        $this->rowPos = $rowPos;
+        $this->rowSpan = $rowSpan;
 
-        $coreClasses = array_diff($this->classes, $classes);
-        $coreSelector = '.' . implode('.', $coreClasses);
-
-        $this->style(Tools::css($coreSelector, '', 'display: flex', 'flex-wrap: wrap',
-            'padding: 5px'));
-
-        $this->style(Tools::css($coreSelector, array(' > ', '.box', ' > ',  '*'), 'box-sizing: border-box',
-            'padding: 10px'));
-
-        $this->style(Tools::css($coreSelector, array(' > ', '.box'), 'overflow-y: auto'));
-
-        $this->style(Tools::css($coreSelector, array(' > ', '.box', ' > ', '.closer'), 'position: absolute',
-            'right: 0', 'top: 0'));
-
-        $this->style(Tools::css($coreSelector, array(' > ', '.box', ' > ', '.pencil'), 'position: absolute',
-            'right: 20px', 'top: -2px'));
-
-        $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item', '.h-0-20'], 'padding-top: 20%'));
-        $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item', '.w-1'], 'width: 95%'));
+        $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item', ' > ', '.box'],
+            'overflow-y: auto', 'padding: 5px', 'box-sizing: border-box', 'width: 100%', 'height: 100%'));
     }
 
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
-        return parent::generateOpeningTag() . '<div class="box">';
+    public function generateOpeningTag() : string {
+        $id = $this->id();
+        return '<div class="' . implode(' ', array_merge($this->classes, array($id))) . '"' .
+            ($id ? ' data-id="' . $id . '"' : '') .
+            ' style="grid-column: ' .
+            ($this->colPos ? $this->colPos . ' / ': '') . 'span ' . $this->colSpan . ';' .
+            ' grid-row: ' .
+            ($this->rowPos ? $this->rowPos . ' / ': '') . 'span ' . $this->rowSpan . ';' . '"' .
+            '>' . (!Tools::isEmpty($this->subviews) ? '<div class="box">' : '');
     }
 
     /**
      * @inheritDoc
      */
-    public function generateClosingTag() {
-        return '</div>' . parent::generateClosingTag();
+    public function generateClosingTag() : string {
+        return (!Tools::isEmpty($this->subviews) ? '</div>' : '') . parent::generateClosingTag();
     }
 
-    // Short cuts
+    // Shortcuts
 
     /**
      * @return ?DashboardHtmlView
@@ -67,11 +65,10 @@ class DashboardItemHtmlView extends HtmlView {
 
     /**
      * Generate a closer view.
-     * @param array|string $classes The classes.
+     * @param string[]|string $classes The classes.
      * @return CloserHtmlView
      */
-    public function closer($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public function closer(string|array $classes = []) : CloserHtmlView {
         $closer = new CloserHtmlView($classes);
         $this->add($closer);
         return $closer;
@@ -79,11 +76,10 @@ class DashboardItemHtmlView extends HtmlView {
 
     /**
      * Generate a closer view.
-     * @param array|string $classes The classes.
+     * @param string[]|string $classes The classes.
      * @return PencilHtmlView
      */
-    public function pencil($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public function pencil(string|array $classes = []) : PencilHtmlView {
         $pencil = new PencilHtmlView($classes);
         $this->add($pencil);
         return $pencil;
@@ -92,12 +88,41 @@ class DashboardItemHtmlView extends HtmlView {
     /**
      * Create a view from the dashboard items.
      * @param DashboardItem $item The dashboard item.
-     * @param array|string $classes (optional) The classes.
+     * @param string[]|string $classes (optional) The classes.
      * @return DashboardItemHtmlView
      */
-    public static function _new(DashboardItem $item, $classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public static function _new(DashboardItem $item, array|string $classes = []) : DashboardItemHtmlView {
         return $item->createView($classes);
     }
+
+    /**
+     * @return int|null
+     */
+    public function getColPos(): ?int {
+        return $this->colPos;
+    }
+
+    /**
+     * @return int
+     */
+    public function getColSpan(): int {
+        return $this->colSpan;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getRowPos(): ?int {
+        return $this->rowPos;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRowSpan(): int {
+        return $this->rowSpan;
+    }
+
+
 }
 ?>

@@ -243,10 +243,10 @@ class HtmlView extends View {
 
     /**
      * Generate a container.
-     * @param string|array|string $classes One or more classes.
+     * @param string[]|string $classes One or more classes.
      * @return ContainerHtmlView
      */
-    public function container($classes = array()) {
+    public function container(array|string $classes = array()) : ContainerHtmlView {
         $classes = is_array($classes) ? $classes : array($classes);
         $containerView = new ContainerHtmlView($classes);
         $this->add($containerView);
