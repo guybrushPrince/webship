@@ -113,16 +113,20 @@ class DashboardHtmlView extends HtmlView {
             }
 
             // The additional dashboard sign
-            $view->plus()->ref('dashboard-plus')->access('survey-menu')->
+            /*$view->plus()->ref('dashboard-plus')->access('survey-menu')->
                 protocol(Event::CLICK)->
                 mousePosition('dashboard-menu')->
-                addClass('dashboard-menu', 'active');
+                addClass('dashboard-menu', 'active');*/
 
             $used = array_reduce($view->subviews, function(int $used, DashboardItemHtmlView $item) {
                 return $used + $item->getColSpan() * $item->getRowSpan();
             }, 0);
             for ($i = $used; $i < $cols * $rows; $i++) {
-                $view->item();
+                $it = $view->item();
+                if ($user) $it->access('survey-menu')->
+                    protocol(Event::CLICK)->
+                        mousePosition('dashboard-menu')->
+                        addClass('dashboard-menu', 'active');;
             }
         } else {
             $view->item([], 1, $cols, 1, $rows)->add(new LoadingHtmlView());

@@ -11,21 +11,27 @@ class HtmlView extends View {
 
     /**
      * Styling code.
-     * @var array: string
+     * @var string[]
      */
     protected array $styles = array();
 
     /**
      * JavaScript codes.
-     * @var array: string
+     * @var string[]
      */
     protected array $javaScripts = array();
 
     /**
      * An array of strings.
-     * @var array: string
+     * @var string[]
      */
     protected $classes;
+
+    /**
+     * Some data.
+     * @var array|null
+     */
+    protected ?array $data = null;
 
     /**
      * HtmlView constructor.
@@ -44,7 +50,11 @@ class HtmlView extends View {
     public function generateOpeningTag() {
         $id = $this->id();
         return '<div class="' . implode(' ', array_merge($this->classes, array($id))) . '"' .
-            ($id ? ' data-id="' . $id . '"' : '') . '>';
+            ($id ? ' data-id="' . $id . '"' : '') .
+            ($this->data ? ' ' . implode(' ', array_map(function($key, $val) {
+                return 'data-' . $key . '="' . $val . '"';
+            }, array_keys($this->data), $this->data)) : '') .
+            '>';
     }
 
     /**
@@ -342,6 +352,17 @@ class HtmlView extends View {
         return array_reduce($this->subviews, function($res, HtmlView $view) use ($selector) {
             return array_merge($res, $view->find($selector));
         }, $res);
+    }
+
+    /**
+     * Add a data value to the view.
+     * @param string $key The key of the data.
+     * @param string|bool|int $value The value.
+     * @return void
+     */
+    public function data(string $key, string|bool|int $value) : void {
+        if (!$this->data) $this->data = [];
+        $this->data[$key] = $value;
     }
 
 }

@@ -27,16 +27,23 @@ class SelectHtmlView extends HtmlView {
     private $disabled = false;
 
     /**
+     * Whether the select is hidden or not.
+     * @var bool
+     */
+    private bool $hidden;
+
+    /**
      * SelectHtmlView constructor.
      * @param string $id The id.
      * @param string $name The name.
      * @param array|string $classes
      */
-    public function __construct($id, $name, $classes = array()) {
+    public function __construct($id, $name, $classes = array(), bool $hidden = false) {
         $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('select'), $classes));
         $this->id = $id;
         $this->name = $name;
+        $this->hidden = $hidden;
 
         $this->option('-1')->texts()->
             text(Language::ENGLISH, 'Please select')->
@@ -66,7 +73,7 @@ class SelectHtmlView extends HtmlView {
                 $this->classes[] = "singleton";
             }
             return '<select class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '" id="' . $this->id .
-                '" name="' . $this->name . '"' . ($this->disabled ? ' disabled' : '') . '>';
+                '" name="' . $this->name . '"' . ($this->disabled ? ' disabled' : '') . ($this->hidden ? ' hidden' : '') . '>';
         }
     }
 
