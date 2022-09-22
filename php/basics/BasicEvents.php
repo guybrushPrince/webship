@@ -26,6 +26,9 @@ class BasicEvents implements EventAdder {
         HtmlTemplateProtocol::_new('Delete', 'basics')->
             delete(TemplateObject::_new('view'));
 
+        HtmlTemplateProtocol::_new('SetValue', 'basics')->
+            value(TemplateObject::_new('view'), TemplateObject::_new('value'));
+
         return true;
     }
 }

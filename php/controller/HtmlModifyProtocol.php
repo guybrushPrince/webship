@@ -130,6 +130,18 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         return $this->createViewSelector($view) . '.focus();';
                     } else return '';
                 }
+                case 'value': {
+                    $view = $this->reduceView($modify["view"]);
+                    if ($view) {
+                        $value = $modify["value"];
+                        if ($value instanceof TemplateObject) {
+                            $name = $value->getName();
+                            $mayClass = $name . 'IClass';
+                            $value = '" + ("' . $mayClass . '" in con ? con["' . $mayClass . '"] + "<::>" : "") + con["' . $name . '"] + "';
+                        }
+                        return $this->createViewSelector($view) . '.val("' . $value . '");';
+                    } else return '';
+                }
                 case 'add':
                 case 'addWithFallback':
                 case 'prepend':
@@ -171,7 +183,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     } else {
                         return '';
                     }
-                } break;
+                }
                 case 'addClasses': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
@@ -185,7 +197,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     } else {
                         return '';
                     }
-                } break;
+                }
                 case 'removeClasses': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
@@ -199,7 +211,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     } else {
                         return '';
                     }
-                } break;
+                }
                 case 'empty': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
@@ -207,7 +219,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     } else {
                         return '';
                     }
-                } break;
+                }
                 case 'removeClassesSiblings': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
@@ -221,7 +233,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     } else {
                         return '';
                     }
-                } break;
+                }
                 case 'toggleClasses': {
                     $c = 'if (typeof res === "undefined") {var res = $(result);}';
                     $classes = implode(' ', array_map(function($c) {
@@ -240,7 +252,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     } else {
                         return $c . 'res.toggleClass("' . $classes . '");';
                     }
-                } break;
+                }
                 case 'mousePosition': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
@@ -258,7 +270,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     } else {
                         return '';
                     }
-                } break;
+                }
                 /*case 'each': {
                     $array = $modify["array"];
                     $array = array_map(function($el) {

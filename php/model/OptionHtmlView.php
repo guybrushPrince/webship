@@ -31,7 +31,9 @@ class OptionHtmlView extends HtmlView {
         if ($value instanceof CObject || $value instanceof BObject ||
             (!is_string($value) && !is_int($value) && !is_float($value) && !is_numeric($value))) {
             $key = $value->getKey();
-            $value = (is_integer($key) ? ActionRegister::convertKey($key) : $key);
+            $val = (is_integer($key) ? ActionRegister::convertKey($key) : $key);
+            $class = get_class($value);
+            $value = $class . '<::>' . $val;
         }
         $this->value = $value;
         $this->selected = $selected;

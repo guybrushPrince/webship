@@ -80,6 +80,7 @@ abstract class DashboardItem extends CObject {
      * @param int $rows The number of rows.
      * @param HtmlView|null $scope The form if available.
      * @return HtmlView
+     * @throws DatabaseError
      */
     public static function createDimensionEditorView(?DashboardItem $item = null, int $cols = 6, int $rows = 4,
                                                      ?HtmlView $scope = null) : HtmlView {
