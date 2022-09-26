@@ -128,8 +128,8 @@ class DashGridHtmlView extends HtmlView {
             'let f = (e) => {' .
             'let v = $(e.target);' .
             'let p = v.parent();' .
-            'let s = ' . ($container ? '$("' . $container->idc() . '")' : 'p') . ';' .
-            'let gp = s.parent();' .
+            'let t = ' . ($container ? '$("' . $container->idc() . '")' : 'p') . ';' .
+            'let gp = t.parent();' .
             'let al = v.data("allowed");' .
             'gp.find("#xPosition").val(v.data("x"));' .
             'gp.find("#yPosition").val(v.data("y"));' .
@@ -150,8 +150,8 @@ class DashGridHtmlView extends HtmlView {
             'let s = (e) => {' .
             'let v = $(e.target);' .
             'let p = v.parent();' .
-            'let s = ' . ($container ? '$("' . $container->idc() . '")' : 'p') . ';' .
-            'let gp = s.parent();' .
+            'let t = ' . ($container ? '$("' . $container->idc() . '")' : 'p') . ';' .
+            'let gp = t.parent();' .
             'let sel = p.find(".selected");' .
             ($instruction1 ? '$("' . $instruction1->idc() . '").show();' : '') .
             ($instruction2 ? '$("' . $instruction2->idc() . '").hide();' : '') .
