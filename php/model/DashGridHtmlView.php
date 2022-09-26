@@ -8,6 +8,12 @@ class DashGridHtmlView extends HtmlView {
 
     const FREE = 0;
     const FILLED = 1;
+    const PLACEHOLDER = 2;
+
+    private int $initXPos = -1;
+    private int $initYPos = -1;
+    private int $initXDim = -1;
+    private int $initYDim = -1;
 
     /**
      * DashGridHtmlView constructor.
@@ -15,7 +21,7 @@ class DashGridHtmlView extends HtmlView {
      * @param int $cols The number of columns.
      * @param int $rows The number of rows.
      */
-    public function __construct(array|string $classes = [], int $cols = 6, int $rows = 4) {
+    private function __construct(array|string $classes = [], int $cols = 6, int $rows = 4) {
         $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['dash-grid'], $classes));
 
@@ -62,13 +68,30 @@ class DashGridHtmlView extends HtmlView {
         // Determine the user
         $user = Persistence::instance()->getUserSession() ? Persistence::instance()->getUserSession()->getUser() : null;
 
+
+        $items = DashboardItem::getAllWhere('user', $user);
+        $created = false;
+        if (!$dashItem) {
+            $dashItem = new MonitorDashboardItem(); // Any class can be used.
+            $dashItem->setXPosition(-1);
+            $dashItem->setYPosition(-1);
+            $dashItem->setXDimension(-1);
+            $dashItem->setXDimension(-1);
+            $created = true;
+        }
+
+        $firstFree = null;
+
         // All user-specific dashboard items
         if ($user) {
-            foreach (DashboardItem::getAllWhere('user', $user) as $k => $item) {
-                if ($item instanceof DashboardItem && (!$dashItem || $item->getId() !== $dashItem->getId())) {
+            foreach ($items as $k => $item) {
+                if ($item instanceof DashboardItem) {
                     for ($c = $item->getXPosition(); $c < $item->getXPosition() + $item->getXDimension(); $c++) {
                         for ($r = $item->getYPosition(); $r < $item->getYPosition() + $item->getYDimension(); $r++) {
-                            $map[$r - 1][$c - 1] = self::FILLED;
+                            if ($item->getId() !== $dashItem->getId()) $map[$r - 1][$c - 1] = self::FILLED;
+                            else {
+                                $map[$r - 1][$c - 1] = self::PLACEHOLDER;
+                            }
                         }
                     }
                 }
@@ -78,8 +101,26 @@ class DashGridHtmlView extends HtmlView {
         for ($r = 0; $r < count($map); $r++) {
             $row = $map[$r];
             for ($c = 0; $c < count($row); $c++) {
-                $view->item($row[$c], $c, $r, $map);
+                $state = $row[$c];
+                if ($state === self::FREE && !$firstFree) {
+                    $firstFree = [$c + 1, $r + 1, 1, 1];
+                    if ($created) $state = self::PLACEHOLDER;
+                }
+                $view->item($state, $c, $r, $map);
             }
+        }
+
+        if (!$created) {
+            $view->initXPos = $dashItem->getXPosition();
+            $view->initYPos = $dashItem->getYPosition();
+            $view->initXDim = $dashItem->getXDimension();
+            $view->initYDim = $dashItem->getYDimension();
+        } else if ($firstFree) {
+            $view->initXPos = $firstFree[0];
+            $view->initYPos = $firstFree[1];
+            $view->initXDim = $firstFree[2];
+            $view->initYDim = $firstFree[3];
+            $map[$view->initYPos - 1][$view->initXPos - 1] = self::PLACEHOLDER;
         }
 
         $view->js('{' .
@@ -90,6 +131,8 @@ class DashGridHtmlView extends HtmlView {
             'let al = v.data("allowed");' .
             'gp.find("#xPosition").val(v.data("x"));' .
             'gp.find("#yPosition").val(v.data("y"));' .
+            'gp.find("#xDimension").val(v.data("x"));' .
+            'gp.find("#yDimension").val(v.data("y"));' .
             ($instruction1 ? '$("' . $instruction1->idc() . '").hide();' : '') .
             ($instruction2 ? '$("' . $instruction2->idc() . '").show();' : '') .
             'p.children().unbind("click", f);' .
@@ -136,19 +179,22 @@ class DashGridHtmlView extends HtmlView {
      */
     public function item(int $state, ?int $colPos = null, ?int $rowPos = null, ?array &$map = null) : HtmlView {
         $allowed = [];
+        $cl = [];
         switch ($state) {
             case self::FILLED: {
-                $cl = 'filled';
+                $cl[] = 'filled';
             } break;
+            case self::PLACEHOLDER:
+                $cl[] = 'chosen';
             default: {
-                $cl = 'free';
+                $cl[] = 'free';
                 $allowed[$colPos . '-' . $rowPos] = [$colPos, $rowPos];
                 for ($r = $rowPos; $r < count($map); $r++) {
                     $row = $map[$r];
                     for ($c = $colPos; $c < count($row); $c++) {
                         $cR = max($r - 1, $rowPos);
                         $cC = max($c - 1, $colPos);
-                        if ($map[$r][$c] === self::FREE) {
+                        if ($map[$r][$c] === self::FREE || $map[$r][$c] === self::PLACEHOLDER) {
                             if (($cR === $r || array_key_exists($c . '-' . $cR, $allowed)) &&
                                 ($cC === $c || array_key_exists($cC . '-' . $r, $allowed))) {
                                 $allowed[$c . '-' . $r] = [$c, $r];
@@ -165,5 +211,35 @@ class DashGridHtmlView extends HtmlView {
         $this->add($view);
         return $view;
     }
+
+    /**
+     * @return int
+     */
+    public function getInitXPos() : int {
+        return $this->initXPos;
+    }
+
+    /**
+     * @return int
+     */
+    public function getInitYPos() : int {
+        return $this->initYPos;
+    }
+
+    /**
+     * @return int
+     */
+    public function getInitXDim() : int {
+        return $this->initXDim;
+    }
+
+    /**
+     * @return int
+     */
+    public function getInitYDim() : int {
+        return $this->initYDim;
+    }
+
+
 }
 ?>

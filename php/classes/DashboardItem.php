@@ -92,12 +92,26 @@ abstract class DashboardItem extends CObject {
             'height: ' . (300 * ($rows / $cols)) . 'px'));
         $view->style(Tools::css('.settings', [' ', '.hidden'], 'display: none'));
 
+        $instruction1 = new HtmlView();
+        $instruction1->ref('instruction1');
+        $instruction1->texts()->
+            text(Language::ENGLISH, 'Please select the desired position of the upper left corner of your dashboard item.')->
+            text(Language::GERMAN,  'Bitte wählen Sie die gewünschte Position der oberen, linken Ecke Ihres Dashboard-Items.');
+
+        $instruction2 = new HtmlView('hidden');
+        $instruction2->ref('instruction2');
+        $instruction2->texts()->
+            text(Language::ENGLISH, 'Please select the desired lower right corner of your dashboard item.')->
+            text(Language::GERMAN,  'Bitte wählen Sie die gewünschte untere, rechte Ecke Ihres Dashboard-Items.');
+
+        $dashGrid = DashGridHtmlView::create($item, $cols, $rows, $instruction1, $instruction2);
+
         $view->add(new FormLabelHtmlView('xDimension', 'hidden'))->texts()->
             text(Language::ENGLISH, 'Width')->
             text(Language::GERMAN,  'Breite');
         $selXDim = $view->add(new SelectHtmlView('xDimension', 'xDimension', [], true))->ref('xDimension', 'value');
-        $selXDim->each(range(1, $cols), function (SelectHtmlView $select, int $col) use ($item) {
-            $select->option($col, [], $item && $item->getXDimension() === $col)->
+        $selXDim->each(range(1, $cols), function (SelectHtmlView $select, int $col) use ($dashGrid) {
+            $select->option($col, [], $dashGrid->getInitXDim() === $col)->
                 texts()->text(View::getLanguage(), $col);
         });
 
@@ -105,8 +119,8 @@ abstract class DashboardItem extends CObject {
             text(Language::ENGLISH, 'Height')->
             text(Language::GERMAN,  'Höhe');
         $selYDim = $view->add(new SelectHtmlView('yDimension', 'yDimension', [], true))->ref('yDimension', 'value');
-        $selYDim->each(range(1, $rows), function (SelectHtmlView $select, int $row) use ($item) {
-            $select->option($row, [], $item && $item->getYDimension() === $row)->
+        $selYDim->each(range(1, $rows), function (SelectHtmlView $select, int $row) use ($dashGrid) {
+            $select->option($row, [], $dashGrid->getInitYDim() === $row)->
                 texts()->text(View::getLanguage(), $row);
         });
 
@@ -114,8 +128,8 @@ abstract class DashboardItem extends CObject {
             text(Language::ENGLISH, 'Position X')->
             text(Language::GERMAN,  'X-Position');
         $selXPos = $view->add(new SelectHtmlView('xPosition', 'xPosition', [], true))->ref('xPosition', 'value');
-        $selXPos->each(range(1, $cols), function (SelectHtmlView $select, int $col) use ($item) {
-            $select->option($col, [], $item && $item->getXPosition() === $col)->
+        $selXPos->each(range(1, $cols), function (SelectHtmlView $select, int $col) use ($dashGrid) {
+            $select->option($col, [], $dashGrid->getInitXPos() === $col)->
                 texts()->text(View::getLanguage(), $col);
         });
 
@@ -123,24 +137,14 @@ abstract class DashboardItem extends CObject {
             text(Language::ENGLISH, 'Position Y')->
             text(Language::GERMAN,  'Y-Position');
         $selYPos = $view->add(new SelectHtmlView('yPosition', 'yPosition', [], true))->ref('yPosition', 'value');
-        $selYPos->each(range(1, $rows), function (SelectHtmlView $select, int $row) use ($item) {
-            $select->option($row, [], $item && $item->getYPosition() === $row)->
+        $selYPos->each(range(1, $rows), function (SelectHtmlView $select, int $row) use ($dashGrid) {
+            $select->option($row, [], $dashGrid->getInitYPos() === $row)->
                 texts()->text(View::getLanguage(), $row);
         });
 
-        $instruction1 = $view->add(new HtmlView());
-        $instruction1->ref('instruction1');
-        $instruction1->texts()->
-            text(Language::ENGLISH, 'Please select the desired position of the upper left corner of your dashboard item.')->
-            text(Language::GERMAN,  'Bitte wählen Sie die gewünschte Position der oberen, linken Ecke Ihres Dashboard-Items.');
-
-        $instruction2 = $view->add(new HtmlView('hidden'));
-        $instruction2->ref('instruction2');
-        $instruction2->texts()->
-            text(Language::ENGLISH, 'Please select the desired lower right corner of your dashboard item.')->
-            text(Language::GERMAN,  'Bitte wählen Sie die gewünschte untere, rechte Ecke Ihres Dashboard-Items.');
-
-        $view->add(DashGridHtmlView::create($item, $cols, $rows, $instruction1, $instruction2));
+        $view->add($instruction1);
+        $view->add($instruction2);
+        $view->add($dashGrid);
 
         return $view;
     }
