@@ -58,7 +58,7 @@ class DashGridContainerHtmlView extends HtmlView {
             text(Language::ENGLISH, 'Please select the desired lower right corner of your dashboard item to set its dimensions.')->
             text(Language::GERMAN,  'Bitte wählen Sie die gewünschte untere, rechte Ecke Ihres Dashboard-Items, um seine Dimensionen festzulegen.');
 
-        $view->dashView = DashGridHtmlView::create($dashItem, $cols, $rows, $instruction1, $instruction2);
+        $view->dashView = DashGridHtmlView::create($dashItem, $cols, $rows, $instruction1, $instruction2, $view);
         $left->add($view->dashView);
 
         return $view;

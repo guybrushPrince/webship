@@ -59,7 +59,8 @@ class DashGridHtmlView extends HtmlView {
      * @throws DatabaseError
      */
     public static function create(?DashboardItem $dashItem = null, int $cols = 6, int $rows = 4,
-                                  ?HtmlView $instruction1 = null, ?HtmlView $instruction2 = null) : DashGridHtmlView {
+                                  ?HtmlView $instruction1 = null, ?HtmlView $instruction2 = null,
+                                  ?HtmlView $container = null) : DashGridHtmlView {
         $view = new DashGridHtmlView([], $cols, $rows);
 
         // Determine the map
@@ -127,7 +128,8 @@ class DashGridHtmlView extends HtmlView {
             'let f = (e) => {' .
             'let v = $(e.target);' .
             'let p = v.parent();' .
-            'let gp = p.parent();' .
+            'let s = ' . ($container ? '$("' . $container->idc() . '")' : 'p') . ';' .
+            'let gp = s.parent();' .
             'let al = v.data("allowed");' .
             'gp.find("#xPosition").val(v.data("x"));' .
             'gp.find("#yPosition").val(v.data("y"));' .
@@ -148,7 +150,8 @@ class DashGridHtmlView extends HtmlView {
             'let s = (e) => {' .
             'let v = $(e.target);' .
             'let p = v.parent();' .
-            'let gp = p.parent();' .
+            'let s = ' . ($container ? '$("' . $container->idc() . '")' : 'p') . ';' .
+            'let gp = s.parent();' .
             'let sel = p.find(".selected");' .
             ($instruction1 ? '$("' . $instruction1->idc() . '").show();' : '') .
             ($instruction2 ? '$("' . $instruction2->idc() . '").hide();' : '') .
