@@ -133,8 +133,8 @@ class DashGridHtmlView extends HtmlView {
             'let al = v.data("allowed");' .
             'gp.find("#xPosition").val(v.data("x"));' .
             'gp.find("#yPosition").val(v.data("y"));' .
-            'gp.find("#xDimension").val(v.data("x"));' .
-            'gp.find("#yDimension").val(v.data("y"));' .
+            'gp.find("#xDimension").val(1);' .
+            'gp.find("#yDimension").val(1);' .
             ($instruction1 ? '$("' . $instruction1->idc() . '").hide();' : '') .
             ($instruction2 ? '$("' . $instruction2->idc() . '").show();' : '') .
             'p.children().unbind("click", f);' .
