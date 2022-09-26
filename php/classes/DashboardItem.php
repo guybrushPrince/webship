@@ -88,23 +88,11 @@ abstract class DashboardItem extends CObject {
             $view = $scope->add(new HtmlView('settings'));
         } else $view = new HtmlView('settings');
 
-        $view->style(Tools::css('.settings', [' > ', '.dash-grid'], 'width: 300px',
+        $view->style(Tools::css('.settings', [' ', '.dash-grid'], 'width: 300px',
             'height: ' . (300 * ($rows / $cols)) . 'px'));
         $view->style(Tools::css('.settings', [' ', '.hidden'], 'display: none'));
 
-        $instruction1 = new HtmlView();
-        $instruction1->ref('instruction1');
-        $instruction1->texts()->
-            text(Language::ENGLISH, 'Please select the desired position of the upper left corner of your dashboard item.')->
-            text(Language::GERMAN,  'Bitte wählen Sie die gewünschte Position der oberen, linken Ecke Ihres Dashboard-Items.');
-
-        $instruction2 = new HtmlView('hidden');
-        $instruction2->ref('instruction2');
-        $instruction2->texts()->
-            text(Language::ENGLISH, 'Please select the desired lower right corner of your dashboard item.')->
-            text(Language::GERMAN,  'Bitte wählen Sie die gewünschte untere, rechte Ecke Ihres Dashboard-Items.');
-
-        $dashGrid = DashGridHtmlView::create($item, $cols, $rows, $instruction1, $instruction2);
+        $dashGrid = DashGridContainerHtmlView::create($item, $cols, $rows, true);
 
         $view->add(new FormLabelHtmlView('xDimension', 'hidden'))->texts()->
             text(Language::ENGLISH, 'Width')->
@@ -142,8 +130,6 @@ abstract class DashboardItem extends CObject {
                 texts()->text(View::getLanguage(), $row);
         });
 
-        $view->add($instruction1);
-        $view->add($instruction2);
         $view->add($dashGrid);
 
         return $view;

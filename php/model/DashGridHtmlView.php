@@ -150,7 +150,7 @@ class DashGridHtmlView extends HtmlView {
             'let p = v.parent();' .
             'let gp = p.parent();' .
             'let sel = p.find(".selected");' .
-            ($instruction1 ? '$("' . $instruction1->idc() . '").hide();' : '') .
+            ($instruction1 ? '$("' . $instruction1->idc() . '").show();' : '') .
             ($instruction2 ? '$("' . $instruction2->idc() . '").hide();' : '') .
             'gp.find("#xDimension").val(v.data("x") - sel.data("x") + 1);' .
             'gp.find("#yDimension").val(v.data("y") - sel.data("y") + 1);' .
