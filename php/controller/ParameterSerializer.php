@@ -196,7 +196,7 @@ class ParameterSerializer {
      */
     private static function preserveArrayKeys(array $a) : array {
         return array_reduce(array_keys($a), function (array $c, $k) use ($a) {
-            $c[is_int($k) ? 'i' . $k : $k] = (is_array($a[$k]) ? self::preserveArrayKeys($a[$k]) : $a[$k]);
+            $c[is_int($k) ? 'i' . $k : str_replace(' ', '__WS__', $k)] = (is_array($a[$k]) ? self::preserveArrayKeys($a[$k]) : $a[$k]);
             return $c;
         }, []);
     }
