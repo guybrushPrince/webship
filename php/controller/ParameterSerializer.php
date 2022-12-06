@@ -118,6 +118,7 @@ class ParameterSerializer {
                         return $key . ': ' . $selector;
                     } else {
                         if (is_int($key)) $key = 'i' . $key;
+                        else $key = str_replace(' ', '__WS__', $key);
                         if (is_string($field)) $field = '"' . $field . '"';
                         else if (is_bool($field)) $field = ($field ? 'true' : 'false');
                         else if (is_object($field)) $field = Tools::jsonEncode(self::handleObject($field));
