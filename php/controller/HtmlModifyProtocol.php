@@ -155,19 +155,24 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
                         $data = '';
-                        if ($modify["data"]) {
-                            $data = ', ' . Tools::jsonEncode(array_reduce(array_keys($modify["data"]),
-                                function (array $values, $param) use ($modify) {
-                                    $value = $modify["data"][$param];
-                                    if ($value instanceof CObject) {
-                                        $value = ParameterSerializer::handleObject($value);
-                                        $values[$param] = $value["value"];
-                                        $values[$param . 'IClass'] = $value["IClass"];
-                                    } else {
-                                        $values[$param] = $value;
-                                    }
-                                    return $values;
-                                }, []));
+                        $dataInfo = $modify["data"];
+                        if ($dataInfo) {
+                            if (!($dataInfo instanceof TemplateObject)) {
+                                $data = ', ' . Tools::jsonEncode(array_reduce(array_keys($dataInfo),
+                                    function (array $values, $param) use ($dataInfo) {
+                                        $value = $dataInfo[$param];
+                                        if ($value instanceof CObject) {
+                                            $value = ParameterSerializer::handleObject($value);
+                                            $values[$param] = $value["value"];
+                                            $values[$param . 'IClass'] = $value["IClass"];
+                                        } else {
+                                            $values[$param] = $value;
+                                        }
+                                        return $values;
+                                    }, []));
+                            } else {
+                                $data = ', con["' . $dataInfo->getName() . '"]';
+                            }
                         }
                         $event = $modify["event"];
                         if ($event instanceof TemplateObject) $event = '" + con["' . $event->getName() . '"] + "';
