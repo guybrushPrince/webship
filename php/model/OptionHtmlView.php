@@ -22,14 +22,14 @@ class OptionHtmlView extends HtmlView {
 
     /**
      * OptionHtmlView constructor.
-     * @param string|CObject|BObject $value The value.
+     * @param string|CObject|BObject|null $value The value.
      * @param array|string $classes
      * @param boolean $selected Whether this option is selected.
      */
     public function __construct($value, $classes = array(), $selected = false) {
         parent::__construct(array_merge(array('option'), $classes));
         if ($value instanceof CObject || $value instanceof BObject ||
-            (!is_string($value) && !is_int($value) && !is_float($value) && !is_numeric($value))) {
+            (!is_string($value) && !is_int($value) && !is_float($value) && !is_numeric($value) && !is_null($value))) {
             $key = $value->getKey();
             $val = (is_integer($key) ? ActionRegister::convertKey($key) : $key);
             $class = get_class($value);
