@@ -66,8 +66,14 @@ class HtmlActionProtocol extends ActionProtocol {
                         $func .= 'sysTF(taskId);})';
                         return $func;
                     } else if ($p["operation"] === "error") {
-                        return '.fail(function(result) {(function(result) {' . $p["protocol"]->generate() . '})(result);' .
-                            'sysTF(taskId);})';
+                        $func = '.fail(function(result) {';
+                        $func .= 'result = result.responseText;';
+                        if (!$isJS) $func .= '(function(result) {' . $p["protocol"]->generate() . '})(result);';
+                        else $func .= '(function(result) {addScript(result);result="";' . $p["protocol"]->generate() . '})(result);';
+                        if ($isCSV || $isPDF)
+                            $func .= 'downloadFile(result, ' . ($isPDF ? '"download.pdf"' : '"data.csv"') . ');';
+                        $func .= 'sysTF(taskId);})';
+                        return $func;
                     } else {
                         return '.always(function(result) {(function(result) {' . $p["protocol"]->generate() . '})(result);' .
                             'sysTF(taskId);})';

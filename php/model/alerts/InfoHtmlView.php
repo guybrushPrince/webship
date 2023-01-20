@@ -12,7 +12,11 @@ class InfoHtmlView extends AlertHtmlView {
     public function __construct($classes = array()) {
         parent::__construct(array_merge(['info'], $classes));
 
-        $this->style(Tools::css('.alert', '.info',
+        $this->style(Tools::css('.alert:not(.screen)', '.info',
+            'border-color: rgba(188, 232, 241, 1.0)', 'color: rgba(49, 112, 143, 1.0)',
+            'background-color: rgba(217, 237, 247, 1.0)'));
+
+        $this->style(Tools::css('.alert.screen.info', [' > ', '.a-message'],
             'border-color: rgba(188, 232, 241, 1.0)', 'color: rgba(49, 112, 143, 1.0)',
             'background-color: rgba(217, 237, 247, 1.0)'));
     }
@@ -20,11 +24,8 @@ class InfoHtmlView extends AlertHtmlView {
     /**
      * @inheritDoc
      */
-    public static function create(array $message = []) : AlertHtmlView {
-        $v = new InfoHtmlView();
-        $v->texts()->text(self::getLanguage(), (array_key_exists(self::getLanguage(), $message) ?
-            $message[self::getLanguage()] : ''));
-        return $v;
+    public static function create(array $message = [], bool $screen = false, ?AlertHtmlView $v = null) : AlertHtmlView {
+        return parent::create($message, $screen, $v ?: new InfoHtmlView());
     }
 }
 ?>
