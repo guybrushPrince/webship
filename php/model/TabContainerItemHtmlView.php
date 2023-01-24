@@ -29,7 +29,7 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
             'position: absolute', 'top: -25px', 'height: 25px', 'z-index: 2',
             'background: rgba(255, 255, 255, 1.0)', 'border: solid 1px rgba(0, 0, 0, 1.0)',
             'border-bottom: none', 'display: flex', 'align-items: center', 'padding: 0 5px',
-            'box-sizing: border-box', 'cursor: pointer'));
+            'box-sizing: border-box', 'cursor: pointer', 'border-radius: 6px 6px 0 0'));
 
         $this->style(Tools::css($coreSelector, array(' > ', '.tab-header', ' > ', '.closer'),
             'width: 25px', 'height: 25px'));
