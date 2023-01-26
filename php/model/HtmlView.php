@@ -98,8 +98,7 @@ class HtmlView extends View {
             $code .= '<script>' . TemplateProtocol::generateAll($context) . '</script>';
         }
         if ($complete) {
-            $code .= /*'<style type="text/css">' . $this->generateStyle() . '</style>' .*/
-                '<script>' . $this->generateJS() . '</script>';
+            $code .= '<script>' . $this->generateJS() . '</script>';
         }
         $code .= $this->generateClosingTag();
         $code .= ($complete ? '<style type="text/css">' . $this->generateStyle() . '</style>' : '');
