@@ -59,7 +59,7 @@ class HtmlEventProtocol extends EventProtocol {
                     $code = '(() => { let i = setInterval(';
                 }
                 if ($this->event === Event::ONLOAD) $code = '';
-                $code .= '(function(e' . ($this->event === Event::CONTENTMODIFY ? ',eData={}' : '') . ') {';
+                $code .= '(function(e' . ($this->event === Event::CONTENTMODIFY || $this->event === Event::DIRTY ? ',eData={}' : '') . ') {';
                 if ($this->event === Event::CONTEXTMENU) {
                     $code .= 'e.preventDefault();';
                 }
