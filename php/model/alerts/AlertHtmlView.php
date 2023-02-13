@@ -10,7 +10,7 @@ class AlertHtmlView extends HtmlView {
      * @param string|string[] $classes The classes.
      */
     public function __construct($classes = []) {
-        parent::__construct(array_merge(['alert'], $classes));
+        parent::__construct(array_merge(['alert'], is_array($classes) ? $classes : [ $classes ]));
 
         $this->style(Tools::css('.alert:not(.screen)', '', 'padding: 15px',
             'margin-bottom: 20px', 'margin-top: 20px', 'border: 1px solid rgba(230, 230, 230, 1.0)',
