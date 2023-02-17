@@ -18,7 +18,7 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
         parent::__construct(array_merge(array('tab'), $classes));
 
         // Add texts for the header.
-        $this->texts();
+        $this->add(new HtmlView())->add(new HtmlView('icon'))->parent()->texts();
 
         $coreClasses = array_diff($this->classes, $classes);
         $coreSelector = '.' . implode('.', $coreClasses);
@@ -30,7 +30,14 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
             'background: rgba(255, 255, 255, 1.0)', 'border: solid 1px rgba(0, 0, 0, 1.0)',
             'border-bottom: none', 'display: flex', 'align-items: center', 'padding: 0 5px',
             'box-sizing: border-box', 'cursor: pointer', 'border-radius: 6px 6px 0 0'));
-
+        $this->style(Tools::css($coreSelector, [' > ', '.tab-header', ' > ', 'div:first-child'],
+            'display: flex', 'flex-direction: row', 'flex-wrap: nowrap'));
+        $this->style(Tools::css($coreSelector, [' > ', '.tab-header', ' ', '.icon:empty'],
+            'display: none'));
+        $this->style(Tools::css($coreSelector, [' > ', '.tab-header', ' ', '.icon:not(:empty)'],
+            'margin-right: 5px'));
+        $this->style(Tools::css($coreSelector, [' > ', '.tab-header', ' ', '.icon', ' > ', 'img'],
+            'height: 15px'));
         $this->style(Tools::css($coreSelector, array(' > ', '.tab-header', ' > ', '.closer'),
             'width: 25px', 'height: 25px'));
 
@@ -66,7 +73,7 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
      */
     public function generateOpeningTag() {
         $code = parent::generateOpeningTag();
-        if ($this->subviews[0] instanceof TextView) {
+        if ($this->subviews[0] instanceof HtmlView) {
             $view = array_shift($this->subviews);
             $code .= '<div class="tab-header">' . $view->generateSafe();
             if (count($this->subviews) >= 1 && $this->subviews[0] instanceof CloserHtmlView) {
@@ -94,13 +101,24 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
 
     /**
      * Set the header of the tab.
-     * @param integer $language The language.
+     * @param int $language The language.
      * @param string $text The header.
+     * @return $this
      */
-    public function header($language, $text) {
-        if ($this->subviews[0] instanceof TextView) {
-            $this->subviews[0]->text($language, $text);
+    public function header(int $language, string $text) : TabContainerItemHtmlView {
+        if ($this->subviews[0]->subviews[1] instanceof TextView) {
+            $this->subviews[0]->subviews[1]->text($language, $text);
         }
+        return $this;
+    }
+
+    /**
+     * Enables to add an image to the tab.
+     * @param string $path The path to the image.
+     * @return $this
+     */
+    public function img(string $path) : TabContainerItemHtmlView {
+        $this->subviews[0]->subviews[0]->add(new ImageHtmlView($path));
         return $this;
     }
 
