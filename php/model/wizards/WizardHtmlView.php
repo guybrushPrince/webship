@@ -33,8 +33,14 @@ abstract class WizardHtmlView extends HtmlView {
         $this->style(Tools::css('.wizard', [' > ', '.controller', ' ', '.button'], 'display: flex',
             'flex-direction: row', 'align-items: center', 'justify-content: center', 'cursor: pointer', 'border: 0',
             'transition: 0.5s background'));
+        $this->style(Tools::css('.wizard', [' > ', '.controller', ' ', '.button.abort'],
+            'width: 50px', 'background: rgba(255, 150, 150, 1.00)'));
+        $this->style(Tools::css('.wizard', [' > ', '.controller', ' ', '.button.abort', ':hover'],
+            'background: rgba(190, 0, 0, 1.0) !important'));
         $this->style(Tools::css('.wizard', [' > ', '.controller', ' ', '.button', ' > ', 'img'],
                 'height: 20px', 'margin-left: 10px'));
+        $this->style(Tools::css('.wizard', [' > ', '.controller', ' ', '.button.abort', ' > ', 'img'],
+            'height: 20px', 'margin: 15px'));
     }
 
     /**

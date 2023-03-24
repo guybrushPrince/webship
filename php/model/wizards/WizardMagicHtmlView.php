@@ -35,6 +35,13 @@ class WizardMagicHtmlView extends HtmlView {
             $view->add($wizard);
             $wizard->ref('wizard-' . $key);
             $controller = $wizard->controller();
+            if ($key !== array_key_last($wizards)) {
+                $abortButton = $controller->add(new ButtonHtmlView('abort-' . $wizard->id(), 'abort-' . $wizard->id(), 'abort'));
+                $abortButton->add(new ImageHtmlView('/sunstone/pic/wrong.svg'));
+                $abortButton->protocol(Event::CLICK)->
+                    doIt('Delete', ['view' => $view], 'basics')->
+                    append($finishProtocol);
+            }
             if ($key !== array_key_first($wizards)) {
                 $wizard->addClass('invisible');
                 $controller->add(new ButtonHtmlView('back-' . $wizard->id(), 'back-' . $wizard->id()))->
