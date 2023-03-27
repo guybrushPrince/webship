@@ -25,7 +25,7 @@ class ContextMenuHtmlView extends MenuHtmlView {
         $this->style(Tools::css('nav' . $coreSelector, '.active', 'display: flex'));
         $this->style(Tools::css('ul' . $coreSelector, '', 'list-style-type: none',
             'display: flex', 'margin: 0', 'flex-wrap: nowrap', 'padding: 0', 'flex-direction: column'));
-        $this->style(Tools::css('ul' . $coreSelector, array(' > ', 'li'), 'width: fit-content',
+        $this->style(Tools::css('ul' . $coreSelector, array(' > ', 'li'), 'width: inherit',
             'min-height: 30px', 'height: auto', 'padding: 5px 20px', 'box-sizing: border-box', 'position: relative',
             'width: -moz-fit-content'));
     }
