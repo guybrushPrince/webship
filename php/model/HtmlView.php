@@ -70,23 +70,9 @@ class HtmlView extends View {
      */
     public function generate($complete = false, $templates = false) : string {
         if (!Tools::isEmpty($this->hints) && !Tools::isEmpty($this->hint(View::getLanguage()))) {
-            $this->js(
-                '(() => {' .
-                    'let hTO;' .
-                    'let h = false;' .
-                    '$("' . $this->idc() . '").hover(function(event) {' .
-                        'sp(event); if (event.target !== this) return;' .
-                        'hTO = setTimeout(() => {' .
-                            'if (!$("' . $this->idc() . '").exists()) return;' .
-                            'h = showHint("' . $this->idc() . '", "' . '<ul>' . implode(array_map(function ($str) {
-                                return '<li>' . str_replace('"', "'", $str) . '</li>';
-                            }, $this->hint(View::getLanguage()))) . '</ul>' . '");
-                        }, 2000);
-                    }, () => {
-                        clearTimeout(hTO);
-                        if (h !== false) hideHint(h);
-                    });' .
-                '})();');
+            $this->js('addHintListener("' . $this->idc() . '" , "<ul>' . implode(array_map(function ($str) {
+                return '<li>' . str_replace('"', "'", $str) . '</li>';
+            }, $this->hint(View::getLanguage()))) . '</ul>' . '")');
         }
         $code = $this->generateOpeningTag();
         $code .= implode(array_map(function(View $view) { return $view->generateSafe(); }, $this->subviews));

@@ -41,7 +41,7 @@ class TabContainerHtmlView extends ContainerHtmlView {
             'if ($(event.target).parent("' . $this->idc() . '").length) {' .
             'let missing = parseInt($(event.target).children(".tab-header").css("width")) + 5;' .
             'let next = $(event.target).nextAll();' .
-            '$(event.target).remove();' .
+            '$(event.target).trigger("' . Event::DELETE . '").remove();' .
             'next.children(".tab-header").each((i, t) => $(t).css("left", parseInt($(t).css("left")) - missing));' .
             'let childrenWithZ = $(this).children(".tab").map((i, c) => {return {v: c, z: parseInt($(c).css("z-index"))};});' .
             'let max = Math.max.apply(Math, childrenWithZ.map((i, c) => c.z));' .

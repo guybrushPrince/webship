@@ -66,8 +66,26 @@ let request = function(
     });
 };
 
-let showHint = (e, content) => { let i = hId(); $(".hints").trigger("19", [e, content, i]); return i; };
+let showHint = (e, content) => { let h = $(".hints"); $(h).children('.hint').remove(); let i = hId(); $(h).trigger("19", [e, content, i]); return i; };
 let hideHint = (hintId) => { $(".hints").trigger("20", [hintId]);};
+let addHintListener = (id, content) => {
+    let hTO;
+    let h = false;
+    $(id).hover(function(event) {
+        sp(event); if (event.target !== this) return;
+        hTO = setTimeout(() => {
+            if (!$(id).exists()) return;
+            h = showHint(id, content);
+        }, 1500);
+    }, () => {
+        clearTimeout(hTO);
+        if (h !== false) hideHint(h);
+    });
+    $(id).on("30", function () {
+        clearTimeout(hTO);
+        if (h !== false) hideHint(h);
+    });
+};
 
 let ms = (s,e) => {
     try {

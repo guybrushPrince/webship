@@ -82,7 +82,7 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
         if ($hasDelete) {
             $this->js('$("' . $this->idc() . '-delete' . '.move.delete").click(function(event) {' .
                 '$(event.target).trigger("' . Event::MOVEDELETE . '");' .
-                ($autoDelete ? '$(event.target).parent().remove();' : '') .
+                ($autoDelete ? '$(event.target).parent().trigger("' . Event::DELETE . '").remove();' : '') .
                 '});');
         }
     }

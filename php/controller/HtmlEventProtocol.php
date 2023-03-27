@@ -67,7 +67,7 @@ class HtmlEventProtocol extends EventProtocol {
                 }
                 if ($this->event === Event::ONLOAD) $code = '';
                 $code .= '(function(e' . ($this->event === Event::CONTENTMODIFY || $this->event === Event::DIRTY ? ',eData={}' : '') . ') {';
-                if ($this->sameTarget) $code .= 'if (e.target !== this) {e.preventDefault(); return;}';
+                if ($this->sameTarget) $code .= 'if (e.target !== this) {sp(e); e.preventDefault(); return;}';
                 if ($this->event === Event::CONTEXTMENU) {
                     $code .= 'e.preventDefault();';
                 }

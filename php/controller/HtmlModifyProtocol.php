@@ -85,7 +85,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'delete': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        return $this->createViewSelector($view) . '.remove();';
+                        return $this->createViewSelector($view) . '.trigger("' . Event::DELETE . '").remove();';
                     } else {
                         return '';
                     }
@@ -414,7 +414,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     $c .= 'before';
                     break;
                 case 'replace':
-                    $c .= 'replaceWith';
+                    $c .= 'trigger("' . Event::DELETE . '").replaceWith';
                     break;
                 case 'addWithFallback': {
                     $fallback = $this->reduceView($modify["fallback"], false);
@@ -434,7 +434,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     $c .= 'prepend';
                     break;
                 case 'delete':
-                    $c .= 'remove';
+                    $c .= 'trigger("' . Event::DELETE . '").remove';
                     break;
                 case 'text':
                     $c .= 'html';
