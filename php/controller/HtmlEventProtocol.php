@@ -15,6 +15,12 @@ class HtmlEventProtocol extends EventProtocol {
     private $delay = false;
 
     /**
+     * Whether the event should only be handled by the specified target.
+     * @var bool
+     */
+    private $sameTarget = false;
+
+    /**
      * Additional parameters.
      * @var array
      */
@@ -26,6 +32,7 @@ class HtmlEventProtocol extends EventProtocol {
     public function __construct(int $event, DirectView $parent, array $params = []) {
         parent::__construct($event, $parent, "HtmlModifyProtocol");
         $this->delay = (array_key_exists('delay', $params) ? $params['delay'] : false);
+        $this->sameTarget = (array_key_exists('sameTarget', $params) ? $params['sameTarget'] : false);
         $this->parameters = $params;
     }
 
@@ -60,6 +67,7 @@ class HtmlEventProtocol extends EventProtocol {
                 }
                 if ($this->event === Event::ONLOAD) $code = '';
                 $code .= '(function(e' . ($this->event === Event::CONTENTMODIFY || $this->event === Event::DIRTY ? ',eData={}' : '') . ') {';
+                if ($this->sameTarget) $code .= 'if (e.target !== this) {e.preventDefault(); return;}';
                 if ($this->event === Event::CONTEXTMENU) {
                     $code .= 'e.preventDefault();';
                 }

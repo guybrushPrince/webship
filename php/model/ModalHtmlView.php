@@ -15,26 +15,26 @@ class ModalHtmlView extends HtmlView {
         $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('modal', 'invisible'), $classes));
 
-        $coreClasses = array_diff($this->classes, $classes);
-        $coreSelector = '.' . implode('.', $coreClasses);
-
-        $this->add(new ContainerHtmlView(array('modal-overlay')))->ref('overlay')->
-            protocol(Event::CLICK)->
-                toggleClass($this, 'invisible');
-        $this->add(new ContainerHtmlView(array('modal-container')));
+        $overlay = $this->add(new ContainerHtmlView('modal-overlay'));
+        $overlay->ref('overlay')->
+            protocol(Event::CLICK, ['sameTarget' => true])->
+                delete($this);
+        $overlay->add(new ContainerHtmlView('modal-container'));
 
         $this->style(Tools::css('.modal.invisible', '', 'display: none !important'));
         $this->style(Tools::css('.modal', array(' > ', '.modal-overlay'), 'position: fixed',
-            'top: 0', 'left: 0', 'width: 100%', 'height: 100%', 'background: rgba(0, 0, 0, 0.5)', 'z-index: 100001'));
-        $this->style(Tools::css('.modal', array(' > ', '.modal-container'), 'position: fixed',
-            'left: 12.5%', 'top: 10%', 'width: 75%', 'max-height: 75%', 'overflow-y: auto',
+            'top: 0', 'left: 0', 'width: 100%', 'height: 100%', 'background: rgba(0, 0, 0, 0.5)', 'z-index: 100001',
+            'overflow-y: auto'));
+        $this->style(Tools::css('.modal', array(' > ', '.modal-overlay', ' > ', '.modal-container'),
+            'position: absolute',
+            'left: 12.5%', 'top: 10%', 'width: 75%', 'overflow-y: initial',
             'background: rgba(255, 255, 255, 1.0)', 'z-index: 100002', 'padding: 20px',
             '-webkit-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75)',
             '-moz-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75)',
             'box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75)'));
-        $this->style(Tools::css('.modal', [' > ', '.modal-container', ' > ', '.form'], 'width: 100%'));
+        $this->style(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' > ', '.form'], 'width: 100%'));
 
-        $this->style(Tools::css('.modal', array(' > ', '.closer'), 'position: fixed',
+        $this->style(Tools::css('.modal', array(' > ', '.modal-overlay', ' > ', '.closer'), 'position: absolute',
             'top: calc(10% - 10px)', 'right: calc(9.15% + 20px)', 'width: 30px', 'height: 30px',
             'z-index: 100003', 'background: rgba(255, 255, 255, 1.0)', 'border-radius: 45%',
             'justify-content: center', 'cursor: pointer', 'box-sizing: border-box',
@@ -54,7 +54,7 @@ class ModalHtmlView extends HtmlView {
     public function header($classes = array()) {
         $classes = is_array($classes) ? $classes : array($classes);
         $headerView = new ContainerHeaderHtmlView($classes);
-        $this->subviews[1]->add($headerView);
+        $this->subviews[0]->subviews[0]->add($headerView);
         return $headerView;
     }
 
@@ -66,7 +66,7 @@ class ModalHtmlView extends HtmlView {
     public function closer($classes = array()) {
         $classes = is_array($classes) ? $classes : array($classes);
         $closer = new CloserHtmlView($classes);
-        $this->add($closer);
+        $this->subviews[0]->add($closer);
         $closer->protocol(Event::CLICK)->
             throwevent(Event::CONTENTMODIFY, $this)->
             delete($this);
@@ -83,7 +83,7 @@ class ModalHtmlView extends HtmlView {
     public function submit($id, $formId, $classes = array()) {
         $classes = is_array($classes) ? $classes : array($classes);
         $submitter = new SubmitHtmlView($id, $formId, $classes);
-        $this->subviews[1]->add($submitter);
+        $this->subviews[0]->subviews[0]->add($submitter);
         return $submitter;
     }
 
@@ -96,7 +96,7 @@ class ModalHtmlView extends HtmlView {
     public function abort($id, $classes = array()) {
         $classes = is_array($classes) ? $classes : array($classes);
         $abort = new AbortHtmlView($id, $classes);
-        $this->subviews[1]->add($abort);
+        $this->subviews[0]->subviews[0]->add($abort);
         $abort->
             protocol(Event::CLICK)->
                 throwevent(Event::CONTENTMODIFY, $this)->
@@ -110,7 +110,7 @@ class ModalHtmlView extends HtmlView {
      * @return HtmlView
      */
     public function item(HtmlView $add) {
-        $this->subviews[1]->add($add);
+        $this->subviews[0]->subviews[0]->add($add);
         return $add;
     }
 
