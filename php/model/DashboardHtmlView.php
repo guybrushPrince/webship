@@ -69,6 +69,24 @@ class DashboardHtmlView extends HtmlView {
             'position: absolute', 'right: 20px', 'top: 0'));
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item', ' > ', '.box', ' > ', '.pencil'],
             'position: absolute', 'right: 35px', 'top: -2px'));
+
+        $this->style(Tools::css('.dashboard', [' ', '.coast-text'], 'font-family: DancingScript-Regular',
+            'font-size: 50', 'display: flex', 'align-items: center', 'justify-content: center', 'width: 100%',
+            'height: 100%', 'box-sizing: border-box'));
+        $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t1'], 'justify-content: center',
+            'padding-right: 20px', 'box-sizing: border-box'));
+        $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t2'], 'justify-content: flex-start',
+            'padding-left: 20px', 'font-size: 70px'));
+        $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t3'], 'justify-content: flex-end',
+            'padding-right: 20px', 'font-size: 90px'));
+        $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t4'], 'font-size: 100px',
+            'color: rgba(150, 202, 214, 1.0)'));
+        $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t5'], 'font-size: 40px'));
+        $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item.coast-image', ' > ', '.box'],
+            'display: flex', 'flex-direction: row', 'align-items: flex-end', 'justify-content: flex-end',
+            'overflow: hidden', 'padding: 0'));
+        $this->style(Tools::css('.dashboard', [' ', '.coast-image', ' > ', '.box', ' ', 'img'],
+            'transform: scale(1.5)', 'transform-origin: 100% 100%'));
     }
 
     /**
@@ -110,6 +128,20 @@ class DashboardHtmlView extends HtmlView {
 
                     }
                 });
+            } else {
+                //DancingScript-Regular
+                $item = $view->add(new DashboardItemHtmlView([], 1, $cols, 1, 1));
+                $item->add(new HtmlView(['coast-text', 't1']))->texts()->text(Language::GERMAN, 'Deine Befragung ist bereit');
+                $item = $view->add(new DashboardItemHtmlView([], 1, 2, 2, 1));
+                $item->add(new HtmlView(['coast-text', 't2']))->texts()->text(Language::GERMAN, 'professionell');
+                $item = $view->add(new DashboardItemHtmlView([], 1, 1, 3, 1));
+                $item->add(new HtmlView(['coast-text', 't3']))->texts()->text(Language::GERMAN, 'in');
+                $item = $view->add(new DashboardItemHtmlView([], 2, 1, 3, 1));
+                $item->add(new HtmlView(['coast-text', 't4']))->texts()->text(Language::GERMAN, 'Coast');
+                $item = $view->add(new DashboardItemHtmlView([], 1, 2, 4, 1));
+                $item->add(new HtmlView(['coast-text', 't5']))->texts()->text(Language::GERMAN, 'erstellt zu werden.');
+                $item = $view->add(new DashboardItemHtmlView('coast-image', 3, 4, 2, 3));
+                $item->add(new ImageHtmlView('/sunstone/brand/cover.png'));
             }
 
             // The additional dashboard sign

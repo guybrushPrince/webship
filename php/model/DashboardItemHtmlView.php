@@ -26,6 +26,8 @@ class DashboardItemHtmlView extends HtmlView {
 
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item', ' > ', '.box'],
             'overflow-y: auto', 'padding: 5px', 'box-sizing: border-box', 'width: 100%', 'height: 100%'));
+        $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item', ' > ', '.box', ' > ', 'img'],
+            'height: 100%'));
     }
 
     /**
