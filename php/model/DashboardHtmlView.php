@@ -88,7 +88,7 @@ class DashboardHtmlView extends HtmlView {
             'font-family: Monospace', 'font-weight: bold', 'font-size: 40', 'display: flex', 'align-items: center',
             'justify-content: center', 'width: 100%', 'height: 100%', 'box-sizing: border-box'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t1', ' > ', '.box', ' > ', 'div'],
-            'justify-content: center', 'padding-right: 20px', 'box-sizing: border-box'));
+            'justify-content: center', 'text-align: center'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t2', ' > ', '.box', ' > ', 'div'],
             'justify-content: flex-start', 'padding-left: 20px', 'font-size: 70px'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t3', ' > ', '.box', ' > ', 'div'],
