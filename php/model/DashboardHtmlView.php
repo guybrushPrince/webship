@@ -70,18 +70,31 @@ class DashboardHtmlView extends HtmlView {
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item', ' > ', '.box', ' > ', '.pencil'],
             'position: absolute', 'right: 35px', 'top: -2px'));
 
-        $this->style(Tools::css('.dashboard', [' ', '.coast-text'], 'font-family: DancingScript-Regular',
-            'font-size: 50', 'display: flex', 'align-items: center', 'justify-content: center', 'width: 100%',
-            'height: 100%', 'box-sizing: border-box'));
-        $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t1'], 'justify-content: center',
-            'padding-right: 20px', 'box-sizing: border-box'));
-        $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t2'], 'justify-content: flex-start',
-            'padding-left: 20px', 'font-size: 70px'));
-        $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t3'], 'justify-content: flex-end',
-            'padding-right: 20px', 'font-size: 90px'));
-        $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t4'], 'font-size: 100px',
-            'color: rgba(150, 202, 214, 1.0)'));
-        $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t5'], 'font-size: 40px'));
+        $this->style(Tools::css('.dashboard', [' ', '.coast-text', ' > ', '.box'],
+            'padding: 0'));
+        $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t1', ' > ', '.box'],
+            'background: rgba(236, 216, 191, 1.0)'));
+        $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t2', ' > ', '.box'],
+            'background: rgba(139, 135, 66, 1.0)'));
+        $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t3', ' > ', '.box'],
+            'background: rgba(215, 223, 221, 1.0)'));
+        $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t4', ' > ', '.box'],
+            'background: rgba(249, 231, 206, 1.0)'));
+        $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t5', ' > ', '.box'],
+            'background: rgba(150, 202, 210, 1.0)'));
+        $this->style(Tools::css('.dashboard', [' ', '.coast-text', ' > ', '.box', ' > ', 'div'],
+            'font-family: DancingScript-Regular', 'font-size: 50', 'display: flex', 'align-items: center',
+            'justify-content: center', 'width: 100%', 'height: 100%', 'box-sizing: border-box'));
+        $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t1', ' > ', '.box', ' > ', 'div'],
+            'justify-content: center', 'padding-right: 20px', 'box-sizing: border-box'));
+        $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t2', ' > ', '.box', ' > ', 'div'],
+            'justify-content: flex-start', 'padding-left: 20px', 'font-size: 70px'));
+        $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t3', ' > ', '.box', ' > ', 'div'],
+            'justify-content: flex-end', 'padding-right: 20px', 'font-size: 90px'));
+        $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t4', ' > ', '.box', ' > ', 'div'],
+            'font-size: 100px', 'color: rgba(150, 202, 214, 1.0)'));
+        $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t5', ' > ', '.box', ' > ', 'div'],
+            'font-size: 40px'));
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item.coast-image', ' > ', '.box'],
             'display: flex', 'flex-direction: row', 'align-items: flex-end', 'justify-content: flex-end',
             'overflow: hidden', 'padding: 0'));
@@ -130,16 +143,16 @@ class DashboardHtmlView extends HtmlView {
                 });
             } else {
                 //DancingScript-Regular
-                $item = $view->add(new DashboardItemHtmlView([], 1, $cols, 1, 1));
-                $item->add(new HtmlView(['coast-text', 't1']))->texts()->text(Language::GERMAN, 'Deine Befragung ist bereit');
-                $item = $view->add(new DashboardItemHtmlView([], 1, 2, 2, 1));
-                $item->add(new HtmlView(['coast-text', 't2']))->texts()->text(Language::GERMAN, 'professionell');
-                $item = $view->add(new DashboardItemHtmlView([], 1, 1, 3, 1));
-                $item->add(new HtmlView(['coast-text', 't3']))->texts()->text(Language::GERMAN, 'in');
-                $item = $view->add(new DashboardItemHtmlView([], 2, 1, 3, 1));
-                $item->add(new HtmlView(['coast-text', 't4']))->texts()->text(Language::GERMAN, 'Coast');
-                $item = $view->add(new DashboardItemHtmlView([], 1, 2, 4, 1));
-                $item->add(new HtmlView(['coast-text', 't5']))->texts()->text(Language::GERMAN, 'erstellt zu werden.');
+                $item = $view->add(new DashboardItemHtmlView(['coast-text', 't1'], 1, $cols, 1, 1));
+                $item->add(new HtmlView())->texts()->text(Language::GERMAN, 'Deine Befragung ist bereit');
+                $item = $view->add(new DashboardItemHtmlView(['coast-text', 't2'], 1, 2, 2, 1));
+                $item->add(new HtmlView())->texts()->text(Language::GERMAN, 'professionell');
+                $item = $view->add(new DashboardItemHtmlView(['coast-text', 't3'], 1, 1, 3, 1));
+                $item->add(new HtmlView())->texts()->text(Language::GERMAN, 'in');
+                $item = $view->add(new DashboardItemHtmlView(['coast-text', 't4'], 2, 1, 3, 1));
+                $item->add(new HtmlView())->texts()->text(Language::GERMAN, 'Coast');
+                $item = $view->add(new DashboardItemHtmlView(['coast-text', 't5'], 1, 2, 4, 1));
+                $item->add(new HtmlView())->texts()->text(Language::GERMAN, 'erstellt zu werden.');
                 $item = $view->add(new DashboardItemHtmlView('coast-image', 3, 4, 2, 3));
                 $item->add(new ImageHtmlView('/sunstone/brand/cover.png'));
             }
