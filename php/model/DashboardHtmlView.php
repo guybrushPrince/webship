@@ -88,7 +88,7 @@ class DashboardHtmlView extends HtmlView {
             'font-family: Monospace', 'font-weight: bold', 'font-size: 30', 'display: flex', 'align-items: center',
             'justify-content: center', 'width: 100%', 'height: 100%', 'box-sizing: border-box'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t1', ' > ', '.box', ' > ', 'div'],
-            'justify-content: center', 'text-align: center'));
+            'justify-content: center', 'text-align: center', 'letter-spacing: -2px'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t2', ' > ', '.box', ' > ', 'div'],
             'justify-content: flex-start', 'padding-left: 20px', 'font-size: 70px'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t3', ' > ', '.box', ' > ', 'div'],
@@ -99,9 +99,9 @@ class DashboardHtmlView extends HtmlView {
             'font-size: 40px'));
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item.coast-image', ' > ', '.box'],
             'display: flex', 'flex-direction: row', 'align-items: flex-end', 'justify-content: flex-end',
-            'overflow: hidden', 'padding: 0'));
+            'overflow: hidden', 'padding: 0', 'background: rgba(150, 202, 214, 1.0)'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-image', ' > ', '.box', ' ', 'img'],
-            'transform: scale(2)', 'transform-origin: 100% 100%'));
+            /*'transform: scale(2)', */'transform-origin: 100% 100%'));
     }
 
     /**
