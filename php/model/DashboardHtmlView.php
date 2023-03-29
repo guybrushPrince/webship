@@ -75,7 +75,7 @@ class DashboardHtmlView extends HtmlView {
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t1', ' > ', '.box'],
             'background: rgba(215, 223, 221, 1.0)'/*, 'background: rgba(236, 216, 191, 1.0)'*/));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t1', ' > ', '.box', ' ', 'span'],
-            'font-size: 75px', 'letter-spacing: -10px', 'font-weight: normal'));
+            'font-size: 75px', 'letter-spacing: -10px', 'font-weight: normal', 'margin-right: 20px'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t2', ' > ', '.box'],
             'background: rgba(139, 135, 66, 1.0)'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t3', ' > ', '.box'],
@@ -85,7 +85,7 @@ class DashboardHtmlView extends HtmlView {
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t5', ' > ', '.box'],
             'background: rgba(150, 202, 210, 1.0)'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', ' > ', '.box', ' > ', 'div'],
-            'font-family: Monospace', 'font-weight: bold', 'font-size: 40', 'display: flex', 'align-items: center',
+            'font-family: Monospace', 'font-weight: bold', 'font-size: 30', 'display: flex', 'align-items: center',
             'justify-content: center', 'width: 100%', 'height: 100%', 'box-sizing: border-box'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t1', ' > ', '.box', ' > ', 'div'],
             'justify-content: center', 'text-align: center'));
@@ -155,7 +155,7 @@ class DashboardHtmlView extends HtmlView {
             } else {
                 //DancingScript-Regular
                 $item = $view->add(new DashboardItemHtmlView(['coast-text', 't1'], 1, $cols, 1, 1));
-                $item->add(new HtmlView())->texts()->text(Language::GERMAN, '<p>Deine Befragung ist bereit in <span>Coast</span> erstellt zu werden.');
+                $item->add(new HtmlView())->texts()->text(Language::GERMAN, '<p><span>Coast.</span> Deine Befragung ist bereit erstellt zu werden.');
                 /*$item = $view->add(new DashboardItemHtmlView(['coast-text', 't2'], 1, 2, 2, 1));
                 $item->add(new HtmlView())->texts()->text(Language::GERMAN, 'professionell');
                 $item = $view->add(new DashboardItemHtmlView(['coast-text', 't3'], 1, 1, 3, 1));
