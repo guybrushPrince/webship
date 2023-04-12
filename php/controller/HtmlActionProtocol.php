@@ -45,12 +45,12 @@ class HtmlActionProtocol extends ActionProtocol {
             $isCSV = (preg_match('/@CSV(.*)/', $reflection->getDocComment(), $matches) >= 1);
             $name = null;
             if (preg_match('/@CSV(.*)/', $reflection->getDocComment(), $matches) >= 1) {
-                $name = trim($matches[1], " ,:\n" . PHP_EOL);
+                $name = trim($matches[1], " ,:\n\r" . PHP_EOL);
                 if ($name === "") $name = null;
             }
             $isPDF = (preg_match('/@PDF(.*)/', $reflection->getDocComment(), $matches) >= 1);
             if (preg_match('/@PDF(.*)/', $reflection->getDocComment(), $matches) >= 1) {
-                $name = trim($matches[1], " ,:\n" . PHP_EOL);
+                $name = trim($matches[1], " ,:\n\r" . PHP_EOL);
                 if ($name === "") $name = null;
             }
             $isJS = (preg_match('/@JS(.*)/', $reflection->getDocComment(), $matches) >= 1);
