@@ -72,7 +72,8 @@ class HtmlActionProtocol extends ActionProtocol {
                         else $func .= '(function(result) {addScript(result);result="";' . $p["protocol"]->generate() . '})(result);';
                         if ($isCSV || $isPDF) {
                             $d = '(new Date()).toISOString().split(/[-T:,.]/).slice(0,6).join("_")';
-                            $func .= 'downloadFile(result, ' . ($isPDF ? '"' . ($name ? $name : 'download') . '_" + ' . $d . ' + "' . '.pdf"' : '"' . ($name ? $name : 'data') . '_" + ' . $d . ' + "' . '.csv"') . ');';
+                            $func .= 'downloadFile(result, ' . ($isPDF ? '"' . ($name ? $name : 'download') . '_" + ' . $d . ' + "' . '.pdf"' :
+                                    '"' . ($name ? $name : 'data') . '_" + ' . $d . ' + "' . '.csv"') . ');';
                         }
                         $func .= 'sysTF(taskId);})';
                         return $func;
