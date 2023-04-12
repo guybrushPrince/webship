@@ -43,7 +43,16 @@ class HtmlActionProtocol extends ActionProtocol {
             $isGet = (preg_match('/@get(.*)/', $reflection->getDocComment(), $matches) >= 1);
             $without = (preg_match('/@without(.*)/', $reflection->getDocComment(), $matches) >= 1);
             $isCSV = (preg_match('/@CSV(.*)/', $reflection->getDocComment(), $matches) >= 1);
+            $name = null;
+            if (preg_match('/@CSV(.*)/', $reflection->getDocComment(), $matches) >= 1) {
+                $name = trim($matches[1], " ,:" . PHP_EOL);
+                if ($name === "") $name = null;
+            }
             $isPDF = (preg_match('/@PDF(.*)/', $reflection->getDocComment(), $matches) >= 1);
+            if (preg_match('/@PDF(.*)/', $reflection->getDocComment(), $matches) >= 1) {
+                $name = trim($matches[1], " ,:" . PHP_EOL);
+                if ($name === "") $name = null;
+            }
             $isJS = (preg_match('/@JS(.*)/', $reflection->getDocComment(), $matches) >= 1);
 
             $code = 'let taskId = nId();';
@@ -56,13 +65,15 @@ class HtmlActionProtocol extends ActionProtocol {
             $code .= 'sysTask,';
             $code .= '{taskId: taskId, title: "' . $this->title[View::getLanguage()] . '"})';
 
-            $code .= implode(array_map(function (array $p) use ($isCSV, $isPDF, $isJS) {
+            $code .= implode(array_map(function (array $p) use ($isCSV, $isPDF, $isJS, $name) {
                     if ($p["operation"] === "success") {
                         $func = '.done(function(result) {';
                         if (!$isJS) $func .= '(function(result) {' . $p["protocol"]->generate() . '})(result);';
                         else $func .= '(function(result) {addScript(result);result="";' . $p["protocol"]->generate() . '})(result);';
-                        if ($isCSV || $isPDF)
-                            $func .= 'downloadFile(result, ' . ($isPDF ? '"download.pdf"' : '"data.csv"') . ');';
+                        if ($isCSV || $isPDF) {
+                            $d = '(new Date()).toISOString().split(/[-T:,.]/).slice(0,6).join("_")';
+                            $func .= 'downloadFile(result, ' . ($isPDF ? '"' . ($name ? $name : 'download') . '_" + ' . $d . ' + "' . '.pdf"' : '"' . ($name ? $name : 'data') . '_" + ' . $d . ' + "' . '.csv"') . ');';
+                        }
                         $func .= 'sysTF(taskId);})';
                         return $func;
                     } else if ($p["operation"] === "error") {
