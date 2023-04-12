@@ -71,6 +71,9 @@ class HtmlModifyProtocol extends ModifyProtocol {
                             $modify["value"]
                             : 'result') . ';';
                 }
+                case 'reload': {
+                    return 'location.reload();';
+                }
                 case 'event': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {

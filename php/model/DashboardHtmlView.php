@@ -155,15 +155,7 @@ class DashboardHtmlView extends HtmlView {
             } else {
                 //DancingScript-Regular
                 $item = $view->add(new DashboardItemHtmlView(['coast-text', 't1'], 1, $cols, 1, 1));
-                $item->add(new HtmlView())->texts()->text(Language::GERMAN, '<p><span>Coast.</span> Deine Befragung ist bereit erstellt zu werden.');
-                /*$item = $view->add(new DashboardItemHtmlView(['coast-text', 't2'], 1, 2, 2, 1));
-                $item->add(new HtmlView())->texts()->text(Language::GERMAN, 'professionell');
-                $item = $view->add(new DashboardItemHtmlView(['coast-text', 't3'], 1, 1, 3, 1));
-                $item->add(new HtmlView())->texts()->text(Language::GERMAN, 'in');
-                $item = $view->add(new DashboardItemHtmlView(['coast-text', 't4'], 2, 1, 3, 1));
-                $item->add(new HtmlView())->texts()->text(Language::GERMAN, 'Coast');
-                $item = $view->add(new DashboardItemHtmlView(['coast-text', 't5'], 1, 2, 4, 1));
-                $item->add(new HtmlView())->texts()->text(Language::GERMAN, 'erstellt zu werden.');*/
+                $item->add(new HtmlView())->texts()->text(Language::GERMAN, '<p><span>Coast.</span> Deine Befragung ist bereit, erstellt zu werden.');
                 $item = $view->add(new DashboardItemHtmlView('coast-image', 1, $cols, 2, 3));
                 $item->add(new ImageHtmlView('/sunstone/brand/cover.png'));
             }
