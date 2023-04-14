@@ -155,7 +155,7 @@ class DashboardHtmlView extends HtmlView {
             } else {
                 //DancingScript-Regular
                 $item = $view->add(new DashboardItemHtmlView(['coast-text', 't1'], 1, $cols, 1, 1));
-                $item->add(new HtmlView())->texts()->text(Language::GERMAN, '<p><span>Coast.</span> Deine Befragung ist bereit, erstellt zu werden.');
+                $item->add(new HtmlView())->texts()->text(Language::GERMAN, '<p><span>Coast.</span> Deine Befragung ist bereit erstellt zu werden.');
                 $item = $view->add(new DashboardItemHtmlView('coast-image', 1, $cols, 2, 3));
                 $item->add(new ImageHtmlView('/sunstone/brand/cover.png'));
             }
