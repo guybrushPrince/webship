@@ -66,6 +66,18 @@ let request = function(
     });
 };
 
+let gc = function () {
+    request(
+        { views: $('[data-id]').toArray().map(d => $(d).data("id").split(" ")).flat() },
+        "POST",
+        context["apiSafe"](),
+        '_gc'
+    );
+    $('script').remove();
+    $('head style').html($('style').toArray().map(d => $(d).html()).join("\n"));
+    $('body style').remove();
+};
+
 let showHint = (e, content) => { let h = $(".hints"); $(h).children('.hint').remove(); let i = hId(); $(h).trigger("19", [e, content, i]); return i; };
 let hideHint = (hintId) => { $(".hints").trigger("20", [hintId]);};
 let addHintListener = (id, content) => {
