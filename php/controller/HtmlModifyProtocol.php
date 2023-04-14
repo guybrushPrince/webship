@@ -279,6 +279,9 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         return '';
                     }
                 }
+                case 'gc': {
+                    return 'gc();';
+                }
                 /*case 'each': {
                     $array = $modify["array"];
                     $array = array_map(function($el) {
@@ -303,9 +306,9 @@ class HtmlModifyProtocol extends ModifyProtocol {
      */
     private function reduceView($view, $class = true) {
         if (is_array($view)) {
-            $view = array_filter(array_map(function($v) use ($class) {
+            $view = Tools::flatten(array_filter(array_map(function($v) use ($class) {
                 return $this->reduceSingleView($v, $class);
-            }, $view), function($v) { return ($v ? true: false);});
+            }, $view), function($v) { return ($v ? true: false);}));
             if (count($view) > 0) return ($class ? implode(',', $view) : $view);
             return false;
         } else return $this->reduceSingleView($view, $class);
@@ -315,18 +318,23 @@ class HtmlModifyProtocol extends ModifyProtocol {
      * Reduces a single view to a string representation.
      * @param string|DirectView $view The view.
      * @param bool $class Whether the view or its class/id should be returned.
-     * @return bool|DirectView|string
+     * @return bool|DirectView|string|string[]
      */
     private function reduceSingleView($view, $class = true) {
-        $tmp_view = $view;
         if (is_string($view)) {
             $view = $this->innerView()->get($view, true); // true is important!
             if ($view !== null) $view = $view["view"];
+        } else if (is_object($view) && !($view instanceof DirectView) && !($view instanceof TemplateObject) && $this->innerView()) {
+            $view = $this->innerView()->pick($view);
         }
         if ($view !== null) {
             if ($view instanceof TemplateObject) {
                 $view->setIsView(true);
                 return $view;
+            } else if (is_array($view)) {
+                return array_map(function ($v) use ($class) {
+                    return ($class ? $v->idc() : $v);
+                }, $view);
             } else return ($class ? $view->idc() : $view);
         }
         else return false;
