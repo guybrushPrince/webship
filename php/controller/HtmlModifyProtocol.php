@@ -350,7 +350,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
         if (is_array($view)) return '$("' . rtrim(implode(',', array_map(function($v) {
             return $this->createInnerViewSelector($v);
         }, $view)), ' + "') . '")';
-        if ($view instanceof TemplateObject) return '$(con["' . $view->getName() . '"])';
+        if ($view instanceof TemplateObject) return '$(asSel(con["' . $view->getName() . '"]))';
         return '';
     }
 

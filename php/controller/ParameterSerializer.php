@@ -145,7 +145,20 @@ class ParameterSerializer {
             else $innerView = $protocol->innerView();
             return $param . ': function(result = undefined) {' . $value->generate($reducedParameters, $innerView) . '}';
         } else if (is_object($value)) {
-            return self::handleObject($value, $param);
+            if (!$isView) return self::handleObject($value, $param);
+            else {
+                if (!$protocol->innerView()) $innerView = $entry;
+                else $innerView = $protocol->innerView();
+                $views = $innerView->pick($value);
+                if ($views) {
+                    if (count($views) === 1) {
+                        return $param . ': "' . $views[0]->idc() . '"';
+                    } else {
+                        return $param . ': ' . Tools::jsonEncode(array_map(function (DirectView $v) { return $v->idc(); }, $views)) . '';
+                    }
+                }
+                else return $param . ': ""';
+            }
         } else if ($value === null) {
             return $param . ': null';
         } else if (is_string($value)) {

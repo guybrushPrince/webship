@@ -144,3 +144,6 @@ let resizeHeight = function(e) {
     $(e).height(min + "px");
     $(e).height(Math.max(min, e.scrollHeight) + "px");
 };
+let asSel = function(v) {
+    return (!Array.isArray(v) ? v : v.join(','));
+};

@@ -53,6 +53,7 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::ONKEYUP) $code .= '.keyup';
                 if ($this->event === Event::INPUT) $code .= '.on("input", ';
                 if ($this->event === Event::CONTENTMODIFY) $code .= '.on("' . Event::CONTENTMODIFY . '", ';
+                if ($this->event === Event::OBJECTMODIFY) $code .= '.on("' . Event::OBJECTMODIFY . '", ';
                 if ($this->event === Event::OPEN_LIST) $code .= '.on("' . Event::OPEN_LIST . '", ';
                 if ($this->event === Event::CLOSE_LIST) $code .= '.on("' . Event::CLOSE_LIST . '", ';
                 if ($this->event === Event::MOVEUP) $code .= '.on("' . Event::MOVEUP . '", ';
@@ -66,7 +67,7 @@ class HtmlEventProtocol extends EventProtocol {
                     $code = '(() => { let i = setInterval(';
                 }
                 if ($this->event === Event::ONLOAD) $code = '';
-                $code .= '(function(e' . ($this->event === Event::CONTENTMODIFY || $this->event === Event::DIRTY ? ',eData={}' : '') . ') {';
+                $code .= '(function(e' . ($this->event === Event::CONTENTMODIFY || $this->event === Event::OBJECTMODIFY || $this->event === Event::DIRTY ? ',eData={}' : '') . ') {';
                 if ($this->sameTarget) $code .= 'if (e.target !== this) {sp(e); e.preventDefault(); return;}';
                 if ($this->event === Event::CONTEXTMENU) {
                     $code .= 'e.preventDefault();';
@@ -87,6 +88,7 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::ONLOAD) $code .= '($("' . $this->parent->idc() . '"))';
                 if ($this->event === Event::INPUT) $code .= ')';
                 if ($this->event === Event::CONTENTMODIFY) $code .= ')';
+                if ($this->event === Event::OBJECTMODIFY) $code .= ')';
                 if ($this->event === Event::OPEN_LIST) $code .= ')';
                 if ($this->event === Event::CLOSE_LIST) $code .= ')';
                 if ($this->event === Event::MOVEUP) $code .= ')';
