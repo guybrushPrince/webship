@@ -47,7 +47,7 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
         $coreSelector = '.' . implode('.', $coreClasses);
 
         $this->style(Tools::css($coreSelector, '', 'position: relative',
-            'width: 90%'));
+            'width: 95%'));
         $this->style(Tools::css($coreSelector, ' > .move.up', 'top: 0'));
         $this->style(Tools::css($coreSelector, array(' > .move.up', ':after'), 'content: "\0025B2"',
             'width: 100%'));
@@ -58,24 +58,27 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
         $this->style(Tools::css($coreSelector, array(' > .move.delete', ':after'), 'content: "X"',
             'width: 100%'));
 
-        $this->style(Tools::css($coreSelector, [' > ', '.move-position'], 'width: 100%', 'height: 10px',
-            'display: none', 'background: rgba(255, 255, 255, 1.0)', 'border-radius: 5px',
-            'border: 1px dashed rgba(200, 200, 200, 0.5)', 'align-items: center', 'justify-content: center',
-            'transition: 0.5s'));
-        $this->style(Tools::css($coreSelector, [' > ', '.move-position', ' > ', 'img'], 'height: 10px',
-            'opacity: 0.5', 'transition: 0.5s'));
-        $this->style(Tools::css($coreSelector, [' > ', '.move-position.hover'],
+        $this->style(Tools::css($coreSelector, [' > ', '.move-position'], 'width: 100%', 'height: 0',
+            'background: rgba(224, 122, 95, 1)', 'border-radius: 5px',
+            'border: 0 dashed rgba(200, 200, 200, 0.5)', 'align-items: center', 'justify-content: center',
+            'transition: 0.5s', 'display: flex'));
+        $this->style(Tools::css($coreSelector, [' > ', '.move-position', ' > ', 'img'],
+            'height: 0', 'opacity: 0.5', 'transition: 0.5s'));
+        $this->style(Tools::css($coreSelector, ['.over.not-bottom', ' > ', '.move-position.bottom'],
+            'display: none'));
+        $this->style(Tools::css($coreSelector, ['.over.not-top', ' > ', '.move-position.top'],
+            'display: none'));
+        $this->style(Tools::css($coreSelector, ['.over:not(.in-move)', ' > ', '.move-position.hover'],
             'border: 1px solid rgba(0, 0, 0, 1.0)', 'opacity: 1.0', 'height: 50px'));
-        $this->style(Tools::css($coreSelector, [' > ', '.move-position.hover', ' > ', 'img'], 'opacity: 1.0',
-            'height: 30px'));
-        $this->style(Tools::css($coreSelector, ['.over:not(.in-move)', ' > ', '.move-position'], 'display: inherit'));
+        $this->style(Tools::css($coreSelector, ['.over:not(.in-move)', ' > ', '.move-position.hover', ' > ', 'img'],
+            'opacity: 1.0', 'height: 30px'));
+        $this->style(Tools::css($coreSelector, ['.over:not(.in-move)', ' > ', '.move-position'],
+            'height: 10px', 'border: 1px dashed rgba(200, 200, 200, 0.5)'));
+        $this->style(Tools::css($coreSelector, ['.over:not(.in-move)', ' > ', '.move-position', ' > ', 'img'],
+            'height: 10px'));
 
-        /*$this->style(Tools::css($coreSelector, ['.in-move'], 'position: fixed', 'max-width: 300px',
-            'max-height: 50px', 'background: rgba(255, 255, 255, 0.75)', 'border: 1px solid rgba(0, 0, 0, 0.5)',
-            'border-radius: 5px', 'width: 300px', 'height: 50px', 'z-index: 100000000'));*/
-        //$this->style(Tools::css($coreSelector, ['.in-move', ' > ', '*'], 'display: none'));
         $this->style(Tools::css($coreSelector, [' > ', '.drag'], 'cursor: move', 'text-align: center',
-            'position: absolute', 'right: -10%', 'width: 5%', 'box-sizing: border-box', 'height: 100%',
+            'position: absolute', 'left: -3%', 'width: 3%', 'box-sizing: border-box', 'height: 100%',
             'transition: background 0.5s', 'display: flex', 'align-items: center', 'justify-content: center',
             'border-radius: 5px'));
         $this->style(Tools::css($coreSelector, [' > ', '.drag', ':hover'], 'background: rgba(0, 0, 0, 0.25)'));
@@ -125,6 +128,7 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
      * @inheritDoc
      */
     public function generateOpeningTag() {
+        if ($this->isDraggable) $this->showMoves = false;
         $key = null;
         if ($this->relatedObject) {
             $key = $this->relatedObject->getId();
@@ -149,7 +153,7 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
      */
     public function generateClosingTag() {
         return ($this->showMoves ? '<div class="' . implode(' ', array('move', 'down', $this->id() . '-down')) . '"></div>' : '') .
-            ($this->showMoves ? '<div class="drag"><img src="' . HtmlActionProtocol::$serverURL . '/webship/pic/drag-handle.svg" alt="move-cursor"></div>' : '') .
+            ($this->isDraggable ? '<div class="drag"><img src="' . HtmlActionProtocol::$serverURL . '/webship/pic/drag-handle.svg" alt="move-cursor"></div>' : '') .
             ($this->isDraggable ? '<div class="move-position bottom"><img src="' . HtmlActionProtocol::$serverURL . '/webship/pic/move-cursor.svg" alt="move-cursor"></div>' : '') .
             parent::generateClosingTag();
     }

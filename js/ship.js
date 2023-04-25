@@ -176,6 +176,8 @@ let drag = function(p, info, im = "in-move", mcl = "movable", h = "hover", o = "
         t.removeClass(h);
         if (!t.hasClass(mcl)) t = t.closest('.' + mcl);
         t.removeClass(o);
+        t.removeClass('not-bottom');
+        t.removeClass('not-top');
 
         if (realT.hasClass(mp)) {
             if (e.dataTransfer === undefined) e.dataTransfer = e.originalEvent.dataTransfer;
@@ -202,6 +204,8 @@ let drag = function(p, info, im = "in-move", mcl = "movable", h = "hover", o = "
             if (n.length >= 1) {
                 e.preventDefault();
                 n.addClass(o);
+                if (n.next('.' + im).length >= 1) n.addClass('not-bottom');
+                if (n.prev('.' + im).length >= 1) n.addClass('not-top');
             }
             if (t.hasClass(mp)) t.addClass(h);
         }
