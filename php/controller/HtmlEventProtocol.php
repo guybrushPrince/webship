@@ -61,13 +61,16 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::MOVEDELETE) $code .= '.on("' . Event::MOVEDELETE . '", ';
                 if ($this->event === Event::NEW_FILE) $code .= '.on("' . Event::NEW_FILE . '", ';
                 if ($this->event === Event::DIRTY) $code .= '.on("' . Event::DIRTY . '", ';
+                if ($this->event === Event::DRAGDROP) $code .= '.on("' . Event::DRAGDROP . '", ';
+                if ($this->event === Event::DRAGSTART) $code .= '.on("' . Event::DRAGSTART . '", ';
                 if ($this->event === Event::CONTEXTMENU) $code .= '.on("contextmenu", ';
                 if ($this->event === Event::CLICK_OUTSIDE) $code = '$(window).click';
                 if ($this->event === Event::TIMED) {
                     $code = '(() => { let i = setInterval(';
                 }
                 if ($this->event === Event::ONLOAD) $code = '';
-                $code .= '(function(e' . ($this->event === Event::CONTENTMODIFY || $this->event === Event::OBJECTMODIFY || $this->event === Event::DIRTY ? ',eData={}' : '') . ') {';
+                $code .= '(function(e' . ($this->event === Event::CONTENTMODIFY || $this->event === Event::OBJECTMODIFY ||
+                    $this->event === Event::DIRTY || $this->event === Event::DRAGDROP || $this->event === Event::DRAGSTART ? ',eData={}' : '') . ') {';
                 if ($this->sameTarget) $code .= 'if (e.target !== this) {sp(e); e.preventDefault(); return;}';
                 if ($this->event === Event::CONTEXTMENU) {
                     $code .= 'e.preventDefault();';
@@ -97,6 +100,8 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::NEW_FILE) $code .= ')';
                 if ($this->event === Event::DIRTY) $code .= ')';
                 if ($this->event === Event::CONTEXTMENU) $code .= ')';
+                if ($this->event === Event::DRAGSTART) $code .= ')';
+                if ($this->event === Event::DRAGDROP) $code .= ')';
                 if ($this->event === Event::TIMED) {
                     $code .= ',' . ($this->parameters['interval'] * 1000) . ')})()';
                 }

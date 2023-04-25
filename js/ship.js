@@ -147,3 +147,91 @@ let resizeHeight = function(e) {
 let asSel = function(v) {
     return (!Array.isArray(v) ? v : v.join(','));
 };
+
+let drag = function(p, info, im = "in-move", mcl = "movable", h = "hover", o = "over",
+                    mp = "move-position") {
+    $(p).on('dragstart', dragMouseDown);
+    $(p).on('drag', elementDrag);
+    $(p).on('drop', dropDragElement);
+    $(p).on('dragend', closeDragElement);
+    $(p).on('dragover', overMovePosition);
+    $(p).on('dragenter', enterMovePosition);
+    $(p).on('dragleave', leaveMovePosition);
+
+    function dragMouseDown(e) {
+        if ($(p).has($(e.target)).length >= 1 || $(p).is($(e.target))) {
+            $(p).addClass(im);
+            $(p).trigger('32');
+            if (e.dataTransfer === undefined) e.dataTransfer = e.originalEvent.dataTransfer;
+            e.dataTransfer.setData('related', info.related);
+        }
+    }
+    function elementDrag(e) {
+        if ($(p).has($(e.target)).length >= 1) {}
+    }
+    function dropDragElement(e) {
+        e.preventDefault();
+        let realT;
+        let t = realT = $(e.target);
+        t.removeClass(h);
+        if (!t.hasClass(mcl)) t = t.closest('.' + mcl);
+        t.removeClass(o);
+
+        if (realT.hasClass(mp)) {
+            if (e.dataTransfer === undefined) e.dataTransfer = e.originalEvent.dataTransfer;
+            let related = e.dataTransfer.getData('related');
+            let top = realT.hasClass('top');
+            $(p).trigger('33', {
+                direction: (top ? 'before' : 'after'),
+                which: related,
+                where: t.data('related')
+            });
+        }
+    }
+    function closeDragElement(e) {
+        let t = $(e.target);
+        if (!t.hasClass(mcl)) t = t.closest('.' + mcl);
+        t.removeClass(im);
+    }
+    function enterMovePosition(e) {
+        let t = $(e.target);
+        if (!t.hasClass(im) && t.parents('.' + im).length === 0) {
+            let n;
+            if (!t.hasClass(mcl)) n = $(e.target).closest('.' + mcl);
+            else n = t;
+            if (n.length >= 1) {
+                e.preventDefault();
+                n.addClass(o);
+            }
+            if (t.hasClass(mp)) t.addClass(h);
+        }
+    }
+    function overMovePosition(e) {
+        let t = $(e.target);
+        let n;
+        if (!t.hasClass(mcl)) n = $(e.target).closest('.' + mcl);
+        else n = t;
+        if (n.length >= 1) {
+            e.preventDefault();
+       }
+    }
+    function leaveMovePosition(e) {
+        let t = $(e.target);
+        if (t.hasClass(mcl) || t.parents('.' + mcl).length >= 1) {
+            let rT = $(e.relatedTarget);
+            if (!rT.hasClass(mcl)) {
+                let c = rT.closest('.' + mcl);
+                if (c.length >= 1) rT = c;
+            }
+            let same = false;
+            if (!t.hasClass(mcl)) {
+                t.removeClass(h);
+                if ($('> .' + mp, rT).length >= 1 && rT.has(t).length >= 1) same = true;
+                t = $(t).closest('.' + mcl);
+            }
+            if (!(same || rT.eq(t).length >= 1)) {
+                t.removeClass(o);
+            }
+        }
+    }
+};
