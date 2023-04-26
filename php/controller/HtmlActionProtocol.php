@@ -69,7 +69,7 @@ class HtmlActionProtocol extends ActionProtocol {
                     if ($p["operation"] === "success") {
                         $func = '.done(function(result) {';
                         if (!$isJS) $func .= '(function(result) {' . $p["protocol"]->generate() . '})(result);';
-                        else $func .= '(function(result) {addScript(result);result="";' . $p["protocol"]->generate() . '})(result);';
+                        else $func .= '(function(result) {' . /*addScript(result);*/'result="";' . $p["protocol"]->generate() . '})(result);';
                         if ($isCSV || $isPDF) {
                             $d = '(new Date()).toISOString().split(/[-T:,.]/).slice(0,3).join("_")';
                             $func .= 'downloadFile(result, ' . ($isPDF ? '"' . ($name ? $name : 'download') . '_" + ' . $d . ' + "' . '.pdf"' :
@@ -81,7 +81,7 @@ class HtmlActionProtocol extends ActionProtocol {
                         $func = '.fail(function(result) {';
                         $func .= 'result = result.responseText;';
                         if (!$isJS) $func .= '(function(result) {' . $p["protocol"]->generate() . '})(result);';
-                        else $func .= '(function(result) {addScript(result);result="";' . $p["protocol"]->generate() . '})(result);';
+                        else $func .= '(function(result) {' . /*addScript(result);*/'result="";' . $p["protocol"]->generate() . '})(result);';
                         if ($isCSV || $isPDF)
                             $func .= 'downloadFile(result, ' . ($isPDF ? '"download.pdf"' : '"data.csv"') . ');';
                         $func .= 'sysTF(taskId);})';

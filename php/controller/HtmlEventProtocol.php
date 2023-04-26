@@ -71,7 +71,8 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::ONLOAD) $code = '';
                 $code .= '(function(e' . ($this->event === Event::CONTENTMODIFY || $this->event === Event::OBJECTMODIFY ||
                     $this->event === Event::DIRTY || $this->event === Event::DRAGDROP || $this->event === Event::DRAGSTART ? ',eData={}' : '') . ') {';
-                if ($this->sameTarget) $code .= 'if (e.target !== this) {sp(e); e.preventDefault(); return;}';
+                if ($this->sameTarget || $this->event === Event::OBJECTMODIFY)
+                    $code .= 'if (e.target !== this) {sp(e); e.preventDefault(); return;}';
                 if ($this->event === Event::CONTEXTMENU) {
                     $code .= 'e.preventDefault();';
                 }
@@ -79,10 +80,14 @@ class HtmlEventProtocol extends EventProtocol {
                     $code .= 'if (this.contains(e.relatedTarget)) return;';
                 }
                 if ($this->delay) $code .= 'let p = lastDelay.length;' . 'let l = function() {' .
-                    'if (p === lastDelay.length) { console.log(p); console.log(lastDelay.length);';
+                    'if (p === lastDelay.length) {';
+
+
                 if ($this->event !== Event::ONLOADCONTENT) $code .= $this->generateCode($this->children);
                 if ((!array_key_exists('include children', $this->parameters) ||
-                    !$this->parameters["include children"]) && $this->event !== Event::TIMED) $code .= 'sp(e);';
+                        !$this->parameters["include children"]) && $this->event !== Event::TIMED) $code .= 'sp(e);';
+
+
                 if ($this->delay) $code .= '}};' . 'lastDelay.push(l);' . 'delay(lastDelay, ' . $this->delay . ');';
                 if ($this->event === Event::TIMED) {
                     $code .= 'if ($("' . $this->parent->idc() . '").length === 0) clearInterval(i);';
