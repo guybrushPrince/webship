@@ -102,8 +102,8 @@ class InputHtmlView extends HtmlView {
                 '') .
             ($this->disabled ? ' disabled ' : '') .
             (!$this->autoComplete ? ' autocomplete="off"' : '') .
-            ($this->type !== 'checkbox' ? ' value="' : '') .
-            ' draggable="true" ondragstart="event.preventDefault();event.stopPropagation();"';
+            ' draggable="true" ondragstart="event.preventDefault();event.stopPropagation();"'
+            ($this->type !== 'checkbox' ? ' value="' : '');
     }
 
     /**
