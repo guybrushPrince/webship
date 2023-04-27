@@ -80,6 +80,7 @@ class TextHtmlView extends HtmlView {
                 ' placeholder="' . implode(' ',$this->hints[View::$language]) . '"' :
                 '') .
             ($this->disabled ? ' disabled' : '') .
+            ' draggable="true" ondragstart="event.preventDefault();event.stopPropagation();"' .
             '>';
     }
 
