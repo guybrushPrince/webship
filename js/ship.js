@@ -148,8 +148,11 @@ let asSel = function(v) {
     return (!Array.isArray(v) ? v : v.join(','));
 };
 
-let drag = function(p, info, im = "in-move", mcl = "movable", h = "hover", o = "over",
+let drag = function(p, d, info, im = "in-move", mcl = "movable", h = "hover", o = "over",
                     mp = "move-position") {
+    $(d).on('mousedown', (e) => p.draggable = true);
+    $(d).on('mouseup', (e) => p.draggable = false);
+
     $(p).on('dragstart', dragMouseDown);
     $(p).on('drag', elementDrag);
     $(p).on('drop', dropDragElement);
@@ -194,6 +197,7 @@ let drag = function(p, info, im = "in-move", mcl = "movable", h = "hover", o = "
         let t = $(e.target);
         if (!t.hasClass(mcl)) t = t.closest('.' + mcl);
         t.removeClass(im);
+        p.draggable = false;
     }
     function enterMovePosition(e) {
         let t = $(e.target);

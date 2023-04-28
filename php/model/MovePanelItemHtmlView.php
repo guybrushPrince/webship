@@ -136,13 +136,13 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
         }
 
         if ($this->isDraggable) {
-            $this->js('drag($("' . $this->idc() . '"), {related: ' . ($key !== null ? '"' . $key . '"' : "null")
+            $this->js('drag($("' . $this->idc() . '"), $("' . $this->idc() . ' > .drag"), {related: ' . ($key !== null ? '"' . $key . '"' : "null")
                 . '}, "in-move", "movable", "hover", "over", "move-position");');
         }
 
         if ($this->relatedObject) $this->data('related', $key);
         $open = parent::generateOpeningTag();
-        if ($this->isDraggable) $open = substr($open, 0, -1) . ' draggable="true"><div class="move-position top"><img src="' . HtmlActionProtocol::$serverURL . '/webship/pic/move-cursor.svg" alt="move-cursor"></div>';
+        if ($this->isDraggable) $open = substr($open, 0, -1) . '><div class="move-position top"><img src="' . HtmlActionProtocol::$serverURL . '/webship/pic/move-cursor.svg" alt="move-cursor"></div>';
         return $open .
             ($this->showMoves ? '<div class="' . implode(' ', array('move', 'up', $this->id() . '-up')) . '"></div>' : '') .
             ($this->hasDelete ? '<div class="' . implode(' ', array('move', 'delete', $this->id() . '-delete')) . '"></div>' : '');
