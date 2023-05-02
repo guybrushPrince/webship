@@ -129,6 +129,9 @@ class ParameterSerializer {
                 }, array_keys($value))) . '}';
         } else if ($value instanceof Context) {
             return $param . ': ' . $value->generate();
+        } else if ($value instanceof Script) {
+            return [$param . ': ' . $value->getCode() . '.id',
+                $param . 'IClass' . ': ' . $value->getCode() . '.class'];
         } else if ($value instanceof View) {
             return $param . ': "' . $value->idc() . '"';
         } else if ($value instanceof TemplateObject) {
