@@ -129,9 +129,9 @@ class ParameterSerializer {
                 }, array_keys($value))) . '}';
         } else if ($value instanceof Context) {
             return $param . ': ' . $value->generate();
-        } else if ($value instanceof Script) {
-            return [$param . ': ' . $value->getCode() . '.id',
-                $param . 'IClass' . ': ' . $value->getCode() . '.class'];
+        } else if ($value instanceof JSObject) {
+            return [$param . ': ' . $value->getName() . '.' . $value->getIdProp(),
+                $param . 'IClass' . ': ' . $value->getName() . '.' . $value->getClassProp()];
         } else if ($value instanceof View) {
             return $param . ': "' . $value->idc() . '"';
         } else if ($value instanceof TemplateObject) {
@@ -140,13 +140,15 @@ class ParameterSerializer {
             return [$param . ': con["' . $value->getName() . '"]',
                 $ifClass . ': ("' . $ifClassVal . '" in con ? con["' . $ifClassVal . '"] : undefined)'];
         } else if ($value instanceof Protocol) {
-            $reducedParameters = array_reduce(array_keys($parameters), function($pm, $p) use ($param, $parameters) {
+            $reducedParameters = array_reduce(array_keys($parameters), function ($pm, $p) use ($param, $parameters) {
                 if ($p !== $param) $pm[$p] = $parameters[$p];
                 return $pm;
             }, array());
             if (!$protocol->innerView()) $innerView = $entry;
             else $innerView = $protocol->innerView();
             return $param . ': function(result = undefined) {' . $value->generate($reducedParameters, $innerView) . '}';
+        } else if ($value instanceof Script) {
+            return $param . ': function(result = undefined) {' . $value->getCode() . '}';
         } else if (is_object($value)) {
             if (!$isView) return self::handleObject($value, $param);
             else {
