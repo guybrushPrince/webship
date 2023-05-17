@@ -72,12 +72,14 @@ class TextHtmlView extends HtmlView {
      * @inheritDoc
      */
     public function generateOpeningTag() {
+        $hints = $this->hints;
+        $this->hints = [];
         return '<textarea class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' .
             ($this->id ? 'id="' . $this->id . '"' : '') . ' name="' . $this->name .
             '" rows="' . $this->rows . '"' .
             ($this->max ? ' maxlength="' . $this->max . '"' : '') .
-            (in_array(View::$language, $this->hints) ?
-                ' placeholder="' . implode(' ',$this->hints[View::$language]) . '"' :
+            (array_key_exists(View::$language, $hints) ?
+                ' placeholder="' . implode(' ', $hints[View::$language]) . '"' :
                 '') .
             ($this->disabled ? ' disabled' : '') .
             '>';
