@@ -28,19 +28,19 @@ class InputHtmlView extends HtmlView {
 
     /**
      * The min
-     * @var boolean|integer
+     * @var bool|integer
      */
     private $min;
 
     /**
      * The max
-     * @var boolean|integer
+     * @var bool|integer
      */
     private $max;
 
     /**
      * The step
-     * @var boolean|integer
+     * @var bool|integer
      */
     private $step;
 
