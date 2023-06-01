@@ -16,15 +16,17 @@ class ColorHtmlView extends HtmlView {
 
     /**
      * An optional text to print on hover.
-     * @var string
+     * @var string|null
      */
-    private string $title;
+    private ?string $title;
 
     /**
      * ColorHtmlView constructor.
      * @param string $color The color.
+     * @param string[]|string $classes Some classes.
+     * @param string|null $title An optional title.
      */
-    public function __construct(string $color, $classes = array(), string $title = null) {
+    public function __construct(string $color, array|string $classes = [], ?string $title = null) {
         parent::__construct($classes);
         $this->color = $color;
         $this->title = $title;
