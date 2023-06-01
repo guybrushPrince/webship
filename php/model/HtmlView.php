@@ -34,6 +34,12 @@ class HtmlView extends View {
     protected ?array $data = null;
 
     /**
+     * Some notices.
+     * @var string[]|null
+     */
+    protected ?array $notices = null;
+
+    /**
      * HtmlView constructor.
      * @param string[]|string $classes (optional) Possible classes
      */
@@ -50,6 +56,7 @@ class HtmlView extends View {
     public function generateOpeningTag() {
         $id = $this->id();
         return '<div class="' . implode(' ', array_merge($this->classes, array($id))) . '"' .
+            ($this->notices ? ' title="' . (array_key_exists(View::getLanguage(), $this->notices) ? $this->notices[View::getLanguage()] : array_pop($this->notices)) . '"' : '') .
             ($id ? ' data-id="' . $id . '"' : '') .
             ($this->data ? ' ' . implode(' ', array_map(function($key, $val) {
                 return 'data-' . $key . '="' . $val . '"';
@@ -348,6 +355,18 @@ class HtmlView extends View {
     public function data(string $key, string|bool|int $value) : void {
         if (!$this->data) $this->data = [];
         $this->data[$key] = $value;
+    }
+
+    /**
+     * Add an notice.
+     * @param int $language The language.
+     * @param string $text The notice.
+     * @return $this
+     */
+    public function notice(int $language, string $text) : HtmlView {
+        if (!$this->notices) $this->notices = [$language => $text];
+        else $this->notices[$language] = $text;
+        return $this;
     }
 
 }
