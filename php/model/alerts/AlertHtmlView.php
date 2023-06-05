@@ -43,7 +43,7 @@ class AlertHtmlView extends HtmlView {
         $this->style(Tools::css('.alert', [' ', 'code'], 'width: 100%', 'border: 0',
             'background: rgba(255, 255, 255, 1.0)', 'border-radius: 10px', 'min-height: 100px',
             'max-height: 50%', 'overflow: auto', 'font-family: Monospace', 'font-size: 10px',
-            'display: block'));
+            'display: block', 'height: 400px'));
     }
 
     /**
