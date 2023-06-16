@@ -22,9 +22,9 @@ class PanelItemHtmlView extends HtmlView {
         $this->style(Tools::css($coreSelector, '', 'display: flex', 'flex-wrap: wrap',
             'padding-bottom: 20px'));
         $this->style(Tools::css($coreSelector, ':nth-child(even)',
-            'background: rgba(250, 250, 250, 1.0)'));
+            'background: var(--fine-system-background)'));
         $this->style(Tools::css($coreSelector, ':nth-child(odd)',
-            'background: rgba(255, 255, 255, 1.0)'));
+            'background: var(--neutral)'));
     }
 
     // Short cuts

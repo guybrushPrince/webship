@@ -28,7 +28,7 @@ class CodeEditorHtmlView extends TextHtmlView {
         $this->style(Tools::css('.code-editor', [' > ', 'textarea'], 'width: 100%',
             'font-family: Consolas, "Courier New", monospace', 'font-weight: normal', 'font-size: 14px',
             'font-feature-settings: "liga" 0, "calt" 0', 'line-height: 19px', 'letter-spacing: 0px', 'height: 190px',
-            'border: none', 'margin: none', 'background: rgba(255, 255, 230, 1.0)', 'padding: 5px 5px',
+            'border: none', 'margin: none', 'background: var(--text-editor-background)', 'padding: 5px 5px',
             'box-sizing: content-box'));
 
         $this->style(Tools::css('.code-editor', [' > ', 'textarea.text-input.resizable'],

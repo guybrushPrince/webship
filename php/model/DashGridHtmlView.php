@@ -30,22 +30,22 @@ class DashGridHtmlView extends HtmlView {
             'max-height: calc(100% - 20px)', 'column-gap: 10px', 'row-gap: 10px', 'padding: 10px 10px 10px 5px',
             'grid-auto-rows: 0', 'overflow-y: hidden', 'height: calc(100% - 20px)'));
         $this->style(Tools::css('.dash-grid', [' > ', '*'], 'justify-self: stretch',
-            'box-sizing: border-box', 'align-self: stretch', 'background: rgba(200, 200, 200, 1.0)',
+            'box-sizing: border-box', 'align-self: stretch', 'background: var(--system-background)',
             'border-radius: 5px'));
         $this->style(Tools::css('.dash-grid', [' > ', '.filled'],
-            'background: rgba(255, 0, 0, 0.125)'));
+            'background: var(--dashboard-filled)'));
         $this->style(Tools::css('.dash-grid', [' > ', '.free'], 'cursor: pointer',
             'transition: background 0.5s'));
         $this->style(Tools::css('.dash-grid', [' > ', '.free', ':hover'],
-            'background: rgba(0, 255, 0, 0.5)'));
+            'background:var(--dashboard-free-hover)'));
         $this->style(Tools::css('.dash-grid', [' > ', '.free', '.selected'],
-            'background: rgba(0, 62.5, 0, 0.5)'));
+            'background:var(--dashboard-free-selected)'));
         $this->style(Tools::css('.dash-grid', [' > ', '.free', ':not(.selected).selectable'],
-            'background: rgba(0, 0, 255, 0.125)'));
+            'background:var(--dashboard-free-selectable)'));
         $this->style(Tools::css('.dash-grid', [' > ', '.free', '.selectable', ':hover'],
-            'background: rgba(0, 0, 255, 0.5)'));
+            'background:var(--dashboard-free-selectable-hover)'));
         $this->style(Tools::css('.dash-grid', [' > ', '.free', ':not(:hover).chosen'],
-            'background: rgba(255, 125, 0, 0.5)'));
+            'background:var(--dashboard-free-chosen)'));
     }
 
     /**

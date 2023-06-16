@@ -21,7 +21,7 @@ class ChipContainerHtmlView extends ContainerHtmlView {
 
         $this->style(Tools::css($coreSelector, '', 'align-items: center'));
 
-        $this->style(Tools::css($coreSelector, array(' > ', '.chip'), 'background: rgba(255, 147, 46, 1)',
+        $this->style(Tools::css($coreSelector, array(' > ', '.chip'), 'background: var(--chip-background)',
             'align-items: center', 'font-weight: 500', 'padding: 5px 15px', 'border-radius: 45px', 'height: 45px',
             'margin: 0 5px 5px 0', 'box-sizing: border-box'));
     }

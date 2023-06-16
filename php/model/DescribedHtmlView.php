@@ -37,7 +37,7 @@ class DescribedHtmlView extends HtmlView {
         $this->style(Tools::css($coreSelector, '',
             'display: flex', 'flex-wrap: nowrap', 'flex-direction: column', 'padding-top: 20px' ,
             'align-items: flex-start', 'justify-content: flex-start', 'box-sizing: border-box'));
-        $this->style(Tools::css($coreSelector, ' > .described-description', 'width: 100%', 'color: rgba(200, 200, 200, 1.0)',
+        $this->style(Tools::css($coreSelector, ' > .described-description', 'width: 100%', 'color: var(--system-background)',
             'font-size: 10px', 'font-weight: 600', 'box-sizing: border-box'));
         $this->style(Tools::css($coreSelector, ' > .described-content', 'width: 100%',
             'box-sizing: border-box'));

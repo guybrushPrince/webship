@@ -13,35 +13,35 @@ class AlertHtmlView extends HtmlView {
         parent::__construct(array_merge(['alert'], is_array($classes) ? $classes : [ $classes ]));
 
         $this->style(Tools::css('.alert:not(.screen)', '', 'padding: 15px',
-            'margin-bottom: 20px', 'margin-top: 20px', 'border: 1px solid rgba(230, 230, 230, 1.0)',
-            'border-radius: 4px', 'color: rgba(30, 30, 30, 1.0)', 'background-color: rgba(240, 240, 240, 1.0)'));
+            'margin-bottom: 20px', 'margin-top: 20px', 'border: 1px solid var(--light-system-background)',
+            'border-radius: 4px', 'color: var(--font-dark)', 'background-color: var(--ultra-light-system-background)'));
         $this->style(Tools::css('.alert.screen', [], 'display: flex', 'flex-direction: row',
             'align-items: center', 'justify-content: center', 'position: fixed', 'width: 100%', 'height: 100%',
             'top: 0', 'left: 0', 'z-index: 10010', 'background: none'));
 
         // For screen-size alerts.
         $this->style(Tools::css('.alert.screen', [' > ', '.overlay'], 'position: fixed',
-            'top: 0', 'left: 0', 'width: 100%', 'height: 100%', 'background: rgba(0, 0, 0, 0.5)', 'z-index: 100011'));
+            'top: 0', 'left: 0', 'width: 100%', 'height: 100%', 'background: var(--window-overlay)', 'z-index: 100011'));
         $this->style(Tools::css('.alert.screen', [' > ', '.a-message'], 'width: 75%', 'max-height: 75%',
-            'background: rgba(240, 240, 240, 1.0)', 'z-index: 100012', 'padding: 20px',
-            '-webkit-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75)',
-            '-moz-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75)',
-            'box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75)', 'position: relative'));
+            'background: var(--ultra-light-system-background)', 'z-index: 100012', 'padding: 20px',
+            '-webkit-box-shadow: var(--shadow-flow-4)',
+            '-moz-box-shadow: var(--shadow-flow-4)',
+            'box-shadow: var(--shadow-flow-4)', 'position: relative'));
 
         $this->style(Tools::css('.alert.screen', [' > ', '.a-message', ' > ', '.closer'],
             'position: absolute', 'top: -15px', 'right: -15px', 'width: 30px', 'height: 30px',
-            'z-index: 100013', 'background: rgba(255, 255, 255, 1.0)', 'border-radius: 45%',
+            'z-index: 100013', 'background: var(--neutral)', 'border-radius: 45%',
             'justify-content: center', 'cursor: pointer', 'box-sizing: border-box',
-            'border: 1px solid rgba(200, 200, 200, 1.0)'));
+            'border: 1px solid var(--system-background)'));
         $this->style(Tools::css('.alert.screen', [' > ', '.a-message', ' > ', '.closer', ':hover'],
-            'background: rgba(200, 200, 200, 1.0);'));
+            'background: var(--system-background);'));
 
         $this->style(Tools::css('.alert.screen', [' ', 'iframe'], 'width: 100%', 'border: 0',
-            'background: rgba(255, 255, 255, 1.0)', 'border-radius: 10px', 'min-height: 250px',
+            'background: var(--neutral)', 'border-radius: 10px', 'min-height: 250px',
             'max-height: 500px'));
 
         $this->style(Tools::css('.alert', [' ', 'code'], 'width: 100%', 'border: 0',
-            'background: rgba(255, 255, 255, 1.0)', 'border-radius: 10px', 'min-height: 100px',
+            'background: var(--neutral)', 'border-radius: 10px', 'min-height: 100px',
             'max-height: 50%', 'overflow: auto', 'font-family: Monospace', 'font-size: 10px',
             'display: block', 'height: 400px'));
     }

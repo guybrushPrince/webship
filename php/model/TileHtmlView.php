@@ -17,20 +17,20 @@ class TileHtmlView extends HtmlView {
 
         $this->style(Tools::css('.tiles', [], 'width: 100%', 'display: flex', 'flex-wrap: wrap',
             'flex-direction: row',
-            'border: 1px solid rgba(230, 230, 230, 1.0)', 'padding: 10px 10px 0px 10px', 'box-sizing: border-box',
+            'border: 1px solid var(--light-system-background)', 'padding: 10px 10px 0px 10px', 'box-sizing: border-box',
             'justify-content: center'));
         $this->style(Tools::css('.tiles', [' > ', '.tile'], 'display: flex', 'flex-direction: column',
             'align-items: center',
-            'justify-content: flex-start', 'margin-right: 10px', 'border: 1px solid rgba(220, 220, 220, 1.0)',
+            'justify-content: flex-start', 'margin-right: 10px', 'border: 1px solid var(--system-background-hover)',
             'padding: 10px', 'box-sizing: border-box', 'cursor: pointer', 'transition: background 0.5s',
-            'text-align: center', 'margin-bottom: 10px', 'background: rgba(240, 240, 240, 1.0)'));
+            'text-align: center', 'margin-bottom: 10px', 'background: var(--ultra-light-system-background)'));
         $this->style(Tools::css('.tiles.w' . $tileWidth, [' > ', '.tile'], 'width: ' . $tileWidth . 'px',
             'max-width: ' . $tileWidth . 'px', 'height: ' . $tileWidth . 'px',
             'font-size: ' . round($tileWidth / 9, 2) . 'px'));
         $this->style(Tools::css('.tiles', [' > ', '.tile', ' > ', 'img'], 'height: 50%',
             'padding: 10px'));
         $this->style(Tools::css('.tiles', [' > ', '.tile', ':hover'],
-            'background: rgba(200, 200, 200, 1.0)'));
+            'background: var(--system-background)'));
     }
 
     /**

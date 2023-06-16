@@ -20,8 +20,8 @@ class ContextMenuHtmlView extends MenuHtmlView {
         $coreSelector = '.' . implode('.', $coreClasses);
 
         $this->style(Tools::css('nav' . $coreSelector, '', 'position: fixed', 'left: 0',
-            'top: 0', 'width: fit-content', 'display: none', 'flex-direction: column', 'background: rgba(250, 250, 250, 1.0)',
-            'z-index: 100', 'border: 1px solid rgba(200, 200, 200, 1.0)', 'width: -moz-fit-content'));
+            'top: 0', 'width: fit-content', 'display: none', 'flex-direction: column', 'background: var(--fine-system-background)',
+            'z-index: 100', 'border: 1px solid var(--system-background)', 'width: -moz-fit-content'));
         $this->style(Tools::css('nav' . $coreSelector, '.active', 'display: flex'));
         $this->style(Tools::css('ul' . $coreSelector, '', 'list-style-type: none',
             'display: flex', 'margin: 0', 'flex-wrap: nowrap', 'padding: 0', 'flex-direction: column'));

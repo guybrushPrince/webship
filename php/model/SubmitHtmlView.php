@@ -28,9 +28,9 @@ class SubmitHtmlView extends ButtonHtmlView {
         $coreClasses = array_diff($this->classes, $classes);
         $coreSelector = '.' . implode('.', $coreClasses);
 
-        $this->style(Tools::css($coreSelector, '', 'background: rgba(176, 232, 176, 0.6)', // 21, 140, 17
+        $this->style(Tools::css($coreSelector, '', 'background: var(--button-submit)',
             'border: none', 'cursor: pointer', 'transition: background 0.5s'));
-        $this->style(Tools::css($coreSelector, ':hover', 'background: rgba(176, 232, 176, 1.0)'));
+        $this->style(Tools::css($coreSelector, ':hover', 'background: var(--button-submit-hover)'));
     }
 
     // Short cuts

@@ -23,15 +23,15 @@ class ContextSubMenuHtmlView extends SubMenuHtmlView {
             'content: ""', 'padding-left: 5px'));
 
         $this->style(Tools::css('ul' . $coreSelector, '',
-            'display: none', 'list-style-type: none', 'margin: 0', 'background: rgba(250, 250, 250, 1.0)',
-            'border: 1px solid rgba(200, 200, 200, 1.0)', 'padding: 0'));
+            'display: none', 'list-style-type: none', 'margin: 0', 'background: var(--fine-system-background)',
+            'border: 1px solid var(--system-background)', 'padding: 0'));
 
         $this->style(Tools::css('ul' . $coreSelector, array(' > ', 'li'), 'width: fit-content',
             'min-height: 30px', 'height: auto', 'padding: 5px 20px', 'box-sizing: border-box', 'position: relative',
             'flex-basis: 100%', 'width: -moz-fit-content'));
 
         $this->style(Tools::css('ul' . $coreSelector, array(' > ', 'li', ':hover'),
-            'background: rgba(200, 200, 200, 1.0)'));
+            'background: var(--system-background)'));
     }
 
     // Short cuts

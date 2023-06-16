@@ -20,10 +20,10 @@ class PanelHtmlView extends HtmlView {
         $coreSelector = '.' . implode('.', $coreClasses);
 
         $this->style(Tools::css($coreSelector, '', 'width: 100%', 'padding: 20px 20px',
-            'box-sizing: border-box', 'border: solid 1px rgba(200, 200, 200, 1.0)'));
+            'box-sizing: border-box', 'border: solid 1px var(--system-background)'));
 
         $this->style(Tools::css($coreSelector, ' > .panel-item',
-            'border-bottom: dashed 1px rgba(200, 200, 200, 1)'));
+            'border-bottom: dashed 1px var(--border-6)'));
         $this->style(Tools::css($coreSelector, array(' > .panel-item', ':last-child'),
             'border-bottom: none'));
     }

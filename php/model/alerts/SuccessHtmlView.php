@@ -13,12 +13,12 @@ class SuccessHtmlView extends AlertHtmlView {
         parent::__construct(array_merge(['success'], $classes));
 
         $this->style(Tools::css('.alert:not(.screen)', '.success',
-            'border-color: rgba(214, 233, 198, 1.0)', 'color: rgba(60, 118, 61, 1.0)',
-            'background-color: rgba(223, 240, 216, 1.0)'));
+            'border-color: var(--border-success)', 'color: var(--font-success)',
+            'background-color: var(--background-success)'));
 
         $this->style(Tools::css('.alert.screen.success', [' > ', '.a-message'],
-            'border-color: rgba(214, 233, 198, 1.0)', 'color: rgba(60, 118, 61, 1.0)',
-            'background-color: rgba(223, 240, 216, 1.0)'));
+            'border-color: var(--border-success)', 'color: var(--font-success)',
+            'background-color: var(--background-success)'));
     }
 
     /**

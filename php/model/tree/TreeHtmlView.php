@@ -20,7 +20,7 @@ class TreeHtmlView extends HtmlView {
             'justify-content: flex-start'));
         $this->style(Tools::css('ul.tree', [' > ', 'li'], 'min-height: 20px', 'list-style-type: none'));
         $this->style(Tools::css('ul.tree', [' > ', 'li:not(:last-child)'],
-            'border-bottom: 1px solid rgba(220, 220, 220, 1.0)'));
+            'border-bottom: 1px solid var(--system-background-hover)'));
         $this->style(Tools::css('ul.tree', [' > ', 'li.entry'], 'margin-left: -40px'));
         $this->style(Tools::css('ul.tree', [' > ', 'li.sub'], 'margin-left: -40px', 'cursor: pointer'));
         $this->style(Tools::css('ul.tree:not(.open)', [' > ', 'li.sub'],
@@ -40,16 +40,16 @@ class TreeHtmlView extends HtmlView {
         $this->style(Tools::css('ul.tree', [' > ', 'li.selectable'], 'transition: 0.5s',
             'cursor: pointer'));
         $this->style(Tools::css('ul.tree', [' > ', 'li.selectable:hover'],
-            'background: rgba(220, 220, 220, 1.0)'));
+            'background: var(--system-background-hover)'));
 
         $this->style(Tools::css('ul.tree', [' ', '.leaf-info'], 'display: flex', 'flex-direction: row',
             'flex-wrap: nowrap', 'min-height: 20px', 'align-items: center'));
         $this->style(Tools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow'],'display: flex',
             'flex-direction: row', 'width: 15px', 'min-width: 15px', 'height: 15px', 'border-radius: 50%',
-            'background: rgba(200, 200, 200, 1.0)', 'justify-content: center', 'align-items: center',
+            'background: var(--system-background)', 'justify-content: center', 'align-items: center',
             'margin-left: 10px', 'transition: 0.5s', 'cursor: pointer'));
         $this->style(Tools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow:hover'],
-            'background: rgba(150, 150, 150, 1.0)'));
+            'background: var(--dark-system-background)'));
         $this->style(Tools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow', ' > ', 'img'],
             'width: 10px', 'height: 10px'));
     }

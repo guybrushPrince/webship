@@ -13,12 +13,12 @@ class ErrorHtmlView extends AlertHtmlView {
         parent::__construct(array_merge(['error'], $classes));
 
         $this->style(Tools::css('.alert:not(.screen)', '.error',
-            'border-color: rgba(235, 204, 209, 1.0)',
-            'color: rgba(169, 68, 66, 1.0)', 'background-color: rgba(242, 222, 222, 1.0)'));
+            'border-color: var(--error-border)',
+            'color: var(--error-font)', 'background-color: var(--error-background)'));
 
         $this->style(Tools::css('.alert.screen.error', [' > ', '.a-message'],
-            'border-color: rgba(235, 204, 209, 1.0)',
-            'color: rgba(169, 68, 66, 1.0)', 'background-color: rgba(242, 222, 222, 1.0)'));
+            'border-color: var(--error-border)',
+            'color: var(--error-font)', 'background-color: var(--error-background)'));
     }
 
     /**

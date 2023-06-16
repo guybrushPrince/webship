@@ -13,12 +13,12 @@ class WarningHtmlView extends AlertHtmlView {
         parent::__construct(array_merge(['warning'], $classes));
 
         $this->style(Tools::css('.alert:not(.screen)', '.warning',
-            'border-color: rgba(250, 235, 204, 1.0)', 'color: rgba(138, 109, 59, 1.0)',
-            'background-color: rgba(252, 248, 227, 1.0)'));
+            'border-color: var(--border-warning)', 'color: var(--font-warning)',
+            'background-color: var(--background-warning)'));
 
         $this->style(Tools::css('.alert.screen.warning', [' > ', '.a-message'],
-            'border-color: rgba(250, 235, 204, 1.0)', 'color: rgba(138, 109, 59, 1.0)',
-            'background-color: rgba(252, 248, 227, 1.0)'));
+            'border-color: var(--border-warning)', 'color: var(--font-warning)',
+            'background-color: var(--background-warning)'));
     }
 
     /**

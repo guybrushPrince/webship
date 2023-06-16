@@ -22,7 +22,7 @@ class MenuEntryHtmlView extends HtmlView {
         $this->style(Tools::css($coreSelector, '', 'display: flex', 'flex-wrap: wrap',
             'cursor: pointer', 'font-size: 15px', 'font-weight: normal',
             'align-items: center'));
-        $this->style(Tools::css($coreSelector, ':hover', 'background: rgba(211, 234, 240, 1.0)'));
+        $this->style(Tools::css($coreSelector, ':hover', 'background: var(--main-menu-hover)'));
         $this->style(Tools::css($coreSelector, array(':hover', ' > ', ' ul.sub-menu-entry'),
             'display: flex', 'flex-wrap: wrap', 'position: absolute', 'left: 0', 'top: 35px'));
     }

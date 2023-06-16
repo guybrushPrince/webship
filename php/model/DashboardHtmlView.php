@@ -35,14 +35,14 @@ class DashboardHtmlView extends HtmlView {
             'max-height: calc(100% - 20px)', 'column-gap: 10px', 'row-gap: 10px', 'padding: 10px 10px 10px 5px',
             'grid-auto-rows: 0', 'overflow-y: hidden', 'height: calc(100% - 20px)'));
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item'], 'justify-self: stretch',
-            'overflow-y: auto', 'box-sizing: border-box', 'align-self: stretch', 'background: rgba(245, 245, 245, 1.0)',
-            'border: 0.5px solid rgba(225, 225, 225, 1.0)', 'border-radius: 5px',
-            'box-shadow: 2px 2px 6px 0px rgb(0 0 0 / 6%)', '-webkit-box-shadow: 2px 2px 6px 0px rgb(0 0 0 / 6%)',
-            '-moz-box-shadow: 2px 2px 6px 0px rgba(0,0,0,0.06)', 'position: relative'));
+            'overflow-y: auto', 'box-sizing: border-box', 'align-self: stretch', 'background: var(--dashboard-background)',
+            'border: 0.5px solid var(--border-15)', 'border-radius: 5px',
+            'box-shadow: var(----shadow-flow-5)', '-webkit-box-shadow: var(----shadow-flow-5)',
+            '-moz-box-shadow: var(----shadow-flow-5-moz)', 'position: relative'));
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item', ':hover'],
-            'border: 0.5px solid rgba(205, 205, 205, 1.0)',
-            'box-shadow: 3px 3px 6px 0px rgb(0 0 0 / 16%)', '-webkit-box-shadow: 3px 3px 6px 0px rgb(0 0 0 / 16%)',
-            '-moz-box-shadow: 3px 3px 6px 0px rgba(0,0,0,0.16)'));
+            'border: 0.5px solid var(--dashboard-item-border-hover)',
+            'box-shadow: var(----shadow-flow-5-hover)', '-webkit-box-shadow: var(----shadow-flow-5-hover)',
+            '-moz-box-shadow: var(----shadow-flow-5-moz-hover)'));
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item', ':empty'], 'cursor: pointer',
             'content: "+"', 'width: 100%', 'height: 100%'));
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item', ':empty', ':hover'], ''
@@ -55,12 +55,10 @@ class DashboardHtmlView extends HtmlView {
 
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item.plus', ' > ', ' .box'],
             'display: flex', 'align-items: center', 'justify-content: center', 'cursor: pointer',
-            'background: rgba(170, 170, 170, 1.0)', 'opacity: 0.5', 'transition: opacity 1s'));
+            'background:var(--dashboard-plus)', 'opacity: 0.5', 'transition: opacity 1s'));
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item.plus', ' > ', ' .box ', ' > ' , '.plus'],
     'display: inline-block', 'padding: 6px', 'box-sizing: border-box',
-             'background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 1)) content-box,
-                linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 1)) content-box,
-                rgba(255,255,255,0)', 'background-position: center', 'background-size: 100% 5px, 5px 100%',
+             'background: var(--plus)', 'background-position: center', 'background-size: 100% 5px, 5px 100%',
              'background-repeat: no-repeat', 'width: 50px', 'height: 50px'));
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item.plus', ' > ', ' .box', ':hover'],
                     'opacity: 1.0'));
@@ -73,17 +71,17 @@ class DashboardHtmlView extends HtmlView {
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', ' > ', '.box'],
             'padding: 0'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t1', ' > ', '.box'],
-            'background: rgba(215, 223, 221, 1.0)'/*, 'background: rgba(236, 216, 191, 1.0)'*/));
+            'background: var(--coast-text-t1)'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t1', ' > ', '.box', ' ', 'span'],
             'font-size: 75px', 'letter-spacing: -10px', 'font-weight: normal', 'margin-right: 20px'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t2', ' > ', '.box'],
-            'background: rgba(139, 135, 66, 1.0)'));
+            'background: var(--coast-text-t2)'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t3', ' > ', '.box'],
-            'background: rgba(215, 223, 221, 1.0)'));
+            'background: var(--coast-text-t3)'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t4', ' > ', '.box'],
-            'background: rgba(249, 231, 206, 1.0)'));
+            'background: var(--coast-text-t4)'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t5', ' > ', '.box'],
-            'background: rgba(150, 202, 210, 1.0)'));
+            'background: var(--coast-text-t5)'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', ' > ', '.box', ' > ', 'div'],
             'font-family: Monospace', 'font-weight: bold', 'font-size: 30', 'display: flex', 'align-items: center',
             'justify-content: center', 'width: 100%', 'height: 100%', 'box-sizing: border-box'));
@@ -94,12 +92,12 @@ class DashboardHtmlView extends HtmlView {
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t3', ' > ', '.box', ' > ', 'div'],
             'justify-content: flex-end', 'padding-right: 20px', 'font-size: 90px'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t4', ' > ', '.box', ' > ', 'div'],
-            'font-size: 100px', 'color: rgba(150, 202, 214, 1.0)'));
+            'font-size: 100px', 'color: var(--main-title-color)'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t5', ' > ', '.box', ' > ', 'div'],
             'font-size: 40px'));
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item.coast-image', ' > ', '.box'],
             'display: flex', 'flex-direction: row', 'align-items: flex-end', 'justify-content: flex-end',
-            'overflow: hidden', 'padding: 0', 'background: rgba(150, 202, 214, 1.0)'));
+            'overflow: hidden', 'padding: 0', 'background: var(--main-title-color)'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-image', ' > ', '.box', ' ', 'img'],
             /*'transform: scale(2)', */'transform-origin: 100% 100%'));
     }

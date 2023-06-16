@@ -59,8 +59,8 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
             'width: 100%'));
 
         $this->style(Tools::css($coreSelector, [' > ', '.move-position'], 'width: 100%', 'height: 0',
-            'background: rgba(224, 122, 95, 1)', 'border-radius: 5px',
-            'border: 0 dashed rgba(200, 200, 200, 0.5)', 'align-items: center', 'justify-content: center',
+            'background: var(--move-position-background)', 'border-radius: 5px',
+            'border: 0 dashed var(--menu-background)', 'align-items: center', 'justify-content: center',
             'transition: 0.5s', 'display: flex'));
         $this->style(Tools::css($coreSelector, [' > ', '.move-position', ' > ', 'img'],
             'height: 0', 'opacity: 0.5', 'transition: 0.5s'));
@@ -69,11 +69,11 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
         $this->style(Tools::css($coreSelector, ['.over.not-top', ' > ', '.move-position.top'],
             'display: none'));
         $this->style(Tools::css($coreSelector, ['.over:not(.in-move)', ' > ', '.move-position.hover'],
-            'border: 1px solid rgba(0, 0, 0, 1.0)', 'opacity: 1.0', 'height: 50px'));
+            'border: 1px solid var(--border-1)', 'opacity: 1.0', 'height: 50px'));
         $this->style(Tools::css($coreSelector, ['.over:not(.in-move)', ' > ', '.move-position.hover', ' > ', 'img'],
             'opacity: 1.0', 'height: 30px'));
         $this->style(Tools::css($coreSelector, ['.over:not(.in-move)', ' > ', '.move-position'],
-            'height: 10px', 'border: 1px dashed rgba(200, 200, 200, 0.5)'));
+            'height: 10px', 'border: 1px dashed var(--border-18)'));
         $this->style(Tools::css($coreSelector, ['.over:not(.in-move)', ' > ', '.move-position', ' > ', 'img'],
             'height: 10px'));
 
@@ -81,18 +81,18 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
             'position: absolute', 'left: -3%', 'width: 3%', 'box-sizing: border-box', 'height: 100%',
             'transition: background 0.5s', 'display: flex', 'align-items: center', 'justify-content: center',
             'border-radius: 5px'));
-        $this->style(Tools::css($coreSelector, [' > ', '.drag', ':hover'], 'background: rgba(0, 0, 0, 0.25)'));
+        $this->style(Tools::css($coreSelector, [' > ', '.drag', ':hover'], 'background: var(--drag-background-hover)'));
         $this->style(Tools::css($coreSelector, [' > ', '.drag', ' > ', 'img'], 'opacity: 0.25', 'width: 100%'));
 
         $this->style(Tools::css($coreSelector, array(' > .move'), 'cursor: pointer', 'text-align: center',
-            'font-size: 25px', 'color: rgba(0, 0, 0, 0.5)', 'position: absolute',
+            'font-size: 25px', 'color: var(--font-trans)', 'position: absolute',
             'left: 100%', 'width: 5%', 'box-sizing: border-box', 'height: 30px', 'transition: background 0.5s'));
-        $this->style(Tools::css($coreSelector, array(' > .move', ':hover'), 'background: rgba(0, 0, 0, 0.25)',
-            'color: rgba(0, 0, 0, 1.0)'));
+        $this->style(Tools::css($coreSelector, array(' > .move', ':hover'), 'background: var(--drag-background-hover)',
+            'color: var(--main-font)'));
 
         $this->style(Tools::css('.movable.outside', [' ', '.panel-item'], 'width: 100%'));
         $this->style(Tools::css('.movable.outside', [' ', '.panel-item', ' ', '.move'], 'display: none',
-            'right: -15px', 'left: initial', 'background: rgba(150, 150, 150, 1.0)', 'width: 20px', 'font-size: 20px',
+            'right: -15px', 'left: initial', 'background: var(--dark-system-background)', 'width: 20px', 'font-size: 20px',
             'height: 20px', 'z-index: 100000'));
         $this->style(Tools::css('.movable.outside', [' ', '.panel-item', ' ', '.move.up'],
             'top: calc(50% - 30px)'));

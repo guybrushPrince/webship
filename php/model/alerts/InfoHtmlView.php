@@ -13,12 +13,12 @@ class InfoHtmlView extends AlertHtmlView {
         parent::__construct(array_merge(['info'], $classes));
 
         $this->style(Tools::css('.alert:not(.screen)', '.info',
-            'border-color: rgba(188, 232, 241, 1.0)', 'color: rgba(49, 112, 143, 1.0)',
-            'background-color: rgba(217, 237, 247, 1.0)'));
+            'border-color: var(--border-info)', 'color: var(--font-info)',
+            'background-color: var(--background-info)'));
 
         $this->style(Tools::css('.alert.screen.info', [' > ', '.a-message'],
-            'border-color: rgba(188, 232, 241, 1.0)', 'color: rgba(49, 112, 143, 1.0)',
-            'background-color: rgba(217, 237, 247, 1.0)'));
+            'border-color: var(--border-info)', 'color: var(--font-info)',
+            'background-color: var(--background-info)'));
     }
 
     /**

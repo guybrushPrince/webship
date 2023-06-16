@@ -40,7 +40,7 @@ class LinkHtmlView extends HtmlView {
         $this->target = $target;
 
         $this->style(Tools::css('a', '', 'text-decoration: none', 'display: flex',
-            'justify-content: center', 'align-items: center', 'text-align: center', 'color: rgba(0, 0, 0, 1.0)',
+            'justify-content: center', 'align-items: center', 'text-align: center', 'color: var(--main-font)',
             'box-sizing: border-box'));
     }
 

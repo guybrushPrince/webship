@@ -23,24 +23,24 @@ class ModalHtmlView extends HtmlView {
 
         $this->style(Tools::css('.modal.invisible', '', 'display: none !important'));
         $this->style(Tools::css('.modal', array(' > ', '.modal-overlay'), 'position: fixed',
-            'top: 0', 'left: 0', 'width: 100%', 'height: 100%', 'background: rgba(0, 0, 0, 0.5)', 'z-index: 100001',
+            'top: 0', 'left: 0', 'width: 100%', 'height: 100%', 'background: var(--window-overlay)', 'z-index: 100001',
             'overflow-y: auto'));
         $this->style(Tools::css('.modal', array(' > ', '.modal-overlay', ' > ', '.modal-container'),
             'position: absolute',
             'left: 12.5%', 'top: 10%', 'width: 75%', 'overflow-y: initial',
-            'background: rgba(255, 255, 255, 1.0)', 'z-index: 100002', 'padding: 20px',
-            '-webkit-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75)',
-            '-moz-box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75)',
-            'box-shadow: 3px 3px 10px 0px rgba(0,0,0,0.75)'));
+            'background: var(--neutral)', 'z-index: 100002', 'padding: 20px',
+            '-webkit-box-shadow: var(--shadow-flow-4)',
+            '-moz-box-shadow: var(--shadow-flow-4)',
+            'box-shadow: var(--shadow-flow-4)'));
         $this->style(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' > ', '.form'], 'width: 100%'));
 
         $this->style(Tools::css('.modal', array(' > ', '.modal-overlay', ' > ', '.closer'), 'position: absolute',
             'top: calc(10% - 10px)', 'right: calc(9.15% + 20px)', 'width: 30px', 'height: 30px',
-            'z-index: 100003', 'background: rgba(255, 255, 255, 1.0)', 'border-radius: 45%',
+            'z-index: 100003', 'background: var(--neutral)', 'border-radius: 45%',
             'justify-content: center', 'cursor: pointer', 'box-sizing: border-box',
-            'border: 1px solid rgba(200, 200, 200, 1.0)'));
+            'border: 1px solid var(--system-background)'));
         $this->style(Tools::css('.modal', array(' > ', '.closer', ':hover'),
-            'background: rgba(200, 200, 200, 1.0);'));
+            'background: var(--system-background);'));
     }
 
 
