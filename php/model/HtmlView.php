@@ -59,7 +59,7 @@ class HtmlView extends View {
             ($this->notices ? ' title="' . (array_key_exists(View::getLanguage(), $this->notices) ? $this->notices[View::getLanguage()] : array_pop($this->notices)) . '"' : '') .
             ($id ? ' data-id="' . $id . '"' : '') .
             ($this->data ? ' ' . implode(' ', array_map(function($key, $val) {
-                return 'data-' . $key . '="' . $val . '"';
+                return 'data-' . $key . ($val !== null ? '="' . $val . '"' : '');
             }, array_keys($this->data), $this->data)) : '') .
             '>';
     }
@@ -349,10 +349,10 @@ class HtmlView extends View {
     /**
      * Add a data value to the view.
      * @param string $key The key of the data.
-     * @param string|bool|int $value The value.
+     * @param string|bool|int|null $value The value.
      * @return void
      */
-    public function data(string $key, string|bool|int $value) : void {
+    public function data(string $key, string|bool|int|null $value = null) : void {
         if (!$this->data) $this->data = [];
         $this->data[$key] = $value;
     }
