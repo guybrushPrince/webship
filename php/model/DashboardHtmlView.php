@@ -37,12 +37,12 @@ class DashboardHtmlView extends HtmlView {
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item'], 'justify-self: stretch',
             'overflow-y: auto', 'box-sizing: border-box', 'align-self: stretch', 'background: var(--dashboard-background)',
             'border: 0.5px solid var(--border-15)', 'border-radius: 5px',
-            'box-shadow: var(----shadow-flow-5)', '-webkit-box-shadow: var(----shadow-flow-5)',
-            '-moz-box-shadow: var(----shadow-flow-5-moz)', 'position: relative'));
+            'box-shadow: var(--shadow-flow-5)', '-webkit-box-shadow: var(--shadow-flow-5)',
+            '-moz-box-shadow: var(--shadow-flow-5-moz)', 'position: relative'));
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item', ':hover'],
             'border: 0.5px solid var(--dashboard-item-border-hover)',
-            'box-shadow: var(----shadow-flow-5-hover)', '-webkit-box-shadow: var(----shadow-flow-5-hover)',
-            '-moz-box-shadow: var(----shadow-flow-5-moz-hover)'));
+            'box-shadow: var(--shadow-flow-5-hover)', '-webkit-box-shadow: var(--shadow-flow-5-hover)',
+            '-moz-box-shadow: var(--shadow-flow-5-moz-hover)'));
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item', ':empty'], 'cursor: pointer',
             'content: "+"', 'width: 100%', 'height: 100%'));
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item', ':empty', ':hover'], ''
