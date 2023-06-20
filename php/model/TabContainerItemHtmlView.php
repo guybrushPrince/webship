@@ -35,9 +35,10 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
         $this->style(Tools::css($coreSelector, [' > ', '.tab-header', ' ', '.icon:empty'],
             'display: none'));
         $this->style(Tools::css($coreSelector, [' > ', '.tab-header', ' ', '.icon:not(:empty)'],
-            'margin-right: 5px'));
+            'margin-right: 5px', 'width: 15px', 'height: 15px', 'display: flex',
+            'align-items: center', 'justify-content: center', 'border-radius: 50%'));
         $this->style(Tools::css($coreSelector, [' > ', '.tab-header', ' ', '.icon', ' > ', 'img'],
-            'height: 15px'));
+            'height: 11px'));
         $this->style(Tools::css($coreSelector, array(' > ', '.tab-header', ' > ', '.closer'),
             'width: 25px', 'height: 25px'));
 
@@ -117,8 +118,10 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
      * @param string $path The path to the image.
      * @return $this
      */
-    public function img(string $path) : TabContainerItemHtmlView {
-        $this->subviews[0]->subviews[0]->add(new ImageHtmlView($path));
+    public function img(string $path, ?string $type = null) : TabContainerItemHtmlView {
+        $iconView = $this->subviews[0]->subviews[0];
+        $iconView->add(new ImageHtmlView($path));
+        if ($type) $iconView->data($type);
         return $this;
     }
 
