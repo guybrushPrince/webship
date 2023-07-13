@@ -52,6 +52,7 @@ class DashboardHtmlView extends HtmlView {
         $this->style(Tools::css('.dashboard', [' ', '.markdown', ' ', 'h1'], 'font-size: 16px'));
         $this->style(Tools::css('.dashboard', [' ', '.markdown', ' ', 'h2'], 'font-size: 14px'));
         $this->style(Tools::css('.dashboard', [' ', '.markdown', ' ', 'h3'], 'font-size: 13px'));
+        $this->style(Tools::css('.dashboard', [' ', '.markdown', ' ', 'pre'], 'overflow-x: scroll'));
 
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item.plus', ' > ', ' .box'],
             'display: flex', 'align-items: center', 'justify-content: center', 'cursor: pointer',
