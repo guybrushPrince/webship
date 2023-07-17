@@ -32,7 +32,8 @@ class ModalHtmlView extends HtmlView {
             '-webkit-box-shadow: var(--shadow-flow-4)',
             '-moz-box-shadow: var(--shadow-flow-4)',
             'box-shadow: var(--shadow-flow-4)'));
-        $this->style(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' > ', '.form'], 'width: 100%'));
+        $this->style(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' > ', '.form'],
+            'width: 100%'));
 
         $this->style(Tools::css('.modal', array(' > ', '.modal-overlay', ' > ', '.closer'), 'position: absolute',
             'top: calc(10% - 10px)', 'right: calc(9.15% + 20px)', 'width: 30px', 'height: 30px',

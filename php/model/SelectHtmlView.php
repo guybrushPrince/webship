@@ -66,7 +66,7 @@ class SelectHtmlView extends HtmlView {
             $this->texts()->
                 text(Language::ENGLISH, 'No options available')->
                 text(Language::GERMAN,  'Keine Auswahl verfügbar');
-            return '';
+            return '<div class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '">';
         } else  {
             if (count($this->subviews) === 2) {
                 $this->subviews = array($this->subviews[1]);
@@ -81,8 +81,8 @@ class SelectHtmlView extends HtmlView {
      * @inheritDoc
      */
     public function generateClosingTag() {
-        if (count($this->subviews) >= 1) return '</select>';
-        else return '';
+        if (count($this->subviews) > 1) return '</select>';
+        else return '</div>';
     }
 
     // Short cuts
