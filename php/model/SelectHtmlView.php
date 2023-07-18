@@ -33,6 +33,12 @@ class SelectHtmlView extends HtmlView {
     private bool $hidden;
 
     /**
+     * The opening tag.
+     * @var string
+     */
+    private string $opening = 'select';
+
+    /**
      * SelectHtmlView constructor.
      * @param string $id The id.
      * @param string $name The name.
@@ -66,6 +72,7 @@ class SelectHtmlView extends HtmlView {
             $this->texts()->
                 text(Language::ENGLISH, 'No options available')->
                 text(Language::GERMAN,  'Keine Auswahl verfügbar');
+            $this->opening = 'div';
             return '<div class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '">';
         } else  {
             if (count($this->subviews) === 2) {
@@ -81,8 +88,7 @@ class SelectHtmlView extends HtmlView {
      * @inheritDoc
      */
     public function generateClosingTag() {
-        if (count($this->subviews) > 1) return '</select>';
-        else return '</div>';
+        return '</' . $this->opening . '>';
     }
 
     // Short cuts
