@@ -99,11 +99,15 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
         $this->style(Tools::css('.movable.outside', [' ', '.panel-item', ' ', '.move.down'],
             'top: calc(50% + 10px)'));
         $this->style(Tools::css('.movable.outside', [' ', '.panel-item', ' ', '.move.delete'],
-            'top: calc(50% - 10px)'));
-        $this->style(Tools::css('.movable.outside', [' ', '.panel-item', ':hover', ' .move'],
+            'top: calc(50% - 10px)', 'padding: 2px', 'border-radius: 4px',
+            'background: var(--delete-2)'));
+        $this->style(Tools::css('.movable.outside', [' ', '.panel-item', ' ', '.move.delete', ':after'],
+            'content: ""', 'background-image: url(\'' . HtmlActionProtocol::$serverURL . '/sunstone/pic/delete.svg\')',
+            'background-repeat: no-repeat', 'background-origin: padding-box'));
+        $this->style(Tools::css('.movable.outside', [' ', '.panel-item', ':hover', ' ', '.move'],
             'display: inherit'));
-
-
+        $this->style(Tools::css('.movable.outside', [' ', '.panel-item', ' ', '.move.delete', ':hover'],
+            'background: var(--delete-2-hover)'));
 
 
         $this->js('$("' . $this->idc() . '-up' . '.move.up").click(function(event) {' .
