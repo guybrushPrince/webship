@@ -24,6 +24,7 @@ class TileHtmlView extends HtmlView {
             'justify-content: flex-start', 'margin-right: 10px', 'border: 1px solid var(--system-background-hover)',
             'padding: 10px', 'box-sizing: border-box', 'cursor: pointer', 'transition: background 0.5s',
             'text-align: center', 'margin-bottom: 10px', 'background: var(--ultra-light-system-background)'));
+        $this->style(Tools::css('.tiles', [' > ', '.tile', ' > ', 'span.small'], 'display: none'));
         $this->style(Tools::css('.tiles.w' . $tileWidth, [' > ', '.tile'], 'width: ' . $tileWidth . 'px',
             'max-width: ' . $tileWidth . 'px', 'height: ' . $tileWidth . 'px',
             'font-size: ' . round($tileWidth / 9, 2) . 'px'));
