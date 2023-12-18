@@ -113,12 +113,12 @@ class DashboardHtmlView extends HtmlView {
      * @throws DatabaseError
      */
     public static function create(?User $user = null, int $cols = 6, int $rows = 4, bool $init = true) : DashboardHtmlView {
-        $view = new DashboardHtmlView([],$cols, $rows);
+        $view = new DashboardHtmlView([], $cols, $rows);
         $view->ref('dashboard');
         $view->protocol(Event::DIRTY)->doIt('LoadDashboard', [
             'user' => $user,
-            'cols' => 6,
-            'rows' => 4,
+            'cols' => $cols,
+            'rows' => $rows,
             'init' => false,
             'replace' => $view
         ], 'monitors');
@@ -126,15 +126,15 @@ class DashboardHtmlView extends HtmlView {
             if ($user) {
                 $view->protocol(Event::ONLOADCONTENT)->doIt('LoadDashboard', [
                     'user' => $user,
-                    'cols' => 6,
-                    'rows' => 4,
+                    'cols' => $cols,
+                    'rows' => $rows,
                     'init' => false,
                     'replace' => $view
                 ], 'monitors');
             } else {
                 $view->protocol(Event::ONLOADCONTENT)->doIt('LoadDashboardUnsafe', [
-                    'cols' => 6,
-                    'rows' => 4,
+                    'cols' => $cols,
+                    'rows' => $rows,
                     'init' => false,
                     'replace' => $view
                 ], 'monitors');

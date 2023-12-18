@@ -54,6 +54,7 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::INPUT) $code .= '.on("input", ';
                 if ($this->event === Event::CONTENTMODIFY) $code .= '.on("' . Event::CONTENTMODIFY . '", ';
                 if ($this->event === Event::OBJECTMODIFY) $code .= '.on("' . Event::OBJECTMODIFY . '", ';
+                if ($this->event === Event::VARIABLE_CHANGE) $code .= '.on("' . Event::VARIABLE_CHANGE . '", ';
                 if ($this->event === Event::OPEN_LIST) $code .= '.on("' . Event::OPEN_LIST . '", ';
                 if ($this->event === Event::CLOSE_LIST) $code .= '.on("' . Event::CLOSE_LIST . '", ';
                 if ($this->event === Event::MOVEUP) $code .= '.on("' . Event::MOVEUP . '", ';
@@ -97,6 +98,7 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::INPUT) $code .= ')';
                 if ($this->event === Event::CONTENTMODIFY) $code .= ')';
                 if ($this->event === Event::OBJECTMODIFY) $code .= ')';
+                if ($this->event === Event::VARIABLE_CHANGE) $code .= ')';
                 if ($this->event === Event::OPEN_LIST) $code .= ')';
                 if ($this->event === Event::CLOSE_LIST) $code .= ')';
                 if ($this->event === Event::MOVEUP) $code .= ')';
