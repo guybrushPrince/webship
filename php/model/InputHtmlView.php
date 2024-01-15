@@ -97,8 +97,8 @@ class InputHtmlView extends HtmlView {
             ($this->type === 'number' && $this->max ? ' max="' . $this->max . '"' : '') .
             ($this->type === 'text'   && $this->max ? ' maxlength="' . $this->max . '"' : '') .
             ($this->type === 'number' && $this->step ? ' step="' . $this->step . '"' : '') .
-            (in_array(View::$language, $this->hints) ?
-                ' placeholder="' . implode(' ',$this->hints[View::$language]) . '"' :
+            (array_key_exists(View::$language, $this->hints) ?
+                ' placeholder="' . implode(' ' ,$this->hints[View::$language]) . '"' :
                 '') .
             ($this->disabled ? ' disabled ' : '') .
             (!$this->autoComplete ? ' autocomplete="off"' : '') .
