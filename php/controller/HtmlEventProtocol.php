@@ -27,13 +27,20 @@ class HtmlEventProtocol extends EventProtocol {
     private array $parameters;
 
     /**
+     * Whether the object shall be forced to be taken instead of the parent.
+     * @var string|null
+     */
+    private ?string $forceObject;
+
+    /**
      * @inheritDoc
      */
-    public function __construct(int $event, DirectView $parent, array $params = []) {
+    public function __construct(int $event, DirectView $parent, array $params = [], ?string $forceObject = null) {
         parent::__construct($event, $parent, "HtmlModifyProtocol");
         $this->delay = (array_key_exists('delay', $params) ? $params['delay'] : false);
         $this->sameTarget = (array_key_exists('sameTarget', $params) ? $params['sameTarget'] : false);
         $this->parameters = $params;
+        $this->forceObject = $forceObject;
     }
 
     /**
@@ -43,14 +50,15 @@ class HtmlEventProtocol extends EventProtocol {
         $code = '';
         if ($this->parent instanceof HtmlView) {
             if (!($this->parent instanceof SubmitHtmlView && $this->event === Event::CLICK)) {
-                $code .= '$("' . $this->parent->idc() . '")';
+                if (!$this->forceObject) $code .= '$("' . $this->parent->idc() . '")';
+                else $code .= $this->forceObject;
                 if ($this->event === Event::CLICK) $code .= '.click';
                 if ($this->event === Event::CHANGE) $code .= '.change';
                 if ($this->event === Event::ONMOUSEOVER) $code .= '.mouseover';
                 if ($this->event === Event::ONMOUSEOUT) $code .= '.mouseout';
                 if ($this->event === Event::ONFOCUSOUT) $code .= '.focusout';
                 if ($this->event === Event::ONFOCUSIN) $code .= '.focusin';
-                if ($this->event === Event::ONKEYUP) $code .= '.keyup';
+                if ($this->event === Event::ONKEYUP) $code .= '.on("keyup", ';
                 if ($this->event === Event::INPUT) $code .= '.on("input", ';
                 if ($this->event === Event::CONTENTMODIFY) $code .= '.on("' . Event::CONTENTMODIFY . '", ';
                 if ($this->event === Event::OBJECTMODIFY) $code .= '.on("' . Event::OBJECTMODIFY . '", ';
@@ -91,11 +99,12 @@ class HtmlEventProtocol extends EventProtocol {
 
                 if ($this->delay) $code .= '}};' . 'lastDelay.push(l);' . 'delay(lastDelay, ' . $this->delay . ');';
                 if ($this->event === Event::TIMED) {
-                    $code .= 'if ($("' . $this->parent->idc() . '").length === 0) clearInterval(i);';
+                    $code .= 'if (' . ($this->forceObject ? : '$("' . $this->parent->idc() . '").length === 0') . ') clearInterval(i);';
                 }
                 $code .= '})';
-                if ($this->event === Event::ONLOAD) $code .= '($("' . $this->parent->idc() . '"))';
+                if ($this->event === Event::ONLOAD) $code .= '(' . ($this->forceObject ? : '$("' . $this->parent->idc() . '")') . ')';
                 if ($this->event === Event::INPUT) $code .= ')';
+                if ($this->event === Event::ONKEYUP) $code .= ')';
                 if ($this->event === Event::CONTENTMODIFY) $code .= ')';
                 if ($this->event === Event::OBJECTMODIFY) $code .= ')';
                 if ($this->event === Event::VARIABLE_CHANGE) $code .= ')';

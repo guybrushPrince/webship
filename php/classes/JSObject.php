@@ -1,7 +1,11 @@
 <?php
-
 /**
  * Class JSObject.
+ *
+ * @package webship
+ * @subpackage php/classes
+ *
+ * @version 1.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  */
 class JSObject {
@@ -48,9 +52,11 @@ class JSObject {
         $this->name = $name;
         $this->idProp = $idProp;
         $this->classProp = $classProp;
-        $this->properties = array_map(function (string|JSObject $entry) {
+        $this->properties = array_map(function (string|JSObject|JSProperty $entry) {
             if ($entry instanceof JSObject) {
                 $entry->parent = $this;
+            } else if ($entry instanceof JSProperty) {
+                $entry->setParent($this);
             }
             return $entry;
         }, $properties);
@@ -80,9 +86,9 @@ class JSObject {
     /**
      * Get the property of the object.
      * @param string $name The name of the property.
-     * @return string|JSObject|null
+     * @return string|JSObject|JSProperty|null
      */
-    public function getProperty(string $name) : string|JSObject|null {
+    public function getProperty(string $name) : string|JSObject|JSProperty|null {
         if (array_key_exists($name, $this->properties)) {
             return $this->properties[$name];
         } else return null;

@@ -132,6 +132,10 @@ class ParameterSerializer {
         } else if ($value instanceof JSObject) {
             return [$param . ': ' . $value->getName() . '.' . $value->getIdProp(),
                 $param . 'IClass' . ': ' . $value->getName() . '.' . $value->getClassProp()];
+        } else if ($value instanceof JSProperty) {
+            return $param . ': ' . $value->getName();
+        } else if ($value instanceof JSNegation) {
+            return $param . ': ' . $value->getExpression();
         } else if ($value instanceof View) {
             return $param . ': "' . $value->idc() . '"';
         } else if ($value instanceof TemplateObject) {

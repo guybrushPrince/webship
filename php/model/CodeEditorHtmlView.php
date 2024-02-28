@@ -7,17 +7,17 @@ class CodeEditorHtmlView extends TextHtmlView {
 
     /**
      * The core classes.
-     * @var array
+     * @var string[]
      */
     private array $coreClasses;
 
     /**
      * CodeEditorHtmlView constructor.
      * @param string $id The id.
-     * @param int $language The programming language.
-     * @param array $classes The classes.
+     * @param int|null $language The programming language.
+     * @param string|string[] $classes The classes.
      */
-    public function __construct(string $id, int $language, array $classes = array()) {
+    public function __construct(string $id, ?int $language = null, string|array $classes = []) {
         $classes = is_array($classes) ? $classes : [$classes];
         $classes[] = 'code-editor';
         $this->coreClasses = $classes;
@@ -36,16 +36,16 @@ class CodeEditorHtmlView extends TextHtmlView {
 
         $this->ref('textarea');
         $this->js('let cm' . $this->id() . ' = CodeMirror.fromTextArea($("' . $this->idc() . '")[0], { ' .
-            'mode: "' . [
-                ProgrammingLanguage::CSS => 'css',
-                ProgrammingLanguage::R => 'r',
-                ProgrammingLanguage::HTML => 'html',
-                ProgrammingLanguage::PHP => 'php',
-                ProgrammingLanguage::JS => 'javascript',
+            ($language !== null ? 'mode: "' . [
+                ProgrammingLanguage::CSS   => 'css',
+                ProgrammingLanguage::R     => 'r',
+                ProgrammingLanguage::HTML  => 'html',
+                ProgrammingLanguage::PHP   => 'php',
+                ProgrammingLanguage::JS    => 'javascript',
                 ProgrammingLanguage::LATEX => 'latex',
-                ProgrammingLanguage::CSV => 'csv'
+                ProgrammingLanguage::CSV   => 'csv'
             ][(array_key_exists($language, ProgrammingLanguage::$PROGRAMMING_LANGUAGE) ?
-                $language : ProgrammingLanguage::PHP)] . '",' .
+                $language : ProgrammingLanguage::PHP)] . '",' : '') .
             'lineNumbers: true, lineWrapping: true });');
 
         $this->js('$("' . $this->idc() . '").on("' . Event::CONTENTMODIFY . '", function(event) {' .
