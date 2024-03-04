@@ -34,7 +34,10 @@ class CodeEditorHtmlView extends TextHtmlView {
         $this->style(Tools::css('.code-editor', [' > ', 'textarea.text-input.resizable'],
             'height: inherit', 'overflow-y: auto'));
 
+        $this->style(Tools::css('.CodeMirror-hints', [], 'z-index: 100000000000', 'position: absolute'));
+
         $this->ref('textarea');
+
         $this->js('let cm' . $this->id() . ' = CodeMirror.fromTextArea($("' . $this->idc() . '")[0], { ' .
             ($language !== null ? 'mode: "' . [
                 ProgrammingLanguage::CSS   => 'css',
@@ -45,8 +48,8 @@ class CodeEditorHtmlView extends TextHtmlView {
                 ProgrammingLanguage::LATEX => 'latex',
                 ProgrammingLanguage::CSV   => 'csv'
             ][(array_key_exists($language, ProgrammingLanguage::$PROGRAMMING_LANGUAGE) ?
-                $language : ProgrammingLanguage::PHP)] . '",' : '') .
-            'lineNumbers: true, lineWrapping: true });');
+                $language : ProgrammingLanguage::PHP)] . '",' : 'mode: "expression",') .
+            'lineNumbers: true, lineWrapping: true, extraKeys: {"Ctrl-Space": "autocomplete"}, });');
 
         $this->js('$("' . $this->idc() . '").on("' . Event::CONTENTMODIFY . '", function(event) {' .
             'cm' . $this->id() . '.save();' .

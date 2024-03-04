@@ -136,6 +136,8 @@ class ParameterSerializer {
             return $param . ': ' . $value->getName();
         } else if ($value instanceof JSNegation) {
             return $param . ': ' . $value->getExpression();
+            } else if ($value instanceof JSFunction) {
+            return $param . ': ' . $value->generate();
         } else if ($value instanceof View) {
             return $param . ': "' . $value->idc() . '"';
         } else if ($value instanceof TemplateObject) {
