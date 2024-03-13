@@ -15,18 +15,23 @@ class ParameterSerializer {
      */
     public static function serialize(Protocol $protocol, array $definitions, array $parameters, DirectView $entry = null) : array {
         $data = Tools::flatten(array_map(function($definition) use ($protocol, $parameters, $entry) {
+            $asIs = false;
             if ($definition instanceof ReflectionParameter) $param = $definition->getName();
             else if ($definition instanceof TemplateObject) {
+                $asIs = $definition->isAsIs();
                 if ($definition->isView()) $param = $definition;
                 else $param = $definition->getName();
             }
             else return '';
             // Try to find the value in the views if the parameter is not set directly.
-            $name = ($param instanceof TemplateObject ? $param->getName() : $param);
-            if (!array_key_exists($name, $parameters)) {
+            if ($param instanceof TemplateObject) {
+                $name = $param->getName();
+                $asIs = $param->isAsIs();
+            } else $name = $param;
+            if (!array_key_exists($name, $parameters) && !$asIs) {
                 return ParameterSerializer::findValueInView($protocol, $param, $entry);
             } else {
-                return ParameterSerializer::serializeValue($protocol, $param, $parameters[$name], $entry, $parameters);
+                return ParameterSerializer::serializeValue($protocol, $param, $parameters[$name], $entry, $parameters, $asIs);
             }
         }, $definitions));
         return $data;
@@ -85,13 +90,15 @@ class ParameterSerializer {
      * @param array $parameters The parameters.
      * @return string|array
      */
-    private static function serializeValue(Protocol $protocol, $param, $value, ?DirectView $entry, array $parameters) {
+    private static function serializeValue(Protocol $protocol, $param, $value, ?DirectView $entry, array $parameters,
+                                           bool $asIs = false) {
         if ($param instanceof TemplateObject) {
             $isView = $param->isView();
+            $asIs = $param->isAsIs();
             $param = $param->getName();
         } else $isView = false;
         if (is_array($value)) {
-            return $param . ': {' . implode(',', array_map(function ($key) use ($protocol, $value, $entry) {
+            return $param . ': {' . implode(',', array_map(function ($key) use ($protocol, $value, $entry, $asIs) {
                     $field = $value[$key];
                     if (!$protocol->innerView()) $innerView = $entry;
                     else $innerView = $protocol->innerView();
@@ -99,7 +106,7 @@ class ParameterSerializer {
                         $info = $innerView->get($key);
                     }
                     else $info = false;
-                    if ($info) {
+                    if ($info && !$asIs) {
                         $view = $info["view"];
                         $scope = $info["scope"];
                         $selector = "";
