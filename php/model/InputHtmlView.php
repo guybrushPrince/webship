@@ -115,7 +115,7 @@ class InputHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generate($complete = false, $templates = false) : string {
+    public function generate($complete = false, $templates = false, $force = false) : string {
         $code = $this->generateOpeningTag();
         $code .= implode(array_map(function(View $view) { return $view->generateSafe(); }, $this->subviews));
         $code .= $this->generateClosingTag();

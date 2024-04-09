@@ -75,7 +75,7 @@ class HtmlView extends View {
     /**
      * @inheritDoc
      */
-    public function generate($complete = false, $templates = false) : string {
+    public function generate($complete = false, $templates = false, $force = false) : string {
         if (!Tools::isEmpty($this->hints) && !Tools::isEmpty($this->hint(View::getLanguage()))) {
             $this->js('addHintListener("' . $this->idc() . '" , "<ul>' . implode(array_map(function ($str) {
                 return '<li>' . str_replace('"', "'", $str) . '</li>';
@@ -84,7 +84,7 @@ class HtmlView extends View {
         $code = $this->generateOpeningTag();
         $code .= implode(array_map(function(View $view) { return $view->generateSafe(); }, $this->subviews));
         if ($templates) {
-            if (isset($_SESSION)) {
+            if (isset($_SESSION) && !$force) {
                 if (!array_key_exists('templates', $_SESSION)) $_SESSION['templates'] = array();
                 $context = &$_SESSION['templates'];
             } else $context = array();
