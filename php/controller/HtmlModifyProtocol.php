@@ -266,18 +266,33 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     if ($view) {
                         $code = '(function() {';
                         $code .= 'ms(' . $this->createViewSelector($view) . ', e);';
-                        /*$code .= 'let s = ' . $this->createViewSelector($view) . ';';
-                        $code .= 'let w = s.width(), d = $(document).width();';
-                        $code .= 'let l = e.pageX + $(e.target).scrollTop();';
-                        $code .= 'l = (l + w > d ? d - w : l);';
-                        $code .= 's' .
-                            '.css("top", e.pageY + $(e.target).scrollTop())' .
-                            '.css("left", l);';*/
                         $code .= '})();';
                         return $code;
                     } else {
                         return '';
                     }
+                }
+                case 'openWindow': {
+                    $url = $modify["url"];
+                    $name = $modify["name"];
+                    $protocol = $modify["protocol"]; // It is a template object
+                    if ($protocol instanceof TemplateObject) {
+                        $f = 'con["' . $protocol->getName() . '"]';
+                        $handler = 'result = (typeof result !== "undefined") ? result : undefined;' .
+                            'if (isFunction(' . $f . ')) ' . $f . '(result);';
+                    } else $handler = null;
+                    if ($url instanceof TemplateObject) {
+                        $url = '" + con["' . $url->getName() . '"] + "';
+                    }
+                    if ($name instanceof TemplateObject) {
+                        $name = '" + con["' . $name->getName() . '"] + "';
+                    }
+                    $code = 'context["windows"].push({' .
+                        'window: open("' . $url . '", "' . $name . '", "location=no,toolbar=no,menubar=no,status=no"), ' .
+                        'handler: ' . ($handler ? 'function() {' . $handler . '}' : '() => {}') .
+                    '});';
+                    $code .= 'checkWindowClosed();';
+                    return $code;
                 }
                 case 'function': {
                     $code = $modify["code"];

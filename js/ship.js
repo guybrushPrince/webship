@@ -5,7 +5,7 @@ $.fn.existsGetElse = function (e = () => {}) {
     if (this.exists()) return this;
     else return e();
 }
-let context = { currentTaskId: 0, currentHintId: 0, tabId: 0, tabOffset: [] };
+let context = { currentTaskId: 0, currentHintId: 0, tabId: 0, tabOffset: [], windows: [] };
 
 let lastDelay = [];
 let delay = (function () {
@@ -243,3 +243,23 @@ let drag = function(p, d, info, im = "in-move", mcl = "movable", h = "hover", o 
         }
     }
 };
+let checkWindowClosed = (function() {
+    this.interval = false;
+    let that = this;
+    return function() {
+        if (that.interval === false && context["windows"].length > 0) {
+            that.interval = setInterval(function () {
+                context["windows"] = context["windows"].filter((w) => {
+                    if (w.window.closed) {
+                        w.handler(w.window);
+                        return false;
+                    } else return true;
+                });
+                if (context["windows"].length === 0) {
+                    clearInterval(that.interval);
+                    that.interval = false;
+                }
+            }, 1000);
+        }
+    };
+})();
