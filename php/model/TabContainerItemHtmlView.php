@@ -25,7 +25,7 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
 
         $this->style(Tools::css($coreSelector, '','z-index: 0'));
 
-        $this->style(Tools::css($coreSelector, array(' > ', '.tab-header'),
+        $this->style(Tools::css($coreSelector, [' > ', '.tab-header'],
             'position: absolute', 'top: -25px', 'height: 25px', 'z-index: 2',
             'background: var(--neutral)', 'border: solid 1px var(--border-1)',
             'border-bottom: none', 'display: flex', 'align-items: center', 'padding: 0 5px',
@@ -39,8 +39,12 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
             'align-items: center', 'justify-content: center', 'border-radius: 50%'));
         $this->style(Tools::css($coreSelector, [' > ', '.tab-header', ' ', '.icon', ' > ', 'img'],
             'height: 11px'));
-        $this->style(Tools::css($coreSelector, array(' > ', '.tab-header', ' > ', '.closer'),
+        $this->style(Tools::css($coreSelector, [' > ', '.tab-header', ' > ', '.closer'],
             'width: 25px', 'height: 25px'));
+        $this->style(Tools::css($coreSelector, [':not(.active)', ' > ', '.tab-header'],
+            'background: var(--system-background-other)'));
+        $this->style(Tools::css($coreSelector, ['.active', ' > ', '.tab-header'],
+            'font-weight: bold', 'letter-spacing: -0.5px'));
 
         $this->style(Tools::css($coreSelector, array(' > ', '.tab-separator'),
             'position: absolute', 'left: 0', 'top: -1px', 'width: 100%', 'box-sizing: border-box',
@@ -55,9 +59,12 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
 
         if (!$knownParent) $this->js('$("' . $this->idc() . '").trigger("' . Event::NEW_TAB . '");');
         $this->js('$("' . $this->idc() . ' > .tab-header").click(function(event) {' .
-            'let max = Math.max.apply(Math, $(this).parent().parent().children(".tab").map((i, c) => parseInt($(c).css("z-index"))));' .
+            'let tabs = $(this).parent().parent().children(".tab"); ' .
+            'tabs.removeClass("active");' .
+            'let max = Math.max.apply(Math, tabs.map((i, c) => parseInt($(c).css("z-index"))));' .
             '$(this).parent().css("z-index", max + 1);' .
-            'let conOld = $(this).parent().parent().children(".tab").children(".tab-content");' .
+            '$(this).parent().addClass("active");' .
+            'let conOld = tabs.children(".tab-content");' .
             'conOld.filter(":visible").toArray().forEach((e) => { let p = $(e).parent(); context.tabOffset[p.attr("tabId")] = p.scrollTop(); });' .
             'conOld.hide();' .
             'let conNew = $(this).parent().children(".tab-content");' .

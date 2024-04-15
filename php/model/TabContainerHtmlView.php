@@ -28,6 +28,8 @@ class TabContainerHtmlView extends ContainerHtmlView {
             'let max = Math.max.apply(Math, $(this).children(".tab").map((i, c) => parseInt($(c).css("z-index"))));' .
             'let width = $(this).children(".tab").children(".tab-header").toArray().reduce((acc, c) => acc + parseInt($(c).css("width")) + 5, 0) - 5;' .
             '$(event.target).css("z-index", max + 1);' .
+            '$(this).children(".tab").removeClass("active");' .
+            '$(event.target).addClass("active");' .
             '$(event.target).attr("tabId", "t" + context.tabId++);' .
             'let tabHeader = $(event.target).children(".tab-header");' .
             '$(tabHeader).css("left", (width - parseInt($(tabHeader).css("width"))) + 5);' .
@@ -45,7 +47,9 @@ class TabContainerHtmlView extends ContainerHtmlView {
             'next.children(".tab-header").each((i, t) => $(t).css("left", parseInt($(t).css("left")) - missing));' .
             'let childrenWithZ = $(this).children(".tab").map((i, c) => {return {v: c, z: parseInt($(c).css("z-index"))};});' .
             'let max = Math.max.apply(Math, childrenWithZ.map((i, c) => c.z));' .
+            '$(this).children(".tab").removeClass("active");' .
             'childrenWithZ.each((i, c) => (c.z === max ? (() => { $(c.v).children(".tab-content").show();' .
+                '$(c.v).addClass("active");' .
                 'let tabId = $(c.v).attr("tabId");' .
                 'if (tabId in context.tabOffset) $(c.v).scrollTop(context.tabOffset[tabId]); })()' . ' : ""));' .
             '}' .
@@ -57,6 +61,7 @@ class TabContainerHtmlView extends ContainerHtmlView {
             'let max = Math.max.apply(Math, $(tab).prevAll(".tab").add(tab).map((i, c) => parseInt($(c).css("z-index"))));' .
             'let width = $(tab).prevAll(".tab").add(tab).children(".tab-header").toArray().reduce((acc, c) => acc + parseInt($(c).css("width")) + 5, 0) - 5;' .
             '$(tab).css("z-index", max + 1);' .
+            '$(tab).addClass("active");' .
             '$(tab).attr("tabId", "t" + context.tabId++);' .
             'let tabHeader = $(tab).children(".tab-header");' .
             '$(tabHeader).css("left", (width - parseInt($(tabHeader).css("width"))) + 5);' .
