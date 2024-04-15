@@ -33,7 +33,8 @@ class DialogHtmlView extends HtmlView {
             text(Language::ENGLISH, 'Note')->
             text(Language::GERMAN,  'Hinweis');
         $textView = $message->add(new HtmlView('text'));
-        $textView->texts()->text(self::getLanguage(), $texts[self::getLanguage()]);
+        $parseDown = new ParsedownExtra();
+        $textView->texts()->text(self::getLanguage(), $parseDown->text($texts[self::getLanguage()]));
         $this->choicesBox = $message->add(new HtmlView('choices'));
     }
 
