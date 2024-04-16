@@ -61,7 +61,6 @@ class TabContainerHtmlView extends ContainerHtmlView {
             'let max = Math.max.apply(Math, $(tab).prevAll(".tab").add(tab).map((i, c) => parseInt($(c).css("z-index"))));' .
             'let width = $(tab).prevAll(".tab").add(tab).children(".tab-header").toArray().reduce((acc, c) => acc + parseInt($(c).css("width")) + 5, 0) - 5;' .
             '$(tab).css("z-index", max + 1);' .
-            '$(tab).addClass("active");' .
             '$(tab).attr("tabId", "t" + context.tabId++);' .
             'let tabHeader = $(tab).children(".tab-header");' .
             '$(tabHeader).css("left", (width - parseInt($(tabHeader).css("width"))) + 5);' .
@@ -69,6 +68,7 @@ class TabContainerHtmlView extends ContainerHtmlView {
             'let f = that.children(".tab").first();' .
             'let max = Math.max.apply(Math, $(that).children(".tab").map((i, c) => parseInt($(c).css("z-index"))));' .
             '$(f).css("z-index", max + 1);' .
+            '$(f).addClass("active");' .
             'let conOld = $(that).children(".tab").children(".tab-content");' .
             'conOld.filter(":visible").toArray().forEach((e) => { let p = $(e).parent(); context.tabOffset[p.attr("tabId")] = p.scrollTop(); });' .
             'conOld.hide();' .
