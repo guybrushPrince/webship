@@ -65,9 +65,9 @@ class DashboardHtmlView extends HtmlView {
                     'opacity: 1.0'));
 
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item', ' > ', '.box', ' > ', '.closer'],
-            'position: absolute', 'right: 20px', 'top: 0'));
+            'position: absolute', 'right: 5px', 'top: 0'));
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item', ' > ', '.box', ' > ', '.pencil'],
-            'position: absolute', 'right: 35px', 'top: -2px'));
+            'position: absolute', 'right: 20px', 'top: -2px'));
 
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', ' > ', '.box'],
             'padding: 0'));
