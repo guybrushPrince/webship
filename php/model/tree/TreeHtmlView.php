@@ -30,6 +30,8 @@ class TreeHtmlView extends HtmlView {
         $this->style(Tools::css('ul.tree.open', [' > ', 'li.sub'],
             'list-style-type: disclosure-open'));
         $this->style(Tools::css('ul.tree.open', [' > ', 'li.sub',  ' ~ ', 'li'], 'display: inherit'));
+        $this->style(Tools::css('ul.tree', [' > ', 'li', ' ', 'span.default'], 'padding-left: 0',
+            'display: flex', 'flex-direction: row', 'align-items: center', 'min-height: 20px', 'font-style: italic'));
         $this->style(Tools::css('ul.tree', [' > ', 'li', ' ', 'span[data-box]'], 'padding-left: 0',
             'display: flex', 'flex-direction: row', 'align-items: center', 'min-height: 20px'));
         $this->style(Tools::css('ul.tree', [' > ', 'li', ' ', 'span[data-box]:empty:after'],
