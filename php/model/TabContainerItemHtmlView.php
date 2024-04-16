@@ -43,8 +43,8 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
             'width: 25px', 'height: 25px'));
         $this->style(Tools::css($coreSelector, [':not(.active)', ' > ', '.tab-header'],
             'background: var(--system-background-other)'));
-        $this->style(Tools::css($coreSelector, ['.active', ' > ', '.tab-header'],
-            'text-shadow: 0px 0px 1px black'));
+        /*$this->style(Tools::css($coreSelector, ['.active', ' > ', '.tab-header'],
+            'text-shadow: 0px 0px 1px black'));*/
         $this->style(Tools::css($coreSelector, ['.active', ' > ', '.tab-header', ' ', '.closer'],
             'text-shadow: none'));
         $this->style(Tools::css($coreSelector, [':first-child', ' > ', '.tab-header', ' > ', ':first-child'],
