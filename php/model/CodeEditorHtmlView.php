@@ -46,7 +46,8 @@ class CodeEditorHtmlView extends TextHtmlView {
                 ProgrammingLanguage::PHP   => 'php',
                 ProgrammingLanguage::JS    => 'javascript',
                 ProgrammingLanguage::LATEX => 'latex',
-                ProgrammingLanguage::CSV   => 'csv'
+                ProgrammingLanguage::CSV   => 'csv',
+                ProgrammingLanguage::PYTHON  => 'python'
             ][(array_key_exists($language, ProgrammingLanguage::$PROGRAMMING_LANGUAGE) ?
                 $language : ProgrammingLanguage::PHP)] . '",' : 'mode: "expression",') .
             'lineNumbers: true, lineWrapping: true, extraKeys: {"Ctrl-Space": "autocomplete"}, });');
