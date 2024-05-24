@@ -7,6 +7,12 @@
 class EditableHtmlView extends HtmlView {
 
     /**
+     * Whether the editable html is enabled, or not.
+     * @var bool
+     */
+    private bool $disabled = false;
+
+    /**
      * EditableHtmlView constructor.
      * @param array|string $classes (optional) Possible classes
      */
@@ -26,9 +32,8 @@ class EditableHtmlView extends HtmlView {
      * @return string
      */
     public function generateOpeningTag() : string {
-        /*return '<div class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '" ' .
-            'contentEditable="true">';*/
-        return '<textarea class="' . implode(' ', array_merge($this->classes, [$this->id()])) . '" ' . '>';
+        return '<textarea class="' . implode(' ', array_merge($this->classes, [$this->id()])) . '" ' .
+            ($this->disabled ? 'disabled' : '') . '>';
     }
 
     /**
@@ -38,6 +43,14 @@ class EditableHtmlView extends HtmlView {
         return '</textarea>';
     }
 
-
+    /**
+     * Set the view disabled.
+     * @param bool $disabled Whether the view is enabled, or not.
+     * @return $this
+     */
+    public function disabled(bool $disabled) : HtmlView {
+        $this->disabled = $disabled;
+        return $this;
+    }
 }
 ?>
