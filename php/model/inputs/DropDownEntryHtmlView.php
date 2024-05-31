@@ -1,70 +1,53 @@
 <?php
 
-include_once dirname(__FILE__) . '/HtmlView.php';
-
 /**
- * Class MenuEntryHtmlView
+ * Class DropDownEntryHtmlView.
+ *
+ * @package webship
+ * @subpackge php/model/inputs
+ *
+ * @version 1.0.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  */
-class MenuEntryHtmlView extends HtmlView {
+class DropDownEntryHtmlView extends HtmlView {
 
     /**
-     * MenuEntryHtmlView constructor.
-     * @param array|string $classes
+     * Constructor.
+     * @param string[]|string $classes Some classes.
      */
-    public function __construct($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct(array_merge(array('menu-entry'), $classes));
+    public function __construct(string|array $classes = []) {
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        parent::__construct(array_merge(['drop-down-entry'], $classes));
 
-        $coreClasses = array_diff($this->classes, $classes);
-        $coreSelector = '.' . implode('.', $coreClasses);
-
-        $this->style(Tools::css($coreSelector, '', 'display: flex', 'flex-wrap: wrap',
-            'cursor: pointer', 'font-size: 15px', 'font-weight: normal',
-            'align-items: center'));
-        $this->style(Tools::css($coreSelector, ':hover', 'background: var(--main-menu-hover)'));
-        $this->style(Tools::css($coreSelector, array(':hover', ' > ', ' ul.sub-menu-entry'),
+        $this->style(Tools::css('.drop-down-entry', [], 'display: flex', 'flex-wrap: wrap',
+            'cursor: pointer', 'font-size: 15px', 'font-weight: normal', 'align-items: center'));
+        $this->style(Tools::css('.drop-down-entry', [':hover'], 'background: var(--main-menu)'));
+        $this->style(Tools::css('.drop-down-entry', [':hover', ' > ', ' ul.sub-menu-entry'],
             'display: flex', 'flex-wrap: wrap', 'position: absolute', 'left: 0', 'top: 35px'));
     }
 
     /**
-     * @inheritDoc
+     * Create a drop-down entry.
+     * @param string|string[] $classes Some classes.
+     * @return DropDownEntryHtmlView
      */
-    public function generateOpeningTag() {
-        return '<li class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '">';
+    public static function create(string|array $classes = []) : DropDownEntryHtmlView {
+        return new DropDownEntryHtmlView($classes);
     }
 
     /**
      * @inheritDoc
      */
-    public function generateClosingTag() {
-        return '</li>';
-    }
-
-
-
-    // Short cuts
-
-    /**
-     * Create a menu entry.
-     * @param array|string $classes A set of classes.
-     * @return MenuEntryHtmlView
-     */
-    public function entry($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        $entry = new MenuEntryHtmlView($classes);
-        $this->add($entry);
-        return $entry;
+    public function generateOpeningTag() : string {
+        return '<div data-drop-down-entry ' .
+            'class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '">';
     }
 
     /**
-     * Return a new menu entry html view.
-     * @param array|string $classes Classes.
-     * @return MenuEntryHtmlView
+     * @inheritDoc
      */
-    public static function _new($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        return new MenuEntryHtmlView($classes);
+    public function generateClosingTag() : string {
+        return '</div>';
     }
 }
 ?>

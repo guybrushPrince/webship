@@ -1,7 +1,5 @@
 <?php
 
-include_once dirname(__FILE__) . '/HtmlView.php';
-
 /**
  * Class MarkdownHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
@@ -9,20 +7,28 @@ include_once dirname(__FILE__) . '/HtmlView.php';
 class MarkdownHtmlView extends HtmlView {
 
     /**
-     * The file.
+     * The file or the markdown content.
      * @var string
      */
-    private $file;
+    private string $fileOrContent;
+
+    /**
+     * Whether the file or content contains a path to a file, or not.
+     * @var bool
+     */
+    private bool $isFile;
 
     /**
      * MarkdownHtmlView constructor.
-     * @param string $file The file.
-     * @param array|string $classes Some classes.
+     * @param string $fileOrContent The file or the markdown content.
+     * @param bool $isFile Is it a path to a file or the content.
+     * @param string[]|string $classes Some classes.
      */
-    public function __construct($file, $classes = array()) {
+    public function __construct(string $fileOrContent, bool $isFile = true, string|array $classes = []) {
         $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct(array_merge(array('markdown'), $classes));
-        $this->file = $file;
+        parent::__construct(array_merge(['markdown'], $classes));
+        $this->fileOrContent = $fileOrContent;
+        $this->isFile = $isFile;
 
         $coreClasses = array_diff($this->classes, $classes);
         $coreSelector = '.' . implode('.', $coreClasses);
@@ -35,29 +41,20 @@ class MarkdownHtmlView extends HtmlView {
      */
     public function generateOpeningTag() {
         $parsedown = new ParsedownExtra();
-        return parent::generateOpeningTag() . $parsedown->text(file_get_contents($this->file));
+        return parent::generateOpeningTag() .
+            ($this->isFile ? $parsedown->text(file_get_contents($this->fileOrContent)) :
+                             $parsedown->text($this->fileOrContent));
     }
 
     /**
-     * @inheritDoc
-     */
-    public function generateClosingTag() {
-        return parent::generateClosingTag();
-    }
-
-
-
-    // Short cuts
-
-    /**
-     * Return a new container html view.
-     * @param string $file The file.
-     * @param array|string $classes Classes.
+     * Create a markdown view..
+     * @param string $content The content.
+     * @param string[]|string $classes Classes.
      * @return MarkdownHtmlView
      */
-    public static function _new($file, $classes = array()) {
+    public static function create(string $content, string|array $classes = []) {
         $classes = is_array($classes) ? $classes : array($classes);
-        return new MarkdownHtmlView($file, $classes);
+        return new MarkdownHtmlView($content, false, $classes);
     }
 }
 ?>

@@ -36,7 +36,7 @@ class TextHtmlView extends HtmlView {
      * Set the button disabled or not.
      * @var bool
      */
-    private $disabled = false;
+    private bool $disabled = false;
 
     /**
      * InputHtmlView constructor.
@@ -92,13 +92,13 @@ class TextHtmlView extends HtmlView {
         return '</textarea>';
     }
 
-    // Short cuts
     /**
-     * Set disabled.
-     * @param bool $disabled The new value.
-     * @return $this
+     * Set/get disabled.
+     * @param ?bool $disabled The new value.
+     * @return $this|bool
      */
-    public function disabled(bool $disabled): TextHtmlView {
+    public function disabled(?bool $disabled = null): TextHtmlView|bool {
+        if ($disabled === null) return $this->disabled;
         $this->disabled = $disabled;
         return $this;
     }

@@ -17,12 +17,14 @@ class ImageHtmlView extends HtmlView {
     /**
      * ImageHtmlView constructor.
      * @param string $src The src.
-     * @param array|string $classes
+     * @param string[]|string $classes Some classes
      */
-    public function __construct($src, $classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct(array_merge(array('image'), $classes));
+    public function __construct(string $src, string|array $classes = []) {
+        $classes = is_array($classes) ? $classes : [$classes];
+        parent::__construct(array_merge(['image'], $classes));
         $this->src = $src;
+
+        $this->style(Tools::css('img.image.cover', [], 'object-fit: cover'));
     }
 
     /**

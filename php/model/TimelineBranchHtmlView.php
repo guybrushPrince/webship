@@ -1,0 +1,93 @@
+<?php
+
+/**
+ * Class TimelineBranchHtmlView.
+ *
+ * @package webship
+ * @subpackage php/model
+ *
+ * @version 1.0.0
+ * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ */
+class TimelineBranchHtmlView extends HtmlView {
+
+    /**
+     * A box for the branches.
+     * @var HtmlView
+     */
+    private HtmlView $box;
+
+    /**
+     * Constructor.
+     * @param string[]|string $classes Some classes.
+     */
+    private function __construct(string|array $classes = []) {
+        if (!is_array($classes)) $classes = [ $classes ];
+        $classes[] = 'timeline-branch';
+        parent::__construct($classes);
+
+        $this->style(Tools::css('.timeline-branch', [], 'width: 100%', 'display: flex',
+            'flex-direction: column'));
+        $this->style(Tools::css('.timeline-branch', [' > ', '.line'], 'box-sizing: border-box',
+            'height: var(--thickness)', 'width: calc((100% / var(--branches)) + var(--thickness))',
+            'margin: 0 calc((100% / (2 * var(--branches))) - var(--thickness) / 2)'));
+        $this->style(Tools::css('.timeline-branch', [' > ', '.line.opening'],
+            'border-top: var(--thickness) solid var(--line-color)',
+            'border-radius: var(--thickness) var(--thickness) 0 0'));
+        $this->style(Tools::css('.timeline-branch', [' > ', '.line.closing'],
+            'border-bottom: var(--thickness) solid var(--line-color)',
+            'border-radius: 0 0 var(--thickness) var(--thickness)'));
+        $this->style(Tools::css('.timeline-branch', [' > ', '.box'], 'display: flex',
+            'flex-direction: row', 'flex-wrap: nowrap'));
+        $this->style(Tools::css('.timeline-branch', [' > ', '.box', ' > ', '.timeline'],
+            'flex: 1'));
+    }
+
+    /**
+     * Create a new timeline branch.
+     * @param string|string[] $classes Some classes.
+     * @return TimelineBranchHtmlView
+     */
+    public static function create(string|array $classes = []) : TimelineBranchHtmlView {
+        $branching = new TimelineBranchHtmlView($classes);
+        $branching->add(new HtmlView(['line', 'opening']));
+        $branching->box = $branching->add(new HtmlView('box'));
+        return $branching;
+    }
+
+    /**
+     * Create a new branch (which is a new timeline).
+     * @return TimelineHtmlView
+     */
+    public function branch() : TimelineHtmlView {
+        return $this->box->add(TimelineHtmlView::create(true));
+    }
+
+    /**
+     * Adds a new branch.
+     * @param TimelineHtmlView $branch The branch to add.
+     * @return TimelineHtmlView
+     */
+    public function _branch(TimelineHtmlView $branch) : TimelineHtmlView {
+        return $this->box->add($branch);
+    }
+
+    /**
+     * Adds a converging line.
+     * @return void
+     */
+    public function close() : void {
+        foreach ($this->box->subviews as $branch) $branch->add(new HtmlView('line'));
+        $this->add(new HtmlView(['line', 'closing']));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function generateOpeningTag() {
+        $open = parent::generateOpeningTag();
+        return substr($open, 0, -1) . ' style="--branches: ' . (count($this->box->subviews)) . '">';
+    }
+
+}
+?>

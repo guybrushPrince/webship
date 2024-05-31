@@ -72,6 +72,8 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::DIRTY) $code .= '.on("' . Event::DIRTY . '", ';
                 if ($this->event === Event::DRAGDROP) $code .= '.on("' . Event::DRAGDROP . '", ';
                 if ($this->event === Event::DRAGSTART) $code .= '.on("' . Event::DRAGSTART . '", ';
+                if ($this->event === Event::NEXT_STEP) $code .= '.on("' . Event::NEXT_STEP . '", ';
+                if ($this->event === Event::NEXT_DEAD) $code .= '.on("' . Event::NEXT_DEAD . '", ';
                 if ($this->event === Event::CONTEXTMENU) $code .= '.on("contextmenu", ';
                 if ($this->event === Event::CLICK_OUTSIDE) $code = '$(window).click';
                 if ($this->event === Event::TIMED) {
@@ -112,6 +114,8 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::CLOSE_LIST) $code .= ')';
                 if ($this->event === Event::MOVEUP) $code .= ')';
                 if ($this->event === Event::MOVEDOWN) $code .= ')';
+                if ($this->event === Event::NEXT_STEP) $code .= ')';
+                if ($this->event === Event::NEXT_DEAD) $code .= ')';
                 if ($this->event === Event::MOVEDELETE) $code .= ')';
                 if ($this->event === Event::NEW_FILE) $code .= ')';
                 if ($this->event === Event::DIRTY) $code .= ')';

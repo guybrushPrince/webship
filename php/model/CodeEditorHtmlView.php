@@ -12,6 +12,12 @@ class CodeEditorHtmlView extends TextHtmlView {
     private array $coreClasses;
 
     /**
+     * The programming language (as one of {@link ProgrammingLanguage}).
+     * @var int|null
+     */
+    private ?int $programmingLanguage;
+
+    /**
      * CodeEditorHtmlView constructor.
      * @param string $id The id.
      * @param int|null $language The programming language.
@@ -38,8 +44,18 @@ class CodeEditorHtmlView extends TextHtmlView {
 
         $this->ref('textarea');
 
-        $this->js('let cm' . $this->id() . ' = CodeMirror.fromTextArea($("' . $this->idc() . '")[0], { ' .
-            ($language !== null ? 'mode: "' . [
+        $this->programmingLanguage = $language;
+
+
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function generateOpeningTag() : string {
+        array_unshift($this->javaScripts,
+            'let cm' . $this->id() . ' = CodeMirror.fromTextArea($("' . $this->idc() . '")[0], { ' .
+            ($this->programmingLanguage !== null ? 'mode: "' . [
                 ProgrammingLanguage::CSS   => 'css',
                 ProgrammingLanguage::R     => 'r',
                 ProgrammingLanguage::HTML  => 'html',
@@ -47,20 +63,19 @@ class CodeEditorHtmlView extends TextHtmlView {
                 ProgrammingLanguage::JS    => 'javascript',
                 ProgrammingLanguage::LATEX => 'latex',
                 ProgrammingLanguage::CSV   => 'csv',
-                ProgrammingLanguage::PYTHON  => 'python'
-            ][(array_key_exists($language, ProgrammingLanguage::$PROGRAMMING_LANGUAGE) ?
-                $language : ProgrammingLanguage::PHP)] . '",' : 'mode: "expression",') .
-            'lineNumbers: true, lineWrapping: true, extraKeys: {"Ctrl-Space": "autocomplete"}, });');
+                ProgrammingLanguage::PYTHON  => 'python',
+                ProgrammingLanguage::VERIFIER => 'php'
+            ][(array_key_exists($this->programmingLanguage, ProgrammingLanguage::$PROGRAMMING_LANGUAGE) ?
+                $this->programmingLanguage : ProgrammingLanguage::PHP)] . '",' : 'mode: "expression",') .
+            'lineNumbers: true, lineWrapping: true, extraKeys: {"Ctrl-Space": "autocomplete"}, ' .
+            ($this->disabled() ? 'readOnly: true' : '') .
+            '});');
 
-        $this->js('$("' . $this->idc() . '").on("' . Event::CONTENTMODIFY . '", function(event) {' .
+        array_unshift($this->javaScripts,
+            '$("' . $this->idc() . '").on("' . Event::CONTENTMODIFY . '", function(event) {' .
             'cm' . $this->id() . '.save();' .
             '});');
-    }
 
-    /**
-     * @inheritDoc
-     */
-    public function generateOpeningTag() : string {
         return '<div class="' . implode(' ', $this->coreClasses) . '">' .
             '<div class="line-numbers"></div>' .
             parent::generateOpeningTag();

@@ -12,19 +12,19 @@ class SelectHtmlView extends HtmlView {
      * An id.
      * @var string
      */
-    private $id;
+    private string $id;
 
     /**
      * The name
      * @var string
      */
-    private $name;
+    private string $name;
 
     /**
      * Set the button disabled or not.
      * @var bool
      */
-    private $disabled = false;
+    private bool $disabled = false;
 
     /**
      * Whether the select is hidden or not.
@@ -111,7 +111,7 @@ class SelectHtmlView extends HtmlView {
      * @param bool $disabled The new value.
      * @return $this
      */
-    public function disabled(bool $disabled): SelectHtmlView {
+    public function disabled(bool $disabled) : SelectHtmlView {
         $this->disabled = $disabled;
         return $this;
     }

@@ -38,7 +38,8 @@ class ColorHtmlView extends HtmlView {
     public function generateOpeningTag() {
         $opening = parent::generateOpeningTag();
         $font = Tools::getFontColor($this->color);
-        return substr($opening, 0, -1) . ' style="background: ' . $this->color . '; color: ' . $font . '"' .
+        return substr($opening, 0, -1) . ' style="background: ' . $this->color . '; color: ' . $font .
+            ';--dev-color: ' . $this->color . '"' .
             ($this->title ? ' title="' . str_replace('"', "'", $this->title) . '"' : '')
             . '">';
     }

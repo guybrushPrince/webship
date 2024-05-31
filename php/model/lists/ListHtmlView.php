@@ -41,10 +41,15 @@ class ListHtmlView extends HtmlView {
     /**
      * Creates a list entry.
      * @param string[]|string $classes The classes.
-     * @return ListItemHtmlView
+     * @param HtmlView|null $view A view to add.
+     * @return ListItemHtmlView|HtmlView
      */
-    public function entry($classes = []) : ListItemHtmlView {
-        return $this->add(new ListItemHtmlView($classes));
+    public function entry($classes = [], ?HtmlView $view = null) : ListItemHtmlView|HtmlView {
+        $entry = $this->add(new ListItemHtmlView($classes));
+        if ($view) {
+            $entry->add($view);
+            return $view;
+        } else return $entry;
     }
 }
 ?>

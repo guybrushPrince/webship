@@ -157,7 +157,10 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
      */
     public function generateClosingTag() {
         return ($this->showMoves ? '<div class="' . implode(' ', array('move', 'down', $this->id() . '-down')) . '"></div>' : '') .
-            ($this->isDraggable ? '<div class="drag"><img src="' . HtmlActionProtocol::$serverURL . '/webship/pic/drag-handle.svg" alt="move-cursor"></div>' : '') .
+            ($this->isDraggable ? '<div class="drag" title="' . [
+                    Language::ENGLISH => 'Move this item to another place',
+                    Language::GERMAN  => 'Verschiebe das Item an eine andere Stelle'
+            ][self::getLanguage()] . '"><img src="' . HtmlActionProtocol::$serverURL . '/webship/pic/drag-handle.svg" alt="move-cursor"></div>' : '') .
             ($this->isDraggable ? '<div class="move-position bottom"><img src="' . HtmlActionProtocol::$serverURL . '/webship/pic/move-cursor.svg" alt="move-cursor"></div>' : '') .
             parent::generateClosingTag();
     }
