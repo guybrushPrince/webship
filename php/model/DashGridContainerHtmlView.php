@@ -50,13 +50,13 @@ class DashGridContainerHtmlView extends HtmlView {
         $instruction1->ref('instruction1');
         $instruction1->texts()->
             text(Language::ENGLISH, 'To change the position and size, please select the desired position of the upper left corner of your dashboard item in the grid.')->
-            text(Language::GERMAN,  'Um die Position und Größe zu verändern, wählen Sie bitte die gewünschte Position der oberen, linken Ecke Ihres Dashboard-Items in dem Raster aus.');
+            text(Language::GERMAN,  'Um die Position und Größe zu verändern, wähle bitte die gewünschte Position der oberen, linken Ecke deines Dashboard-Items im Raster aus.');
 
         $instruction2 = $right->add(new HtmlView('hidden'));
         $instruction2->ref('instruction2');
         $instruction2->texts()->
             text(Language::ENGLISH, 'Please select the desired lower right corner of your dashboard item to set its dimensions.')->
-            text(Language::GERMAN,  'Bitte wählen Sie die gewünschte untere, rechte Ecke Ihres Dashboard-Items, um seine Dimensionen festzulegen.');
+            text(Language::GERMAN,  'Bitte wähle die gewünschte untere, rechte Ecke deines Dashboard-Items, um seine Dimensionen festzulegen.');
 
         $view->dashView = DashGridHtmlView::create($dashItem, $cols, $rows, $instruction1, $instruction2, $view);
         $left->add($view->dashView);

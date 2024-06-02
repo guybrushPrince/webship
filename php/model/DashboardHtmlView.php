@@ -145,13 +145,26 @@ class DashboardHtmlView extends HtmlView {
         // All user-specific dashboard items
         if (!$init) {
             if ($user) {
-                $view->each(DashboardItem::getAllWhere('user', $user), function (DashboardHtmlView $view, DashboardItem $item) {
-                    try {
-                        $view->add($item->createView());
-                    } catch (Error $error) {
+                $userSession = Persistence::instance()->getUserSession();
+                if ($userSession && $userSession->getCurrentGroup()) {
+                    $group = $userSession->getCurrentGroup();
+                    $items = DashboardItem::getAllWhere('user', $user);
+                    $items = array_filter($items, function (DashboardItem $item) use ($group) {
+                        foreach ($item->getAccess()->getAccessRights() as $accessRight) {
+                            if ($accessRight->getReadAccessGroup()->getName() === $group->getName()) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    });
+                    $view->each($items, function (DashboardHtmlView $view, DashboardItem $item) {
+                        try {
+                            $view->add($item->createView());
+                        } catch (Error $error) {
 
-                    }
-                });
+                        }
+                    });
+                }
             } else {
                 //DancingScript-Regular
                 $item = $view->add(new DashboardItemHtmlView(['coast-text', 't1'], 1, $cols, 1, 1));
@@ -159,12 +172,6 @@ class DashboardHtmlView extends HtmlView {
                 $item = $view->add(new DashboardItemHtmlView('coast-image', 1, $cols, 2, 3));
                 $item->add(new ImageHtmlView('/sunstone/brand/cover.png'));
             }
-
-            // The additional dashboard sign
-            /*$view->plus()->ref('dashboard-plus')->access('survey-menu')->
-                protocol(Event::CLICK)->
-                mousePosition('dashboard-menu')->
-                addClass('dashboard-menu', 'active');*/
 
             $used = array_reduce($view->subviews, function(int $used, DashboardItemHtmlView $item) {
                 return $used + $item->getColSpan() * $item->getRowSpan();
