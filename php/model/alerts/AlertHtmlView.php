@@ -14,7 +14,8 @@ class AlertHtmlView extends HtmlView {
 
         $this->style(Tools::css('.alert:not(.screen)', '', 'padding: 15px',
             'margin-bottom: 20px', 'margin-top: 20px', 'border: 1px solid var(--light-system-background)',
-            'border-radius: 4px', 'color: var(--font-dark)', 'background-color: var(--ultra-light-system-background)'));
+            'border-radius: 4px', 'color: var(--font-dark)', 'background-color: var(--ultra-light-system-background)',
+            'position: relative'));
         $this->style(Tools::css('.alert.screen', [], 'display: flex', 'flex-direction: row',
             'align-items: center', 'justify-content: center', 'position: fixed', 'width: 100%', 'height: 100%',
             'top: 0', 'left: 0', 'z-index: 10010', 'background: none'));
@@ -40,10 +41,21 @@ class AlertHtmlView extends HtmlView {
             'background: var(--neutral)', 'border-radius: 10px', 'min-height: 250px',
             'max-height: 500px'));
 
-        $this->style(Tools::css('.alert', [' ', 'code'], 'width: 100%', 'border: 0',
-            'background: var(--neutral)', 'border-radius: 10px', 'min-height: 100px',
-            'max-height: 50%', 'overflow: auto', 'font-family: Monospace', 'font-size: 10px',
-            'display: block', 'height: 400px'));
+        $this->style(Tools::css('.alert', [' ', 'pre'], 'display: block'));
+        $this->style(Tools::css('.alert', [' ', 'pre', ' > ', 'code'], 'width: 100%',
+            'border-radius: 10px', 'max-height: 200px', 'overflow: auto', 'overflow: auto'));
+        $this->style(Tools::css('.alert', [' ', 'code'], 'border: 0',
+            'background: var(--neutral)', 'font-family: Monospace', 'font-size: 14px', 'padding: 5px',
+            'display: inline-block'));
+        $this->style(Tools::css('.alert.screen', [' ', 'code'], 'display: block', 'height: 400px',
+            'font-size: 10px', 'padding: inherit', 'min-height: 100px', 'max-height: 50%'));
+
+        $this->style(Tools::css('.alert.invisible', [], 'display: none'));
+        $this->style(Tools::css('.alert', [' > ', '.closer'], 'position: absolute', 'top: 3px',
+            'right: 5px'));
+        $this->style(Tools::css('.alert.with-image', [], 'display: flex', 'flex-direction: row',
+            'flex-wrap: nowrap', 'gap: 15px'));
+        $this->style(Tools::css('.alert.with-image', [' > ', 'img'], 'width: 25px'));
     }
 
     /**
@@ -51,9 +63,24 @@ class AlertHtmlView extends HtmlView {
      * @param string[] $message The multilingual messages.
      * @param bool $screen If it should cover the screen.
      * @param AlertHtmlView|null $v A view that is recycled.
+     * @param string|null $property A property of the user context, which shall be set.
+     * @param string|null $image An image to be shown on the left.
      * @return AlertHtmlView
+     * @throws DatabaseError
      */
-    public static function create(array $message = [], bool $screen = false, ?AlertHtmlView $v = null) : AlertHtmlView {
+    public static function create(array $message = [], bool $screen = false, ?AlertHtmlView $v = null,
+                                  ?string $property = null, ?string $image = null) : AlertHtmlView {
+        if ($property !== null) {
+            $show = BreakwaterUtil::getUserParameter($property, Type::BOOLEAN, true);
+            if (!$show) {
+                if (!$v) return new AlertHtmlView('invisible');
+                else {
+                    $v->addClass('invisible');
+                    return $v;
+                }
+            }
+        }
+
         if (!$v) $v = new AlertHtmlView($screen ? [] : ['screen']);
         else if ($screen) $v->addClass('screen');
         $con = $v;
@@ -67,8 +94,28 @@ class AlertHtmlView extends HtmlView {
             $con->add($closer);
             $closer->protocol(Event::CLICK)->doIt('Delete', ['view' => $v], 'basics');
         }
-        $con->texts()->text(self::getLanguage(), (array_key_exists(self::getLanguage(), $message) ?
-            $message[self::getLanguage()] : ''));
+        if (!$screen && $image) {
+            $con->addClass('with-image');
+            $con->add(new ImageHtmlView($image));
+            $textView = $con->add(new HtmlView());
+        } else $textView = $con;
+        $textView->texts()->text(self::getLanguage(), (array_key_exists(self::getLanguage(), $message) ?
+            ParsedownExtra::instance()->text($message[self::getLanguage()]) : ''));
+
+        if (!$screen && $property !== null) {
+            $con->ref('alert-view');
+            $closer = $con->add(new CloserHtmlView());
+            $closer->notice(Language::ENGLISH, 'Do not show this hint anymore.');
+            $closer->notice(Language::GERMAN, 'Diesen Hinweis nicht mehr anzeigen.');
+            $closer->protocol(Event::CLICK)->
+                doIt('ChangeParameter', [
+                    'target' => BreakwaterUtil::getUserConfiguration(BreakwaterUtil::getCurrentUser()),
+                    'parameter' => $property,
+                    'type' => Type::BOOLEAN,
+                    'value' => false
+                ], 'texts')->
+                doIt('Delete', ['view' => $v], 'basics');
+        }
 
         return $v;
     }

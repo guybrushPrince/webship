@@ -39,8 +39,9 @@ class DropDownEntryHtmlView extends HtmlView {
      * @inheritDoc
      */
     public function generateOpeningTag() : string {
-        return '<div data-drop-down-entry ' .
-            'class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '">';
+        return '<div data-drop-down-entry' .
+            ($this->notices ? ' title="' . (array_key_exists(View::getLanguage(), $this->notices) ? $this->notices[View::getLanguage()] : array_pop($this->notices)) . '"' : '') .
+            ' class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '">';
     }
 
     /**

@@ -73,6 +73,8 @@ class DashboardItemHtmlView extends HtmlView {
     public function closer(string|array $classes = []) : CloserHtmlView {
         $closer = new CloserHtmlView($classes);
         $this->add($closer);
+        $closer->notice(Language::ENGLISH, 'Remove this dashboard item from your dashboard');
+        $closer->notice(Language::GERMAN,  'Dieses Dashboard-Item von deinem Dashboard löschen');
         return $closer;
     }
 
@@ -84,6 +86,8 @@ class DashboardItemHtmlView extends HtmlView {
     public function pencil(string|array $classes = []) : PencilHtmlView {
         $pencil = new PencilHtmlView($classes);
         $this->add($pencil);
+        $pencil->notice(Language::ENGLISH, 'Edit this dashboard item');
+        $pencil->notice(Language::GERMAN,  'Dieses Dashboard-Item bearbeiten');
         return $pencil;
     }
 

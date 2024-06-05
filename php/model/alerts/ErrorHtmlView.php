@@ -7,9 +7,9 @@ class ErrorHtmlView extends AlertHtmlView {
 
     /**
      * ErrorHtmlView constructor.
-     * @param array $classes The classes.
+     * @param string[]|string $classes The classes.
      */
-    public function __construct($classes = array()) {
+    public function __construct(string|array $classes = []) {
         parent::__construct(array_merge(['error'], $classes));
 
         $this->style(Tools::css('.alert:not(.screen)', '.error',
@@ -24,8 +24,10 @@ class ErrorHtmlView extends AlertHtmlView {
     /**
      * @inheritDoc
      */
-    public static function create(array $message = [], bool $screen = false, ?AlertHtmlView $v = null) : AlertHtmlView {
-        return parent::create($message, $screen, $v ?: new ErrorHtmlView());
+    public static function create(array $message = [], bool $screen = false, ?AlertHtmlView $v = null,
+                                  ?string $property = null, ?string $image = null) : AlertHtmlView {
+        return parent::create($message, $screen, $v ?: new ErrorHtmlView(), $property,
+            $image ? $image : '/webship/pic/alert-error.svg');
     }
 }
 ?>

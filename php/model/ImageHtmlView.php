@@ -31,7 +31,9 @@ class ImageHtmlView extends HtmlView {
      * @inheritDoc
      */
     public function generateOpeningTag() {
-        return '<img src="' . HtmlActionProtocol::$serverURL . $this->src . '" class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '">';
+        return '<img src="' . HtmlActionProtocol::$serverURL . $this->src . '" class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' .
+            ($this->notices ? ' title="' . (array_key_exists(View::getLanguage(), $this->notices) ? $this->notices[View::getLanguage()] : array_pop($this->notices)) . '"' : '') .
+            '>';
     }
 
     /**
