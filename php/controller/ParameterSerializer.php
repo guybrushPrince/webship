@@ -50,6 +50,7 @@ class ParameterSerializer {
         else $innerView = $protocol->innerView();
         if ($innerView !== null) {
             $info = $innerView->get($param);
+            $param = '"' . $param . '"';
             if ($info !== null) {
                 $view = $info["view"];
                 $scope = $info["scope"];
@@ -77,7 +78,7 @@ class ParameterSerializer {
             // Create a new template object for it.
             $obj = TemplateObject::_new($param);
             $protocol->addTemplateObject($obj);
-            return $param . ': con["' . $obj->getName() . '"]';
+            return '"' . $param . '"' . ': con["' . $obj->getName() . '"]';
         }
     }
 
@@ -98,7 +99,7 @@ class ParameterSerializer {
             $param = $param->getName();
         } else $isView = false;
         if (is_array($value)) {
-            return $param . ': {' . implode(',', array_map(function ($key) use ($protocol, $value, $entry, $asIs) {
+            return '"' . $param . '"' . ': {' . implode(',', array_map(function ($key) use ($protocol, $value, $entry, $asIs) {
                     $field = $value[$key];
                     if (!$protocol->innerView()) $innerView = $entry;
                     else $innerView = $protocol->innerView();
@@ -135,22 +136,22 @@ class ParameterSerializer {
                     }
                 }, array_keys($value))) . '}';
         } else if ($value instanceof Context) {
-            return $param . ': ' . $value->generate();
+            return '"' . $param . '"' . ': ' . $value->generate();
         } else if ($value instanceof JSObject) {
-            return [$param . ': ' . $value->getName() . '.' . $value->getIdProp(),
+            return ['"' . $param . '"' . ': ' . $value->getName() . '.' . $value->getIdProp(),
                 $param . 'IClass' . ': ' . $value->getName() . '.' . $value->getClassProp()];
         } else if ($value instanceof JSProperty) {
-            return $param . ': ' . $value->getName();
+            return '"' . $param . '"' . ': ' . $value->getName();
         } else if ($value instanceof JSNegation) {
-            return $param . ': ' . $value->getExpression();
+            return '"' . $param . '"' . ': ' . $value->getExpression();
             } else if ($value instanceof JSFunction) {
-            return $param . ': ' . $value->generate();
+            return '"' . $param . '"' . ': ' . $value->generate();
         } else if ($value instanceof View) {
-            return $param . ': "' . $value->idc() . '"';
+            return '"' . $param . '"' . ': "' . $value->idc() . '"';
         } else if ($value instanceof TemplateObject) {
             $ifClass = $param . 'IClass';
             $ifClassVal = $value->getName() . 'IClass';
-            return [$param . ': con["' . $value->getName() . '"]',
+            return ['"' . $param . '"' . ': con["' . $value->getName() . '"]',
                 $ifClass . ': ("' . $ifClassVal . '" in con ? con["' . $ifClassVal . '"] : undefined)'];
         } else if ($value instanceof Protocol) {
             $reducedParameters = array_reduce(array_keys($parameters), function ($pm, $p) use ($param, $parameters) {
@@ -159,9 +160,9 @@ class ParameterSerializer {
             }, array());
             if (!$protocol->innerView()) $innerView = $entry;
             else $innerView = $protocol->innerView();
-            return $param . ': function(result = undefined) {' . $value->generate($reducedParameters, $innerView) . '}';
+            return '"' . $param . '"' . ': function(result = undefined) {' . $value->generate($reducedParameters, $innerView) . '}';
         } else if ($value instanceof Script) {
-            return $param . ': function(result = undefined) {' . $value->getCode() . '}';
+            return '"' . $param . '"' . ': function(result = undefined) {' . $value->getCode() . '}';
         } else if (is_object($value)) {
             if (!$isView) return self::handleObject($value, $param);
             else {
@@ -170,26 +171,26 @@ class ParameterSerializer {
                 $views = $innerView->pick($value);
                 if ($views) {
                     if (count($views) === 1) {
-                        return $param . ': "' . $views[0]->idc() . '"';
+                        return '"' . $param . '"' . ': "' . $views[0]->idc() . '"';
                     } else {
-                        return $param . ': ' . Tools::jsonEncode(array_map(function (DirectView $v) { return $v->idc(); }, $views)) . '';
+                        return '"' . $param . '"' . ': ' . Tools::jsonEncode(array_map(function (DirectView $v) { return $v->idc(); }, $views)) . '';
                     }
                 }
-                else return $param . ': ""';
+                else return '"' . $param . '"' . ': ""';
             }
         } else if ($value === null) {
-            return $param . ': null';
+            return '"' . $param . '"' . ': null';
         } else if (is_string($value)) {
-            if (!$isView) return $param . ': ' . '"' . $value . '"';
+            if (!$isView) return '"' . $param . '"' . ': ' . '"' . $value . '"';
             else {
                 if (!$protocol->innerView()) $innerView = $entry;
                 else $innerView = $protocol->innerView();
                 $info = $innerView->get($value, true);
-                if ($info) return $param . ': "' . $info["view"]->idc() . '"';
-                else return $param . ': ""';
+                if ($info) return '"' . $param . '"' . ': "' . $info["view"]->idc() . '"';
+                else return '"' . $param . '"' . ': ""';
             }
         } else {
-            return $param . ': ' . (is_bool($value) ? ($value ? 'true' : 'false') : $value);
+            return '"' . $param . '"' . ': ' . (is_bool($value) ? ($value ? 'true' : 'false') : $value);
         }
     }
 
@@ -206,7 +207,7 @@ class ParameterSerializer {
         // Convert the type of the object
         $type = get_class($value);
         if ($param !== null) {
-            return [$param . ': ' . (is_string($key) ? '"' . $key . '"' : $key),
+            return ['"' . $param . '"' . ': ' . (is_string($key) ? '"' . $key . '"' : $key),
                 $param . 'IClass' . ': "' . $type . '"'];
         } else {
             return ['value' => $key, 'IClass' => $type];
