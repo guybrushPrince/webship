@@ -123,7 +123,7 @@ class ParameterSerializer {
                                 $selector .= '.attr("' . $scope . '")';
                             }
                         }
-                        return $key . ': ' . $selector;
+                        return '"' . $key . '"' . ': ' . $selector;
                     } else {
                         if (is_int($key)) $key = 'i' . $key;
                         else $key = str_replace(' ', '__WS__', $key);
@@ -132,14 +132,14 @@ class ParameterSerializer {
                         else if ($field instanceof View) $field = '"' . $field->idc() . '"';
                         else if (is_object($field)) $field = Tools::jsonEncode(self::handleObject($field));
                         else if (is_array($field)) $field = Tools::jsonEncode(self::preserveArrayKeys($field));
-                        return $key . ': ' . $field;
+                        return '"' . $key . '"' . ': ' . $field;
                     }
                 }, array_keys($value))) . '}';
         } else if ($value instanceof Context) {
             return '"' . $param . '"' . ': ' . $value->generate();
         } else if ($value instanceof JSObject) {
             return ['"' . $param . '"' . ': ' . $value->getName() . '.' . $value->getIdProp(),
-                $param . 'IClass' . ': ' . $value->getName() . '.' . $value->getClassProp()];
+                '"' . $param . 'IClass' . '"' . ': ' . $value->getName() . '.' . $value->getClassProp()];
         } else if ($value instanceof JSProperty) {
             return '"' . $param . '"' . ': ' . $value->getName();
         } else if ($value instanceof JSNegation) {
@@ -152,7 +152,7 @@ class ParameterSerializer {
             $ifClass = $param . 'IClass';
             $ifClassVal = $value->getName() . 'IClass';
             return ['"' . $param . '"' . ': con["' . $value->getName() . '"]',
-                $ifClass . ': ("' . $ifClassVal . '" in con ? con["' . $ifClassVal . '"] : undefined)'];
+                '"' . $ifClass . '"' . ': ("' . $ifClassVal . '" in con ? con["' . $ifClassVal . '"] : undefined)'];
         } else if ($value instanceof Protocol) {
             $reducedParameters = array_reduce(array_keys($parameters), function ($pm, $p) use ($param, $parameters) {
                 if ($p !== $param) $pm[$p] = $parameters[$p];
@@ -208,7 +208,7 @@ class ParameterSerializer {
         $type = get_class($value);
         if ($param !== null) {
             return ['"' . $param . '"' . ': ' . (is_string($key) ? '"' . $key . '"' : $key),
-                $param . 'IClass' . ': "' . $type . '"'];
+                '"' . $param . 'IClass' . '"' . ': "' . $type . '"'];
         } else {
             return ['value' => $key, 'IClass' => $type];
         }
