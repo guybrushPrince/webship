@@ -263,3 +263,53 @@ let checkWindowClosed = (function() {
         }
     };
 })();
+let eventBus = (function () {
+    function EventBus() {
+        this.registry = {};
+        this.bind = function (view, objId, event, fun = (data) => {}, scope = undefined) {
+            if (scope === undefined) scope = 'undefined';
+            let reg;
+            if (!this.registry.hasOwnProperty(objId)) {
+                reg = {};
+                this.registry[objId] = reg;
+            } else reg = this.registry[objId];
+            let sc;
+            if (!reg.hasOwnProperty(scope)) {
+                sc = [];
+                reg[scope] = sc;
+            } else sc = reg[scope];
+            let ev;
+            if (!sc.hasOwnProperty(event)) {
+                ev = [];
+                sc[event] = ev;
+            } else ev = sc[event];
+            sc[event] = ev = ev.filter((el) => {
+                return $('[data-id="' + el.view.data('id') + '"]').length > 0;
+            });
+            ev.push({ view: view, fun: fun });
+        };
+        this.trigger = function (objId, event, scopes = undefined, data = undefined) {
+            if (this.registry.hasOwnProperty(objId)) {
+                let reg = this.registry[objId];
+                if (scopes !== undefined) {
+                    if (!Array.isArray(scopes)) scopes = [ scopes ];
+                }
+                else scopes = Object.getOwnPropertyNames(reg);
+                scopes.forEach((scope) => {
+                    if (reg.hasOwnProperty(scope)) {
+                        let sc = reg[scope];
+                        if (sc.hasOwnProperty(event)) {
+                            let ev = sc[event];
+                            if (data !== undefined) data = Object.assign(data, {_object: objId});
+                            else data = {_object: objId};
+                            ev.forEach((b) => {
+                                b.fun(Object.assign(data, {_view: b.view}));
+                            });
+                        }
+                    }
+                });
+            }
+        };
+    }
+    return new EventBus();
+})();

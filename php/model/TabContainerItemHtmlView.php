@@ -146,6 +146,8 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
     public function closer($classes = array()) {
         $classes = is_array($classes) ? $classes : array($classes);
         $closer = new CloserHtmlView($classes);
+        $closer->notice(Language::ENGLISH, 'Close this tab');
+        $closer->notice(Language::GERMAN,  'Tab schließen');
         $this->add($closer);
         return $closer;
     }

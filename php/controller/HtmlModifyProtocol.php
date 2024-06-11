@@ -16,6 +16,15 @@ class HtmlModifyProtocol extends ModifyProtocol {
     }
 
     /**
+     * Create a new html modify protocol.
+     * @param HtmlView $view The view binding.
+     * @return HtmlModifyProtocol
+     */
+    public static function _new(HtmlView $view) : HtmlModifyProtocol {
+        return new HtmlModifyProtocol($view);
+    }
+
+    /**
      * @inheritDoc
      */
     public function generate() : string {
@@ -164,7 +173,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                                 $data = ', ' . Tools::jsonEncode(array_reduce(array_keys($dataInfo),
                                     function (array $values, $param) use ($dataInfo) {
                                         $value = $dataInfo[$param];
-                                        if ($value instanceof CObject) {
+                                        if ($value instanceof CliffSerializable) {
                                             $value = ParameterSerializer::handleObject($value);
                                             $values[$param] = $value["value"];
                                             $values[$param . 'IClass'] = $value["IClass"];
@@ -180,6 +189,53 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         $event = $modify["event"];
                         if ($event instanceof TemplateObject) $event = '" + con["' . $event->getName() . '"] + "';
                         return $this->createViewSelector($view) . '.trigger("' . $event . '"' . $data . ');';
+                    } else {
+                        return '';
+                    }
+                }
+                case 'throwObjectEvent': {
+                    $obj = $modify["object"];
+                    if ($obj instanceof CliffSerializable || $obj instanceof TemplateObject) {
+                        $event = $modify["event"];
+                        if ($event instanceof TemplateObject) $event = '" + con["' . $event->getName() . '"] + "';
+
+                        $scopesInfo = $modify["scopes"];
+                        $scopes = '';
+                        if ($scopesInfo) {
+                            if (!($scopesInfo instanceof TemplateObject)) {
+                                $scopes = Tools::jsonEncode($scopes);
+                            } else {
+                                $scopes = ', con["' . $scopesInfo->getName() . '"]';
+                            }
+                        }
+
+                        $data = '';
+                        $dataInfo = $modify["data"];
+                        if ($dataInfo) {
+                            if (!($dataInfo instanceof TemplateObject)) {
+                                $data = ', ' . Tools::jsonEncode(array_reduce(array_keys($dataInfo),
+                                        function (array $values, $param) use ($dataInfo) {
+                                            $value = $dataInfo[$param];
+                                            if ($value instanceof CliffSerializable) {
+                                                $value = ParameterSerializer::handleObject($value);
+                                                $values[$param] = $value["value"];
+                                                $values[$param . 'IClass'] = $value["IClass"];
+                                            } else {
+                                                $values[$param] = $value;
+                                            }
+                                            return $values;
+                                        }, []));
+                            } else {
+                                $data = ', con["' . $dataInfo->getName() . '"]';
+                            }
+                        }
+                        if ($obj instanceof CliffSerializable) {
+                            $objId = ParameterSerializer::handleObject($obj);
+                            $objId = $objId["IClass"] . $objId["value"];
+                        } else {
+                            $objId = '" + con["' . $obj->getName() . 'IClass"] + con["' . $obj->getName() . '"] + "';
+                        }
+                        return 'eventBus.trigger("' . $objId . '", "' . $event . '"' . $scopes . $data . ');';
                     } else {
                         return '';
                     }
