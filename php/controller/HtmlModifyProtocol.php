@@ -203,7 +203,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         $scopes = '';
                         if ($scopesInfo) {
                             if (!($scopesInfo instanceof TemplateObject)) {
-                                $scopes = Tools::jsonEncode($scopes);
+                                $scopes = ', ' . Tools::jsonEncode($scopesInfo);
                             } else {
                                 $scopes = ', con["' . $scopesInfo->getName() . '"]';
                             }
