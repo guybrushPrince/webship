@@ -235,7 +235,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         } else {
                             $objId = '" + con["' . $obj->getName() . 'IClass"] + con["' . $obj->getName() . '"] + "';
                         }
-                        return 'eventBus.trigger("' . $objId . '", "' . $event . '"' . $scopes . $data . ');';
+                        return 'eventBus.trigger("' . $objId . '", "' . $event . '", _i_n_' . $scopes . $data . ');';
                     } else {
                         return '';
                     }

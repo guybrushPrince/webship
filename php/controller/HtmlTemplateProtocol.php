@@ -34,6 +34,7 @@ class HtmlTemplateProtocol extends TemplateProtocol {
         $name = $this->getCallName();
         $code = 'if (typeof ' . $name . ' === "undefined") {';
         $code .= 'var ' . $name . ' = function(con) {';
+        $code .= 'let _i_n_ = "' . $name . '";';
         $code .= $this->generateCode($this->children);
         $code .= '};';
         $code .= '}';

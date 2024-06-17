@@ -90,6 +90,7 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::ONFOCUSOUT) {
                     $code .= 'if (this.contains(e.relatedTarget)) return;';
                 }
+                $code .= 'let _i_n_ = "anonymous";';
                 if ($this->delay) $code .= 'let p = lastDelay.length;' . 'let l = function() {' .
                     'if (p === lastDelay.length) {';
 
