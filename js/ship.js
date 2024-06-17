@@ -267,6 +267,7 @@ let eventBus = (function () {
     function EventBus() {
         this.registry = {};
         this.bind = function (view, objId, event, fun = (data) => {}, scope = undefined) {
+            event = "e" + event;
             if (scope === undefined) scope = 'undefined';
             let reg;
             if (!this.registry.hasOwnProperty(objId)) {
@@ -284,11 +285,12 @@ let eventBus = (function () {
                 sc[event] = ev;
             } else ev = sc[event];
             sc[event] = ev = ev.filter((el) => {
-                return $('[data-id="' + el.view.data('id') + '"]').length > 0;
+                return $('[data-id="' + el.view.attr('data-id') + '"]').length > 0;
             });
             ev.push({ view: view, fun: fun });
         };
-        this.trigger = function (objId, event, scopes = undefined, data = undefined) {
+        this.trigger = function (objId, event, callee = undefined, scopes = undefined, data = undefined) {
+            event = "e" + event;
             if (this.registry.hasOwnProperty(objId)) {
                 let reg = this.registry[objId];
                 if (scopes !== undefined) {
