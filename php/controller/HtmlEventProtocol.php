@@ -141,6 +141,7 @@ class HtmlEventProtocol extends EventProtocol {
                 $code .= 'function(' . $v->id() . ') {';
                 $code .= 'var keycode = (event.keyCode ? event.keyCode : event.which);';
                 $code .= 'if(keycode == \'13\' || event.type === "submit") {';
+                $code .= 'let _i_n_ = "anonymous";';
                 $code .= $this->generateCode($this->children);
                 $code .= 'return false;';
                 $code .= '}';
@@ -149,6 +150,7 @@ class HtmlEventProtocol extends EventProtocol {
                 if (!($v instanceof SubmitHtmlView)) {
                     $code .= '$("' . $submitView->idc() . '").click';
                     $code .= '(function(' . $submitView->id() . ') {';
+                    $code .= 'let _i_n_ = "anonymous";';
                     $code .= $this->generateCode($this->children);
                     $code .= '});';
                 }
