@@ -50,11 +50,13 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
             return !($view instanceof MenuEntryHtmlView);
         });
         $this->subviews = $menuEntries;
-        return '<li class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '">' .
+        return '<li class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' .
+            ($this->notices ? ' title="' . (array_key_exists(View::getLanguage(), $this->notices) ? $this->notices[View::getLanguage()] : array_pop($this->notices)) . '"' : '') .
+            '>' .
             implode(array_map(function (View $view) {
                 return $view->generateSafe();
             }, $nonMenuEntries)) .
-            '<ul class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '">';
+            '<ul class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' . '>';
     }
 
     /**
