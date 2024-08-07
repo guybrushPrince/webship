@@ -315,3 +315,12 @@ let eventBus = (function () {
     }
     return new EventBus();
 })();
+let reheight = function() {
+    let v = $(this);
+    let pt = v.css("padding-top");
+    let pb = v.css("padding-bottom");
+    pt = parseInt(pt.substring(0, pt.length - 2));
+    pb = parseInt(pb.substring(0, pb.length - 2));
+    v.height('1px');
+    v.height(v.prop("scrollHeight") - (pt + pb));
+}

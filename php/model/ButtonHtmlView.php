@@ -52,6 +52,7 @@ class ButtonHtmlView extends HtmlView {
     public function generateOpeningTag() {
         return '<button class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' .
             ($this->id ? ' id="' . $this->id . '"' : '') . ' type="' . $this->type . '"' .
+            ($this->notices ? ' title="' . (array_key_exists(View::getLanguage(), $this->notices) ? $this->notices[View::getLanguage()] : array_pop($this->notices)) . '"' : '') .
             ($this->disabled ? ' disabled' : '') . '>';
     }
 

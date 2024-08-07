@@ -28,7 +28,7 @@ class DialogHtmlView extends HtmlView {
 
 
         $message = $this->add(new HtmlView('dialog-message'));
-        $title = $message->add(new HtmlView('title'));
+        $title = $message->add(new HtmlView('d-title'));
         $title->texts()->
             text(Language::ENGLISH, 'Note')->
             text(Language::GERMAN,  'Hinweis');
