@@ -21,8 +21,7 @@ class ParameterSerializer {
                 $asIs = $definition->isAsIs();
                 if ($definition->isView()) $param = $definition;
                 else $param = $definition->getName();
-            }
-            else return '';
+            } else return '';
             // Try to find the value in the views if the parameter is not set directly.
             if ($param instanceof TemplateObject) {
                 $name = $param->getName();
@@ -58,12 +57,14 @@ class ParameterSerializer {
                 if ($view instanceof View) {
                     $selector .= '$("' . $view->idc() . '")';
                     if ($scope === "value") {
-                        if ($view instanceof InputHtmlView && $view->type() === 'checkbox') {
+                        if ($view instanceof InputHtmlView && $view->type() === 'checkbox' && $view->getValue()) {
                             $selector .= '.is(":checked")';
                         /*} else if ($view instanceof EditableHtmlView) {
                             $selector .= '.html()';*/
                         } else if ($view instanceof CodeEditorHtmlView) {
                             $selector = 'cm' . $view->id() . '.getValue()';
+                        } else if ($view instanceof FieldSetHtmlView) {
+                            $selector .= '.find("input").toArray().filter((i) => (!$(i).is(":checkbox") || $(i).is(":checked"))).map((i) => $(i).val())';
                         } else {
                             $selector .= '.val()';
                         }
@@ -114,8 +115,12 @@ class ParameterSerializer {
                         if ($view instanceof View) {
                             $selector .= '$("' . $view->idc() . '")';
                             if ($scope === "value") {
-                                if ($view instanceof InputHtmlView && $view->type() === 'checkbox') {
+                                if ($view instanceof InputHtmlView && $view->type() === 'checkbox' && $view->getValue()) {
                                     $selector .= '.is(":checked")';
+                                } else if ($view instanceof CodeEditorHtmlView) {
+                                    $selector = 'cm' . $view->id() . '.getValue()';
+                                } else if ($view instanceof FieldSetHtmlView) {
+                                    $selector .= '.find("input").toArray().filter((i) => (!$(i).is(":checkbox") || $(i).is(":checked"))).map((i) => $(i).val())';
                                 } else {
                                     $selector .= '.val()';
                                 }
