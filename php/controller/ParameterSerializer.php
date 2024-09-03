@@ -57,7 +57,7 @@ class ParameterSerializer {
                 if ($view instanceof View) {
                     $selector .= '$("' . $view->idc() . '")';
                     if ($scope === "value") {
-                        if ($view instanceof InputHtmlView && $view->type() === 'checkbox' && $view->getValue()) {
+                        if ($view instanceof InputHtmlView && $view->type() === 'checkbox' && !$view->getValue()) {
                             $selector .= '.is(":checked")';
                         /*} else if ($view instanceof EditableHtmlView) {
                             $selector .= '.html()';*/
@@ -115,7 +115,7 @@ class ParameterSerializer {
                         if ($view instanceof View) {
                             $selector .= '$("' . $view->idc() . '")';
                             if ($scope === "value") {
-                                if ($view instanceof InputHtmlView && $view->type() === 'checkbox' && $view->getValue()) {
+                                if ($view instanceof InputHtmlView && $view->type() === 'checkbox' && !$view->getValue()) {
                                     $selector .= '.is(":checked")';
                                 } else if ($view instanceof CodeEditorHtmlView) {
                                     $selector = 'cm' . $view->id() . '.getValue()';
