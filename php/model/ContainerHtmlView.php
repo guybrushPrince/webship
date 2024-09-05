@@ -25,6 +25,7 @@ class ContainerHtmlView extends HtmlView {
         $this->style(Tools::css('.container', '.hor', 'flex-direction: row'));
         $this->style(Tools::css('.container', '.single', 'flex-wrap: nowrap'));
         $this->style(Tools::css('.container', '.vcent', 'align-items: center'));
+        $this->style(Tools::css('.container', '.gap', 'gap: 5px'));
         $this->style(Tools::css('.container', '.hcent', 'justify-content: center'));
         $this->style(Tools::css('.container', '.vbot', 'align-items: flex-end'));
         $this->style(Tools::css('.container', ['.fit', ' > ', '*'], 'width: fit-content'));

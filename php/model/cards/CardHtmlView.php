@@ -7,6 +7,18 @@
 class CardHtmlView extends HtmlView {
 
     /**
+     * The title view.
+     * @var HtmlView|null
+     */
+    private ?HtmlView $title = null;
+
+    /**
+     * The content view.
+     * @var HtmlView|null
+     */
+    private ?HtmlView $content = null;
+
+    /**
      * CardHtmlView constructor.
      * @param string[] $classes Some additional classes.
      */
@@ -45,11 +57,16 @@ class CardHtmlView extends HtmlView {
     /**
      * Creates a title.
      * @param bool $editable If the title should be editable.
+     * @param string|string[] $classes Some classes.
      * @return HtmlView
      */
-    public function title(bool $editable = false) : HtmlView {
-        $titleView = (!$editable ? new HtmlView('title') : new EditableHtmlView('title'));
+    public function title(bool $editable = false, string|array $classes = []) : HtmlView {
+        if ($this->title) return $this->title;
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        $classes[] = 'title';
+        $titleView = (!$editable ? new HtmlView($classes) : new EditableHtmlView($classes));
         $this->add($titleView);
+        $this->title = $titleView;
         return $titleView;
     }
 
@@ -58,10 +75,12 @@ class CardHtmlView extends HtmlView {
      * @param string|string[] $classes Some classes.
      * @return HtmlView
      */
-    public function content($classes = []) : HtmlView {
+    public function content(string|array $classes = []) : HtmlView {
+        if ($this->content) return $this->content;
         $classes = is_array($classes) ? $classes : [ $classes ];
         $contentView = new HtmlView(array_merge($classes, ['content']));
         $this->add($contentView);
+        $this->content = $contentView;
         return $contentView;
     }
 

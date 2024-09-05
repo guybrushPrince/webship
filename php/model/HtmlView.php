@@ -147,6 +147,7 @@ class HtmlView extends View {
      * Collect the styles.
      * @param array $styles The styles.
      * @return array
+     * @throws DatabaseError
      */
     private function collectStyles(&$styles) {
         if ($this->isSafe()) {
@@ -163,6 +164,7 @@ class HtmlView extends View {
     /**
      * Generates a complete java script.
      * @return string
+     * @throws DatabaseError
      */
     public function generateJS() {
         return implode("\n", array_unique($this->collectJS()));
@@ -171,6 +173,7 @@ class HtmlView extends View {
     /**
      * Collect the java scripts.
      * @return array
+     * @throws DatabaseError
      */
     private function collectJS() {
         if ($this->isSafe()) {
@@ -190,7 +193,7 @@ class HtmlView extends View {
     /**
      * @inheritDoc
      */
-    public function protocol(int $event, array $params = []) {
+    public function protocol(int $event, array $params = []) : HtmlModifyProtocol {
         $pro = new HtmlEventProtocol($event, $this, $params);
         if (!$this->uniqueId) $this->uniqueId = $this->generateId();
         $this->protocols[] = $pro;
@@ -201,7 +204,7 @@ class HtmlView extends View {
     /**
      * @inheritDoc
      */
-    public function firstProtocol(int $event, array $params = []) {
+    public function firstProtocol(int $event, array $params = []) : HtmlModifyProtocol {
         $pro = new HtmlEventProtocol($event, $this, $params);
         if (!$this->uniqueId) $this->uniqueId = $this->generateId();
         array_unshift($this->protocols, $pro);
@@ -213,10 +216,10 @@ class HtmlView extends View {
 
     /**
      * @see HtmlView->addJavaScript.
-     * @param string|array $js The code.
+     * @param string|string[] $js The code.
      * @return HtmlView $this
      */
-    public function js($js) {
+    public function js(string|array $js) : static {
         $this->addJavaScript($js);
         return $this;
     }
@@ -226,7 +229,7 @@ class HtmlView extends View {
      * @param string|array $style The code.
      * @return HtmlView $this
      */
-    public function style($style) {
+    public function style($style) : static {
         $this->addStyle($style);
         return $this;
     }

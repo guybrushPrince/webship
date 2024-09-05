@@ -10,29 +10,29 @@ class ButtonHtmlView extends HtmlView {
 
     /**
      * An id.
-     * @var string|false
+     * @var string|null|false
      */
-    private $id;
+    private string|null|false $id;
 
     /**
      * The type
      * @var string
      */
-    private $type;
+    private string $type;
 
     /**
      * Set the button disabled or not.
      * @var bool
      */
-    private $disabled = false;
+    private bool $disabled = false;
 
     /**
      * ButtonHtmlView constructor.
      * @param string|false $id The id.
      * @param string $type The type.
-     * @param array|string $classes
+     * @param string[]|string $classes Some classes.
      */
-    public function __construct($id, $type, $classes = array()) {
+    public function __construct(string|null|false $id, string $type, string|array $classes = []) {
         $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('button'), $classes));
         $this->id = $id;
@@ -62,8 +62,6 @@ class ButtonHtmlView extends HtmlView {
     public function generateClosingTag() {
         return '</button>';
     }
-
-    // Short cuts
 
     /**
      * Set disabled.
