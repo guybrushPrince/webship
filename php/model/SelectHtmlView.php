@@ -10,9 +10,9 @@ class SelectHtmlView extends HtmlView {
 
     /**
      * An id.
-     * @var string
+     * @var string|null
      */
-    private string $id;
+    private ?string $id;
 
     /**
      * The name
@@ -114,6 +114,14 @@ class SelectHtmlView extends HtmlView {
     public function disabled(bool $disabled) : SelectHtmlView {
         $this->disabled = $disabled;
         return $this;
+    }
+
+    /**
+     * Get the id.
+     * @return string|null
+     */
+    public function getId() : ?string {
+        return $this->id;
     }
 }
 ?>

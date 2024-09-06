@@ -33,7 +33,12 @@ class FormLabelHtmlView extends HtmlView {
         $id = $this->id();
         return '<label' . ($this->for ? ' for="' . $this->for . '"' : '') .
             ' class="' . implode(' ', array_merge($this->classes, array($id))) . '"' .
-            ($id ? ' data-id="' . $id . '"' : '') . '>';
+            ($id ? ' data-id="' . $id . '"' : '') .
+            ($this->notices ? ' title="' . (array_key_exists(View::getLanguage(), $this->notices) ? $this->notices[View::getLanguage()] : array_pop($this->notices)) . '"' : '') .
+            ($this->data ? ' ' . implode(' ', array_map(function($key, $val) {
+                    return 'data-' . $key . ($val !== null ? '="' . $val . '"' : '');
+                }, array_keys($this->data), $this->data)) : '') .
+            '>';
     }
 
     /**

@@ -167,6 +167,14 @@ class InputHtmlView extends HtmlView {
     }
 
     /**
+     * Get the id.
+     * @return string|null
+     */
+    public function getId() : ?string {
+        return $this->id;
+    }
+
+    /**
      * Set disabled.
      * @param bool $disabled The new value.
      * @return $this

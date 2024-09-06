@@ -307,7 +307,8 @@ class HtmlView extends View {
     }
 
     /**
-     * @return HtmlView
+     * Get the parent.
+     * @return HtmlView|null
      */
     public function parent() : ?HtmlView {
         $p = $this->getParent();
@@ -322,18 +323,19 @@ class HtmlView extends View {
      * Return the id class for html.
      * @return string
      */
-    public function idc() {
+    public function idc() : string {
         if (!$this->uniqueId) $this->uniqueId = $this->generateId();
         return '.' . $this->id();
     }
 
     /**
      * Adds a class to this view.
-     * @param string $class The class.
+     * @param string|string[] $class The class(es).
      * @return void
      */
-    public function addClass(string $class) {
-        $this->classes[] = $class;
+    public function addClass(string|array $class) : void {
+        if (!is_array($class)) $class = [ $class ];
+        $this->classes = array_unique(array_merge($this->classes, $class));
     }
 
     /**
