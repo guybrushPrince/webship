@@ -27,12 +27,15 @@ class StandardButtonHtmlView extends ButtonHtmlView {
             'border: 1px solid var(--dark-system-background)', 'background: var(--card-background)',
             'color: var(--main-font)', 'font-size: 16px', 'text-align: center',
             'font-family: Roboto Condensed, Roboto, sans-serif', 'position: relative', 'margin: .5rem 0 1rem 0',
-            '-webkit-transition: -webkit-box-shadow .25s', 'transition: box-shadow .25s', 'border-radius: 2px',
+            '-webkit-transition: -webkit-box-shadow .25s', 'transition: box-shadow .25s',
             '-webkit-box-shadow: var(--shadow-flow-1)', 'box-shadow: var(--shadow-flow-1)',
-            'transition: background 0.5s', 'border-radius: 5px'));
+            'transition: background 0.5s', 'border-radius: 5px', 'box-sizing: border-box'));
         $this->style(Tools::css('button.std-button', [':hover'],
             'background: var(--dark-system-background)'));
-        $this->style(Tools::css('.std-button', [' > ', 'img'], 'max-height: 100%'));
+        $this->style(Tools::css('button.std-button', [' > ', 'img'], 'height: 100%'));
+
+        $this->style(Tools::css('button.std-button.only-img', [], 'width: 30px', 'height: 30px',
+            'padding: 5px', 'margin: 0', 'min-height: 30px', 'max-height: 30px', 'min-width: 30px', 'max-width: 30px'));
     }
 
     /**
@@ -56,6 +59,16 @@ class StandardButtonHtmlView extends ButtonHtmlView {
             $imgView = array_pop($this->subviews);
             array_unshift($this->subviews, $imgView);
         }
+        return $this;
+    }
+
+    /**
+     * Set that the button only uses an image.
+     * @param bool $img Whether it is only an image, or not.
+     * @return $this
+     */
+    public function onlyImg(bool $img) : static {
+        if ($img) $this->classes[] = 'only-img';
         return $this;
     }
 
