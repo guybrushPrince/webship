@@ -39,7 +39,7 @@ class KeyValueHtmlView extends HtmlView {
         if (!$for) $keyView = $this->add(new HtmlView(['k', 'd' . $keyRatio]));
         else $keyView = $this->add(new FormLabelHtmlView($for, ['k', 'd' . $keyRatio]));
         if (!is_array($key)) $key = [self::getLanguage() => $key];
-        foreach ($key as $l => $k) $keyView->texts()->text($l, $k);
+        foreach ($key as $l => $k) $keyView->texts()->text($l, str_replace(' ', '&nbsp;', $k));
 
         $this->valueView = new HtmlView(['v', 'd' . $valueRatio]);
         $this->add($this->valueView);
