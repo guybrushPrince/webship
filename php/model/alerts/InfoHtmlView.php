@@ -12,11 +12,11 @@ class InfoHtmlView extends AlertHtmlView {
     public function __construct(string|array $classes = []) {
         parent::__construct(array_merge(['info'], $classes));
 
-        $this->style(Tools::css('.alert:not(.screen)', '.info',
+        $this->style(Tools::css('.alert:not(.cover)', '.info',
             'border-color: var(--border-info)', 'color: var(--font-info)',
             'background-color: var(--background-info)'));
 
-        $this->style(Tools::css('.alert.screen.info', [' > ', '.a-message'],
+        $this->style(Tools::css('.alert.cover.info', [' > ', '.a-message'],
             'border-color: var(--border-info)', 'color: var(--font-info)',
             'background-color: var(--background-info)'));
     }
@@ -24,9 +24,10 @@ class InfoHtmlView extends AlertHtmlView {
     /**
      * @inheritDoc
      */
-    public static function create(array $message = [], bool $screen = false, ?AlertHtmlView $v = null,
-                                  ?string $property = null, ?string $image = null) : AlertHtmlView {
-        return parent::create($message, $screen, $v ?: new InfoHtmlView(), $property,
+    public static function create(array $message = [], bool $screen = false, bool $fullView = false,
+                                  ?AlertHtmlView $v = null, ?string $property = null,
+                                  ?string $image = null) : AlertHtmlView {
+        return parent::create($message, $screen, $fullView, $v ?: new InfoHtmlView(), $property,
             $image ? $image : '/webship/pic/alert-info.svg');
     }
 }

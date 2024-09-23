@@ -12,11 +12,11 @@ class SuccessHtmlView extends AlertHtmlView {
     public function __construct(string|array $classes = []) {
         parent::__construct(array_merge(['success'], $classes));
 
-        $this->style(Tools::css('.alert:not(.screen)', '.success',
+        $this->style(Tools::css('.alert:not(.cover)', '.success',
             'border-color: var(--border-success)', 'color: var(--font-success)',
             'background-color: var(--background-success)'));
 
-        $this->style(Tools::css('.alert.screen.success', [' > ', '.a-message'],
+        $this->style(Tools::css('.alert.cover.success', [' > ', '.a-message'],
             'border-color: var(--border-success)', 'color: var(--font-success)',
             'background-color: var(--background-success)'));
     }
@@ -24,9 +24,10 @@ class SuccessHtmlView extends AlertHtmlView {
     /**
      * @inheritDoc
      */
-    public static function create(array $message = [], bool $screen = false, ?AlertHtmlView $v = null,
-                                  ?string $property = null, ?string $image = null) : AlertHtmlView {
-        return parent::create($message, $screen, $v ?: new SuccessHtmlView(), $property,
+    public static function create(array $message = [], bool $screen = false, bool $fullView = false,
+                                  ?AlertHtmlView $v = null, ?string $property = null,
+                                  ?string $image = null) : AlertHtmlView {
+        return parent::create($message, $screen, $fullView, $v ?: new SuccessHtmlView(), $property,
             $image);
     }
 }

@@ -294,6 +294,7 @@ let eventBus = (function () {
             if (this.registry.hasOwnProperty(objId)) {
                 let reg = this.registry[objId];
                 if (scopes !== undefined) {
+                    if (typeof scopes === 'object') scopes = Object.values(scopes);
                     if (!Array.isArray(scopes)) scopes = [ scopes ];
                 }
                 else scopes = Object.getOwnPropertyNames(reg);
