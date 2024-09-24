@@ -127,7 +127,12 @@ class HtmlEventProtocol extends EventProtocol {
                     $code .= ',' . ($this->parameters['interval'] * 1000) . ')})()';
                 }
                 $code .= ';';
-                if ($this->event === Event::ONLOADCONTENT) $code = $this->generateCode($this->children);
+                if ($this->event === Event::ONLOADCONTENT) {
+                    $code = '(function() {';
+                    $code .= 'let _i_n_ = "anonymous";';
+                    $code .= $this->generateCode($this->children);
+                    $code .= '})();';
+                }
             } else {
                 $submitView = $this->parent;
                 $v = $submitView->submitForm();
