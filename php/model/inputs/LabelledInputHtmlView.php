@@ -183,14 +183,14 @@ class LabelledInputHtmlView extends InputHtmlView {
      * Create a mini checkbox.
      * @param string|string[] $labels The label(s).
      * @param string $id The id.
-     * @param bool $checked Whether the checkbox is checked, or not.
+     * @param bool|null $checked Whether the checkbox is checked, or not.
      * @param string[]|string $classes Some classes.
      * @return LabelledInputHtmlView
      */
-    public static function createMiniCheckBox(string|array $labels, string $id, bool $checked = false,
+    public static function createMiniCheckbox(string|array $labels, string $id, ?bool $checked = false,
                                               array|string $classes = []) : LabelledInputHtmlView {
         $input = new LabelledInputHtmlView($labels, $id, 'checkbox', null, null, $classes);
-        $input->texts()->text(View::getLanguage(), ($checked ? '' : 'checked'));
+        $input->texts()->text(View::getLanguage(), (!$checked ? '' : 'checked'));
         $input->mini = true;
         $input->inside = false;
         return $input;
