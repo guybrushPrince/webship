@@ -20,7 +20,8 @@ class CheckboxHtmlView extends InputHtmlView {
      */
     private function __construct(?string $id = null, bool $checked = false, array|string $classes = []) {
         parent::__construct($id, $id, 'checkbox', null, null, null, $classes);
-        $this->texts()->text(View::getLanguage(), ($checked ? '' : 'checked'));
+        $this->texts()->text(View::getLanguage(), (!$checked ? '' : 'checked'));
+        $this->addClass('fit');
     }
 
     /**

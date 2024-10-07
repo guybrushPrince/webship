@@ -81,8 +81,10 @@ class LabelledInputHtmlView extends InputHtmlView {
         $this->style(Tools::css('.linput.mini.out', [' > ', 'label'], 'color: var(--font-info)',
             'font-size: 10px', 'display: flex', 'flex-wrap: nowrap', 'flex-direction: row', 'height: var(--height)',
             'width: fit-content', 'width: -moz-fit-content', 'align-items: center'));
-        $this->style(Tools::css('.linput.mini.out', [' > ', 'label:after'], 'color: var(--font-info)',
-            'font-size: 10px', 'content: ":"', 'display: block', 'margin-right: 5px'));
+        $this->style(Tools::css('.linput.mini.out', [' > ', 'label:empty'], 'display: none'));
+        $this->style(Tools::css('.linput.mini.out', [' > ', 'label:not(:empty):after'],
+            'color: var(--font-info)', 'font-size: 10px', 'content: ":"', 'display: block',
+            'margin-right: 5px'));
     }
 
     /**
@@ -191,6 +193,8 @@ class LabelledInputHtmlView extends InputHtmlView {
                                               array|string $classes = []) : LabelledInputHtmlView {
         $input = new LabelledInputHtmlView($labels, $id, 'checkbox', null, null, $classes);
         $input->texts()->text(View::getLanguage(), (!$checked ? '' : 'checked'));
+        if (!is_array($labels)) $labels = [ self::getLanguage() => $labels ];
+        foreach ($labels as $lang => $label) $input->notice($lang, $label);
         $input->mini = true;
         $input->inside = false;
         return $input;

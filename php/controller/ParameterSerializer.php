@@ -64,7 +64,8 @@ class ParameterSerializer {
                         } else if ($view instanceof CodeEditorHtmlView) {
                             $selector = 'cm' . $view->id() . '.getValue()';
                         } else if ($view instanceof FieldSetHtmlView) {
-                            $selector .= '.find("input").toArray().filter((i) => (!$(i).is(":checkbox") || $(i).is(":checked"))).map((i) => $(i).val())';
+                            $name = $info["name"];
+                            $selector .= '.find("input[data-intern-scope=\"' . $name . '\"]").toArray().filter((i) => (!$(i).is(":checkbox") || $(i).is(":checked"))).map((i) => $(i).val())';
                         } else {
                             $selector .= '.val()';
                         }

@@ -24,7 +24,7 @@ class MiniTextButtonHtmlView extends ButtonHtmlView {
 
         $this->style(Tools::css('button.mini', [],'border: none', 'background: none',
             'height: 20px', 'border-radius: 3px', 'padding: 3px', 'width: initial', 'font-size: 10px',
-            'color: var(--font-info)', 'transition: all 0.25s'));
+            'color: var(--font-info)', 'transition: all 0.25s', 'cursor: pointer'));
         $this->style(Tools::css('button.mini', [':hover'], 'background: var(--font-info)',
             'color: var(--neutral)'));
     }

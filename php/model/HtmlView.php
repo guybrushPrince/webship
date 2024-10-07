@@ -16,6 +16,12 @@ class HtmlView extends View {
     protected array $styles = array();
 
     /**
+     * Local styles.
+     * @var string[]
+     */
+    protected array $localStyles = [];
+
+    /**
      * JavaScript codes.
      * @var string[]
      */
@@ -25,7 +31,7 @@ class HtmlView extends View {
      * An array of strings.
      * @var string[]
      */
-    protected $classes;
+    protected array $classes;
 
     /**
      * Some data.
@@ -43,7 +49,7 @@ class HtmlView extends View {
      * HtmlView constructor.
      * @param string[]|string $classes (optional) Possible classes
      */
-    public function __construct($classes = []) {
+    public function __construct(string|array $classes = []) {
         $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct();
         $this->classes = $classes;
@@ -61,6 +67,7 @@ class HtmlView extends View {
             ($this->data ? ' ' . implode(' ', array_map(function($key, $val) {
                 return 'data-' . $key . ($val !== null ? '="' . $val . '"' : '');
             }, array_keys($this->data), $this->data)) : '') .
+            ($this->localStyles ? ' style="' . implode(';', $this->localStyles) . '"' : '') .
             '>';
     }
 
@@ -135,10 +142,21 @@ class HtmlView extends View {
     }
 
     /**
+     * Add local styles.
+     * @param string[]|string $style The style(s).
+     * @return void
+     */
+    public function addLocalStyle(array|string $style) : void {
+        if (!is_array($style)) $style = [ $style ];
+        $this->localStyles = array_merge($this->localStyles, $style);
+    }
+
+    /**
      * Generates a complete style sheet.
      * @return string
+     * @throws DatabaseError
      */
-    public function generateStyle() {
+    public function generateStyle() : string {
         $styles = array();
         return implode("\n", array_unique($this->collectStyles($styles)));
     }
@@ -193,7 +211,16 @@ class HtmlView extends View {
     /**
      * @inheritDoc
      */
-    public function protocol(int $event, array $params = []) : HtmlModifyProtocol {
+    public function ref(string $id, bool|string $scope = false, View|bool $view = false) : static {
+        if ($scope !== false && $scope !== 'value') $this->data('intern-scope', $scope);
+        return parent::ref($id, $scope, $view);
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function protocol(int $event, array $params = []) : ModifyProtocol {
         $pro = new HtmlEventProtocol($event, $this, $params);
         if (!$this->uniqueId) $this->uniqueId = $this->generateId();
         $this->protocols[] = $pro;
@@ -208,8 +235,7 @@ class HtmlView extends View {
         $pro = new HtmlEventProtocol($event, $this, $params);
         if (!$this->uniqueId) $this->uniqueId = $this->generateId();
         array_unshift($this->protocols, $pro);
-        $pro = $pro->modify();
-        return $pro;
+        return $pro->modify();
     }
 
     // Short cuts
@@ -227,10 +253,20 @@ class HtmlView extends View {
     /**
      * @see HtmlView->addStyle
      * @param string|array $style The code.
-     * @return HtmlView $this
+     * @return static
      */
     public function style($style) : static {
         $this->addStyle($style);
+        return $this;
+    }
+
+    /**
+     * @see HtmlView->addLocalStyle
+     * @param string|string[] $style The style(s).
+     * @return static
+     */
+    public function localStyle(string|array $style) : static {
+        $this->addLocalStyle($style);
         return $this;
     }
 
