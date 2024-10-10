@@ -36,7 +36,7 @@ class StandardButtonHtmlView extends ButtonHtmlView {
 
         $this->style(Tools::css('button.std-button.only-img', [], 'width: 30px', 'height: 30px',
             'padding: 5px', 'margin: 0', 'min-height: 30px', 'max-height: 30px', 'min-width: 30px', 'max-width: 30px'));
-        $this->style(Tools::css('button.std-button:disabled', [], 'opacity: 0.25'));
+        $this->style(Tools::css('button.std-button:disabled', [], 'opacity: 0.25', 'cursor: not-allowed'));
     }
 
     /**
