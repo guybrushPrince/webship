@@ -149,6 +149,17 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         return $this->createViewSelector($view) . '.val("' . $value . '");';
                     } else return '';
                 }
+                case 'disable'; {
+                    $view = $this->reduceView($modify["view"], false);
+                    if ($view) {
+                        if (!is_array($view)) $view = array($view);
+                        $c = '$("' . implode(',', array_map(function ($v) {
+                                if ($v instanceof View) return $v->idc();
+                                else return '" + con["' . $v->getName() . '"] + "';
+                            }, $view)) . '").find("input, select, button").';
+                        return $c . 'unbind();' . $c . 'prop("disabled", true);';
+                    } else return '';
+                }
                 case 'add':
                 case 'addWithFallback':
                 case 'prepend':

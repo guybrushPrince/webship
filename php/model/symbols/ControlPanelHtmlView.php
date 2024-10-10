@@ -87,6 +87,8 @@ class ControlPanelHtmlView extends HtmlView {
 
         $this->style(Tools::css('.ctr', [' ', '.std-job-but'], 'grid-column-end: span 2'));
         $this->style(Tools::css('.ctr', [' ', '.del:hover'], 'background: var(--delete-2-hover-2)'));
+        $this->style(Tools::css('.ctr', [' ', '.css-gradient'], 'height: 100%'));
+        $this->style(Tools::css('.ctr', [' ', '.css-gradient', ' > ', 'div'], 'height: 100%', 'top: 0'));
 
         $this->style(Tools::css('.ctr.fix', [], 'position: absolute', 'min-height: 20px', 'height: 20px',
             'margin: 0 !important'));
@@ -210,6 +212,20 @@ class ControlPanelHtmlView extends HtmlView {
             array_merge(['area'], $classes));
         $this->add($view);
         return $view;
+    }
+
+    /**
+     * Adds a progress into a control panel.
+     * @param Job $job The job to state the progress of.
+     * @param int $xDim The x-dimension of the view.
+     * @param int $yDim The y-dimension of the view.
+     * @return JobProgressHtmlView
+     */
+    public function progress(Job $job, int $xDim, int $yDim) : JobProgressHtmlView {
+        $progress = JobProgressHtmlView::createJob($job, 'var(--neutral)', 'var(--font-info)',
+            '100%; grid-column-end: span ' . $xDim . '; grid-row-end: span ' . $yDim);
+        $this->add($progress);
+        return $progress;
     }
 
     /**

@@ -32,8 +32,8 @@ class CSSColorGradientHtmlView extends HtmlView {
      * @param string|null $width The desired width (absolute or relative).
      * @param string|string[] $classes Some classes.
      */
-    private function __construct(string $fromColor, string $toColor, float|string|int $state, string $width = null,
-                                 string|array $classes = []) {
+    protected function __construct(string $fromColor, string $toColor, float|string|int $state, ?string $width = null,
+                                   string|array $classes = []) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         $classes[] = 'css-gradient';
         parent::__construct($classes);
