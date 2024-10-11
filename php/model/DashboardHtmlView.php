@@ -150,12 +150,15 @@ class DashboardHtmlView extends HtmlView {
                     $group = $userSession->getCurrentGroup();
                     $items = DashboardItem::getAllWhere('user', $user);
                     $items = array_filter($items, function (DashboardItem $item) use ($group) {
-                        foreach ($item->getAccess()->getAccessRights() as $accessRight) {
-                            if ($accessRight->getReadAccessGroup()->getName() === $group->getName()) {
-                                return true;
+                        if ($item->getAccess()) {
+                            foreach ($item->getAccess()->getAccessRights() as $accessRight) {
+                                if ($accessRight->getReadAccessGroup()->getName() === $group->getName()) {
+                                    return true;
+                                }
                             }
+                            return false;
                         }
-                        return false;
+                        return true;
                     });
                     $view->each($items, function (DashboardHtmlView $view, DashboardItem $item) {
                         try {
