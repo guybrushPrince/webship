@@ -18,12 +18,12 @@ class AreaHtmlView extends ContainerHtmlView {
      */
     public function __construct(string|array $classes = []) {
         parent::__construct($classes);
-        $this->classes[] = 'area';
+        $this->classes[] = 'c-area';
 
-        $this->style(Tools::css('.area', [], 'background: var(--ultra-light-system-background)',
+        $this->style(Tools::css('.c-area', [], 'background: var(--ultra-light-system-background)',
             'border-radius: 10px', 'margin-top: 10px', 'padding: 20px', 'box-sizing: border-box',
             'border: solid 1px var(--system-background)'));
-        $this->style(Tools::css('.aggregations', [' > ', '.sub-title'], 'padding: 0',
+        $this->style(Tools::css('.c-area', [' > ', '.sub-title'], 'padding: 0',
             'margin-bottom: 10px'));
     }
 
