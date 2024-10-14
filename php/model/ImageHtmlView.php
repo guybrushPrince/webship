@@ -12,7 +12,7 @@ class ImageHtmlView extends HtmlView {
      * The image location
      * @var string
      */
-    private $src;
+    private string $src;
 
     /**
      * ImageHtmlView constructor.
@@ -24,6 +24,8 @@ class ImageHtmlView extends HtmlView {
         parent::__construct(array_merge(['image'], $classes));
         $this->src = $src;
 
+        $this->style(Tools::css('.min-img', [], 'width: 20px', 'height: 20px'));
+        $this->style(Tools::css('.min-img', [' > ', 'img'], 'width: 100%'));
         $this->style(Tools::css('img.image.cover', [], 'object-fit: cover'));
     }
 
@@ -43,7 +45,18 @@ class ImageHtmlView extends HtmlView {
         return '';
     }
 
-    // Short cuts
+    // Shortcuts
 
+    /**
+     * Creates a mini image view.
+     * @param string $src The source of the image.
+     * @param string|string[] $classes Some classes.
+     * @return HtmlView
+     */
+    public static function mini(string $src, string|array $classes = []) : HtmlView {
+        $mini = new HtmlView('min-img');
+        $mini->add(new ImageHtmlView($src, $classes));
+        return $mini;
+    }
 }
 ?>

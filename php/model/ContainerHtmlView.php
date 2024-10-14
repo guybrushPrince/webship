@@ -7,11 +7,12 @@ include_once dirname(__FILE__) . '/HtmlView.php';
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  */
 class ContainerHtmlView extends HtmlView {
+
     /**
      * ContainerHtmlView constructor.
-     * @param array|string $classes
+     * @param string[]|string $classes
      */
-    public function __construct($classes = array()) {
+    public function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('container'), $classes));
 
@@ -40,11 +41,10 @@ class ContainerHtmlView extends HtmlView {
 
     /**
      * Create a header.
-     * @param array|string $classes A set of classes.
-     * @return ContainerHeaderHtmlView
+     * @param string[]|string $classes A set of classes.
+     * @return HtmlView|TextView
      */
-    public function header($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public function header(string|array $classes = []) : HtmlView|TextView {
         $headerView = new ContainerHeaderHtmlView($classes);
         $this->add($headerView);
         return $headerView;
@@ -52,11 +52,10 @@ class ContainerHtmlView extends HtmlView {
 
     /**
      * Create an item.
-     * @param array|string $classes A set of classes.
-     * @return ContainerItemHtmlView
+     * @param string[]|string $classes A set of classes.
+     * @return HtmlView
      */
-    public function item($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public function item(string|array $classes = []) : HtmlView {
         $itemView = new ContainerItemHtmlView($classes);
         $this->add($itemView);
         return $itemView;
@@ -67,8 +66,7 @@ class ContainerHtmlView extends HtmlView {
      * @param array|string $classes Classes.
      * @return ContainerHtmlView
      */
-    public static function _new($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public static function _new(string|array $classes = []) : static {
         return new ContainerHtmlView($classes);
     }
 }

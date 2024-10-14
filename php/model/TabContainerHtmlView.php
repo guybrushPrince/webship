@@ -116,8 +116,7 @@ class TabContainerHtmlView extends ContainerHtmlView {
      * @param array|string $classes Classes.
      * @return TabContainerHtmlView
      */
-    public static function _new($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public static function _new($classes = array()) : static {
         return new TabContainerHtmlView($classes);
     }
 }

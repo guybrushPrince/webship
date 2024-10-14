@@ -133,7 +133,7 @@ class ParameterSerializer {
                     } else {
                         if (is_int($key)) $key = 'i' . $key;
                         else $key = str_replace(' ', '__WS__', $key);
-                        if (is_string($field)) $field = '"' . $field . '"';
+                        if (is_string($field)) $field = '"' . str_replace('"', "'", $field) . '"';
                         else if (is_bool($field)) $field = ($field ? 'true' : 'false');
                         else if ($field instanceof View) $field = '"' . $field->idc() . '"';
                         else if (is_object($field)) $field = Tools::jsonEncode(self::handleObject($field));

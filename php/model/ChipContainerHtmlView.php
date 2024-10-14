@@ -28,20 +28,29 @@ class ChipContainerHtmlView extends ContainerHtmlView {
 
     /**
      * Create a new chip.
-     * @param array|string $classes An array of additional classes.
-     * @return ContainerItemHtmlView
+     * @param string[]|string $classes An array of additional classes.
+     * @return ChipContainerItemHtmlView
      */
-    public function chip($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        return $this->add(new ChipContainerItemHtmlView($classes));
+    public function chip(string|array $classes = array()) : ChipContainerItemHtmlView {
+        $chip = new ChipContainerItemHtmlView($classes);
+        $this->add($chip);
+        return $chip;
     }
 
     /**
      * @inheritdoc
      */
-    public function item($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public function item($classes = array()) : HtmlView {
         return $this->chip($classes);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public static function _new(array|string $classes = []) : static {
+        return new ChipContainerHtmlView($classes);
+    }
+
+
 }
 ?>

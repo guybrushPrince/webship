@@ -55,6 +55,9 @@ class KeyValueHtmlView extends HtmlView {
         $this->style(Tools::css('.kv', [' > ', '.d' . $keyRatio], 'width: ' . $keyRatio . '%'));
         $this->style(Tools::css('.kv', [' > ', '.d' . $valueRatio], 'width: ' . $valueRatio . '%'));
         $this->style(Tools::css('.kv.frame', [' + ', '.kv.frame'], 'border-top: none'));
+        $this->style(Tools::css('.kv.ver', [], 'flex-direction: column'));
+        $this->style(Tools::css('.kv.ver', [' > ', '*'], 'width: 100%'));
+        $this->style(Tools::css('.kv.np', [], 'padding: 0'));
     }
 
     /**
@@ -156,6 +159,24 @@ class KeyValueHtmlView extends HtmlView {
         $view = new KeyValueHtmlView($key, $frame, $keySize, $valueSize, $classes, $value->getId());
         $view->valueView->add($value);
         return $view;
+    }
+
+    /**
+     * Place the entries vertically.
+     * @return $this
+     */
+    public function vertical() : static {
+        $this->classes[] = 'ver';
+        return $this;
+    }
+
+    /**
+     * Removes the padding.
+     * @return $this
+     */
+    public function noPadding() : static {
+        $this->classes[] = 'np';
+        return $this;
     }
 
     /**
