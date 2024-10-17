@@ -1,47 +1,42 @@
 <?php
 
-include_once dirname(__FILE__) . '/ButtonHtmlView.php';
-
 /**
- * Class SubmitHtmlView
+ * Class SubmitHtmlView.
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.2.0
  */
-class SubmitHtmlView extends ButtonHtmlView {
+class SubmitHtmlView extends StandardButtonHtmlView {
 
     /**
-     * The id of the form to submit.
-     * @var string
+     * The form / reference of the form to submit.
+     * @var string|FormHtmlView
      */
-    protected $formId;
+    protected string|FormHtmlView $form;
 
     /**
      * SubmitHtmlView constructor.
      * @param string $id The id.
-     * @param string $formId The id of the formular to submit.
-     * @param array|string $classes
+     * @param string|FormHtmlView $form The form or form reference.
+     * @param string[]|string $classes Some classes.
      */
-    public function __construct($id, $formId, $classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct($id, 'button', array_merge(array('submit'), $classes));
-        $this->formId = $formId;
+    public function __construct($id, $form, $classes = []) {
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        parent::__construct($id, array_merge(['submit'], $classes));
+        $this->form = $form;
 
-        $coreClasses = array_diff($this->classes, $classes);
-        $coreSelector = '.' . implode('.', $coreClasses);
-
-        $this->style(Tools::css($coreSelector, '', 'background: var(--button-submit)',
-            'border: none', 'cursor: pointer', 'transition: background 0.5s'));
-        $this->style(Tools::css($coreSelector, ':hover', 'background: var(--button-submit-hover)'));
+        $this->style(Tools::css('button.std-button.submit', [], 'background: var(--button-submit)'));
+        $this->style(Tools::css('button.std-button.submit', [':hover'],
+            'background: var(--dark-system-background)'));
     }
-
-    // Short cuts
 
     /**
-     * Get the form id.
-     * @return string|View|null
+     * Get the form.
+     * @return string|View|null|FormHtmlView
      */
-    public function submitForm() {
-        return $this->get($this->formId)["view"];
+    public function submitForm() : string|View|null|FormHtmlView {
+        if (is_string($this->form)) return $this->get($this->form)["view"];
+        else return $this->form;
     }
-
 }
 ?>

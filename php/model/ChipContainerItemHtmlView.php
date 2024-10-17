@@ -1,30 +1,31 @@
 <?php
 
-include_once dirname(__FILE__) . '/ContainerItemHtmlView.php';
-
 /**
- * Class ChipContainerItemHtmlView
+ * Class ChipContainerItemHtmlView.
+ *
+ * @package webship
+ * @subpackage php/model
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.2.0
  */
 class ChipContainerItemHtmlView extends ContainerItemHtmlView {
 
     /**
      * ContainerItemHtmlView constructor.
-     * @param array|string $classes
+     * @param string[]|string $classes Some classes.
      */
-    public function __construct($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct(array_merge(array('chip'), $classes));
+    public function __construct(string|array $classes = []) {
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        parent::__construct(array_merge([ 'chip' ], $classes));
 
-        $coreClasses = array_diff($this->classes, $classes);
-        $coreSelector = '.' . implode('.', $coreClasses);
-
-        $this->style(Tools::css($coreSelector, array(' > ', '.closer'), 'width: 10px', 'margin-left: 10px'));
-        $this->style(Tools::css($coreSelector, array(' ', '.container'), 'height: auto', 'padding-top: 0',
+        $this->style(Tools::css('.chip', [' > ', 'button.std-button.closer.mini'],
+            'min-height: 20px', 'height: 20px', 'padding: 2.5px', 'min-width: 20px', 'width: 20px'));
+        $this->style(Tools::css('.chip', [' ', '.container'], 'height: auto', 'padding-top: 0',
             'padding-bottom: 0'));
-        $this->style(Tools::css($coreSelector, array(' ', '.container-item'), 'height: auto', 'padding-top: 0',
+        $this->style(Tools::css('.chip', [' ', '.container-item'], 'height: auto', 'padding-top: 0',
             'padding-bottom: 0'));
-        $this->style(Tools::css($coreSelector, array(' ', 'select'), 'height: auto'));
+        $this->style(Tools::css('.chip', [' ', 'select'], 'height: auto'));
     }
 
     /**
@@ -37,16 +38,14 @@ class ChipContainerItemHtmlView extends ContainerItemHtmlView {
         return parent::generateOpeningTag();
     }
 
-    // Short cuts
-
     /**
      * Generate a closer view.
-     * @param array|string $classes The classes.
+     * @param string[]|string $classes Some classes.
      * @return CloserHtmlView
      */
-    public function closer($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public function closer(string|array $classes = []) : CloserHtmlView {
         $closer = new CloserHtmlView($classes);
+        $closer->plain()->mini();
         $this->add($closer);
         return $closer;
     }

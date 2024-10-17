@@ -23,16 +23,17 @@ class KeyValueHtmlView extends HtmlView {
      * @param string|string[] $key The key.
      * @param bool $frame Whether there shall be a frame or not.
      * @param int $keySize The size of key field.
-     * @param int $valueSize The size of the value field.
+     * @param int|null $valueSize The size of the value.
      * @param string[]|string $classes Some classes.
      */
-    private function __construct(array|string $key, bool $frame = true, int $keySize = 30, int $valueSize = 70,
+    private function __construct(array|string $key, bool $frame = true, int $keySize = 30, ?int $valueSize = null,
                                  array|string $classes = [], ?string $for = null) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         $classes[] = 'kv';
         if ($frame) $classes[] = 'frame';
         parent::__construct($classes);
 
+        if ($valueSize === null) $valueSize = 100 - $keySize;
         $keyRatio = round($keySize / ($keySize + $valueSize), 2) * 100;
         $valueRatio = round($valueSize / ($keySize + $valueSize), 2) * 100;
 
@@ -66,12 +67,12 @@ class KeyValueHtmlView extends HtmlView {
      * @param string $value The value (as string).
      * @param bool $frame Whether there shall be a frame or not.
      * @param int $keySize The size of the key.
-     * @param int $valueSize The size of the value.
+     * @param int|null $valueSize The size of the value.
      * @param string[]|string $classes Some classes.
      * @return KeyValueHtmlView
      */
     public static function createString(array|string $key, string $value,
-                                        bool $frame = true, int $keySize = 30, int $valueSize = 70,
+                                        bool $frame = true, int $keySize = 30, ?int $valueSize = null,
                                         array|string $classes = []) : KeyValueHtmlView {
         $view = new KeyValueHtmlView($key, $frame, $keySize, $valueSize, $classes);
         $view->valueView->texts()->text(self::getLanguage(), $value);
@@ -84,12 +85,12 @@ class KeyValueHtmlView extends HtmlView {
      * @param HtmlView $value The value (as view).
      * @param bool $frame Whether there shall be a frame or not.
      * @param int $keySize The size of the key.
-     * @param int $valueSize The size of the value.
+     * @param int|null $valueSize The size of the value.
      * @param string[]|string $classes Some classes.
      * @return KeyValueHtmlView
      */
     public static function createView(array|string $key, HtmlView $value,
-                                      bool $frame = true, int $keySize = 30, int $valueSize = 70,
+                                      bool $frame = true, int $keySize = 30, ?int $valueSize = null,
                                       array|string $classes = []) : KeyValueHtmlView {
         $view = new KeyValueHtmlView($key, $frame, $keySize, $valueSize, $classes);
         $view->valueView->add($value);
@@ -102,12 +103,12 @@ class KeyValueHtmlView extends HtmlView {
      * @param InputHtmlView $value The value (as an input view).
      * @param bool $frame Whether there shall be a frame or not.
      * @param int $keySize The size of the key.
-     * @param int $valueSize The size of the value.
+     * @param int|null $valueSize The size of the value.
      * @param string[]|string $classes Some classes.
      * @return KeyValueHtmlView
      */
     public static function createTextField(array|string $key, InputHtmlView $value,
-                                           bool $frame = true, int $keySize = 30, int $valueSize = 70,
+                                           bool $frame = true, int $keySize = 30, ?int $valueSize = null,
                                            array|string $classes = []) : KeyValueHtmlView {
         if ($value->type() === 'checkbox')
             return self::createCheckbox($key, $value, $frame, $keySize, $valueSize, $classes);
@@ -123,12 +124,12 @@ class KeyValueHtmlView extends HtmlView {
      * @param bool $swap For checkboxes, key and value are exchanged by default.
      * @param bool $frame Whether there shall be a frame or not.
      * @param int $keySize The size of the key.
-     * @param int $valueSize The size of the value.
+     * @param int|null $valueSize The size of the value.
      * @param string[]|string $classes Some classes.
      * @return KeyValueHtmlView
      */
     public static function createCheckbox(array|string $key, InputHtmlView $value, bool $swap = true,
-                                           bool $frame = true, int $keySize = 30, int $valueSize = 70,
+                                           bool $frame = true, int $keySize = 30, ?int $valueSize = null,
                                            array|string $classes = []) : KeyValueHtmlView {
         if ($value->type() !== 'checkbox')
             return self::createTextField($key, $value, $frame, $keySize, $valueSize, $classes);
@@ -149,12 +150,12 @@ class KeyValueHtmlView extends HtmlView {
      * @param SelectHtmlView $value The value (as a select).
      * @param bool $frame Whether there shall be a frame or not.
      * @param int $keySize The size of the key.
-     * @param int $valueSize The size of the value.
+     * @param int|null $valueSize The size of the value.
      * @param string[]|string $classes Some classes.
      * @return KeyValueHtmlView
      */
     public static function createSelect(array|string $key, SelectHtmlView $value,
-                                        bool $frame = true, int $keySize = 30, int $valueSize = 70,
+                                        bool $frame = true, int $keySize = 30, ?int $valueSize = null,
                                         array|string $classes = []) : KeyValueHtmlView {
         $view = new KeyValueHtmlView($key, $frame, $keySize, $valueSize, $classes, $value->getId());
         $view->valueView->add($value);

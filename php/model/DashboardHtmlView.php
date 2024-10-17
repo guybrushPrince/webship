@@ -65,11 +65,6 @@ class DashboardHtmlView extends HtmlView {
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item.plus', ' > ', ' .box', ':hover'],
                     'opacity: 1.0'));
 
-        $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item', ' > ', '.box', ' > ', '.closer'],
-            'position: absolute', 'right: 5px', 'top: 0'));
-        $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item', ' > ', '.box', ' > ', '.pencil'],
-            'position: absolute', 'right: 20px', 'top: -2px'));
-
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', ' > ', '.box'],
             'padding: 0'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-text', '.t1', ' > ', '.box'],

@@ -34,15 +34,15 @@ class InputHtmlView extends HtmlView {
 
     /**
      * The minimum length of the content.
-     * @var int|null
+     * @var int|string|null
      */
-    private ?int $min;
+    private int|string|null $min;
 
     /**
      * The maximum length of the content.
-     * @var int|null
+     * @var int|string|null
      */
-    private ?int $max;
+    private int|string|null $max;
 
     /**
      * The step size between different values.
@@ -67,13 +67,14 @@ class InputHtmlView extends HtmlView {
      * @param string|null $id The id.
      * @param string $name The name.
      * @param string $type The type.
-     * @param int|null $min The minimum (optional).
-     * @param int|null $max The maximum (optional).
+     * @param int|null|string $min The minimum (optional).
+     * @param int|null|string $max The maximum (optional).
      * @param int|null $step The step size (optional).
      * @param string[]|string $classes
      */
-    public function __construct(?string $id, string $name, string $type, ?int $min = null, ?int $max = null,
-                                ?int $step = null, string|array $classes = []) {
+    public function __construct(?string $id, string $name, string $type,
+                                int|string|null $min = null, int|string|null $max = null, ?int $step = null,
+                                string|array $classes = []) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct(array_merge([ 'input' ], $classes));
         $this->id = $id;
@@ -101,10 +102,10 @@ class InputHtmlView extends HtmlView {
         return '<input class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' .
             ($this->id ? ' id="' . $this->id . '"' : '') . ' name="' . $this->name .
             '" type="' . $this->type . '"' .
-            ($this->type === 'number' && $this->min ? ' min="' . $this->min . '"' : '') .
-            ($this->type === 'number' && $this->max ? ' max="' . $this->max . '"' : '') .
+            ($this->type === 'number' || $this->type === 'date' && $this->min ? ' min="' . $this->min . '"' : '') .
+            ($this->type === 'number' || $this->type === 'date' && $this->max ? ' max="' . $this->max . '"' : '') .
             ($this->type === 'text'   && $this->max ? ' maxlength="' . $this->max . '"' : '') .
-            ($this->type === 'number' && $this->step ? ' step="' . $this->step . '"' : '') .
+            (($this->type === 'number' || $this->type === 'time') && $this->step ? ' step="' . $this->step . '"' : '') .
             (array_key_exists(View::$language, $this->hints) ?
                 ' placeholder="' . implode(' ' ,$this->hints[View::$language]) . '"' :
                 '') .

@@ -102,7 +102,7 @@ class HtmlEventProtocol extends EventProtocol {
 
                 if ($this->delay) $code .= '}};' . 'lastDelay.push(l);' . 'delay(lastDelay, ' . $this->delay . ');';
                 if ($this->event === Event::TIMED) {
-                    $code .= 'if (' . ($this->forceObject ? : '$("' . $this->parent->idc() . '").length === 0') . ') clearInterval(i);';
+                    $code .= 'if (' . ($this->forceObject ? : '$("[data-id=' . $this->parent->id() . '").length === 0') . ') clearInterval(i);';
                 }
                 $code .= '})';
                 if ($this->event === Event::ONLOAD) $code .= '(' . ($this->forceObject ? : '$("' . $this->parent->idc() . '")') . ')';

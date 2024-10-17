@@ -113,7 +113,9 @@ class AlertHtmlView extends HtmlView {
             $overlay->protocol(Event::CLICK)->doIt('Delete', ['view' => $v], 'basics');
             $con = $v->add(new HtmlView('a-message'));
             $con->ref('alert-content');
-            $closer = new CloserHtmlView();
+            $control = ControlPanelHtmlView::create(1, 1, false)->fix()->plain();
+            $con->add($control);
+            $closer = $control->add(new CloserHtmlView());
             $con->add($closer);
             $closer->protocol(Event::CLICK)->doIt('Delete', ['view' => $v], 'basics');
         }
@@ -131,7 +133,9 @@ class AlertHtmlView extends HtmlView {
 
         if (!$screen && !$fullView && $property !== null) {
             $con->ref('alert-view');
-            $closer = $con->add(new CloserHtmlView());
+            $control = ControlPanelHtmlView::create(1, 1, false)->fix()->plain();
+            $con->add($control);
+            $closer = $control->add(new CloserHtmlView());
             $closer->notice(Language::ENGLISH, 'Do not show this hint anymore.');
             $closer->notice(Language::GERMAN, 'Diesen Hinweis nicht mehr anzeigen.');
             $closer->protocol(Event::CLICK)->

@@ -12,7 +12,7 @@ class HtmlActionProtocol extends ActionProtocol {
      * The url to the server
      * @var bool|string
      */
-    public static $serverURL = false;
+    public static bool|string $serverURL = false;
 
     /**
      * @inheritDoc
@@ -65,9 +65,21 @@ class HtmlActionProtocol extends ActionProtocol {
             $code .= 'sysTask,';
             $code .= '{taskId: taskId, title: "' . $this->title[View::getLanguage()] . '"})';
 
-            $code .= implode(array_map(function (array $p) use ($isCSV, $isPDF, $isJS, $name) {
-                    if ($p["operation"] === "success") {
+            $successCreated = false;
+            $code .= implode(array_map(function (array $p) use ($isCSV, $isPDF, $isJS, $name, &$successCreated) {
+                    if ($p["operation"] === "success" || $p["operation"] === "fail") {
+                        $successCreated = true;
                         $func = '.done(function(result) {';
+                        $hasFail = !Tools::isEmpty(
+                            array_filter($this->protocol, function (array $pr) { return $pr["operation"] === "fail"; })
+                        );
+                        if ($hasFail && $p["operation"] === "success") {
+                            $func .= 'if (isObject(result) && ("__intern_fail" in result)) return;';
+                        }
+                        if ($hasFail && $p["operation"] === "fail") {
+                            $func .= 'if (!(isObject(result) && "__intern_fail" in result)) return;';
+                            $func .= 'result = result["content"];';
+                        }
                         if (!$isJS) $func .= '(function(result) {' . $p["protocol"]->generate() . '})(result);';
                         else $func .= '(function(result) {' . /*addScript(result);*/'result="";' . $p["protocol"]->generate() . '})(result);';
                         if ($isCSV || $isPDF) {

@@ -17,9 +17,10 @@ class StandardButtonHtmlView extends ButtonHtmlView {
      * @param string|null $id The id.
      * @param string|array $classes Some classes.
      */
-    private function __construct(?string $id = null, string|array $classes = []) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct($id, 'button', array_merge(['std-button'], $classes));
+    protected function __construct(?string $id = null, string|array $classes = [], ?string $type = 'button') {
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        if ($type === null) $type = 'button';
+        parent::__construct($id, $type, array_merge(['std-button'], $classes));
 
         $this->style(Tools::css('button.std-button', [], 'display: flex', 'flex-direction: row',
             'align-items: center', 'justify-content: center',
@@ -33,6 +34,9 @@ class StandardButtonHtmlView extends ButtonHtmlView {
         $this->style(Tools::css('button.std-button', [':hover'],
             'background: var(--dark-system-background)'));
         $this->style(Tools::css('button.std-button', [' > ', 'img'], 'height: 100%'));
+
+        $this->style(Tools::css('button.std-button.plain', [], 'background: none',
+            '-webkit-box-shadow: none', 'box-shadow: none'));
 
         $this->style(Tools::css('button.std-button.only-img', [], 'width: 30px', 'height: 30px',
             'padding: 5px', 'margin: 0', 'min-height: 30px', 'max-height: 30px', 'min-width: 30px', 'max-width: 30px'));
@@ -73,5 +77,13 @@ class StandardButtonHtmlView extends ButtonHtmlView {
         return $this;
     }
 
+    /**
+     * Sets it plain.
+     * @return $this
+     */
+    public function plain() : static {
+        $this->addClass('plain');
+        return $this;
+    }
 }
 ?>

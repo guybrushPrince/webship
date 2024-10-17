@@ -140,12 +140,12 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
 
     /**
      * Generate a closer view.
-     * @param array|string $classes The classes.
+     * @param string[]|string $classes Some classes.
      * @return CloserHtmlView
      */
-    public function closer($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public function closer(string|array $classes = []) : CloserHtmlView {
         $closer = new CloserHtmlView($classes);
+        $closer->mini()->plain();
         $closer->notice(Language::ENGLISH, 'Close this tab');
         $closer->notice(Language::GERMAN,  'Tab schließen');
         $this->add($closer);

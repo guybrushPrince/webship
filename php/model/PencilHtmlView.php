@@ -1,43 +1,41 @@
 <?php
 
-include_once dirname(__FILE__) . '/HtmlView.php';
-
 /**
- * Class PencilHtmlView
+ * Class PencilHtmlView.
+ *
+ * @package webship
+ * @subpackage php/model
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.2.0
  */
-class PencilHtmlView extends HtmlView {
+class PencilHtmlView extends StandardButtonHtmlView {
 
     /**
      * PencilHtmlView constructor.
-     * @param string $target The target.
+     * @param string|string[] $classes Some classes.
      */
-    public function __construct($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct(array_merge(array('pencil'), $classes));
+    public function __construct(string|array $classes = []) {
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        parent::__construct('pencil', array_merge([ 'pencil' ], $classes));
 
-        $coreClasses = array_diff($this->classes, $classes);
-        $coreSelector = '.' . implode('.', $coreClasses);
+        $this->onlyImg(true);
 
-        $this->style(Tools::css($coreSelector, '', 'display: flex', 'align-items: center'));
+        $this->style(Tools::css('button.std-button.pencil', [], 'color: var(--font-info)'));
+        $this->style(Tools::css('button.std-button.pencil', [':after'], 'content: "\270E"',
+            'width: 100%', 'text-align: center', 'font-size: 14px', 'line-height: 15px'));
 
-        $this->style(Tools::css($coreSelector, '::after', 'content: "\270E"',
-            'width: 100%', 'text-align: center', 'cursor: pointer'));
-
-        $this->style(Tools::css($coreSelector, ':hover', 'font-weight: bold'));
+        $this->style(Tools::css('button.std-button.pencil', ':hover',
+            'color: var(--neutral)'));
     }
-
-    // Short cuts
 
     /**
      * Return a new pencil html view.
-     * @param array|string $classes Classes.
+     * @param string[]|string $classes Classes.
      * @return PencilHtmlView
      */
-    public static function _new($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public static function _new(string|array $classes = []) : PencilHtmlView {
         return new PencilHtmlView($classes);
     }
-
 }
 ?>

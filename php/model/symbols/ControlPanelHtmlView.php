@@ -55,10 +55,10 @@ class ControlPanelHtmlView extends HtmlView {
             '--cell-height: 30px', '--cell-width: 30px', '--cell-gap: 2px',
             'grid-template-columns: repeat(var(--ctr-cols), 1fr)', 'grid-template-rows: repeat(var(--ctr-rows), 1fr)',
             'box-sizing: content-box',
-            'min-height: calc(var(--cell-height) * var(--ctr-rows) + var(--cell-gap) * (var(--ctr-rows) + 1))',
-            'min-width: calc(var(--cell-width) * var(--ctr-cols) + var(--cell-gap) * (var(--ctr-cols) + 1))',
-            'height: calc(var(--cell-height) * var(--ctr-rows) + var(--cell-gap) * (var(--ctr-rows) + 1))',
-            'width: calc(var(--cell-width) * var(--ctr-cols) + var(--cell-gap) * (var(--ctr-cols) + 1))',
+            'min-height: calc(var(--cell-height) * var(--ctr-rows) + var(--cell-gap) * (var(--ctr-rows) - 1))',
+            'min-width: calc(var(--cell-width) * var(--ctr-cols) + var(--cell-gap) * (var(--ctr-cols) - 1))',
+            'height: calc(var(--cell-height) * var(--ctr-rows) + var(--cell-gap) * (var(--ctr-rows) - 1))',
+            'width: calc(var(--cell-width) * var(--ctr-cols) + var(--cell-gap) * (var(--ctr-cols) - 1))',
             'column-gap: var(--cell-gap)', 'row-gap: var(--cell-gap)', 'padding: 3px',
             'grid-auto-rows: 0', 'overflow: hidden'));
         $this->style(Tools::css('.ctr.wb', [], 'border: 1px solid var(--system-background)',
@@ -68,7 +68,6 @@ class ControlPanelHtmlView extends HtmlView {
 
         $this->style(Tools::css('.ctr', [' ', '.ctr.area'], 'display: grid',
             'grid-column-end: span var(--ctr-cols)', 'grid-row-end: span var(--ctr-rows)',
-            '--cell-height: 30px', '--cell-width: 30px',
             'grid-template-columns: repeat(var(--ctr-cols), 1fr)', 'grid-template-rows: repeat(var(--ctr-rows), 1fr)',
             'box-sizing: content-box',
             'min-height: calc(var(--cell-height) * var(--ctr-rows))',
@@ -82,7 +81,7 @@ class ControlPanelHtmlView extends HtmlView {
 
         $this->style(Tools::css('.ctr.flexibleX', [], 'min-width: 0', 'width: fit-content',
             'width: -moz-fit-content'));
-        $this->style(Tools::css('.ctr.flexibleY', [], 'min-height: 0', 'height: fit-content',
+        $this->style(Tools::css('.ctr.flexibleY', [',', '.ctr.fix.flexibleY'], 'min-height: 0', 'height: fit-content',
             'height: -moz-fit-content'));
 
         $this->style(Tools::css('.ctr', [' ', '.std-job-but'], 'grid-column-end: span 2'));
@@ -91,7 +90,7 @@ class ControlPanelHtmlView extends HtmlView {
         $this->style(Tools::css('.ctr', [' ', '.css-gradient', ' > ', 'div'], 'height: 100%', 'top: 0'));
 
         $this->style(Tools::css('.ctr.fix', [], 'position: absolute', 'min-height: 20px', 'height: 20px',
-            'margin: 0 !important'));
+            'margin: 0 !important', '--cell-height: 20px', '--cell-width: 20px'));
         $this->style(Tools::css('.ctr.fix.tl', [], 'left: 0', 'top: var(--top-dist)'));
         $this->style(Tools::css('.ctr.fix.tr', [], 'right: 0', 'top: var(--top-dist)'));
         $this->style(Tools::css('.ctr.fix.bl', [], 'left: 0', 'bottom: 0'));
@@ -108,6 +107,8 @@ class ControlPanelHtmlView extends HtmlView {
             'filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(241deg) brightness(110%) contrast(106%)'));
         $this->style(Tools::css('.ctr.fix', [' ', 'button.std-button.del', ':hover'],
             'background: var(--delete-2-hover-2)', 'border-color: var(--neutral)'));
+
+        $this->style(Tools::css('.ctr.plain', [' ', 'button.std-button'], 'border: none'));
     }
 
     /**
@@ -254,6 +255,15 @@ class ControlPanelHtmlView extends HtmlView {
      */
     public function addMini(HtmlView $mini) : static {
         $this->add($mini);
+        return $this;
+    }
+
+    /**
+     * Sets it plain.
+     * @return $this
+     */
+    public function plain() : static {
+        $this->addClass('plain');
         return $this;
     }
 }

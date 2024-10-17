@@ -1,28 +1,24 @@
 <?php
 
-include_once dirname(__FILE__) . '/ButtonHtmlView.php';
-
 /**
  * Class AbortHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  */
-class AbortHtmlView extends ButtonHtmlView {
+class AbortHtmlView extends StandardButtonHtmlView {
 
     /**
      * AbortHtmlView constructor.
-     * @param string $id The id.
-     * @param array|string $classes
+     * @param string|int $id The id.
+     * @param string[]|string $classes Some classes.
      */
-    public function __construct($id, $classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct($id, 'reset', array_merge(array('reset'), $classes));
+    public function __construct(string|int $id, string|array $classes = []) {
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        parent::__construct($id, array_merge(['reset'], $classes), 'reset');
 
-        $coreClasses = array_diff($this->classes, $classes);
-        $coreSelector = '.' . implode('.', $coreClasses);
-
-        $this->style(Tools::css($coreSelector, '', 'background: var(--button-abort)',
-            'border: none', 'cursor: pointer', 'transition: background 0.5s'));
-        $this->style(Tools::css($coreSelector, ':hover', 'background: var(--button-hover)'));
+        $this->style(Tools::css('button.std-button.reset', '',
+            'background: var(--button-abort)'));
+        $this->style(Tools::css('button.std-button.reset', ':hover',
+            'background: var(--dark-system-background)'));
     }
 }
 ?>

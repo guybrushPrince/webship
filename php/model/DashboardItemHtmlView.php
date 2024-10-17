@@ -12,6 +12,12 @@ class DashboardItemHtmlView extends HtmlView {
     private int $rowSpan;
 
     /**
+     * A control panel for the pencil, etc.
+     * @var ControlPanelHtmlView|null
+     */
+    private ?ControlPanelHtmlView $controlPanel = null;
+
+    /**
      * DashboardItemHtmlView constructor.
      * @param string[]|string $classes
      */
@@ -71,8 +77,13 @@ class DashboardItemHtmlView extends HtmlView {
      * @return CloserHtmlView
      */
     public function closer(string|array $classes = []) : CloserHtmlView {
+        if (!$this->controlPanel) {
+            $this->controlPanel = ControlPanelHtmlView::create(1,1);
+            $this->controlPanel->fix()->plain();
+            $this->add($this->controlPanel);
+        }
         $closer = new CloserHtmlView($classes);
-        $this->add($closer);
+        $this->controlPanel->addMini($closer);
         $closer->notice(Language::ENGLISH, 'Remove this dashboard item from your dashboard');
         $closer->notice(Language::GERMAN,  'Dieses Dashboard-Item von deinem Dashboard löschen');
         return $closer;
@@ -84,8 +95,13 @@ class DashboardItemHtmlView extends HtmlView {
      * @return PencilHtmlView
      */
     public function pencil(string|array $classes = []) : PencilHtmlView {
+        if (!$this->controlPanel) {
+            $this->controlPanel = ControlPanelHtmlView::create(2,1, false, true);
+            $this->controlPanel->fix()->plain();
+            $this->add($this->controlPanel);
+        }
         $pencil = new PencilHtmlView($classes);
-        $this->add($pencil);
+        $this->controlPanel->addMini($pencil);
         $pencil->notice(Language::ENGLISH, 'Edit this dashboard item');
         $pencil->notice(Language::GERMAN,  'Dieses Dashboard-Item bearbeiten');
         return $pencil;
