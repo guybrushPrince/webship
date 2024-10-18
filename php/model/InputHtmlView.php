@@ -117,7 +117,7 @@ class InputHtmlView extends HtmlView {
                 }, array_keys($this->data), $this->data)) : '') .
             ($this->localStyles ? ' style="' . implode(';', $this->localStyles) . '"' : '') .
             ($this->type !== 'checkbox' ? ' value="' : '') .
-            ($this->type === 'checkbox' && $this->value ? ' value="' . $this->value . '"' : '');
+            ($this->type === 'checkbox' && $this->value ? ' value="' . str_replace('"', "'", $this->value) . '"' : '');
     }
 
     /**
@@ -151,17 +151,21 @@ class InputHtmlView extends HtmlView {
 
     /**
      * Sets the value (for checkboxes) stored behind the checkbox.
-     * @param string|CliffSerializable|null $value The value.
+     * @param string|CliffSerializable|null|array|int|bool $value The value.
      * @return $this
      */
-    public function val(string|CliffSerializable|null $value) : InputHtmlView {
+    public function val(string|CliffSerializable|null|array|int|bool $value) : InputHtmlView {
         if ($value instanceof CliffSerializable ||
-            (!is_string($value) && !is_int($value) && !is_float($value) && !is_numeric($value) && !is_null($value))) {
+            (!is_string($value) && !is_int($value) && !is_float($value) && !is_numeric($value) && !is_null($value) &&
+                !is_array($value))) {
             $key = $value->getKey();
             $val = (is_integer($key) ? ActionRegister::convertKey($key) : $key);
             $class = get_class($value);
             $this->value = $class . '<::>' . $val;
-        } else $this->value = $value;
+        } else {
+            if (is_array($value)) $value = Tools::jsonEncode($value);
+            $this->value = $value;
+        }
         return $this;
     }
 

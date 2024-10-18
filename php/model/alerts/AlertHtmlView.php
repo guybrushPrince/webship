@@ -116,7 +116,6 @@ class AlertHtmlView extends HtmlView {
             $control = ControlPanelHtmlView::create(1, 1, false)->fix()->plain();
             $con->add($control);
             $closer = $control->add(new CloserHtmlView());
-            $con->add($closer);
             $closer->protocol(Event::CLICK)->doIt('Delete', ['view' => $v], 'basics');
         }
         $v->box = $con;

@@ -65,6 +65,11 @@ class ControlPanelHtmlView extends HtmlView {
             'border-radius: 5px'));
         $this->style(Tools::css('.ctr.ub', [], 'width: fit-content', 'display: flex',
             'flex-direction: row', 'flex-wrap: nowrap'));
+        $this->style(Tools::css('.ctr.ub.gap5' , [], '--cell-gap:  5px'));
+        $this->style(Tools::css('.ctr.ub.gap10', [], '--cell-gap: 10px'));
+        $this->style(Tools::css('.ctr.ub.gap15', [], '--cell-gap: 15px'));
+        $this->style(Tools::css('.ctr.ub.gap20', [], '--cell-gap: 20px'));
+        $this->style(Tools::css('.ctr.ub.gap25', [], '--cell-gap: 25px'));
 
         $this->style(Tools::css('.ctr', [' ', '.ctr.area'], 'display: grid',
             'grid-column-end: span var(--ctr-cols)', 'grid-row-end: span var(--ctr-rows)',

@@ -5,6 +5,17 @@ $.fn.existsGetElse = function (e = () => {}) {
     if (this.exists()) return this;
     else return e();
 }
+let isJson = function (item) {
+    let value = typeof item !== "string" ? JSON.stringify(item) : item;
+    try {
+        value = JSON.parse(value);
+    } catch (e) {
+        return false;
+    }
+    return typeof value === "object" && value !== null;
+};
+Array.prototype.unique = function () { return [...new Set(this)]; }
+
 let context = { currentTaskId: 0, currentHintId: 0, tabId: 0, tabOffset: [], windows: [] };
 
 let lastDelay = [];
