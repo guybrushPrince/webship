@@ -71,10 +71,8 @@ class HtmlActionProtocol extends ActionProtocol {
             $code .= 'sysTask,';
             $code .= '{taskId: taskId, title: "' . $this->title[View::getLanguage()] . '"})';
 
-            $successCreated = false;
-            $code .= implode(array_map(function (array $p) use ($isCSV, $isPDF, $isZIP, $isJS, $name, &$successCreated) {
+            $code .= implode(array_map(function (array $p) use ($isCSV, $isPDF, $isZIP, $isJS, $name) {
                     if ($p["operation"] === "success" || $p["operation"] === "fail") {
-                        $successCreated = true;
                         $func = '.done(function(result) {';
                         $hasFail = !Tools::isEmpty(
                             array_filter($this->protocol, function (array $pr) { return $pr["operation"] === "fail"; })
@@ -86,8 +84,8 @@ class HtmlActionProtocol extends ActionProtocol {
                             $func .= 'if (!(isObject(result) && "__intern_fail" in result)) return;';
                             $func .= 'result = result["content"];';
                         }
-                        if (!$isJS) $func .= '(function(result) {' . $p["protocol"]->generate() . '})(result);';
-                        else $func .= '(function(result) {' . /*addScript(result);*/'result="";' . $p["protocol"]->generate() . '})(result);';
+                        if (!$isJS || $hasFail && $p["operation"] === "fail") $func .= '(function(result) {' . $p["protocol"]->generate() . '})(result);';
+                        else if ($hasFail && $p["operation"] !== "fail") $func .= '(function(result) {' . 'result="";' . $p["protocol"]->generate() . '})(result);';
                         if (($isCSV || $isPDF || $isZIP) && $p["operation"] === "success") {
                             $d = '(new Date()).toISOString().split(/[-T:,.]/).slice(0,3).join("_")';
                             $func .= 'downloadFile(result, ' . ($isPDF || $isZIP ? '"' . ($name ? $name : 'download') . '_" + ' . $d . ' + "' . ($isPDF ? '.pdf"' : '.zip"') :
@@ -99,9 +97,7 @@ class HtmlActionProtocol extends ActionProtocol {
                         $func = '.fail(function(result) {';
                         $func .= 'result = result.responseText;';
                         if (!$isJS) $func .= '(function(result) {' . $p["protocol"]->generate() . '})(result);';
-                        else $func .= '(function(result) {' . /*addScript(result);*/'result="";' . $p["protocol"]->generate() . '})(result);';
-                        /*if ($isCSV || $isPDF || $isZIP)
-                            $func .= 'downloadFile(result, ' . ($isPDF ? '"download.pdf"' : ($isZIP ? '"download.zip"' : '"data.csv"')) . ');';*/
+                        else $func .= '(function(result) {' . 'result="";' . $p["protocol"]->generate() . '})(result);';
                         $func .= 'sysTF(taskId);})';
                         return $func;
                     } else {

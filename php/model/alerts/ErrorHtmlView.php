@@ -26,7 +26,7 @@ class ErrorHtmlView extends AlertHtmlView {
      */
     public static function create(array $message = [], bool $screen = false, bool $fullView = false,
                                   ?AlertHtmlView $v = null, ?string $property = null,
-                                  ?string $image = null) : AlertHtmlView {
+                                  ?string $image = '/webship/pic/alert-error.svg') : AlertHtmlView {
         return parent::create($message, $screen, $fullView, $v ?: new ErrorHtmlView(), $property,
             $image ? $image : '/webship/pic/alert-error.svg');
     }
