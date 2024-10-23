@@ -119,7 +119,7 @@ class AlertHtmlView extends HtmlView {
             $closer->protocol(Event::CLICK)->doIt('Delete', ['view' => $v], 'basics');
         }
         $v->box = $con;
-        if (!$screen && $image) {
+        if (/*!$screen && */$image) {
             $con->addClass('with-image');
             $con->add(new ImageHtmlView($image));
             $textView = $con->add(new HtmlView());

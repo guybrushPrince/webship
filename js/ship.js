@@ -38,9 +38,8 @@ let delay = (function () {
 let isObject = function(x) { return typeof x === 'object' && !Array.isArray(x) && x !== null; }
 
 let downloadFile = function(data, fileName) {
-    let blob = new Blob([data], {type: 'application/octet-binary'});
     let link = document.createElement('a');
-    link.href = window.URL.createObjectURL(blob);
+    link.href = data;
     link.download = fileName;
     link.click();
 };
@@ -64,14 +63,15 @@ let request = function(
     method = '',
     isCSV = false,
     isPDF = false,
+    isZIP = false,
     call = (params) => {},
     params = {}) {
     call(params);
     return $.ajax({
         type: type,
         url: context["server"] + api + method,
-        contentType: (!isCSV && !isPDF ? 'application/json; charset=utf-8' :
-            (isCSV ? 'text/csv; charset=utf-8' : 'application/pdf')),
+        contentType: (!isCSV && !isPDF && !isZIP ? 'application/json; charset=utf-8' :
+            (isCSV ? 'text/csv; charset=utf-8' : (isPDF ? 'application/pdf' : 'application/json; charset=utf-8' ))),
         data: JSON.stringify(data),
         encoding: (!isPDF ? 'UTF-8' : null),
         xhrFields: { withCredentials: true },

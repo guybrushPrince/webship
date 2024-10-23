@@ -49,12 +49,12 @@ class HtmlActionProtocol extends ActionProtocol {
                 if ($name === "") $name = null;
             }
             $isPDF = (preg_match('/@PDF(.*)/', $reflection->getDocComment(), $matches) >= 1);
-            if (preg_match('/@PDF(.*)/', $reflection->getDocComment(), $matches) >= 1) {
+            if ($isPDF) {
                 $name = trim($matches[1], " ,:\n\r" . PHP_EOL);
                 if ($name === "") $name = null;
             }
             $isZIP = (preg_match('/@ZIP(.*)/', $reflection->getDocComment(), $matches) >= 1);
-            if (preg_match('/@ZIP(.*)/', $reflection->getDocComment(), $matches) >= 1) {
+            if ($isZIP) {
                 $name = trim($matches[1], " ,:\n\r" . PHP_EOL);
                 if ($name === "") $name = null;
             }
@@ -66,7 +66,8 @@ class HtmlActionProtocol extends ActionProtocol {
             $code .= 'context["api' . (!$without ? 'Safe' : '') . '"](),';
             $code .= '"' . $this->method . '",';
             $code .= ($isCSV ? 'true' : 'false') . ',';
-            $code .= ($isPDF || $isZIP ? 'true' : 'false') . ',';
+            $code .= ($isPDF ? 'true' : 'false') . ',';
+            $code .= ($isZIP ? 'true' : 'false') . ',';
             $code .= 'sysTask,';
             $code .= '{taskId: taskId, title: "' . $this->title[View::getLanguage()] . '"})';
 
@@ -87,7 +88,7 @@ class HtmlActionProtocol extends ActionProtocol {
                         }
                         if (!$isJS) $func .= '(function(result) {' . $p["protocol"]->generate() . '})(result);';
                         else $func .= '(function(result) {' . /*addScript(result);*/'result="";' . $p["protocol"]->generate() . '})(result);';
-                        if ($isCSV || $isPDF || $isZIP) {
+                        if (($isCSV || $isPDF || $isZIP) && $p["operation"] === "success") {
                             $d = '(new Date()).toISOString().split(/[-T:,.]/).slice(0,3).join("_")';
                             $func .= 'downloadFile(result, ' . ($isPDF || $isZIP ? '"' . ($name ? $name : 'download') . '_" + ' . $d . ' + "' . ($isPDF ? '.pdf"' : '.zip"') :
                                     '"' . ($name ? $name : 'data') . '_" + ' . $d . ' + "' . '.csv"') . ');';
@@ -99,8 +100,8 @@ class HtmlActionProtocol extends ActionProtocol {
                         $func .= 'result = result.responseText;';
                         if (!$isJS) $func .= '(function(result) {' . $p["protocol"]->generate() . '})(result);';
                         else $func .= '(function(result) {' . /*addScript(result);*/'result="";' . $p["protocol"]->generate() . '})(result);';
-                        if ($isCSV || $isPDF || $isZIP)
-                            $func .= 'downloadFile(result, ' . ($isPDF ? '"download.pdf"' : ($isZIP ? '"download.zip"' : '"data.csv"')) . ');';
+                        /*if ($isCSV || $isPDF || $isZIP)
+                            $func .= 'downloadFile(result, ' . ($isPDF ? '"download.pdf"' : ($isZIP ? '"download.zip"' : '"data.csv"')) . ');';*/
                         $func .= 'sysTF(taskId);})';
                         return $func;
                     } else {
