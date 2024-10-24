@@ -21,7 +21,7 @@ class AlertHtmlView extends HtmlView {
         $this->style(Tools::css('.alert:not(.cover)', '', 'padding: 15px',
             'margin-bottom: 20px', 'margin-top: 20px', 'border: 1px solid var(--light-system-background)',
             'border-radius: 4px', 'color: var(--font-dark)', 'background-color: var(--ultra-light-system-background)',
-            'position: relative'));
+            'position: relative', 'box-sizing: border-box'));
         $this->style(Tools::css('.alert.cover', [], 'display: flex',
             'flex-direction: row', 'align-items: center', 'justify-content: center', 'width: 100%',
             'height: 100%', 'top: 0', 'left: 0', 'z-index: 10010', 'background: none'));
