@@ -10,17 +10,17 @@ class SubmitHtmlView extends StandardButtonHtmlView {
 
     /**
      * The form / reference of the form to submit.
-     * @var string|FormHtmlView
+     * @var string|FormHtmlView|null
      */
-    protected string|FormHtmlView $form;
+    protected string|FormHtmlView|null $form;
 
     /**
      * SubmitHtmlView constructor.
      * @param string $id The id.
-     * @param string|FormHtmlView $form The form or form reference.
+     * @param string|FormHtmlView|null $form The form or form reference.
      * @param string[]|string $classes Some classes.
      */
-    public function __construct($id, $form, $classes = []) {
+    public function __construct(string $id, FormHtmlView|string|null $form, array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct($id, array_merge(['submit'], $classes));
         $this->form = $form;
