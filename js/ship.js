@@ -37,9 +37,14 @@ let delay = (function () {
 
 let isObject = function(x) { return typeof x === 'object' && !Array.isArray(x) && x !== null; }
 
-let downloadFile = function(data, fileName) {
+let downloadFile = function(data, fileName, path = true) {
     let link = document.createElement('a');
-    link.href = data;
+    if (path) {
+        link.href = data;
+    } else {
+        let blob = new Blob([data], {type: 'application/octet-binary'});
+        link.href = window.URL.createObjectURL(blob);
+    }
     link.download = fileName;
     link.click();
 };
