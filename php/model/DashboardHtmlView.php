@@ -30,8 +30,9 @@ class DashboardHtmlView extends HtmlView {
         $this->cols = $cols;
         $this->rows = $rows;
 
+        $this->localStyle(['--dash-cols: ' . $cols, '--dash-rows: ' . $rows]);
         $this->style(Tools::css('.dashboard', [], 'display: grid',
-            'grid-template-columns: repeat(' . $cols . ', 1fr)', 'grid-template-rows: repeat(' . $rows . ', 1fr)',
+            'grid-template-columns: repeat(var(--dash-cols), 1fr)', 'grid-template-rows: repeat(var(--dash-rows), 1fr)',
             'max-height: calc(100% - 20px)', 'column-gap: 10px', 'row-gap: 10px', 'padding: 10px 10px 10px 5px',
             'grid-auto-rows: 0', 'overflow-y: hidden', 'height: calc(100% - 20px)'));
         $this->style(Tools::css('.dashboard', [' > ', '.dashboard-item'], 'justify-self: stretch',

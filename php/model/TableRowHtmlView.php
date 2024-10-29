@@ -1,7 +1,5 @@
 <?php
 
-include_once dirname(__FILE__) . '/HtmlView.php';
-
 /**
  * Class TableRowHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
@@ -10,31 +8,30 @@ class TableRowHtmlView extends HtmlView {
 
     /**
      * TableRowHtmlView constructor.
-     * @param array|string $classes
+     * @param string[]|string $classes Some classes.
      */
-    public function __construct($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public function __construct(array|string $classes = []) {
+        $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct(array_merge(['table', 'row'], $classes));
     }
 
-    // Short cuts
-
     /**
      * Create a cell for the table.
-     * @param array $classes
+     * @param string[]|string $classes Some classes.
      * @return HtmlView
      */
-    public function cell($classes = array()) : HtmlView {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public function cell(array|string $classes = []) : HtmlView {
+        $classes = is_array($classes) ? $classes : [ $classes ];
         $cellView = new HtmlView(array_merge(['cell'], $classes));
         $this->add($cellView);
         return $cellView;
     }
 
     /**
-     * @return ?TableHtmlView|?View
+     * Get the parent view.
+     * @return ?TableHtmlView|?HtmlView
      */
-    public function parent(): ?TableHtmlView {
+    public function parent(): TableHtmlView|HtmlView|null {
         return $this->getParent();
     }
 

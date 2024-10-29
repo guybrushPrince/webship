@@ -70,6 +70,7 @@ class ControlPanelHtmlView extends HtmlView {
         $this->style(Tools::css('.ctr.ub.gap15', [], '--cell-gap: 15px'));
         $this->style(Tools::css('.ctr.ub.gap20', [], '--cell-gap: 20px'));
         $this->style(Tools::css('.ctr.ub.gap25', [], '--cell-gap: 25px'));
+        $this->style(Tools::css('.ctr.ub.reverse', [], 'flex-direction: row-reverse'));
 
         $this->style(Tools::css('.ctr', [' ', '.ctr.area'], 'display: grid',
             'grid-column-end: span var(--ctr-cols)', 'grid-row-end: span var(--ctr-rows)',
@@ -269,6 +270,15 @@ class ControlPanelHtmlView extends HtmlView {
      */
     public function plain() : static {
         $this->addClass('plain');
+        return $this;
+    }
+
+    /**
+     * Sets a unbounded control panel with a reverse direction of items.
+     * @return $this
+     */
+    public function reverse() : static {
+        $this->addClass('reverse');
         return $this;
     }
 }

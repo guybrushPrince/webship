@@ -35,7 +35,8 @@ class LabelledSelectHtmlView extends SelectHtmlView {
      */
     private function __construct(string|array|null $labels, string $id, array|string $classes = []) {
         parent::__construct($id, $id, $classes);
-        $this->labels = is_array($labels) ? $labels : [self::getLanguage() => $labels];
+        if ($labels) $this->labels = is_array($labels) ? $labels : [self::getLanguage() => $labels];
+        else $this->labels = $labels;
 
         $this->style(Tools::css('.lselect', [], 'position: relative', 'width: fit-content',
             'box-sizing: border-box', 'width: -moz-fit-content', '--height: 30px', '--buffer: 10px',
