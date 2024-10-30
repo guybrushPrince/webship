@@ -11,7 +11,7 @@
  */
 class TabContainerHtmlView extends ContainerHtmlView {
 
-    public const TAB_HEADER_DISTANCE = -1;
+    public const TAB_HEADER_DISTANCE = 1;
 
     /**
      * TabContainerHtmlView constructor.
@@ -22,20 +22,21 @@ class TabContainerHtmlView extends ContainerHtmlView {
         parent::__construct(array_merge([ 'tabbed' ], $classes));
 
         $this->style(Tools::css('.tabbed', [], 'position: relative',
-            'width: 100%', 'height: 100%', 'overflow-y: clip'));
-        $this->style(Tools::css('.tabbed', [' > ', '.tab'], 'position: absolute', 'left: 0', 'top: 30px',
+            'width: 100%', 'height: 100%', 'overflow-y: clip', 'background: var(--main-menu)'));
+        $this->style(Tools::css('.tabbed', [' > ', '.tab'], 'position: absolute', 'left: 0', 'top: 27px',
             'width: 100%', 'box-sizing: border-box', 'overflow-y: visible', 'height: 100%', 'padding: 0'));
 
         $this->js('$("' . $this->idc() . '").on("' . Event::NEW_TAB . '", function(event) {' .
             'if ($(event.target).parent("' . $this->idc() . '").length) {' .
             'let max = Math.max.apply(Math, $(this).children(".tab").map((i, c) => parseInt($(c).css("z-index"))));' .
-            'let width = $(this).children(".tab").children(".tab-header").toArray().reduce((acc, c) => acc + parseInt($(c).css("width")) + ' . self::TAB_HEADER_DISTANCE . ', 0) - ' . self::TAB_HEADER_DISTANCE . ';' .
+            'let width = $(this).children(".tab").children(".tab-header").toArray().reduce((acc, c) => acc + parseFloat($(c).css("width")) + ' . self::TAB_HEADER_DISTANCE . ', 0) - ' . self::TAB_HEADER_DISTANCE . ';' .
             '$(event.target).css("z-index", max + 1);' .
             '$(this).children(".tab").removeClass("active");' .
             '$(event.target).addClass("active");' .
             '$(event.target).attr("tabId", "t" + context.tabId++);' .
             'let tabHeader = $(event.target).children(".tab-header");' .
-            '$(tabHeader).css("left", (width - parseInt($(tabHeader).css("width"))) + ' . self::TAB_HEADER_DISTANCE . ');' .
+            'let w = (width - parseFloat($(tabHeader).css("width")));' .
+            '$(tabHeader).css("left", w === 0 ? -1 : w + /*' . self::TAB_HEADER_DISTANCE . '*/ - 1);' .
             'let conOld = $(this).children(".tab").not(event.target).children(".tab-content");' .
             'conOld.filter(":visible").toArray().forEach((e) => { let p = $(e).parent(); context.tabOffset[p.attr("tabId")] = p.scrollTop(); });' .
             'conOld.hide();' .
@@ -44,11 +45,11 @@ class TabContainerHtmlView extends ContainerHtmlView {
 
         $this->js('$("' . $this->idc() . '").on("' . Event::CLOSE_TAB . '", function(event) {' .
             'if ($(event.target).parent("' . $this->idc() . '").length) {' .
-            'let missing = parseInt($(event.target).children(".tab-header").css("width")) + ' . self::TAB_HEADER_DISTANCE . ';' .
+            'let missing = parseFloat($(event.target).children(".tab-header").css("width")) + ' . self::TAB_HEADER_DISTANCE . ';' .
             'let next = $(event.target).nextAll();' .
             '$(event.target).trigger("' . Event::DELETE . '").remove();' .
-            'next.children(".tab-header").each((i, t) => $(t).css("left", parseInt($(t).css("left")) - missing));' .
-            'let childrenWithZ = $(this).children(".tab").map((i, c) => {return {v: c, z: parseInt($(c).css("z-index"))};});' .
+            'next.children(".tab-header").each((i, t) => $(t).css("left", parseFloat($(t).css("left")) - missing));' .
+            'let childrenWithZ = $(this).children(".tab").map((i, c) => {return {v: c, z: parseFloat($(c).css("z-index"))};});' .
             'let max = Math.max.apply(Math, childrenWithZ.map((i, c) => c.z));' .
             '$(this).children(".tab").removeClass("active");' .
             'childrenWithZ.each((i, c) => (c.z === max ? (() => { $(c.v).children(".tab-content").show();' .
@@ -62,11 +63,13 @@ class TabContainerHtmlView extends ContainerHtmlView {
             'let that = $("' . $this->idc() . '");' .
             'that.children(".tab").each((i,tab) => {' .
             'let max = Math.max.apply(Math, $(tab).prevAll(".tab").add(tab).map((i, c) => parseInt($(c).css("z-index"))));' .
-            'let width = $(tab).prevAll(".tab").add(tab).children(".tab-header").toArray().reduce((acc, c) => acc + parseInt($(c).css("width")) + ' . self::TAB_HEADER_DISTANCE . ', 0) - ' . self::TAB_HEADER_DISTANCE . ';' .
+            'let width = $(tab).prevAll(".tab").add(tab).children(".tab-header").toArray().reduce((acc, c) => acc + parseFloat($(c).css("width")) + ' . self::TAB_HEADER_DISTANCE . ', 0) - ' . self::TAB_HEADER_DISTANCE . ';' .
             '$(tab).css("z-index", max + 1);' .
             '$(tab).attr("tabId", "t" + context.tabId++);' .
             'let tabHeader = $(tab).children(".tab-header");' .
-            '$(tabHeader).css("left", (width - parseInt($(tabHeader).css("width"))) + ' . self::TAB_HEADER_DISTANCE . ');' .
+            'let w = (width - parseFloat($(tabHeader).css("width")));' .
+            '$(tabHeader).css("left", w === 0 ? -1 : w + /*' . self::TAB_HEADER_DISTANCE . '*/ - 1);' .
+            //'$(tabHeader).css("left", (width - parseInt($(tabHeader).css("width"))) + ' . self::TAB_HEADER_DISTANCE . ');' .
             '});' .
             'let f = that.children(".tab").first();' .
             'let max = Math.max.apply(Math, $(that).children(".tab").map((i, c) => parseInt($(c).css("z-index"))));' .
