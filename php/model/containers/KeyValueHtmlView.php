@@ -1,11 +1,10 @@
 <?php
 
 /**
- * Class OpeningCardHtmlView.
+ * Class KeyValueHtmlView.
  *
  * @package webship
- * @subpackge php/model/cards
- *
+ * @subpackge php/model/containers
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
@@ -25,9 +24,13 @@ class KeyValueHtmlView extends HtmlView {
      * @param int $keySize The size of key field.
      * @param int|null $valueSize The size of the value.
      * @param string[]|string $classes Some classes.
+     * @param string|null $for An attribute for.
+     * @param bool $forceKeySize Whether empty spaces shall be replaced.
+     * @param string|string[]|null $afterText Some texts (as units) to present after the input.
      */
-    private function __construct(array|string $key, bool $frame = true, int $keySize = 30, ?int $valueSize = null,
-                                 array|string $classes = [], ?string $for = null) {
+    protected function __construct(array|string $key, bool $frame = true, int $keySize = 30, ?int $valueSize = null,
+                                   array|string $classes = [], ?string $for = null, bool $forceKeySize = true,
+                                   string|array|null $afterText = null) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         $classes[] = 'kv';
         if ($frame) $classes[] = 'frame';
@@ -37,16 +40,24 @@ class KeyValueHtmlView extends HtmlView {
         $keyRatio = round($keySize / ($keySize + $valueSize), 2) * 100;
         $valueRatio = round($valueSize / ($keySize + $valueSize), 2) * 100;
 
+        if ($afterText) $valueRatio -= 5;
+
         if (!$for) $keyView = $this->add(new HtmlView(['k', 'd' . $keyRatio]));
         else $keyView = $this->add(new FormLabelHtmlView($for, ['k', 'd' . $keyRatio]));
         if (!is_array($key)) $key = [self::getLanguage() => $key];
-        foreach ($key as $l => $k) $keyView->texts()->text($l, str_replace(' ', '&nbsp;', $k));
+        foreach ($key as $l => $k) $keyView->texts()->text($l, $forceKeySize ? str_replace(' ', '&nbsp;', $k) : $k);
 
         $this->valueView = new HtmlView(['v', 'd' . $valueRatio]);
         $this->add($this->valueView);
 
+        if ($afterText) {
+            if (!is_array($afterText)) $afterText = [ self::getLanguage() => $afterText ];
+            $afterView = $this->add(new HtmlView('ka'));
+            foreach ($afterText as $l => $t) $afterView->texts()->text($l, $t);
+        }
+
         $this->style(Tools::css('.kv', [], 'display: flex', 'flex-direction: row', 'flex-wrap: nowrap',
-            'width: 100%', 'align-items: center', 'padding: 10px', 'box-sizing: border-box'));
+            'width: 100%', 'align-items: center', 'padding: 10px', 'box-sizing: border-box', 'gap: 10px'));
         $this->style(Tools::css('.kv.frame', [], 'border: 1px solid var(--ultra-light-system-background)'));
         $this->style(Tools::css('.kv', [' > ', '.k'], 'display: flex', 'flex-direction: row',
             'align-items: center', 'justify-content: flex-start', 'margin: 0'));
@@ -55,6 +66,7 @@ class KeyValueHtmlView extends HtmlView {
         $this->style(Tools::css('.kv', [' > ', '.v', ' > ', 'input[type="checkbox"]'], 'width: 25px'));
         $this->style(Tools::css('.kv', [' > ', '.d' . $keyRatio], 'width: ' . $keyRatio . '%'));
         $this->style(Tools::css('.kv', [' > ', '.d' . $valueRatio], 'width: ' . $valueRatio . '%'));
+        $this->style(Tools::css('.kv', [' > ', '.ka'], 'width: 5%'));
         $this->style(Tools::css('.kv.frame', [' + ', '.kv.frame'], 'border-top: none'));
         $this->style(Tools::css('.kv.ver', [], 'flex-direction: column'));
         $this->style(Tools::css('.kv.ver', [' > ', '*'], 'width: 100%'));
