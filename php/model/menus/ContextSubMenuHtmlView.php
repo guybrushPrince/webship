@@ -1,7 +1,5 @@
 <?php
 
-include_once dirname(__FILE__) . '/SubMenuHtmlView.php';
-
 /**
  * Class ContextSubMenuHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz

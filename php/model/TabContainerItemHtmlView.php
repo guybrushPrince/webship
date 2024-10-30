@@ -1,10 +1,13 @@
 <?php
 
-include_once dirname(__FILE__) . '/ContainerItemHtmlView.php';
-
 /**
- * Class TabContainerItemHtmlView
+ * Class TabContainerItemHtmlView.
+ *
+ * @package webship
+ * @subpackage php/model
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.2.0
  */
 class TabContainerItemHtmlView extends ContainerItemHtmlView {
 
@@ -13,54 +16,55 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
      * @param string[]|string $classes Some classes.
      * @param bool $knownParent
      */
-    public function __construct($classes = array(), bool $knownParent = false) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct(array_merge(array('tab'), $classes));
+    public function __construct(string|array $classes = [], bool $knownParent = false) {
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        parent::__construct(array_merge([ 'tab' ], $classes));
 
         // Add texts for the header.
         $this->add(new HtmlView())->add(new HtmlView('icon'))->parent()->texts();
 
-        $coreClasses = array_diff($this->classes, $classes);
-        $coreSelector = '.' . implode('.', $coreClasses);
+        $this->style(Tools::css('.tab', '','z-index: 0'));
 
-        $this->style(Tools::css($coreSelector, '','z-index: 0'));
-
-        $this->style(Tools::css($coreSelector, [' > ', '.tab-header'],
+        $this->style(Tools::css('.tab', [' > ', '.tab-header'],
             'position: absolute', 'top: -25px', 'height: 25px', 'z-index: 2',
             'background: var(--neutral)', 'border: solid 1px var(--border-1)',
             'border-bottom: none', 'display: flex', 'align-items: center', 'padding: 0 5px',
-            'box-sizing: border-box', 'cursor: pointer', 'border-radius: 6px 6px 0 0'));
-        $this->style(Tools::css($coreSelector, [' > ', '.tab-header', ' > ', 'div:first-child'],
+            'box-sizing: border-box', 'cursor: pointer'/*, 'border-radius: 6px 6px 0 0'*//*, 'border-left: none'*/));
+        $this->style(Tools::css('.tabbed:not(.lo)', [' > ', '.tab:first-child', ' > ', '.tab-header'],
+            'border-left: solid 1px var(--border-1)'));
+        $this->style(Tools::css('.tab', [' > ', '.tab-header', ' > ', 'div:first-child'],
             'display: flex', 'flex-direction: row', 'flex-wrap: nowrap'));
-        $this->style(Tools::css($coreSelector, [' > ', '.tab-header', ' ', '.icon:empty'],
+        $this->style(Tools::css('.tab', [' > ', '.tab-header', ' ', '.icon:empty'],
             'display: none'));
-        $this->style(Tools::css($coreSelector, [' > ', '.tab-header', ' ', '.icon:not(:empty)'],
+        $this->style(Tools::css('.tab', [' > ', '.tab-header', ' ', '.icon:not(:empty)'],
             'margin-right: 5px', 'width: 15px', 'height: 15px', 'display: flex',
             'align-items: center', 'justify-content: center', 'border-radius: 50%'));
-        $this->style(Tools::css($coreSelector, [' > ', '.tab-header', ' ', '.icon', ' > ', 'img'],
+        $this->style(Tools::css('.tab', [' > ', '.tab-header', ' ', '.icon', ' > ', 'img'],
             'height: 11px'));
-        $this->style(Tools::css($coreSelector, [' > ', '.tab-header', ' > ', '.closer'],
-            'width: 25px', 'height: 25px'));
-        $this->style(Tools::css($coreSelector, [':not(.active)', ' > ', '.tab-header'],
+        $this->style(Tools::css('.tab', [' > ', '.tab-header', ' > ', '.closer'],
+            'width: 20px', 'height: 25px', 'padding-right: 0'));
+        $this->style(Tools::css('.tab', [':not(.active)', ' > ', '.tab-header'],
             'background: var(--system-background-other)'));
-        /*$this->style(Tools::css($coreSelector, ['.active', ' > ', '.tab-header'],
-            'text-shadow: 0px 0px 1px black'));*/
-        $this->style(Tools::css($coreSelector, ['.active', ' > ', '.tab-header', ' ', '.closer'],
+        $this->style(Tools::css('.tab', [':not(.active)', ' > ', '.tab-header:hover'],
+            'background: var(--dark-system-background)'));
+        $this->style(Tools::css('.tab', ['.active', ' > ', '.tab-header'],
+            'border-top: 3px solid var(--font-info)'));
+        $this->style(Tools::css('.tab', ['.active', ' > ', '.tab-header', ' ', '.closer'],
             'text-shadow: none'));
-        $this->style(Tools::css($coreSelector, [':first-child', ' > ', '.tab-header', ' > ', ':first-child'],
+        $this->style(Tools::css('.tab', [':first-child', ' > ', '.tab-header', ' > ', ':first-child'],
             'padding-right: 4px'));
-        $this->style(Tools::css($coreSelector, [':first-child', ' > ', '.tab-header', ' ', '.closer'],
+        $this->style(Tools::css('.tab', [':first-child', ' > ', '.tab-header', ' ', '.closer'],
             'display: none'));
 
-        $this->style(Tools::css($coreSelector, array(' > ', '.tab-separator'),
+        $this->style(Tools::css('.tab', array(' > ', '.tab-separator'),
             'position: absolute', 'left: 0', 'top: -1px', 'width: 100%', 'box-sizing: border-box',
             'border-bottom: solid 1px var(--border-1)', 'z-index: 1'));
 
-        $this->style(Tools::css($coreSelector, array(' > ', '.tab-content'), 'box-sizing: border-box',
-            'position: absolute', 'width: calc(100% - 5px)', 'top: 0', 'background: var(--neutral)',
+        $this->style(Tools::css('.tab', array(' > ', '.tab-content'), 'box-sizing: border-box',
+            'position: absolute', 'width: 100%', 'top: 0', 'background: var(--neutral)',
             'height: calc(100% - 30px)', 'overflow-y: auto'));
 
-        $this->style(Tools::css($coreSelector, array(' > ', '.tab-content', ' > ', '.panel'),
+        $this->style(Tools::css('.tab', array(' > ', '.tab-content', ' > ', '.panel'),
             'border: none'));
 
         if (!$knownParent) $this->js('$("' . $this->idc() . '").trigger("' . Event::NEW_TAB . '");');
@@ -119,7 +123,7 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
      * @param string $text The header.
      * @return $this
      */
-    public function header(int $language, string $text) : TabContainerItemHtmlView {
+    public function header(int $language, string $text) : static {
         if ($this->subviews[0]->subviews[1] instanceof TextView) {
             $this->subviews[0]->subviews[1]->text($language, $text);
         }
@@ -131,7 +135,7 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
      * @param string $path The path to the image.
      * @return $this
      */
-    public function img(string $path, ?string $type = null) : TabContainerItemHtmlView {
+    public function img(string $path, ?string $type = null) : static {
         $iconView = $this->subviews[0]->subviews[0];
         $iconView->add(new ImageHtmlView($path));
         if ($type) $iconView->data($type);

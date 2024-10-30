@@ -1,7 +1,5 @@
 <?php
 
-include_once dirname(__FILE__) . '/HtmlView.php';
-
 /**
  * Class MenuEntryHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
@@ -10,7 +8,7 @@ class MenuEntryHtmlView extends HtmlView {
 
     /**
      * MenuEntryHtmlView constructor.
-     * @param array|string $classes
+     * @param string[]|string $classes Some classes.
      */
     public function __construct($classes = array()) {
         $classes = is_array($classes) ? $classes : array($classes);
