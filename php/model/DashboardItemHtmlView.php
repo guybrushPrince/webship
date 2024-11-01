@@ -40,14 +40,10 @@ class DashboardItemHtmlView extends HtmlView {
      * @inheritDoc
      */
     public function generateOpeningTag() : string {
+        $this->localStyle('grid-column: ' . ($this->colPos ? $this->colPos . ' / ': '') . 'span ' . $this->colSpan);
+        $this->localStyle('grid-row: ' . ($this->rowPos ? $this->rowPos . ' / ': '') . 'span ' . $this->rowSpan);
         $id = $this->id();
-        return '<div class="' . implode(' ', array_merge($this->classes, array($id))) . '"' .
-            ($id ? ' data-id="' . $id . '"' : '') .
-            ' style="grid-column: ' .
-            ($this->colPos ? $this->colPos . ' / ': '') . 'span ' . $this->colSpan . ';' .
-            ' grid-row: ' .
-            ($this->rowPos ? $this->rowPos . ' / ': '') . 'span ' . $this->rowSpan . ';' . '"' .
-            '>' . (!Tools::isEmpty($this->subviews) ? '<div class="box">' : '');
+        return parent::generateOpeningTag() . (!Tools::isEmpty($this->subviews) ? '<div class="box">' : '');
     }
 
     /**
