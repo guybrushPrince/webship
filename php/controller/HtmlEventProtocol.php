@@ -143,7 +143,7 @@ class HtmlEventProtocol extends EventProtocol {
                     $v = $submitView;
                 }
                 $code .= '$("' . $v->idc() . '").on("' . $method . '", ';
-                $code .= 'function(' . $v->id() . ') {console.log(event);';
+                $code .= 'function(' . $v->id() . ') {';
                 $code .= 'var keycode = (event.keyCode ? event.keyCode : event.which);';
                 $code .= 'if(keycode == \'13\' || event.type === "submit" || event.type === "click") {';
                 $code .= 'let _i_n_ = "anonymous";';

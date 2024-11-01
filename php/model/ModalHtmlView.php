@@ -17,7 +17,7 @@ class ModalHtmlView extends HtmlView {
      * An already created control panel for small buttons.
      * @var ControlPanelHtmlView|null
      */
-    private ?ControlPanelHtmlView $controlPanel = null;
+    private ?ControlPanelHtmlView $controlPanel;
 
     /**
      * ModalHtmlView constructor.
@@ -32,6 +32,10 @@ class ModalHtmlView extends HtmlView {
             protocol(Event::CLICK, ['sameTarget' => true])->
                 delete($this);
         $overlay->add(new ContainerHtmlView(['modal-container', 'gap10']));
+
+        $this->controlPanel = ControlPanelHtmlView::createUnbounded(false);
+        $this->controlPanel->fix()->reverse();
+        $this->subviews[0]->subviews[0]->add($this->controlPanel);
 
         $this->style(Tools::css('.modal.invisible', '', 'display: none !important'));
         $this->style(Tools::css('.modal', [' > ', '.modal-overlay'], 'position: fixed',
@@ -48,15 +52,6 @@ class ModalHtmlView extends HtmlView {
             'width: 100%'));
         $this->style(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' ', '.alert'],
             'width: 100%'));
-
-        /*$this->style(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.closer'],
-            'position: absolute',
-            'top: calc(10% - 10px)', 'right: calc(9.15% + 20px)', 'width: 30px', 'height: 30px',
-            'z-index: 100003', 'background: var(--neutral)', 'border-radius: 45%',
-            'justify-content: center', 'cursor: pointer', 'box-sizing: border-box',
-            'border: 1px solid var(--system-background)'));
-        $this->style(Tools::css('.modal', [' > ', '.closer', ':hover'],
-            'background: var(--system-background);'));*/
     }
 
     /**
@@ -76,11 +71,6 @@ class ModalHtmlView extends HtmlView {
      * @return CloserHtmlView
      */
     public function closer(string|array $classes = []) : CloserHtmlView {
-        if (!$this->controlPanel) {
-            $this->controlPanel = ControlPanelHtmlView::create(1,1, false);
-            $this->controlPanel->fix();
-            $this->subviews[0]->subviews[0]->add($this->controlPanel);
-        }
         $closer = CloserHtmlView::_new($classes);
         $this->controlPanel->addMini($closer);
         $closer->protocol(Event::CLICK)->
@@ -134,7 +124,7 @@ class ModalHtmlView extends HtmlView {
      * @param HtmlView $add The view.
      * @return HtmlView
      */
-    public function item(HtmlView $add) {
+    public function item(HtmlView $add) : HtmlView {
         $this->subviews[0]->subviews[0]->add($add);
         return $add;
     }
@@ -144,9 +134,17 @@ class ModalHtmlView extends HtmlView {
      * @param array|string $classes Classes.
      * @return ModalHtmlView
      */
-    public static function _new($classes = array()) {
+    public static function _new(string|array $classes = []) : ModalHtmlView {
         $classes = is_array($classes) ? $classes : array($classes);
         return new ModalHtmlView($classes);
+    }
+
+    /**
+     * Get the control panel.
+     * @return ControlPanelHtmlView|null
+     */
+    public function getControlPanel() : ?ControlPanelHtmlView {
+        return $this->controlPanel;
     }
 }
 ?>

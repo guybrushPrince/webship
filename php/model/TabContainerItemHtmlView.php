@@ -27,11 +27,11 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
 
         $this->style(Tools::css('.tab', [' > ', '.tab-header'],
             'position: absolute', 'top: -25px', 'height: 25px', 'z-index: 2',
-            'background: var(--neutral)', 'border: solid 1px var(--border-1)',
+            'background: var(--neutral)', 'border: solid 2px var(--login-border)',
             'border-bottom: none', 'display: flex', 'align-items: center', 'padding: 0 5px',
             'box-sizing: border-box', 'cursor: pointer', 'border-radius: 6px 6px 0 0'/*, 'border-left: none'*/));
         $this->style(Tools::css('.tabbed:not(.lo)', [' > ', '.tab:first-child', ' > ', '.tab-header'],
-            'border-left: solid 1px var(--border-1)'));
+            'border-left: solid 2px var(--login-border)'));
         $this->style(Tools::css('.tab', [' > ', '.tab-header', ' > ', 'div:first-child'],
             'display: flex', 'flex-direction: row', 'flex-wrap: nowrap'));
         $this->style(Tools::css('.tab', [' > ', '.tab-header', ' ', '.icon:empty'],
@@ -56,11 +56,11 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
         $this->style(Tools::css('.tab', [':first-child', ' > ', '.tab-header', ' ', '.closer'],
             'display: none'));
 
-        $this->style(Tools::css('.tab', array(' > ', '.tab-separator'),
-            'position: absolute', 'left: 0', 'top: -1px', 'width: 100%', 'box-sizing: border-box',
-            'border-bottom: solid 1px var(--border-1)', 'z-index: 1'));
+        $this->style(Tools::css('.tab', [' > ', '.tab-separator'],
+            'position: absolute', 'left: 0', 'top: -2px', 'width: 100%', 'box-sizing: border-box',
+            'border-bottom: solid 2px var(--login-border)', 'z-index: 1'));
 
-        $this->style(Tools::css('.tab', array(' > ', '.tab-content'), 'box-sizing: border-box',
+        $this->style(Tools::css('.tab', [' > ', '.tab-content'], 'box-sizing: border-box',
             'position: absolute', 'width: 100%', 'top: 0', 'background: var(--neutral)',
             'height: calc(100% - 27px)', 'overflow-y: auto'));
 

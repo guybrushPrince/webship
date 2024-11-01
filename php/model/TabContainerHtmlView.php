@@ -36,7 +36,7 @@ class TabContainerHtmlView extends ContainerHtmlView {
             '$(event.target).attr("tabId", "t" + context.tabId++);' .
             'let tabHeader = $(event.target).children(".tab-header");' .
             'let w = (width - parseFloat($(tabHeader).css("width")));' .
-            '$(tabHeader).css("left", w === 0 ? -1 : w + /*' . self::TAB_HEADER_DISTANCE . '*/ - 1);' .
+            '$(tabHeader).css("left", w === 0 ? -2 : w + /*' . self::TAB_HEADER_DISTANCE . '*/ - 1);' .
             'let conOld = $(this).children(".tab").not(event.target).children(".tab-content");' .
             'conOld.filter(":visible").toArray().forEach((e) => { let p = $(e).parent(); context.tabOffset[p.attr("tabId")] = p.scrollTop(); });' .
             'conOld.hide();' .
@@ -68,7 +68,7 @@ class TabContainerHtmlView extends ContainerHtmlView {
             '$(tab).attr("tabId", "t" + context.tabId++);' .
             'let tabHeader = $(tab).children(".tab-header");' .
             'let w = (width - parseFloat($(tabHeader).css("width")));' .
-            '$(tabHeader).css("left", w === 0 ? -1 : w + /*' . self::TAB_HEADER_DISTANCE . '*/ - 1);' .
+            '$(tabHeader).css("left", w === 0 ? -2 : w + /*' . self::TAB_HEADER_DISTANCE . '*/ - 1);' .
             //'$(tabHeader).css("left", (width - parseInt($(tabHeader).css("width"))) + ' . self::TAB_HEADER_DISTANCE . ');' .
             '});' .
             'let f = that.children(".tab").first();' .
