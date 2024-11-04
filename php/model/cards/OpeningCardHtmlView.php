@@ -14,9 +14,9 @@ class OpeningCardHtmlView extends CardHtmlView {
 
     /**
      * The control view.
-     * @var HtmlView|null
+     * @var ControlPanelHtmlView|null
      */
-    private ?HtmlView $control = null;
+    private ?ControlPanelHtmlView $control = null;
 
     /**
      * The id view.
@@ -60,11 +60,11 @@ class OpeningCardHtmlView extends CardHtmlView {
 
     /**
      * Create a control section.
-     * @return HtmlView
+     * @return ControlPanelHtmlView
      */
-    private function control() : HtmlView {
+    public function control() : ControlPanelHtmlView {
         if ($this->control) return $this->control;
-        $this->control = new HtmlView('op-control');
+        $this->control = ControlPanelHtmlView::createUnbounded(false)->fix()->reverse();
         $this->content()->add($this->control);
         return $this->control;
     }
@@ -80,18 +80,11 @@ class OpeningCardHtmlView extends CardHtmlView {
 
     /**
      * Adds a menu button to the control section.
-     * @param HtmlView|string|null $image The image.
+     * @param HtmlView|null $button The button.
      * @return HtmlView
      */
-    public function addMenuButton(HtmlView|string|null $image = null) : HtmlView {
-        if ($image instanceof HtmlView) {
-            $image->addClass('op-m-button');
-            $button = $image;
-        } else {
-            $button = new HtmlView('op-m-button');
-            if ($image) $button->add(new ImageHtmlView($image));
-        }
-        $this->control->add($button);
+    public function addMenuButton(HtmlView|null $button = null) : HtmlView {
+        $this->control()->addMini($button);
         return $button;
     }
 
