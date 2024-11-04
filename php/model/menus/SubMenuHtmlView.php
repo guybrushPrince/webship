@@ -27,7 +27,9 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
 
         $this->style(Tools::css('ul' . $coreSelector, '',
             'display: none', 'list-style-type: none', 'margin: 0', 'background: var(--main-menu-hover)',
-            'padding: 0'));
+            'padding: 0',
+            '-webkit-box-shadow: var(--shadow-flow-4)', '-moz-box-shadow: var(--shadow-flow-4)',
+            'box-shadow: var(--shadow-flow-4)', 'border-radius: 0 6px 6px 6px'));
 
         $this->style(Tools::css('ul' . $coreSelector, array(' > ', 'li'), 'width: fit-content',
             'height: 50px', 'padding: 10px 20px', 'box-sizing: border-box', 'position: relative', 'flex-basis: 100%',
@@ -35,6 +37,11 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
 
         $this->style(Tools::css('ul' . $coreSelector, array(' > ', 'li', ':hover'),
             'background: var(--main-menu)'));
+
+        $this->style(Tools::css('ul' . $coreSelector, [' > ', 'li:first-child'],
+            'border-radius: 0 6px 0 0'));
+        $this->style(Tools::css('ul' . $coreSelector, [' > ', 'li:last-child'],
+            'border-radius: 0 0 6px 6px'));
     }
 
     /**

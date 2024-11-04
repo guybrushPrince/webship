@@ -22,9 +22,12 @@ class MenuHtmlView extends HtmlView {
             'z-index: 100'));
         $this->style(Tools::css('ul' . $coreSelector, '', 'list-style-type: none',
             'display: flex', 'margin: 0', 'flex-wrap: nowrap', 'padding: 0'));
-        $this->style(Tools::css('ul' . $coreSelector, array(' > ', 'li'), 'width: fit-content',
+        $this->style(Tools::css('ul' . $coreSelector, [' > ', 'li'], 'width: fit-content',
             'height: 35px', 'padding: 10px 20px', 'box-sizing: border-box', 'position: relative',
             'width: -moz-fit-content'));
+        $this->style(Tools::css('ul' . $coreSelector, [' > ', 'li:hover'],
+            '-webkit-box-shadow: var(--shadow-flow-1)', '-moz-box-shadow: var(--shadow-flow-1)',
+            'box-shadow: var(--shadow-flow-1)'));
     }
 
     /**
