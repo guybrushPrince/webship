@@ -19,6 +19,13 @@ class ErrorHtmlView extends AlertHtmlView {
         $this->style(Tools::css('.alert.cover.error', [' > ', '.a-message'],
             'border-color: var(--error-border)',
             'color: var(--error-font)', 'background-color: var(--error-background)'));
+
+        $this->style(Tools::css('.alert.error', [' ', '.ctr', ' > ', 'button.std-button.closer', ' > ', 'img'],
+            'filter: brightness(0) saturate(100%) invert(36%) sepia(6%) saturate(4774%) hue-rotate(314deg) brightness(98%) contrast(99%)'));
+        $this->style(Tools::css('.alert.error', [' ', '.ctr', ' > ', 'button.std-button.closer:hover'],
+            'background: var(--error-font)'));
+        $this->style(Tools::css('.alert.error', [' ', '.ctr', ' > ', 'button.std-button.closer:hover', ' > ', 'img'],
+            'filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(241deg) brightness(110%) contrast(106%)'));
     }
 
     /**

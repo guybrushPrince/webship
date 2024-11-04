@@ -96,7 +96,7 @@ class ControlPanelHtmlView extends HtmlView {
         $this->style(Tools::css('.ctr', [' ', '.css-gradient', ' > ', 'div'], 'height: 100%', 'top: 0'));
 
         $this->style(Tools::css('.ctr.fix', [], 'position: absolute', 'min-height: 20px', 'height: 20px',
-            'margin: 0 !important', '--cell-height: 20px', '--cell-width: 20px'));
+            'margin: 0 !important', '--cell-height: 20px', '--cell-width: 20px', 'z-index: 1'));
         $this->style(Tools::css('.ctr.fix.tl', [], 'left: 0', 'top: var(--top-dist)'));
         $this->style(Tools::css('.ctr.fix.tr', [], 'right: 0', 'top: var(--top-dist)'));
         $this->style(Tools::css('.ctr.fix.bl', [], 'left: 0', 'bottom: 0'));
