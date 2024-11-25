@@ -148,18 +148,27 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
         $open = parent::generateOpeningTag();
         if ($this->isDraggable) $open = substr($open, 0, -1) . '><div class="move-position top"><img src="' . HtmlActionProtocol::$serverURL . '/webship/pic/move-cursor.svg" alt="move-cursor"></div>';
         return $open .
-            ($this->showMoves ? '<div class="' . implode(' ', array('move', 'up', $this->id() . '-up')) . '"></div>' : '') .
-            ($this->hasDelete ? '<div class="' . implode(' ', array('move', 'delete', $this->id() . '-delete')) . '"></div>' : '');
+            ($this->showMoves ? '<div class="' . implode(' ', array('move', 'up', $this->id() . '-up')) . '" title="' . [
+                    Language::ENGLISH => 'Move this element up by one',
+                    Language::GERMAN  => 'Dieses Element um eins nach oben schieben.'
+                ][self::getLanguage()] . '"></div>' : '') .
+            ($this->hasDelete ? '<div class="' . implode(' ', array('move', 'delete', $this->id() . '-delete')) . '" title="' . [
+                    Language::ENGLISH => 'Delete this element',
+                    Language::GERMAN  => 'Dieses Element löschen'
+                ][self::getLanguage()] . '"></div>' : '');
     }
 
     /**
      * @inheritDoc
      */
     public function generateClosingTag() {
-        return ($this->showMoves ? '<div class="' . implode(' ', array('move', 'down', $this->id() . '-down')) . '"></div>' : '') .
+        return ($this->showMoves ? '<div class="' . implode(' ', array('move', 'down', $this->id() . '-down')) . '" title="' . [
+                    Language::ENGLISH => 'Move this element down by one',
+                    Language::GERMAN  => 'Dieses Element um eins nach unten schieben.'
+                ][self::getLanguage()] . '"></div>' : '') .
             ($this->isDraggable ? '<div class="drag" title="' . [
-                    Language::ENGLISH => 'Move this item to another place',
-                    Language::GERMAN  => 'Verschiebe das Item an eine andere Stelle'
+                    Language::ENGLISH => 'Move this element to another place',
+                    Language::GERMAN  => 'Verschiebe dieses Element an eine andere Stelle'
             ][self::getLanguage()] . '"><img src="' . HtmlActionProtocol::$serverURL . '/webship/pic/drag-handle.svg" alt="move-cursor"></div>' : '') .
             ($this->isDraggable ? '<div class="move-position bottom"><img src="' . HtmlActionProtocol::$serverURL . '/webship/pic/move-cursor.svg" alt="move-cursor"></div>' : '') .
             parent::generateClosingTag();
