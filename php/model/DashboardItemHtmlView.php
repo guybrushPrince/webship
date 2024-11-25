@@ -80,8 +80,8 @@ class DashboardItemHtmlView extends HtmlView {
         }
         $closer = new CloserHtmlView($classes);
         $this->controlPanel->addMini($closer);
-        $closer->notice(Language::ENGLISH, 'Remove this dashboard item from your dashboard');
-        $closer->notice(Language::GERMAN,  'Dieses Dashboard-Item von deinem Dashboard löschen');
+        $closer->notice(Language::ENGLISH, 'Remove this element from your dashboard');
+        $closer->notice(Language::GERMAN,  'Dieses Element von deinem Dashboard löschen');
         return $closer;
     }
 
@@ -98,8 +98,8 @@ class DashboardItemHtmlView extends HtmlView {
         }
         $pencil = new PencilHtmlView($classes);
         $this->controlPanel->addMini($pencil);
-        $pencil->notice(Language::ENGLISH, 'Edit this dashboard item');
-        $pencil->notice(Language::GERMAN,  'Dieses Dashboard-Item bearbeiten');
+        $pencil->notice(Language::ENGLISH, 'Edit this element');
+        $pencil->notice(Language::GERMAN,  'Dieses Element bearbeiten');
         return $pencil;
     }
 

@@ -30,22 +30,29 @@ class DashGridHtmlView extends HtmlView {
             'max-height: calc(100% - 20px)', 'column-gap: 10px', 'row-gap: 10px', 'padding: 10px 10px 10px 5px',
             'grid-auto-rows: 0', 'overflow-y: hidden', 'height: calc(100% - 20px)'));
         $this->style(Tools::css('.dash-grid', [' > ', '*'], 'justify-self: stretch',
-            'box-sizing: border-box', 'align-self: stretch', 'background: var(--system-background)',
-            'border-radius: 5px'));
+            'box-sizing: border-box', 'align-self: stretch', 'background: var(--neutral)',
+            'border-radius: 5px', 'outline: 1px solid var(--dashboard-free-border)', 'outline-offset: 1px'));
         $this->style(Tools::css('.dash-grid', [' > ', '.filled'],
-            'background: var(--dashboard-filled)'));
+            'background: var(--dashboard-filled)', 'cursor: not-allowed', 'transition: opacity 1.0s'));
+        $this->style(Tools::css('.dash-grid.progress', [' > ', '.free:not(.selectable)'],
+            'cursor: not-allowed', 'opacity: 0.3'));
+        $this->style(Tools::css('.dash-grid.progress', [' > ', '.filled'],
+            'opacity: 0.3'));
         $this->style(Tools::css('.dash-grid', [' > ', '.free'], 'cursor: pointer',
-            'transition: background 0.5s'));
+            'transition: opacity 1.0s'));
         $this->style(Tools::css('.dash-grid', [' > ', '.free', ':hover'],
-            'background:var(--dashboard-free-hover)'));
+            'outline-width: 5px', 'outline-color: var(--dashboard-free-chosen)'));
+        $this->style(Tools::css('.dash-grid', [' > ', '.free.chosen', ':hover'],
+            'outline-width: 5px'));
         $this->style(Tools::css('.dash-grid', [' > ', '.free', '.selected'],
-            'background:var(--dashboard-free-selected)'));
-        $this->style(Tools::css('.dash-grid', [' > ', '.free', ':not(.selected).selectable'],
-            'background:var(--dashboard-free-selectable)'));
+            'background: var(--dashboard-free-chosen)'));
+        $this->style(Tools::css('.dash-grid', [' > ', '.free', '.selectable'],
+            'outline-width: 3px'));
         $this->style(Tools::css('.dash-grid', [' > ', '.free', '.selectable', ':hover'],
-            'background:var(--dashboard-free-selectable-hover)'));
-        $this->style(Tools::css('.dash-grid', [' > ', '.free', ':not(:hover).chosen'],
-            'background:var(--dashboard-free-chosen)'));
+            'outline-width: 5px'));
+        $this->style(Tools::css('.dash-grid', [' > ', '.free', '.chosen'],
+            'background: var(--dashboard-free-chosen)', 'outline-width: 3px',
+            'outline-color: var(--dashboard-free-chosen)'));
     }
 
     /**
@@ -55,6 +62,7 @@ class DashGridHtmlView extends HtmlView {
      * @param int $rows The number of rows.
      * @param HtmlView|null $instruction1 A view that has the instruction.
      * @param HtmlView|null $instruction2 A view that has the second instruction.
+     * @param HtmlView|null $container
      * @return DashGridHtmlView
      * @throws DatabaseError
      */
@@ -64,7 +72,7 @@ class DashGridHtmlView extends HtmlView {
         $view = new DashGridHtmlView([], $cols, $rows);
 
         // Determine the map
-        $map = array_fill(0, $rows, array_fill(0, $cols, self::FREE));
+        $map = array_fill(0, $rows, array_fill(0, $cols, [ 'kind' => self::FREE ]));
 
         // Determine the user
         $user = Persistence::instance()->getUserSession() ? Persistence::instance()->getUserSession()->getUser() : null;
@@ -89,9 +97,10 @@ class DashGridHtmlView extends HtmlView {
                 if ($item instanceof DashboardItem) {
                     for ($c = $item->getXPosition(); $c < $item->getXPosition() + $item->getXDimension(); $c++) {
                         for ($r = $item->getYPosition(); $r < $item->getYPosition() + $item->getYDimension(); $r++) {
-                            if ($item->getId() !== $dashItem->getId()) $map[$r - 1][$c - 1] = self::FILLED;
-                            else {
-                                $map[$r - 1][$c - 1] = self::PLACEHOLDER;
+                            if ($item->getId() !== $dashItem->getId()) {
+                                $map[$r - 1][$c - 1] = [ 'kind' => self::FILLED, 'with' => $item ];
+                            } else {
+                                $map[$r - 1][$c - 1] = [ 'kind' => self::PLACEHOLDER ];
                             }
                         }
                     }
@@ -103,9 +112,9 @@ class DashGridHtmlView extends HtmlView {
             $row = $map[$r];
             for ($c = 0; $c < count($row); $c++) {
                 $state = $row[$c];
-                if ($state === self::FREE && !$firstFree) {
+                if ($state['kind'] === self::FREE && !$firstFree) {
                     $firstFree = [$c + 1, $r + 1, 1, 1];
-                    if ($created) $state = self::PLACEHOLDER;
+                    if ($created) $state = [ 'kind' => self::PLACEHOLDER ];
                 }
                 $view->item($state, $c, $r, $map);
             }
@@ -121,7 +130,7 @@ class DashGridHtmlView extends HtmlView {
             $view->initYPos = $firstFree[1];
             $view->initXDim = $firstFree[2];
             $view->initYDim = $firstFree[3];
-            $map[$view->initYPos - 1][$view->initXPos - 1] = self::PLACEHOLDER;
+            $map[$view->initYPos - 1][$view->initXPos - 1] = [ 'kind' => self::PLACEHOLDER ];
         }
 
         $view->js('{' .
@@ -135,6 +144,7 @@ class DashGridHtmlView extends HtmlView {
             'gp.find("#yPosition").val(v.data("y"));' .
             'gp.find("#xDimension").val(1);' .
             'gp.find("#yDimension").val(1);' .
+            'p.addClass("progress");' .
             ($instruction1 ? '$("' . $instruction1->idc() . '").hide();' : '') .
             ($instruction2 ? '$("' . $instruction2->idc() . '").show();' : '') .
             'p.children().unbind("click", f);' .
@@ -152,6 +162,7 @@ class DashGridHtmlView extends HtmlView {
             'let p = v.parent();' .
             'let t = ' . ($container ? '$("' . $container->idc() . '")' : 'p') . ';' .
             'let gp = t.parent();' .
+            'p.removeClass("progress");' .
             'let sel = p.find(".selected");' .
             ($instruction1 ? '$("' . $instruction1->idc() . '").show();' : '') .
             ($instruction2 ? '$("' . $instruction2->idc() . '").hide();' : '') .
@@ -175,12 +186,13 @@ class DashGridHtmlView extends HtmlView {
 
     /**
      * Create an item.
-     * @param int $state The state of the item.
+     * @param array $stateInfo The state information of the item.
      * @param int|null $colPos The x position of the item.
      * @param int|null $rowPos The y position of the item.
      * @return DashboardItemHtmlView
      */
-    public function item(int $state, ?int $colPos = null, ?int $rowPos = null, ?array &$map = null) : HtmlView {
+    public function item(array $stateInfo, ?int $colPos = null, ?int $rowPos = null, ?array &$map = null) : HtmlView {
+        $state = $stateInfo['kind'];
         $allowed = [];
         $cl = [];
         switch ($state) {
@@ -197,7 +209,7 @@ class DashGridHtmlView extends HtmlView {
                     for ($c = $colPos; $c < count($row); $c++) {
                         $cR = max($r - 1, $rowPos);
                         $cC = max($c - 1, $colPos);
-                        if ($map[$r][$c] === self::FREE || $map[$r][$c] === self::PLACEHOLDER) {
+                        if ($map[$r][$c]['kind'] === self::FREE || $map[$r][$c]['kind'] === self::PLACEHOLDER) {
                             if (($cR === $r || array_key_exists($c . '-' . $cR, $allowed)) &&
                                 ($cC === $c || array_key_exists($cC . '-' . $r, $allowed))) {
                                 $allowed[$c . '-' . $r] = [$c, $r];
@@ -207,7 +219,37 @@ class DashGridHtmlView extends HtmlView {
                 }
             } break;
         }
+        $title = null;
+        if (array_key_exists('with', $stateInfo)) {
+            $item = $stateInfo['with'];
+            if ($item instanceof DashboardItem) {
+                if ($item instanceof ReferenceDashboardItem) {
+                    $title = [
+                        Language::ENGLISH => 'Pinned ' . get_class($item->getReference()),
+                        Language::GERMAN  => 'Angepinnt'
+                    ];
+                } else if ($item instanceof ChangelogDashboardItem) {
+                    $title = [
+                        Language::ENGLISH => 'Changelog',
+                        Language::GERMAN  => 'Changelog'
+                    ];
+                } else if ($item instanceof MonitorDashboardItem) {
+                    $title = [
+                        Language::ENGLISH => 'Survey Monitoring',
+                        Language::GERMAN  => 'Befragungsmonitoring'
+                    ];
+                } else if ($item instanceof InvitationDashboardItem) {
+                    $title = [
+                        Language::ENGLISH => 'Invitation',
+                        Language::GERMAN  => 'Einladung'
+                    ];
+                }
+            }
+        }
         $view = new HtmlView($cl);
+        if ($title) {
+            $view->notice(self::getLanguage(), $title[self::getLanguage()]);
+        }
         $view->data('x', $colPos + 1);
         $view->data('y', $rowPos + 1);
         $view->data('allowed', str_replace('"', "'", json_encode(array_values($allowed))));

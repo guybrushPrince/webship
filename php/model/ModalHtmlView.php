@@ -44,7 +44,7 @@ class ModalHtmlView extends HtmlView {
         $this->style(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container'],
             'position: absolute',
             'left: 12.5%', 'top: 10%', 'width: 75%', 'overflow-y: initial',
-            'background: var(--neutral)', 'z-index: 100002', 'padding: 20px',
+            'background: var(--neutral)', 'z-index: 100002', 'padding: 20px', 'border-radius: 5px',
             '-webkit-box-shadow: var(--shadow-flow-4)',
             '-moz-box-shadow: var(--shadow-flow-4)',
             'box-shadow: var(--shadow-flow-4)'));
