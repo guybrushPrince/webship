@@ -42,19 +42,23 @@ class SectionHtmlView extends HtmlView {
 
         $this->box = new HtmlView();
         $this->add($this->box);
-        $this->box->ref('foldable');
-        if (!$open) $this->box->addClass('closed');
+        $this->ref('foldable');
+        if (!$open) $this->addClass('closed');
 
         $this->section->protocol(Event::CLICK)->
-            doIt('ToggleClass', ['view' => $this->box, 'class' => 'closed'], 'basics');
+            doIt('ToggleClass', ['view' => $this, 'class' => 'closed'], 'basics');
 
         $this->style(Tools::css('.sect', [],'width: 100%', 'display: flex',
             'flex-direction: column', 'padding: 0 0 16px 0'));
+        $this->style(Tools::css('.sect.fit', [],'width: -moz-fit-content', 'width: fit-content',
+            'padding-right: 20px'));
         $this->style(Tools::css('.sect:last-child', [],'padding: 0'));
-        $this->style(Tools::css('.sect', [' > ', '.closed'],'display: none !important'));
+        $this->style(Tools::css('.sect.fit:last-child', [],'padding: 0'));
+        $this->style(Tools::css('.sect.closed', [' > ', 'div:not(.section)'],'display: none !important'));
+        $this->style(Tools::css('.sect.fit:not(.closed)', [],'width: 100%'));
         $this->style(Tools::css('.sect', [' > ', '.section'], 'font-family: Roboto, sans-serif',
             'text-transform: none', 'font-size: 1.25em', 'font-weight: lighter', 'width: 100%',
-            'cursor: pointer', 'width: 100%'));
+            'cursor: pointer'));
         $this->style(Tools::css('.sect', [' > ', '.section', ':after'], 'content: ""',
             'margin-left: 5px', 'background-repeat: no-repeat', 'width: 10px', 'height: 10px', 'background-size: cover',
             'background-image: url("' . HtmlActionProtocol::$serverURL . '/webship/pic/arrow-down-sign-to-navigate.svg")',
@@ -85,6 +89,23 @@ class SectionHtmlView extends HtmlView {
     public function box(string|array $classes = []) : HtmlView {
         $this->box->addClass($classes);
         return $this->box;
+    }
+
+    /**
+     * Get the section (to extend the click event).
+     * @return HtmlView
+     */
+    public function section() : HtmlView {
+        return $this->section;
+    }
+
+    /**
+     * Fit the section to its size in closed state.
+     * @return $this
+     */
+    public function fit() : static {
+        $this->classes[] = 'fit';
+        return $this;
     }
 
 }

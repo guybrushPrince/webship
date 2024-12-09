@@ -1,45 +1,45 @@
 <?php
 
-include_once dirname(__FILE__) . '/HtmlView.php';
-
 /**
- * Class IFrameHtmlView
+ * Class IFrameHtmlView.
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  */
 class IFrameHtmlView extends HtmlView {
 
     /**
      * The content.
-     * @var string|boolean|View
+     * @var string|bool|View|null
      */
-    private $content;
+    private string|bool|View|null $content;
 
     /**
      * The url.
-     * @var string
+     * @var string|bool|null
      */
-    private $url;
+    private string|bool|null $url;
 
     /**
      * InputHtmlView constructor.
-     * @param string|boolean|View $content The id.
-     * @param string|boolean $url The url.
-     * @param array|string $classes
+     * @param string|null|false|View $content The id.
+     * @param string|null|false $url The url.
+     * @param string[]|string $classes Some classes.
      */
-    public function __construct($content = false, $url = false, $classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct(array_merge(array('iframe'), $classes));
+    public function __construct(View|string|bool|null $content = null, string|bool|null $url = null,
+                                array|string $classes = []) {
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        parent::__construct(array_merge(['iframe'], $classes));
         $this->content = $content;
         $this->url = $url;
 
-        $coreClasses = array_diff($this->classes, $classes);
-        $coreSelector = '.' . implode('.', $coreClasses);
+        $this->style(Tools::css('iframe', [], 'border: none', 'box-sizing: border-box',
+            'width: 100%', 'height: 100%'));
     }
 
     /**
      * @inheritDoc
+     * @throws DatabaseError
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         return '<iframe class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' .
             ($this->url ? ' src="' . $this->url . '"' : '') .
             ($this->content ? ' srcdoc="' .
@@ -51,11 +51,8 @@ class IFrameHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateClosingTag() {
+    public function generateClosingTag() : string {
         return '</iframe>';
     }
-
-    // Short cuts
-
 }
 ?>

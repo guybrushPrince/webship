@@ -246,6 +246,34 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         return '';
                     }
                 }
+                case 'unbindObjectEvent': {
+                    $obj = $modify["object"];
+                    if ($obj instanceof CliffSerializable || $obj instanceof TemplateObject) {
+                        $event = $modify["event"];
+                        if ($event instanceof TemplateObject) $event = '" + con["' . $event->getName() . '"] + "';
+
+                        $scopesInfo = $modify["scopes"];
+                        $scopes = '';
+                        if ($scopesInfo) {
+                            if (!($scopesInfo instanceof TemplateObject)) {
+                                $scopes = ', ' . Tools::jsonEncode($scopesInfo);
+                            } else {
+                                $scopes = ', con["' . $scopesInfo->getName() . '"]';
+                            }
+                        }
+
+                        if ($obj instanceof CliffSerializable) {
+                            $objId = ParameterSerializer::handleObject($obj);
+                            $objId = $objId["IClass"] . $objId["value"];
+                        } else {
+                            $objId = '" + con["' . $obj->getName() . 'IClass"] + con["' . $obj->getName() . '"] + "';
+                        }
+                        $view = $this->reduceView($modify["view"]);
+                        return 'eventBus.unbind(' . $this->createViewSelector($view) . ',"' . $objId . '", "' . $event . '"' . $scopes . ');';
+                    } else {
+                        return '';
+                    }
+                }
                 case 'clear': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
@@ -338,6 +366,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     $url = $modify["url"];
                     $name = $modify["name"];
                     $protocol = $modify["protocol"]; // It is a template object
+                    $view = $modify["view"];
                     if ($protocol instanceof TemplateObject) {
                         $f = 'con["' . $protocol->getName() . '"]';
                         $handler = 'result = (typeof result !== "undefined") ? result : undefined;' .
@@ -349,12 +378,12 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     if ($name instanceof TemplateObject) {
                         $name = '" + con["' . $name->getName() . '"] + "';
                     }
-                    $code = 'context["windows"].push({' .
-                        'window: open("' . $url . '", "' . $name . '", "location=no,toolbar=no,menubar=no,status=no"), ' .
-                        'handler: ' . ($handler ? 'function() {' . $handler . '}' : '() => {}') .
-                    '});';
-                    $code .= 'checkWindowClosed();';
-                    return $code;
+                    if ($view) {
+                        $view = $this->reduceView($modify["view"]);
+                        $view = $this->createViewSelector($view);
+                    }
+                    return 'openWindow("' . $url . '", "' . $name . '", ' . ($handler ? 'function() {' . $handler . '}' : '() => {}') . ', ' .
+                        ($view ? $view . '.html()' : 'null' ) . ');';
                 }
                 case 'function': {
                     $code = $modify["code"];

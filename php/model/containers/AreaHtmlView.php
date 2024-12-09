@@ -22,9 +22,24 @@ class AreaHtmlView extends ContainerHtmlView {
 
         $this->style(Tools::css('.c-area', [], 'background: var(--ultra-light-system-background)',
             'border-radius: 10px', 'margin-top: 10px', 'padding: 20px', 'box-sizing: border-box',
-            'border: solid 1px var(--system-background)'));
+            'border: solid 1px var(--system-background)', 'height: -moz-fit-content', 'height: fit-content'));
         $this->style(Tools::css('.c-area', [' > ', '.sub-title'], 'padding: 0',
             'margin-bottom: 10px'));
+    }
+
+    /**
+     * Create an area.
+     * @param string|string[]|null $header An optional header of the area.
+     * @param string|string[] $classes Some classes.
+     * @return AreaHtmlView
+     */
+    public static function create(string|array|null $header = null, string|array $classes = []) : AreaHtmlView {
+        $view = new AreaHtmlView($classes);
+        if ($header) {
+            if (is_string($header)) $header = [ self::getLanguage() => $header ];
+            $view->header()->text(self::getLanguage(), $header[self::getLanguage()]);
+        }
+        return $view;
     }
 
     /**

@@ -1,7 +1,5 @@
 <?php
 
-include_once dirname(__FILE__) . '/HtmlView.php';
-
 /**
  * Class SelectHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz

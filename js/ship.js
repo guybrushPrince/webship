@@ -1,3 +1,22 @@
+(function(){
+    /*overloading of jQuery(...) function*/
+    let _$ = jQuery;
+    $ = jQuery = function(){
+        let args = Array.prototype.slice.call(arguments);
+        if (arguments.length === 1){
+            args.push(_$._defaultRoot);
+        }
+        return _$.apply(_$, args);
+    }
+    jQuery.setDefaultRoot = function(element){ _$._defaultRoot = element; }
+
+    for (let key in _$) {
+        if (_$.hasOwnProperty(key)) {
+            jQuery[key] = _$[key];
+        }
+    }
+})();
+
 $.fn.exists = function () {
     return this.length !== 0;
 }
@@ -261,6 +280,16 @@ let drag = function(p, d, info, im = "in-move", mcl = "movable", h = "hover", o 
         }
     }
 };
+let openWindow = function (url, name, handler, takeView) {
+    let w = {
+        window: open(url, name, "location=no,toolbar=no,menubar=no,status=no"),
+        handler: handler
+    };
+    if (takeView !== null) w["takeView"] = takeView;
+    context["windows"].push(w);
+    checkWindowClosed();
+    return context["windows"][context["windows"].length - 1].window;
+};
 let checkWindowClosed = (function() {
     this.interval = false;
     let that = this;
@@ -268,11 +297,23 @@ let checkWindowClosed = (function() {
         if (that.interval === false && context["windows"].length > 0) {
             that.interval = setInterval(function () {
                 context["windows"] = context["windows"].filter((w) => {
+                    if ('takeView' in w &&
+                        'document' in w.window && w.window.document !== null && w.window.document !== undefined) {
+                        let wi = w.window.document;
+                        if ($(wi).find("body").html().trim() !== "") {
+                            $(wi).find("body > div").replaceWith(w.takeView);
+                            delete w.takeView;
+                        }
+                    }
                     if (w.window.closed) {
                         w.handler(w.window);
                         return false;
                     } else return true;
                 });
+                let docs = [ document ].concat(context["windows"].map(wi => {
+                    return wi.window.document;
+                }));
+                $.setDefaultRoot(docs);
                 if (context["windows"].length === 0) {
                     clearInterval(that.interval);
                     that.interval = false;
@@ -307,6 +348,18 @@ let eventBus = (function () {
             });
             ev.push({ view: view, fun: fun });
         };
+        this.unbind = function (view, objId, event, scope = undefined) {
+            event = "e" + event;
+            if (scope === undefined) scope = 'undefined';
+            if (!this.registry.hasOwnProperty(objId)) return;
+            let reg = this.registry[objId];
+            if (!reg.hasOwnProperty(scope)) return;
+            let sc = reg[scope];
+            if (!sc.hasOwnProperty(event)) return;
+            sc[event] = sc[event].filter((el) => {
+                return !$(el.view).is($(view));
+            });
+        };
         this.trigger = function (objId, event, callee = undefined, scopes = undefined, data = undefined) {
             event = "e" + event;
             if (this.registry.hasOwnProperty(objId)) {
@@ -334,12 +387,19 @@ let eventBus = (function () {
     }
     return new EventBus();
 })();
-let reheight = function() {
-    let v = $(this);
-    let pt = v.css("padding-top");
-    let pb = v.css("padding-bottom");
-    pt = parseInt(pt.substring(0, pt.length - 2));
-    pb = parseInt(pb.substring(0, pb.length - 2));
-    v.height('1px');
-    v.height(v.prop("scrollHeight") - (pt + pb));
-}
+let reheight = function(el = undefined) {
+    let v = el;
+    if (el === undefined) v = this;
+    v = $(v);
+    if (!v.is('textarea')) v = v.find('textarea').toArray();
+    else v = [v];
+    v.forEach(function (v) {
+        v = $(v);
+        let pt = v.css("padding-top");
+        let pb = v.css("padding-bottom");
+        pt = parseInt(pt.substring(0, pt.length - 2));
+        pb = parseInt(pb.substring(0, pb.length - 2));
+        v.height('1px');
+        v.height(v.prop("scrollHeight") - (pt + pb));
+    });
+};

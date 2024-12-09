@@ -21,7 +21,7 @@ class SubTitleHtmlView extends HtmlView {
 
         $this->style(Tools::css('.sub-title', [],'font-family: Roboto, sans-serif',
             'text-transform: none', 'font-size: 1.25em', 'font-weight: lighter', 'width: 100%',
-            'cursor: pointer', 'width: 100%'));
+            'width: 100%'));
     }
 }
 ?>

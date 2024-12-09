@@ -1,17 +1,16 @@
 <?php
 
-include_once dirname(__FILE__) . '/HtmlView.php';
-
 /**
  * Class TableHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  */
 class TableHtmlView extends HtmlView {
+
     /**
      * ContainerHtmlView constructor.
      * @param array|string $classes
      */
-    public function __construct($classes = array()) {
+    public function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(['table'], $classes));
 
@@ -23,14 +22,12 @@ class TableHtmlView extends HtmlView {
         $this->style(Tools::css('.table', [' > ', '.row.header'], 'font-weight: bold'));
     }
 
-    // Short cuts
-
     /**
      * Create a header.
-     * @param array|string $classes A set of classes.
+     * @param string|string[] $classes A set of classes.
      * @return TableRowHtmlView
      */
-    public function header($classes = array()) : TableRowHtmlView {
+    public function header(array|string $classes = []) : TableRowHtmlView {
         $headerView = new TableRowHtmlView(array_merge(['header'], $classes));
         $this->add($headerView);
         return $headerView;
@@ -38,10 +35,10 @@ class TableHtmlView extends HtmlView {
 
     /**
      * Create a row.
-     * @param array|string $classes A set of classes.
+     * @param string[]|string $classes A set of classes.
      * @return TableRowHtmlView
      */
-    public function row($classes = array()) : TableRowHtmlView {
+    public function row(array|string $classes = []) : TableRowHtmlView {
         $rowView = new TableRowHtmlView($classes);
         $this->add($rowView);
         return $rowView;
@@ -49,10 +46,10 @@ class TableHtmlView extends HtmlView {
 
     /**
      * Return a new table html view.
-     * @param array|string $classes Classes.
+     * @param string|string[] $classes Some classes.
      * @return TableHtmlView
      */
-    public static function _new($classes = array()) : TableHtmlView {
+    public static function _new(array|string $classes = []) : TableHtmlView {
         return new TableHtmlView($classes);
     }
 }

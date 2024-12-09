@@ -29,6 +29,9 @@ class BasicEvents implements EventAdder {
         HtmlTemplateProtocol::_new('ThrowEventToObject', 'basics')->
             throwObjectEvent(TemplateObject::_new('event'), TemplateObject::_new('object'), TemplateObject::_new('scope'), TemplateObject::_new('data'));
 
+        HtmlTemplateProtocol::_new('UnbindEventFromObject', 'basics')->
+            unbindObjectEvent(TemplateObject::_new('view'), TemplateObject::_new('event'), TemplateObject::_new('object'), TemplateObject::_new('scope'));
+
         HtmlTemplateProtocol::_new('AddView', 'basics')->
             add(TemplateObject::_new('view'), TemplateObject::_new('add'));
 

@@ -45,7 +45,7 @@ class OpeningCardsHtmlView extends HtmlView {
         $this->style(Tools::css('.op-cards', [' > ', '.op-adder', ' > ', '.title', ' > ', 'div:first-child'],
             'width: initial'));
         $this->style(Tools::css('.op-cards', [' > ', '.op-adder', ' > ', '.title'],
-            'justify-content: center', 'align-items: center'));
+            'align-items: center', 'gap: 10px'));
         $this->style(Tools::css('.op-cards', [' > ', '.op-adder', ' > ', '.title', ' ', 'img'],
             'height: 40px'));
 
@@ -97,6 +97,7 @@ class OpeningCardsHtmlView extends HtmlView {
      */
     public function adder(string|array $classes = [], string $image = '/sunstone/pic/add.svg') : CardHtmlView {
         $classes = is_array($classes) ? $classes : [ $classes ];
+        $classes[] = 'op-card';
         $classes[] = 'op-adder';
         $adderCard = new CardHtmlView($classes);
         $this->add($adderCard);

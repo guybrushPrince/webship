@@ -1,7 +1,5 @@
 <?php
 
-include_once dirname(__FILE__) . '/HtmlView.php';
-
 /**
  * Class OptionHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
@@ -12,13 +10,19 @@ class OptionHtmlView extends HtmlView {
      * The value.
      * @var string
      */
-    private $value;
+    private string $value;
 
     /**
      * Selected.
      * @var boolean
      */
-    private $selected;
+    private bool $selected;
+
+    /**
+     * The text view.
+     * @var TextView
+     */
+    private TextView $textView;
 
     /**
      * OptionHtmlView constructor.
@@ -53,7 +57,24 @@ class OptionHtmlView extends HtmlView {
         return '</option>';
     }
 
-    // Short cuts
+    /**
+     * @inheritDoc
+     */
+    public function texts() {
+        $this->textView = parent::texts();
+        return $this;
+    }
+
+    /**
+     * Set a text.
+     * @param int $language The language.
+     * @param string $text The text.
+     * @return $this
+     */
+    public function text(int $language, string $text) : static {
+        $this->textView->text($language, strip_tags($text));
+        return $this;
+    }
 
 }
 ?>

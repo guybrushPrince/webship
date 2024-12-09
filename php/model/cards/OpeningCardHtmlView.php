@@ -31,6 +31,24 @@ class OpeningCardHtmlView extends CardHtmlView {
     private ?HtmlView $titleField;
 
     /**
+     * A bounded object.
+     * @var null
+     */
+    private $object = null;
+
+    /**
+     * Whether the card is opened, or not.
+     * @var bool|null
+     */
+    private ?bool $opened = null;
+
+    /**
+     * The title view.
+     * @var HtmlView
+     */
+    private HtmlView $titleView;
+
+    /**
      * Constructor.
      * @param bool|null $opened Whether the card is opened, or not.
      * @param string|string[] $classes Some additional classes.
@@ -56,6 +74,31 @@ class OpeningCardHtmlView extends CardHtmlView {
         $titleView->protocol(Event::CLICK)->
             doIt('ToggleClass', ['view' => $this, 'class' => 'wide'], 'basics')->
             doIt('ToggleClass', ['view' => $contentView, 'class' => 'invisible'], 'basics');
+
+        $this->opened = $opened;
+        $this->titleView = $titleView;
+    }
+
+    /**
+     * Binds an object for opening the card.
+     * @param PersistentTrait $object The object.
+     * @param HtmlModifyProtocol|string|null $protocol The function to execute.
+     * @return void
+     */
+    public function bindOpening($object, HtmlModifyProtocol|string|null $protocol = null) : void {
+        $this->bind($object, Event::CONTENTMODIFY, $protocol, WebshipScopes::OPENING_CARD_OPENS);
+        $this->object = $object;
+    }
+
+    /**
+     * Binds an object for opening the card.
+     * @param PersistentTrait $object The object.
+     * @param HtmlModifyProtocol|string|null $protocol The function to execute.
+     * @return void
+     */
+    public function bindClosing($object, HtmlModifyProtocol|string|null $protocol = null) : void {
+        $this->bind($object, Event::CONTENTMODIFY, $protocol, WebshipScopes::OPENING_CARD_CLOSES);
+        $this->object = $object;
     }
 
     /**
@@ -98,6 +141,25 @@ class OpeningCardHtmlView extends CardHtmlView {
         if (!$acronym) $acronym = '<span></span>';
         $this->titleField->texts()->text(self::getLanguage(), $acronym . $title);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function generateOpeningTag() {
+        if ($this->object) {
+            if (!$this->opened) {
+                $this->titleView->protocol(Event::CLICK)->
+                    doIt('ThrowEventToObject', ['object' => $this->object, 'event' => Event::CONTENTMODIFY, 'scope' => WebshipScopes::OPENING_CARD_OPENS], 'basics')->
+                    doIt('UnbindEventFromObject', ['view' => $this, 'object' => $this->object, 'event' => Event::CONTENTMODIFY, 'scope' => WebshipScopes::OPENING_CARD_OPENS], 'basics');
+            } else {
+                $this->titleView->protocol(Event::CLICK)->
+                    doIt('ThrowEventToObject', ['object' => $this->object, 'event' => Event::CONTENTMODIFY, 'scope' => WebshipScopes::OPENING_CARD_CLOSES], 'basics')->
+                    doIt('UnbindEventFromObject', ['view' => $this, 'object' => $this->object, 'event' => Event::CONTENTMODIFY, 'scope' => WebshipScopes::OPENING_CARD_OPENS], 'basics');
+            }
+        }
+        return parent::generateOpeningTag();
+    }
+
 
 }
 ?>

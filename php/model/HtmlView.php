@@ -67,7 +67,7 @@ class HtmlView extends View {
             ($this->data ? ' ' . implode(' ', array_map(function($key, $val) {
                 return 'data-' . $key . ($val !== null ? '="' . $val . '"' : '');
             }, array_keys($this->data), $this->data)) : '') .
-            ($this->localStyles ? ' style="' . implode(';', $this->localStyles) . '"' : '') .
+            ($this->localStyles ? ' style="' . str_replace('"', "'", implode(';', $this->localStyles)) . '"' : '') .
             '>';
     }
 

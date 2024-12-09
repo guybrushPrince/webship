@@ -51,7 +51,8 @@ class ButtonHtmlView extends HtmlView {
         return '<button class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' .
             ($this->id ? ' id="' . $this->id . '"' : '') . ' type="' . $this->type . '"' .
             ($this->notices ? ' title="' . (array_key_exists(View::getLanguage(), $this->notices) ? $this->notices[View::getLanguage()] : array_pop($this->notices)) . '"' : '') .
-            ($this->disabled ? ' disabled' : '') . '>';
+            ($this->disabled ? ' disabled' : '') .
+            ($this->localStyles ? ' style="' . str_replace('"', "'", implode(';', $this->localStyles)) . '"' : '') . '>';
     }
 
     /**

@@ -37,14 +37,15 @@ class ModalHtmlView extends HtmlView {
         $this->controlPanel->fix()->reverse();
         $this->subviews[0]->subviews[0]->add($this->controlPanel);
 
-        $this->style(Tools::css('.modal.invisible', '', 'display: none !important'));
+        $this->style(Tools::css('.modal', [], '--modal-pad: 20px'));
+        $this->style(Tools::css('.modal.invisible', [], 'display: none !important'));
         $this->style(Tools::css('.modal', [' > ', '.modal-overlay'], 'position: fixed',
             'top: 0', 'left: 0', 'width: 100%', 'height: 100%', 'background: var(--window-overlay)', 'z-index: 100001',
             'overflow-y: auto'));
         $this->style(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container'],
             'position: absolute',
             'left: 12.5%', 'top: 10%', 'width: 75%', 'overflow-y: initial',
-            'background: var(--neutral)', 'z-index: 100002', 'padding: 20px', 'border-radius: 5px',
+            'background: var(--neutral)', 'z-index: 100002', 'padding: var(--modal-pad)', 'border-radius: 5px',
             '-webkit-box-shadow: var(--shadow-flow-4)',
             '-moz-box-shadow: var(--shadow-flow-4)',
             'box-shadow: var(--shadow-flow-4)'));
@@ -52,6 +53,8 @@ class ModalHtmlView extends HtmlView {
             'width: 100%'));
         $this->style(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' ', '.alert'],
             'width: 100%'));
+        $this->style(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' > ', 'div',
+            ' > ', '.ctr.fix.tr'], 'right: calc((-1) * var(--modal-pad))', 'top: 2px'));
     }
 
     /**

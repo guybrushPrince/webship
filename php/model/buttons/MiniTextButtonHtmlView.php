@@ -27,6 +27,8 @@ class MiniTextButtonHtmlView extends ButtonHtmlView {
             'color: var(--font-info)', 'transition: all 0.25s', 'cursor: pointer'));
         $this->style(Tools::css('button.mini', [':hover'], 'background: var(--font-info)',
             'color: var(--neutral)'));
+        $this->style(Tools::css('button.mini.del', [':hover'],'background: var(--delete-2-hover-2)',
+            'color: var(--neutral)'));
     }
 
     /**
@@ -41,6 +43,20 @@ class MiniTextButtonHtmlView extends ButtonHtmlView {
         $view = new MiniTextButtonHtmlView($id, $classes);
         if (!is_array($texts)) $texts = [ self::getLanguage() => $texts ];
         foreach ($texts as $l => $text) $view->texts()->text($l, $text);
+        return $view;
+    }
+
+    /**
+     * Creates a delete text button.
+     * @param string|null $id The id.
+     * @param string|string[] $texts The button texts.
+     * @param string[]|string $classes Some classes.
+     * @return MiniTextButtonHtmlView
+     */
+    public static function delete(string|null $id, string|array $texts = [],
+                                  array|string $classes = []) : MiniTextButtonHtmlView {
+        $view = self::create($id, $texts, $classes);
+        $view->addClass('del');
         return $view;
     }
 }
