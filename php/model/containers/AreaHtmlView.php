@@ -22,9 +22,10 @@ class AreaHtmlView extends ContainerHtmlView {
 
         $this->style(Tools::css('.c-area', [], 'background: var(--ultra-light-system-background)',
             'border-radius: 10px', 'margin-top: 10px', 'padding: 20px', 'box-sizing: border-box',
-            'border: solid 1px var(--system-background)', 'height: -moz-fit-content', 'height: fit-content'));
+            'border: solid 1px var(--system-background)', 'height: -moz-fit-content'));
         $this->style(Tools::css('.c-area', [' > ', '.sub-title'], 'padding: 0',
             'margin-bottom: 10px'));
+        $this->style(Tools::css('.c-area.fit', [], 'height: fit-content'));
     }
 
     /**
@@ -67,6 +68,14 @@ class AreaHtmlView extends ContainerHtmlView {
         return new AreaHtmlView($classes);
     }
 
+    /**
+     * Set the height to fit the content.
+     * @return $this
+     */
+    public function fit() : static {
+        $this->classes[] = 'fit';
+        return $this;
+    }
 
 }
 ?>
