@@ -182,6 +182,7 @@ let resizeHeight = function(e) {
     $(e).height(Math.max(min, e.scrollHeight) + "px");
 };
 let asSel = function(v) {
+    if (v === undefined || v === null) return $();
     if (typeof v === 'object') v = Object.values(v);
     return (!Array.isArray(v) ? v : v.join(','));
 };
