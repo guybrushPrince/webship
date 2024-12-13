@@ -7,6 +7,30 @@
 abstract class WizardHtmlView extends HtmlView {
 
     /**
+     * The title view.
+     * @var ContainerHtmlView|null
+     */
+    private ?ContainerHtmlView $title = null;
+
+    /**
+     * The explanation view.
+     * @var ContainerHtmlView|null
+     */
+    private ?ContainerHtmlView $explanation = null;
+
+    /**
+     * The active view.
+     * @var ContainerHtmlView|null
+     */
+    private ?ContainerHtmlView $active = null;
+
+    /**
+     * The controller view.
+     * @var HtmlView|null
+     */
+    private ?HtmlView $controller = null;
+
+    /**
      * Constructor.
      * @param string|string[] $classes Additional classes.
      */
@@ -23,10 +47,16 @@ abstract class WizardHtmlView extends HtmlView {
             '-webkit-box-shadow: var(--shadow-flow-1-hover)',
             'box-shadow: var(--shadow-flow-1-hover)'));
         $this->style(Tools::css('.wizard', [' > ', '.title'], 'color: var(--main-font)',
-            'width: 100%', 'max-width: 100%', 'padding: 24px', 'font-size: 24px',
-            'font-weight: 300', 'box-sizing: border-box', 'background: var(--card-title-background)',
+            'padding: 24px', 'font-size: 24px',
+            'font-weight: 300', 'box-sizing: border-box', 'background: var(--wizard-title-background)',
+            'color: var(--wizard-title-font)',
             'border-bottom: solid 1px var(--wizard-title-border)'));
-        $this->style(Tools::css('.wizard', [' > ', '.explanation'], 'padding: 20px'));
+        $this->style(Tools::css('.wizard', [' > ', '.title', ' > ', 'img'], 'height: 20px',
+            'filter: var(--wizard-img-title-filter)'));
+        $this->style(Tools::css('.wizard', [' > ', '.explanation'], 'padding: 20px',
+            'background: var(--wizard-expl-background)'));
+        $this->style(Tools::css('.wizard', [' > ', '.active'], 'padding: 20px',
+            'background: var(--wizard-active-background)'));
         $this->style(Tools::css('.wizard', [' > ', '.active', ' ', '.tiles'], 'border: 0'));
         $this->style(Tools::css('.wizard', [' > ', '.controller'], 'display: flex',
             'flex-direction: row', 'flex-wrap: nowrap', 'flex: 1 0 0'));
@@ -45,26 +75,36 @@ abstract class WizardHtmlView extends HtmlView {
 
     /**
      * Create a title.
-     * @return HtmlView
+     * @return ContainerHtmlView
      */
-    public function title() : HtmlView {
-        return $this->add(new HtmlView('title'));
+    public function title() : ContainerHtmlView {
+        if ($this->title) return $this->title;
+        $this->title = new ContainerHtmlView(['hor', 'w100', 'vcent', 'gap20', 'title']);
+        $this->add($this->title);
+        $this->title->add(new ImageHtmlView('/webship/pic/wand.svg', 'wand'));
+        return $this->title;
     }
 
     /**
      * Create an explanation.
-     * @return HtmlView
+     * @return ContainerHtmlView
      */
-    public function explanation() : HtmlView {
-        return $this->add(new HtmlView('explanation'));
+    public function explanation() : ContainerHtmlView {
+        if ($this->explanation) return $this->explanation;
+        $this->explanation = new ContainerHtmlView('explanation');
+        $this->add($this->explanation);
+        return $this->explanation;
     }
 
     /**
      * Create the area for active content (where the user must do something).
-     * @return HtmlView
+     * @return ContainerHtmlView
      */
-    public function active() : HtmlView {
-        return $this->add(new HtmlView('active'));
+    public function active() : ContainerHtmlView {
+        if ($this->active) return $this->active;
+        $this->active = new ContainerHtmlView('active');
+        $this->add($this->active);
+        return $this->active;
     }
 
     /**
@@ -72,7 +112,10 @@ abstract class WizardHtmlView extends HtmlView {
      * @return HtmlView
      */
     public function controller() : HtmlView {
-        return $this->add(new HtmlView('controller'));
+        if ($this->controller) return $this->controller;
+        $this->controller = new HtmlView('controller');
+        $this->add($this->controller);
+        return $this->controller;
     }
 
     /**

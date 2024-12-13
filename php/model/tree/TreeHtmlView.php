@@ -10,7 +10,7 @@ class TreeHtmlView extends HtmlView {
      * MenuHtmlView constructor.
      * @param string[]|string $classes
      */
-    public function __construct($classes = []) {
+    public function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(['tree'], $classes));
         $this->ref('tree');
@@ -32,13 +32,13 @@ class TreeHtmlView extends HtmlView {
         $this->style(Tools::css('ul.tree.open', [' > ', 'li.sub',  ' ~ ', 'li'], 'display: inherit'));
         $this->style(Tools::css('ul.tree', [' > ', 'li', ' ', 'span.default'], 'padding-left: 0',
             'display: flex', 'flex-direction: row', 'align-items: center', 'min-height: 20px', 'font-style: italic'));
-        $this->style(Tools::css('ul.tree', [' > ', 'li', ' ', 'span[data-box]'], 'padding-left: 0',
+        /*$this->style(Tools::css('ul.tree', [' > ', 'li', ' ', 'span[data-box]'], 'padding-left: 0',
             'display: flex', 'flex-direction: row', 'align-items: center', 'min-height: 20px'));
         $this->style(Tools::css('ul.tree', [' > ', 'li', ' ', 'span[data-box]:empty:after'],
             'content: "' . [
                 Language::ENGLISH => 'no-text',
                 Language::GERMAN  => 'Kein-Text'
-            ][View::getLanguage()] . '"', 'display: block'));
+            ][View::getLanguage()] . '"', 'display: block'));*/
         $this->style(Tools::css('ul.tree', [' > ', 'li.selectable'], 'transition: 0.5s',
             'cursor: pointer'));
         $this->style(Tools::css('ul.tree', [' > ', 'li.selectable:hover'],

@@ -395,7 +395,7 @@ class HtmlView extends View {
         if ($object && $event && $protocol) {
             $objId = ParameterSerializer::handleObject($object);
             $this->js('eventBus.bind($("' . $this->idc() . '"), "' . $objId["IClass"] . $objId["value"] . '", ' .
-                '"' . $event . '", function(data) { ' .
+                '"' . $event . '", function(eData) { ' .
                 ($protocol instanceof ModifyProtocol ? $protocol->generate() : $protocol) . '}' .
                 ($scope ? ', "' . $scope . '"' : '') . ');');
             if (is_string($protocol)) $protocol = null;

@@ -12,9 +12,9 @@ class SwitchHtmlView extends InputHtmlView {
      * SwitchHtmlView constructor.
      * @param string $id The id.
      * @param string $name The name.
-     * @param array|string $classes The classes.
+     * @param string[]|string $classes The classes.
      */
-    public function __construct(string $id, string $name, $classes = array()) {
+    public function __construct(string $id, string $name, string|array $classes = []) {
         parent::__construct($id, $name, 'checkbox');
         $this->localClasses = array_merge(['switch'], is_array($classes) ? $classes : ['classes']);
 
@@ -51,6 +51,19 @@ class SwitchHtmlView extends InputHtmlView {
      */
     public function generateClosingTag() {
         return parent::generateClosingTag() . '<span class="slider"></span></label>';
+    }
+
+    /**
+     * Create the switch.
+     * @param string $id The id.
+     * @param bool|null $checked The current value.
+     * @param string[]|string $classes The classes.
+     * @return SwitchHtmlView
+     */
+    public static function create(string $id, ?bool $checked = false, string|array $classes = []) : SwitchHtmlView {
+        $switch = new SwitchHtmlView($id, $id, $classes);
+        $switch->texts()->text(View::getLanguage(), (!$checked ? '' : 'checked'));
+        return $switch;
     }
 
 

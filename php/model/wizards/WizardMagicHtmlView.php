@@ -13,10 +13,10 @@ class WizardMagicHtmlView extends HtmlView {
     public function __construct(array|string $classes = []) {
         parent::__construct(array_merge(['magic'], is_array($classes) ? $classes : [ $classes ]));
 
-        $this->style(Tools::css('.magic', [], 'max-width: 800px', 'position: relative'));
-        $this->style(Tools::css('.magic', [' > ', 'img.wand'], 'position: absolute',
-            'top: 5px', 'right: 5px', 'width: 30px', 'z-index: 1'));
+        $this->style(Tools::css('.magic', [], 'width: 100%', 'position: relative'));
         $this->style(Tools::css('.magic', [' ', '.invisible'], 'display: none'));
+        $this->style(Tools::css('.magic', [' > ', '.ctr'], 'background: var(--neutral)',
+            'border-radius: 0 0 0 5px'));
     }
 
     /**
@@ -30,18 +30,17 @@ class WizardMagicHtmlView extends HtmlView {
 
         $view = new WizardMagicHtmlView();
         $view->ref('magic');
-        $view->add(new ImageHtmlView('/webship/pic/wand.svg', 'wand'));
+        $control = ControlPanelHtmlView::createUnbounded(false)->fix()->reverse();
+        $view->add($control);
+        $abortButton = $control->addMini(CloserHtmlView::_new());
+        $abortButton->protocol(Event::CLICK)->
+            doIt('Delete', ['view' => $view], 'basics')->
+            append($finishProtocol);
+
         $view->each($wizards, function (WizardMagicHtmlView $view, WizardHtmlView $wizard, int $key) use ($wizards, $finishProtocol) {
             $view->add($wizard);
             $wizard->ref('wizard-' . $key);
             $controller = $wizard->controller();
-            if ($key !== array_key_last($wizards)) {
-                $abortButton = $controller->add(new ButtonHtmlView('abort-' . $wizard->id(), 'abort-' . $wizard->id(), 'abort'));
-                $abortButton->add(new ImageHtmlView('/sunstone/pic/wrong.svg'));
-                $abortButton->protocol(Event::CLICK)->
-                    doIt('Delete', ['view' => $view], 'basics')->
-                    append($finishProtocol);
-            }
             if ($key !== array_key_first($wizards)) {
                 $wizard->addClass('invisible');
                 $controller->add(new ButtonHtmlView('back-' . $wizard->id(), 'back-' . $wizard->id()))->

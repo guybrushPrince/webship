@@ -54,7 +54,7 @@ class ModalHtmlView extends HtmlView {
         $this->style(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' ', '.alert'],
             'width: 100%'));
         $this->style(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' > ', 'div',
-            ' > ', '.ctr.fix.tr'], 'right: calc((-1) * var(--modal-pad))', 'top: 2px'));
+            ' > ', '.ctr.fix.tr'], 'right: calc(var(--modal-pad) + var(--cell-gap))'));
     }
 
     /**

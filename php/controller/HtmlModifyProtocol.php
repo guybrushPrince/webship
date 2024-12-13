@@ -172,26 +172,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'throw': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        $data = '';
-                        $dataInfo = $modify["data"];
-                        if ($dataInfo) {
-                            if (!($dataInfo instanceof TemplateObject)) {
-                                $data = ', ' . Tools::jsonEncode(array_reduce(array_keys($dataInfo),
-                                    function (array $values, $param) use ($dataInfo) {
-                                        $value = $dataInfo[$param];
-                                        if ($value instanceof CliffSerializable) {
-                                            $value = ParameterSerializer::handleObject($value);
-                                            $values[$param] = $value["value"];
-                                            $values[$param . 'IClass'] = $value["IClass"];
-                                        } else {
-                                            $values[$param] = $value;
-                                        }
-                                        return $values;
-                                    }, []));
-                            } else {
-                                $data = ', con["' . $dataInfo->getName() . '"]';
-                            }
-                        }
+                        $data = $this->generateData($modify["data"]);
                         $event = $modify["event"];
                         if ($event instanceof TemplateObject) $event = '" + con["' . $event->getName() . '"] + "';
                         return $this->createViewSelector($view) . '.trigger("' . $event . '"' . $data . ');';
@@ -215,26 +196,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                             }
                         }
 
-                        $data = '';
-                        $dataInfo = $modify["data"];
-                        if ($dataInfo) {
-                            if (!($dataInfo instanceof TemplateObject)) {
-                                $data = ', ' . Tools::jsonEncode(array_reduce(array_keys($dataInfo),
-                                        function (array $values, $param) use ($dataInfo) {
-                                            $value = $dataInfo[$param];
-                                            if ($value instanceof CliffSerializable) {
-                                                $value = ParameterSerializer::handleObject($value);
-                                                $values[$param] = $value["value"];
-                                                $values[$param . 'IClass'] = $value["IClass"];
-                                            } else {
-                                                $values[$param] = $value;
-                                            }
-                                            return $values;
-                                        }, []));
-                            } else {
-                                $data = ', con["' . $dataInfo->getName() . '"]';
-                            }
-                        }
+                        $data = $this->generateData($modify["data"]);
                         if ($obj instanceof CliffSerializable) {
                             $objId = ParameterSerializer::handleObject($obj);
                             $objId = $objId["IClass"] . $objId["value"];
@@ -485,6 +447,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
      * Generate the dom action.
      * @param array $modify The associative array with information.
      * @return string
+     * @throws DatabaseError
      */
     private function generateDomAction(array $modify) : string {
         $c = 'if (typeof(res) === "undefined") {var res = ';
@@ -570,6 +533,33 @@ class HtmlModifyProtocol extends ModifyProtocol {
             $c .= ');';
         }
         return $c;
+    }
+
+    /**
+     * Generate the information about data.
+     * @param array|TemplateObject|bool|null $dataInfo The data information (if available).
+     * @return string
+     */
+    private function generateData(array|TemplateObject|bool|null $dataInfo) : string {
+        if ($dataInfo) {
+            if (!($dataInfo instanceof TemplateObject)) {
+                return ', ' . Tools::jsonEncode(array_reduce(array_keys($dataInfo),
+                        function (array $values, $param) use ($dataInfo) {
+                            $value = $dataInfo[$param];
+                            if ($value instanceof CliffSerializable) {
+                                $value = ParameterSerializer::handleObject($value);
+                                $values[$param] = $value["value"];
+                                $values[$param . 'IClass'] = $value["IClass"];
+                            } else {
+                                $values[$param] = $value;
+                            }
+                            return $values;
+                        }, []));
+            } else {
+                return ', con["' . $dataInfo->getName() . '"]';
+            }
+        }
+        return '';
     }
 
 }

@@ -175,6 +175,31 @@ class KeyValueHtmlView extends HtmlView {
     }
 
     /**
+     * Creates a key-value where the value is a switch.
+     * @param string[]|string $key The key (possibly in different languages).
+     * @param SwitchHtmlView $value The value (as an input view).
+     * @param bool $swap For switches, key and value are exchanged by default.
+     * @param bool $frame Whether there shall be a frame or not.
+     * @param int $keySize The size of the key.
+     * @param int|null $valueSize The size of the value.
+     * @param string[]|string $classes Some classes.
+     * @return KeyValueHtmlView
+     */
+    public static function createSwitch(array|string $key, SwitchHtmlView $value, bool $swap = true,
+                                        bool $frame = true, int $keySize = 30, ?int $valueSize = null,
+                                        array|string $classes = []) : KeyValueHtmlView {
+        if ($swap) {
+            $view = new KeyValueHtmlView($key, $frame, $valueSize, $keySize, $classes, $value->getId());
+            $view->valueView->add($value);
+            $view->subviews = [ $view->subviews[1], $view->subviews[0] ];
+        } else {
+            $view = new KeyValueHtmlView($key, $frame, $keySize, $valueSize, $classes, $value->getId());
+            $view->valueView->add($value);
+        }
+        return $view;
+    }
+
+    /**
      * Place the entries vertically.
      * @return $this
      */

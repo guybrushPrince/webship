@@ -182,6 +182,7 @@ let resizeHeight = function(e) {
     $(e).height(Math.max(min, e.scrollHeight) + "px");
 };
 let asSel = function(v) {
+    if (typeof v === 'object') v = Object.values(v);
     return (!Array.isArray(v) ? v : v.join(','));
 };
 
@@ -403,3 +404,11 @@ let reheight = function(el = undefined) {
         v.height(v.prop("scrollHeight") - (pt + pb));
     });
 };
+
+let checkIfEmpty = function(el, clazz) {
+    $(el).toArray().forEach((e) => {
+        if ($(e).children('span').toArray().filter((s) => $.trim(($(s).html()))).length === 0) {
+            $(e).addClass(clazz);
+        } else $(e).removeClass(clazz);
+    });
+}

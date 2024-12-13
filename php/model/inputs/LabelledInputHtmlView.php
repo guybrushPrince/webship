@@ -127,13 +127,37 @@ class LabelledInputHtmlView extends InputHtmlView {
      * @param string|string[]|null $labels The label(s).
      * @param string $id The id.
      * @param string[]|string $classes Some classes.
+     * @param string|null $value The start value.
      * @param int|null $min The minimum length.
      * @param int|null $max The maximum length.
      * @return LabelledInputHtmlView
      */
     public static function createTextField(string|array|null $labels, string $id, array|string $classes = [],
-                                           ?int $min = null, ?int $max = null) : LabelledInputHtmlView {
-        return new LabelledInputHtmlView($labels, $id, 'text', $min, $max, null, $classes);
+                                           ?string $value = null, ?int $min = null,
+                                           ?int $max = null) : LabelledInputHtmlView {
+        $input = new LabelledInputHtmlView($labels, $id, 'text', $min, $max, null, $classes);
+        if ($value) $input->texts()->text(self::getLanguage(), $value);
+        return $input;
+    }
+
+    /**
+     * Create a numeric input field.
+     * @param string|string[]|null $labels The label(s).
+     * @param string $id The id.
+     * @param string[]|string $classes Some classes.
+     * @param int|null $value The start value.
+     * @param int|null $min The minimum value.
+     * @param int|null $max The maximum value.
+     * @param int|null $step The step size.
+     * @return LabelledInputHtmlView
+     */
+    public static function createNumericField(string|array|null $labels, string $id, array|string $classes = [],
+                                              ?int $value = null,
+                                              ?int $min = null, ?int $max = null,
+                                              ?int $step = null) : LabelledInputHtmlView {
+        $input = new LabelledInputHtmlView($labels, $id, 'number', $min, $max, $step, $classes);
+        if ($value) $input->texts()->text(self::getLanguage(), $value);
+        return $input;
     }
 
     /**

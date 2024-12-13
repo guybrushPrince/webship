@@ -14,6 +14,7 @@ class LabelledSelectHtmlView extends SelectHtmlView {
 
     private const mainClass = 'lselect';
     private const miniClass = 'mini';
+    private const labelLessClass = 'll';
 
     /**
      * Whether the input is mini or not.
@@ -28,6 +29,12 @@ class LabelledSelectHtmlView extends SelectHtmlView {
     private ?array $labels;
 
     /**
+     * Does the select has labels?
+     * @var bool
+     */
+    private bool $labelLess = false;
+
+    /**
      * Constructor.
      * @param string|string[] $labels The label(s).
      * @param string $id The id.
@@ -35,8 +42,9 @@ class LabelledSelectHtmlView extends SelectHtmlView {
      */
     private function __construct(string|array|null $labels, string $id, array|string $classes = []) {
         parent::__construct($id, $id, $classes);
-        if ($labels) $this->labels = is_array($labels) ? $labels : [self::getLanguage() => $labels];
-        else $this->labels = $labels;
+        if ($labels === null) $labels = '';
+        if ($labels === '') $this->labelLess = true;
+        $this->labels = is_array($labels) ? $labels : [self::getLanguage() => $labels];
 
         $this->style(Tools::css('.lselect', [], 'position: relative', 'width: fit-content',
             'box-sizing: border-box', 'width: -moz-fit-content', '--height: 30px', '--buffer: 10px',
@@ -44,6 +52,8 @@ class LabelledSelectHtmlView extends SelectHtmlView {
             'display: flex', 'flex-direction: row-reverse', 'align-items: flex-end', 'flex-wrap: nowrap'));
         $this->style(Tools::css('.lselect', [' > ', 'select'], 'height: var(--height)',
             'box-sizing: border-box', 'font-size: 13px'));
+        $this->style(Tools::css('.lselect.ll', [], '--buffer: 0'));
+        $this->style(Tools::css('.lselect.ll', [' > ', 'select + label'], 'display: none'));
 
         $this->style(Tools::css('.lselect:not(.mini)', [' > ', 'select + label'],
             'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--dark-system-background)',
@@ -64,7 +74,9 @@ class LabelledSelectHtmlView extends SelectHtmlView {
      * @inheritDoc
      */
     public function generateOpeningTag() : string {
-        return '<div class="' . self::mainClass . ($this->mini ? ' ' . self::miniClass : '') . '">' .
+        return '<div class="' . self::mainClass .
+            ($this->mini ? ' ' . self::miniClass : '') .
+            ($this->labelLess ? ' ' . self::labelLessClass : '') . '">' .
             parent::generateOpeningTag();
     }
 
