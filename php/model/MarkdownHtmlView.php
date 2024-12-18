@@ -19,16 +19,25 @@ class MarkdownHtmlView extends HtmlView {
     private bool $isFile;
 
     /**
+     * Whether the origin (the base path) of pictures shall be changed.
+     * @var string|null
+     */
+    private ?string $replaceOrigin = null;
+
+    /**
      * MarkdownHtmlView constructor.
      * @param string $fileOrContent The file or the markdown content.
      * @param bool $isFile Is it a path to a file or the content.
      * @param string[]|string $classes Some classes.
+     * @param string|null $replaceOrigin Whether the origin (the base path) of pictures shall be changed.
      */
-    public function __construct(string $fileOrContent, bool $isFile = true, string|array $classes = []) {
+    public function __construct(string $fileOrContent, bool $isFile = true, string|array $classes = [],
+                                ?string $replaceOrigin = null) {
         $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(['markdown'], $classes));
         $this->fileOrContent = $fileOrContent;
         $this->isFile = $isFile;
+        $this->replaceOrigin = $replaceOrigin;
 
         $coreClasses = array_diff($this->classes, $classes);
         $coreSelector = '.' . implode('.', $coreClasses);
@@ -41,9 +50,12 @@ class MarkdownHtmlView extends HtmlView {
      */
     public function generateOpeningTag() {
         $parsedown = new ParsedownExtra();
-        return parent::generateOpeningTag() .
-            ($this->isFile ? $parsedown->text(file_get_contents($this->fileOrContent)) :
-                             $parsedown->text($this->fileOrContent));
+        $text = ($this->isFile ? $parsedown->text(file_get_contents($this->fileOrContent)) :
+                $parsedown->text($this->fileOrContent));
+        if ($this->replaceOrigin) {
+            $text = str_replace('img src="', 'img src="' . $this->replaceOrigin, $text);
+        }
+        return parent::generateOpeningTag() . $text;
     }
 
     /**

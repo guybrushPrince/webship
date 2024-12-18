@@ -41,6 +41,24 @@ class BasicEvents implements EventAdder {
         HtmlTemplateProtocol::_new('SetValue', 'basics')->
             value(TemplateObject::_new('view'), TemplateObject::_new('value'));
 
+        HtmlTemplateProtocol::_new('OpenHelp', 'basics')->
+            action(BasicsController::class, 'openHelp', [
+                    'package' => TemplateObject::_new('package'),
+                    'subpackage' => TemplateObject::_new('subpackage'),
+                    'doc' => TemplateObject::_new('doc'),
+                    'language' => TemplateObject::_new('language')
+                ], [
+                    Language::ENGLISH => 'Open help ...',
+                    Language::GERMAN =>  'Öffne Hilfe ...'
+                ])->
+                success()->
+                    replace(TemplateObject::_new('replace'))->
+                    add(TemplateObject::_new('add'))->
+                parent()->
+                error()->
+                    add(TemplateObject::_new('error'))->
+                parent();
+
         return true;
     }
 }

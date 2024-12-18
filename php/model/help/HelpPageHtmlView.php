@@ -1,8 +1,99 @@
 <?php
 
-namespace help;
+/**
+ * Class HelpPageHtmlView.
+ *
+ * @package webship
+ * @subpackage php/model/help
+ *
+ * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ */
+class HelpPageHtmlView extends StandardButtonHtmlView {
 
-class HelpPageHtmlView
-{
+    /**
+     * Constructor.
+     * @param string $package The package.
+     * @param string|null $subpackage A potential sub package.
+     * @param string $doc The document (concept).
+     * @param string $img An image.
+     * @param string[]|string $classes Some classes.
+     */
+    private function __construct(string $package, ?string $subpackage, string $doc,
+                                 string $img = '/webship/pic/help.svg', array|string $classes = []) {
+        parent::__construct('help-' . $package . '-' . $doc, $classes);
+        $this->img($img);
+        $this->onlyImg(true);
 
+        $this->protocol(Event::CLICK)->doIt('OpenHelp', [
+            'package' => $package,
+            'subpackage' => $subpackage,
+            'doc' => $doc,
+            'replace' => 'help-center',
+            'add' => 'main-app',
+            'error' => 'main-app'
+        ], 'basics');
+
+        $this->style(Tools::css('.help-page', [' ', 'img'], 'position: relative', 'max-width: 500px',
+            'width: 100%', 'display: block', 'margin-left: auto', 'margin-right: auto'));
+    }
+
+    /**
+     * Create a new help center button.
+     * @param string $package The package.
+     * @param string|null $subpackage A potential sub package.
+     * @param string $doc The document (concept).
+     * @param string $img An image.
+     * @param string[]|string $classes Some classes.
+     * @return HelpPageHtmlView
+     */
+    public static function createIt(string $package, ?string $subpackage, string $doc,
+                                    string $img = '/webship/pic/help.svg',
+                                    array|string $classes = []) : HelpPageHtmlView {
+        return new HelpPageHtmlView($package, $subpackage, $doc, $img, $classes);
+    }
+
+    /**
+     * Create the help page.
+     * @param string $package The package.
+     * @param string|null $subpackage A potential sub package.
+     * @param string $doc The document (concept).
+     * @param int $language The language.
+     * @return MarkdownHtmlView
+     */
+    public static function createHelpPage(string $package, ?string $subpackage, string $doc,
+                                          int $language = Language::GERMAN) : MarkdownHtmlView {
+        $file = __DIR__ . '/../../../../' . $package . '/docs/' . ($subpackage ? $subpackage . '/' : '') .
+            $doc . '_' . Language::BCP47[$language] . '.md';
+        if (file_exists($file)) {
+            return new MarkdownHtmlView($file, true, ['help-page'],
+                HtmlActionProtocol::$serverURL . '/' . $package . '/docs/' .
+                ($subpackage ? $subpackage . '/' : ''));
+        } else return new MarkdownHtmlView('Cannot find help file ' . $file, false, ['help-page']);
+    }
+
+    /**
+     * Creates the help center (as modal).
+     * @param string $package The package.
+     * @param string|null $subpackage A potential sub package.
+     * @param string $doc The document (concept).
+     * @param int|null $language The language.
+     * @return ModalHtmlView
+     */
+    public static function createHelpCenter(string $package, ?string $subpackage, string $doc,
+                                            ?int $language = null) : ModalHtmlView {
+        if ($language === null) $language = View::getLanguage();
+        $modal = new ModalHtmlView('help-center');
+        $modal->header()->texts()->
+            text(Language::ENGLISH, 'Coast Help Center')->
+            text(Language::GERMAN, 'Coast Hilfecenter');
+
+        // TODO: Add standard stuff
+
+        $modal->item(self::createHelpPage($package, $subpackage, $doc, $language));
+        $modal->protocol(Event::ONLOAD)->toggleClass($modal, 'invisible');
+        $modal->closer();
+        return $modal;
+    }
 }
+?>
