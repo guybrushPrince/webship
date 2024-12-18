@@ -334,11 +334,17 @@ class HtmlView extends View {
 
     /**
      * Add texts.
-     * @return TextView
+     * @param string[]|null $texts A language-indexed optional set of texts.
+     * @return HtmlView|TextView
      */
-    public function texts() {
+    public function texts(?array $texts = null) : HtmlView|TextView {
         $textView = new TextView();
         $this->add($textView);
+        if ($texts) {
+            foreach ($texts as $lang => $text) {
+                $textView->text($lang, $text);
+            }
+        }
         return $textView;
     }
 
@@ -420,9 +426,21 @@ class HtmlView extends View {
      * @param string $text The notice.
      * @return $this
      */
-    public function notice(int $language, string $text) : HtmlView {
+    public function notice(int $language, string $text) : static {
         if (!$this->notices) $this->notices = [$language => $text];
         else $this->notices[$language] = $text;
+        return $this;
+    }
+
+    /**
+     * Shortcut for notice.
+     * @param string[] $texts The language-indexed texts.
+     * @return $this
+     */
+    public function notices(array $texts) : static {
+        foreach ($texts as $lang => $text) {
+            $this->notice($lang, $text);
+        }
         return $this;
     }
 }
