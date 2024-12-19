@@ -55,6 +55,7 @@ class LabelledInputHtmlView extends InputHtmlView {
                                  int|string|null $min = null, int|string|null $max = null, ?int $step = null,
                                  array|string $classes = []) {
         parent::__construct($id, $id, $type, $min, $max, $step, $classes);
+        $labels = null;
         if ($labels === null) $labels = '';
         if ($labels === '') $this->labelLess = true;
         $this->labels = is_array($labels) ? $labels : [ self::getLanguage() => $labels ];
