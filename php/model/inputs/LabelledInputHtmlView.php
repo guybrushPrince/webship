@@ -55,7 +55,6 @@ class LabelledInputHtmlView extends InputHtmlView {
                                  int|string|null $min = null, int|string|null $max = null, ?int $step = null,
                                  array|string $classes = []) {
         parent::__construct($id, $id, $type, $min, $max, $step, $classes);
-        $labels = null;
         if ($labels === null) $labels = '';
         if ($labels === '') $this->labelLess = true;
         $this->labels = is_array($labels) ? $labels : [ self::getLanguage() => $labels ];
@@ -72,12 +71,14 @@ class LabelledInputHtmlView extends InputHtmlView {
         $this->style(Tools::css('.linput', [' > ', 'input:not([type=date]):not([type=checkbox]) + label'],
             'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--dark-system-background)',
             'transition: 0.5s'));
-        $this->style(Tools::css('.linput', [' > ', 'input:not([type=date]):not([type=checkbox]):placeholder-shown + label'],
-            'display: flex', 'top: var(--buffer)', 'flex-direction: row', 'width: 100%',
+        $this->style(Tools::css('.linput', [' > ', 'input:not(:focus):not([type=date]):not([type=checkbox]):placeholder-shown + label'],
+            'display: flex', 'top: var(--buffer)', 'flex-direction: row', /*'width: 100%',*/
             'height: calc(100% - var(--buffer))', 'align-items: center', 'cursor: text', 'padding-left: 8px',
             'font-size: 13px'));
+        $this->style(Tools::css('.linput', [' > ', 'input:focus:not([type=date]):not([type=checkbox]) + label'],
+            'bottom: calc(100% - var(--buffer))', 'font-size: 10px', 'top: unset'));
         $this->style(Tools::css('.linput', [' > ', 'input:not([type=date]):not([type=checkbox]):not(:placeholder-shown) + label'],
-            'bottom: calc(100% - var(--buffer))', 'font-size: 10px'));
+            'bottom: calc(100% - var(--buffer))', 'font-size: 10px', 'top: unset'));
         $this->style(Tools::css('.linput', [' > ', 'input[type=checkbox]'], 'height: var(--height)',
             'box-sizing: border-box', 'margin: 0'));
         $this->style(Tools::css('.linput', [' > ', 'input[type=checkbox] + label'], 'cursor: pointer'));
@@ -88,6 +89,8 @@ class LabelledInputHtmlView extends InputHtmlView {
         $this->style(Tools::css('.linput.mini', [' > ', 'input:focus'], 'outline: none'));
         $this->style(Tools::css('.linput.mini', [' > ', 'input:not([type=date]):not([type=checkbox]):placeholder-shown + label'],
             'height: var(--height)', 'color: var(--font-info)', 'font-size: 10px', 'padding-left: 5px'));
+        $this->style(Tools::css('.linput.mini', [' > ', 'input:focus:not([type=date]):not([type=checkbox]):placeholder-shown + label'],
+            'display: none'));
         $this->style(Tools::css('.linput.mini', [' > ', 'input:not([type=date]):not([type=checkbox]):not(:placeholder-shown) + label'],
             'display: none'));
 
@@ -116,7 +119,7 @@ class LabelledInputHtmlView extends InputHtmlView {
      */
     public function generateClosingTag() : string {
         return parent::generateClosingTag() .
-            '<label for="' . $this->getId() . '">' .
+            '<label for="' . $this->getId() . '" onclick="$(\'#' . $this->getId() . '[type=text]\').focus();">' .
             ($this->mini && $this->inside ? '[' : '') .
             str_replace(' ', '&nbsp;', $this->labels[self::getLanguage()]) .
             ($this->mini && $this->inside ? ']' : '') .

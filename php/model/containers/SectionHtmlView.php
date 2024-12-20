@@ -87,7 +87,7 @@ class SectionHtmlView extends HtmlView {
      * @return HtmlView
      */
     public function box(string|array $classes = []) : HtmlView {
-        $this->box->addClass($classes);
+        if (is_array($classes) && !Tools::isEmpty($classes) || is_string($classes)) $this->box->addClass($classes);
         return $this->box;
     }
 
