@@ -327,7 +327,7 @@ let checkWindowClosed = (function() {
 let eventBus = (function () {
     function EventBus() {
         this.registry = {};
-        this.bind = function (view, objId, event, fun = (data) => {}, scope = undefined) {
+        this.bind = function (view, objId, event, fun = (data) => {}, igData = null, scope = undefined) {
             event = "e" + event;
             if (scope === undefined) scope = 'undefined';
             let reg;
@@ -348,7 +348,9 @@ let eventBus = (function () {
             sc[event] = ev = ev.filter((el) => {
                 return $('[data-id="' + el.view.attr('data-id') + '"]').length > 0;
             });
-            ev.push({ view: view, fun: fun });
+            igData = (typeof igData === 'object' && igData !== null && igData !== undefined) ? Object.values(igData) : igData;
+            igData = (igData === undefined) ? null : igData;
+            ev.push({ view: view, fun: fun, igData: igData });
         };
         this.unbind = function (view, objId, event, scope = undefined) {
             event = "e" + event;
@@ -376,10 +378,20 @@ let eventBus = (function () {
                         let sc = reg[scope];
                         if (sc.hasOwnProperty(event)) {
                             let ev = sc[event];
-                            if (data !== undefined) data = Object.assign(data, {_object: objId});
-                            else data = {_object: objId};
                             ev.forEach((b) => {
-                                b.fun(Object.assign(data, {_view: b.view}));
+                                let locData = data;
+                                if (data !== undefined) {
+                                    locData = Object.assign({}, data);
+                                    if (b.igData !== null && b.igData !== undefined) {
+                                        for (let f of b.igData) {
+                                            delete locData[f];
+                                        }
+                                    }
+                                    locData = Object.assign(locData, {_object: objId});
+                                } else locData = { _object: objId };
+
+                                console.log(['Event Bus', event, objId, scope, locData, b, b.view.toArray()]);
+                                b.fun(Object.assign(locData, {_view: b.view}));
                             });
                         }
                     }

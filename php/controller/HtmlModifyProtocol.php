@@ -83,14 +83,6 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'reload': {
                     return 'location.reload();';
                 }
-                case 'event': {
-                    $view = $this->reduceView($modify["view"]);
-                    if ($view) {
-                        return $this->createViewSelector($view) . '.trigger("' . $modify["event"] . '");';
-                    } else {
-                        return '';
-                    }
-                }
                 case 'get': {
                     return 'context.' . $modify["key"] . ';';
                 }
@@ -169,13 +161,18 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'text': {
                     return $this->generateDomAction($modify);
                 }
+                case 'event':
                 case 'throw': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
                         $data = $this->generateData($modify["data"]);
                         $event = $modify["event"];
-                        if ($event instanceof TemplateObject) $event = '" + con["' . $event->getName() . '"] + "';
-                        return $this->createViewSelector($view) . '.trigger("' . $event . '"' . $data . ');';
+                        $code = '';
+                        if ($event instanceof TemplateObject) {
+                            $code .= 'console.log(["Trigger", con["' . $event->getName() . '"], ' . $this->createViewSelector($view) . '.toArray(), ' . $data . ']);';
+                            $event = '" + con["' . $event->getName() . '"] + "';
+                        } else $code .= 'console.log(["Trigger", ' . $event . ', ' . $this->createViewSelector($view) . '.toArray(), ' . $data . ']);';
+                        return $code . $this->createViewSelector($view) . '.trigger("' . $event . '"' . $data . ');';
                     } else {
                         return '';
                     }
