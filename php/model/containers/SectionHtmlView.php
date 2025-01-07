@@ -47,6 +47,9 @@ class SectionHtmlView extends HtmlView {
 
         $this->section->protocol(Event::CLICK)->
             doIt('ToggleClass', ['view' => $this, 'class' => 'closed'], 'basics');
+        if (!$open) {
+            $this->js('(function() { let open = false; $("' . $this->section->idc() . '").on("click", function() { if (!open) $("' . $this->idc() . '").trigger("' . Event::OPEN_LIST . '"); open = true; }); })();');
+        } else $this->js('(function() { let open = true; $("' . $this->section->idc() . '").on("click", function() { if (open) $("' . $this->idc() . '").trigger("' . Event::CLOSE_LIST . '"); open = false; }); })();');
 
         $this->style(Tools::css('.sect', [],'width: 100%', 'display: flex',
             'flex-direction: column', 'padding: 0 0 16px 0'));

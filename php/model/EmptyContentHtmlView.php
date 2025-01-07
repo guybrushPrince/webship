@@ -22,6 +22,7 @@ class EmptyContentHtmlView extends HtmlView {
         $this->style(Tools::css('.empty-content', [], 'display: flex',
             'flex-direction: column', 'width: 100%', 'align-items: center'));
         $this->style(Tools::css('.empty-content', [' > ', 'img'], 'width: 200px'));
+        $this->style(Tools::css('.empty-content.small', [' > ', 'img'], 'width: 100px'));
     }
 
     /**
@@ -39,6 +40,15 @@ class EmptyContentHtmlView extends HtmlView {
             $view->add(InfoHtmlView::create($info));
         }
         return $view;
+    }
+
+    /**
+     * Set it to a small image.
+     * @return $this
+     */
+    public function small() : static {
+        $this->addClass('small');
+        return $this;
     }
 }
 ?>

@@ -1,29 +1,29 @@
 <?php
 
-include_once dirname(__FILE__) . '/ContainerHtmlView.php';
-
 /**
  * Class ChipContainerHtmlView
+ *
+ * @package webship
+ * @subpackage php/model/containers
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.1.0
  */
 class ChipContainerHtmlView extends ContainerHtmlView {
 
     /**
      * ChipContainerHtmlView constructor.
-     * @param array|string $classes An array of additional classes.
+     * @param string[]|string $classes An array of additional classes.
      */
-    public function __construct($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct(array_merge(array('chip-container'), $classes));
+    public function __construct(array|string $classes = []) {
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        parent::__construct(array_merge(['chip-container'], $classes));
 
-        $coreClasses = array_diff($this->classes, $classes);
-        $coreSelector = '.' . implode('.', $coreClasses);
+        $this->style(Tools::css('.chip-container', '', 'align-items: center', 'gap: 5px'));
 
-        $this->style(Tools::css($coreSelector, '', 'align-items: center'));
-
-        $this->style(Tools::css($coreSelector, array(' > ', '.chip'), 'background: var(--chip-background)',
-            'align-items: center', 'font-weight: 500', 'padding: 5px 15px', 'border-radius: 45px', 'height: 45px',
-            'margin: 0 5px 5px 0', 'box-sizing: border-box'));
+        $this->style(Tools::css('.chip-container', [' > ', '.chip'],
+            'background: var(--chip-background)', 'align-items: center', 'font-weight: 500',
+            'padding: 5px 15px', 'border-radius: 45px', 'height: 45px', 'box-sizing: border-box'));
     }
 
     /**
@@ -50,7 +50,6 @@ class ChipContainerHtmlView extends ContainerHtmlView {
     public static function _new(array|string $classes = []) : static {
         return new ChipContainerHtmlView($classes);
     }
-
 
 }
 ?>

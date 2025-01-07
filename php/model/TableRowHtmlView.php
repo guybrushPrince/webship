@@ -12,7 +12,9 @@ class TableRowHtmlView extends HtmlView {
      */
     public function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [ $classes ];
-        parent::__construct(array_merge(['table', 'row'], $classes));
+        parent::__construct(array_merge(['tr'], $classes));
+
+        $this->style(Tools::css('.table > .tr', ['.vcent'], 'align-items: center'));
     }
 
     /**

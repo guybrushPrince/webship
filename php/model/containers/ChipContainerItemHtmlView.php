@@ -4,7 +4,7 @@
  * Class ChipContainerItemHtmlView.
  *
  * @package webship
- * @subpackage php/model
+ * @subpackage php/model/containers
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.2.0
@@ -33,7 +33,7 @@ class ChipContainerItemHtmlView extends ContainerItemHtmlView {
      */
     public function generateOpeningTag() {
         if ($this->subviews[0] instanceof CloserHtmlView) {
-            array_push($this->subviews, array_shift($this->subviews));
+            $this->subviews[] = array_shift($this->subviews);
         }
         return parent::generateOpeningTag();
     }

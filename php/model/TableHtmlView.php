@@ -17,9 +17,9 @@ class TableHtmlView extends HtmlView {
         $this->style(Tools::css('.table', '', 'display: flex',
             'flex-wrap: wrap', 'flex-direction: column', 'align-items: flex-start', 'width: 100%',
             'box-sizing: border-box'));
-        $this->style(Tools::css('.table', [' > ', '.row'], 'display: flex',
-            'flex-wrap: nowrap', 'flex-direction: row', 'padding: 5px', 'box-sizing: border-box'));
-        $this->style(Tools::css('.table', [' > ', '.row.header'], 'font-weight: bold'));
+        $this->style(Tools::css('.table', [' > ', '.tr'], 'display: flex',
+            'flex-wrap: nowrap', 'flex-direction: row', 'padding: 5px', 'box-sizing: border-box', 'width: 100%'));
+        $this->style(Tools::css('.table', [' > ', '.tr.header'], 'font-weight: bold'));
     }
 
     /**
