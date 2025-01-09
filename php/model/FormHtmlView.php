@@ -12,21 +12,21 @@ class FormHtmlView extends HtmlView {
      * The action to perform.
      * @var string
      */
-    private $action = "";
+    private string $action = "";
 
     /**
      * The method.
      * @var string
      */
-    private $method = "";
+    private string $method = "";
 
     /**
      * FormHtmlView constructor.
      * @param string $action The action to perform.
      * @param string $method The method.
-     * @param array|string $classes
+     * @param string[]|string $classes Some classes.
      */
-    public function __construct($action, $method, $classes = array()) {
+    public function __construct(string $action = '', string $method = '', array|string $classes = []) {
         $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('form'), $classes));
         $this->action = $action;
@@ -54,19 +54,14 @@ class FormHtmlView extends HtmlView {
         return '</form>';
     }
 
-
-
-    // Short cuts
-
     /**
      * Return a new form html view.
      * @param string $action
      * @param string $method
-     * @param array|string $classes Classes.
+     * @param string[]|string $classes Classes.
      * @return FormHtmlView
      */
-    public static function _new($action, $method, $classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public static function _new(string $action = '', string $method = '', array|string $classes = []) : FormHtmlView {
         return new FormHtmlView($action, $method, $classes);
     }
 

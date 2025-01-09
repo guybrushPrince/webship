@@ -34,21 +34,21 @@ class InputHtmlView extends HtmlView {
 
     /**
      * The minimum length of the content.
-     * @var int|string|null
+     * @var int|float|string|null
      */
-    private int|string|null $min;
+    private int|float|string|null $min;
 
     /**
      * The maximum length of the content.
-     * @var int|string|null
+     * @var int|float|string|null
      */
-    private int|string|null $max;
+    private int|float|string|null $max;
 
     /**
      * The step size between different values.
-     * @var int|null
+     * @var int|float|null
      */
-    private ?int $step;
+    private int|float|null $step;
 
     /**
      * Set the input disabled or not.
@@ -67,13 +67,14 @@ class InputHtmlView extends HtmlView {
      * @param string|null $id The id.
      * @param string $name The name.
      * @param string $type The type.
-     * @param int|null|string $min The minimum (optional).
-     * @param int|null|string $max The maximum (optional).
-     * @param int|null $step The step size (optional).
+     * @param int|float|null|string $min The minimum (optional).
+     * @param int|float|null|string $max The maximum (optional).
+     * @param int|float|null $step The step size (optional).
      * @param string[]|string $classes
      */
     public function __construct(?string $id, string $name, string $type,
-                                int|string|null $min = null, int|string|null $max = null, ?int $step = null,
+                                int|string|float|null $min = null, int|string|float|null $max = null,
+                                int|float|null $step = null,
                                 string|array $classes = []) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct(array_merge([ 'input' ], $classes));

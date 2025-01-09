@@ -15,6 +15,9 @@ class TableRowHtmlView extends HtmlView {
         parent::__construct(array_merge(['tr'], $classes));
 
         $this->style(Tools::css('.table > .tr', ['.vcent'], 'align-items: center'));
+        $this->style(Tools::css('.table > .tr', ['.vbot'], 'align-items: flex-end'));
+        $this->style(Tools::css('.table > .tr > .cell', ['.hend'], 'display: flex',
+            'justify-content: flex-end', 'justify-items: flex-end'));
     }
 
     /**

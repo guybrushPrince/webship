@@ -59,7 +59,7 @@ class AlertHtmlView extends HtmlView {
             'border-radius: 10px', 'max-height: 200px', 'overflow: auto', 'overflow: auto'));
         $this->style(Tools::css('.alert', [' ', 'code'], 'border: 0',
             'background: var(--neutral)', 'font-family: Monospace', 'font-size: 14px', 'padding: 5px',
-            'display: inline-block'));
+            'display: inline-block', 'border-radius: 3px'));
         $this->style(Tools::css('.alert.cover', [' ', 'code'], 'display: block', 'height: 400px',
             'font-size: 10px', 'padding: inherit', 'min-height: 100px', 'max-height: 50%'));
 
@@ -73,6 +73,8 @@ class AlertHtmlView extends HtmlView {
             'flex-direction: row', 'flex-wrap: nowrap', 'gap: 15px'));
         $this->style(Tools::css('.alert.cover', [' > ', '.a-message.with-image', ' > ', 'img'],
             'width: 25px'));
+
+        $this->style(Tools::css('.alert.inline', [], 'margin: 0', 'padding: 0 15px'));
     }
 
     /**
@@ -156,6 +158,15 @@ class AlertHtmlView extends HtmlView {
      */
     public function box() : HtmlView {
         return $this->box;
+    }
+
+    /**
+     * Creates an inline alert.
+     * @return $this
+     */
+    public function inline() : static {
+        $this->addClass('inline');
+        return $this;
     }
 }
 ?>

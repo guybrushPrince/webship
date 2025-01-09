@@ -20,17 +20,25 @@ class ModalHtmlView extends HtmlView {
     private ?ControlPanelHtmlView $controlPanel;
 
     /**
+     * Whether the modal shall only be closed after a request.
+     * @var string[]|null
+     */
+    private ?array $outProtected;
+
+    /**
      * ModalHtmlView constructor.
      * @param string[]|string $classes Some classes.
      */
-    public function __construct(string|array $classes = []) {
+    public function __construct(string|array $classes = [], ?array $outProtected = null) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct(array_merge(['modal', 'invisible'], $classes));
+
+        $this->outProtected = $outProtected;
 
         $overlay = $this->add(new ContainerHtmlView('modal-overlay'));
         $overlay->ref('overlay')->
             protocol(Event::CLICK, ['sameTarget' => true])->
-                delete($this);
+                append($this->getCloseAction());
         $overlay->add(new ContainerHtmlView(['modal-container', 'gap10']));
 
         $this->controlPanel = ControlPanelHtmlView::createUnbounded(false);
@@ -78,10 +86,20 @@ class ModalHtmlView extends HtmlView {
     public function closer(string|array $classes = []) : CloserHtmlView {
         $closer = CloserHtmlView::_new($classes);
         $this->controlPanel->addMini($closer);
-        $closer->protocol(Event::CLICK)->
-            throwevent(Event::CONTENTMODIFY, $this)->
-            delete($this);
+        $closer->protocol(Event::CLICK)->append($this->getCloseAction());
         return $closer;
+    }
+
+    private function getCloseAction() : HtmlModifyProtocol {
+        $protocol = new HtmlModifyProtocol($this);
+        $current = $protocol;
+        if ($this->outProtected) {
+            $current = $protocol->alert($this->outProtected)->
+            no()->parent()->
+            yes();
+        }
+        $current->throwevent(Event::CLOSE_MODAL, $this)->delete($this);
+        return $protocol;
     }
 
     /**
@@ -119,7 +137,7 @@ class ModalHtmlView extends HtmlView {
         $this->control->add($abort);
         $abort->
             protocol(Event::CLICK)->
-                throwevent(Event::CONTENTMODIFY, $this)->
+                throwevent(Event::CLOSE_MODAL, $this)->
                 delete($this);
         return $abort;
     }

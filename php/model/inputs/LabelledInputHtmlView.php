@@ -16,6 +16,7 @@ class LabelledInputHtmlView extends InputHtmlView {
     private const miniClass = 'mini';
     private const outsideClass = 'out';
     private const labelLessClass = 'll';
+    private const bufferLessClass = 'bl';
 
     /**
      * Whether the input is mini or not.
@@ -36,6 +37,12 @@ class LabelledInputHtmlView extends InputHtmlView {
     private bool $labelLess = false;
 
     /**
+     * Whether the view is without buffer, or not.
+     * @var bool
+     */
+    private bool $bufferLess = false;
+
+    /**
      * The labels.
      * @var string[]
      */
@@ -46,13 +53,14 @@ class LabelledInputHtmlView extends InputHtmlView {
      * @param string|string[]|null $labels The label(s).
      * @param string $id The id.
      * @param string $type The type (either *text* or *password*).
-     * @param int|string|null $min The minimum length.
-     * @param int|string|null $max The maximum length.
-     * @param int|null $step The step size.
+     * @param int|float|string|null $min The minimum length.
+     * @param int|float|string|null $max The maximum length.
+     * @param int|float|null $step The step size.
      * @param string[]|string $classes Some classes.
      */
     private function __construct(string|array|null $labels, string $id, string $type,
-                                 int|string|null $min = null, int|string|null $max = null, ?int $step = null,
+                                 int|string|float|null $min = null, int|string|float|null $max = null,
+                                 int|float|null $step = null,
                                  array|string $classes = []) {
         parent::__construct($id, $id, $type, $min, $max, $step, $classes);
         if ($labels === null) $labels = '';
@@ -64,6 +72,7 @@ class LabelledInputHtmlView extends InputHtmlView {
             'box-sizing: border-box', 'width: -moz-fit-content', '--height: 30px', '--buffer: 10px',
             'height: calc(var(--height) + var(--buffer))',
             'display: flex', 'flex-direction: row', 'align-items: flex-end', 'flex-wrap: nowrap'));
+        $this->style(Tools::css('.linput.bl', [], '--buffer: 0'));
         $this->style(Tools::css('.linput.ll', [], '--buffer: 0'));
         $this->style(Tools::css('.linput.ll', [' > ', 'input + label'], 'display: none'));
         $this->style(Tools::css('.linput', [' > ', 'input'], 'height: var(--height)',
@@ -79,8 +88,9 @@ class LabelledInputHtmlView extends InputHtmlView {
             'bottom: calc(100% - var(--buffer))', 'font-size: 10px', 'top: unset'));
         $this->style(Tools::css('.linput', [' > ', 'input:not([type=date]):not([type=checkbox]):not(:placeholder-shown) + label'],
             'bottom: calc(100% - var(--buffer))', 'font-size: 10px', 'top: unset'));
-        $this->style(Tools::css('.linput', [' > ', 'input[type=checkbox]'], 'height: var(--height)',
-            'box-sizing: border-box', 'margin: 0'));
+        $this->style(Tools::css('.linput', [' > ', 'input[type=checkbox]'], '--height: 25px',
+            '--margin: 2.5px', 'margin: var(--margin)',
+            'height: var(--height)', 'width: var(--height)', 'box-sizing: border-box'));
         $this->style(Tools::css('.linput', [' > ', 'input[type=checkbox] + label'], 'cursor: pointer'));
 
         $this->style(Tools::css('.linput.mini', [], '--height: 20px', '--buffer: 0'));
@@ -93,11 +103,16 @@ class LabelledInputHtmlView extends InputHtmlView {
             'display: none'));
         $this->style(Tools::css('.linput.mini', [' > ', 'input:not([type=date]):not([type=checkbox]):not(:placeholder-shown) + label'],
             'display: none'));
+        $this->style(Tools::css('.linput.mini', [' > ', 'input[type=checkbox]'],'--height: 15px'));
 
         $this->style(Tools::css('.linput.out', [], 'flex-direction: row-reverse'));
+        $this->style(Tools::css('.linput.out', [' > ', 'label'], 'display: flex', 'flex-wrap: nowrap',
+            'flex-direction: row', 'height: var(--height)', 'width: fit-content', 'width: -moz-fit-content',
+            'align-items: center'));
+        $this->style(Tools::css('.linput.out', [' > ', 'label:not(:empty):after'],
+            'content: ":"', 'display: block', 'margin-right: 5px'));
         $this->style(Tools::css('.linput.mini.out', [' > ', 'label'], 'color: var(--font-info)',
-            'font-size: 10px', 'display: flex', 'flex-wrap: nowrap', 'flex-direction: row', 'height: var(--height)',
-            'width: fit-content', 'width: -moz-fit-content', 'align-items: center'));
+            'font-size: 10px'));
         $this->style(Tools::css('.linput.mini.out', [' > ', 'label:empty'], 'display: none'));
         $this->style(Tools::css('.linput.mini.out', [' > ', 'label:not(:empty):after'],
             'color: var(--font-info)', 'font-size: 10px', 'content: ":"', 'display: block',
@@ -110,6 +125,7 @@ class LabelledInputHtmlView extends InputHtmlView {
     public function generateOpeningTag() : string {
         return '<div class="' . self::mainClass . ($this->mini ? ' ' . self::miniClass : '') .
             ($this->labelLess ? ' ' . self::labelLessClass : '') .
+            ($this->bufferLess ? ' ' . self::bufferLessClass : '') .
             (!$this->inside ? ' ' . self::outsideClass : '') . '">' .
             parent::generateOpeningTag();
     }
@@ -149,18 +165,18 @@ class LabelledInputHtmlView extends InputHtmlView {
      * @param string|string[]|null $labels The label(s).
      * @param string $id The id.
      * @param string[]|string $classes Some classes.
-     * @param int|null $value The start value.
-     * @param int|null $min The minimum value.
-     * @param int|null $max The maximum value.
-     * @param int|null $step The step size.
+     * @param int|float|null $value The start value.
+     * @param int|float|null $min The minimum value.
+     * @param int|float|null $max The maximum value.
+     * @param int|float|null $step The step size.
      * @return LabelledInputHtmlView
      */
     public static function createNumericField(string|array|null $labels, string $id, array|string $classes = [],
-                                              ?int $value = null,
-                                              ?int $min = null, ?int $max = null,
-                                              ?int $step = null) : LabelledInputHtmlView {
+                                              int|float|null $value = null,
+                                              int|float|null $min = null, int|float|null $max = null,
+                                              int|float|null $step = null) : LabelledInputHtmlView {
         $input = new LabelledInputHtmlView($labels, $id, 'number', $min, $max, $step, $classes);
-        if ($value) $input->texts()->text(self::getLanguage(), $value);
+        if ($value || is_int($value) || is_float($value)) $input->texts()->text(self::getLanguage(), $value);
         return $input;
     }
 
@@ -246,6 +262,27 @@ class LabelledInputHtmlView extends InputHtmlView {
         if ($value !== null) $input->texts()->text(self::getLanguage(), $value);
         $input->mini = true;
         $input->inside = false;
+        return $input;
+    }
+
+    /**
+     * Create a checkbox.
+     * @param string|string[]|null $labels The label(s).
+     * @param string $id The id.
+     * @param bool|null $checked Whether the checkbox is checked, or not.
+     * @param string[]|string $classes Some classes.
+     * @return LabelledInputHtmlView
+     */
+    public static function createCheckbox(string|array|null $labels, string $id, ?bool $checked = false,
+                                          array|string $classes = []) : LabelledInputHtmlView {
+        $input = new LabelledInputHtmlView($labels, $id, 'checkbox', null, null, null, $classes);
+        $input->texts()->text(View::getLanguage(), (!$checked ? '' : 'checked'));
+        if ($labels) {
+            if (!is_array($labels)) $labels = [ self::getLanguage() => $labels ];
+            foreach ($labels as $lang => $label) $input->notice($lang, $label);
+        }
+        $input->inside = false;
+        $input->bufferLess = true;
         return $input;
     }
 

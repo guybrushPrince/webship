@@ -28,6 +28,7 @@ class TableHtmlView extends HtmlView {
      * @return TableRowHtmlView
      */
     public function header(array|string $classes = []) : TableRowHtmlView {
+        $classes = !is_array($classes) ? [ $classes ] : $classes;
         $headerView = new TableRowHtmlView(array_merge(['header'], $classes));
         $this->add($headerView);
         return $headerView;

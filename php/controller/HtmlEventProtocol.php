@@ -60,20 +60,23 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::ONFOCUSIN) $code .= '.focusin';
                 if ($this->event === Event::ONKEYUP) $code .= '.on("keyup", ';
                 if ($this->event === Event::INPUT) $code .= '.on("input", ';
-                if ($this->event === Event::CONTENTMODIFY) $code .= '.on("' . Event::CONTENTMODIFY . '", ';
-                if ($this->event === Event::OBJECTMODIFY) $code .= '.on("' . Event::OBJECTMODIFY . '", ';
-                if ($this->event === Event::VARIABLE_CHANGE) $code .= '.on("' . Event::VARIABLE_CHANGE . '", ';
-                if ($this->event === Event::OPEN_LIST) $code .= '.on("' . Event::OPEN_LIST . '", ';
-                if ($this->event === Event::CLOSE_LIST) $code .= '.on("' . Event::CLOSE_LIST . '", ';
-                if ($this->event === Event::MOVEUP) $code .= '.on("' . Event::MOVEUP . '", ';
-                if ($this->event === Event::MOVEDOWN) $code .= '.on("' . Event::MOVEDOWN . '", ';
-                if ($this->event === Event::MOVEDELETE) $code .= '.on("' . Event::MOVEDELETE . '", ';
-                if ($this->event === Event::NEW_FILE) $code .= '.on("' . Event::NEW_FILE . '", ';
-                if ($this->event === Event::DIRTY) $code .= '.on("' . Event::DIRTY . '", ';
-                if ($this->event === Event::DRAGDROP) $code .= '.on("' . Event::DRAGDROP . '", ';
-                if ($this->event === Event::DRAGSTART) $code .= '.on("' . Event::DRAGSTART . '", ';
-                if ($this->event === Event::NEXT_STEP) $code .= '.on("' . Event::NEXT_STEP . '", ';
-                if ($this->event === Event::NEXT_DEAD) $code .= '.on("' . Event::NEXT_DEAD . '", ';
+                switch ($this->event) {
+                    case Event::CONTENTMODIFY:
+                    case Event::OBJECTMODIFY:
+                    case Event::VARIABLE_CHANGE:
+                    case Event::OPEN_LIST:
+                    case Event::CLOSE_LIST:
+                    case Event::MOVEUP:
+                    case Event::MOVEDOWN:
+                    case Event::MOVEDELETE:
+                    case Event::NEW_FILE:
+                    case Event::DIRTY:
+                    case Event::DRAGDROP:
+                    case Event::DRAGSTART:
+                    case Event::NEXT_STEP:
+                    case Event::NEXT_DEAD:
+                    case Event::CLOSE_MODAL: $code .= '.on("' . $this->event . '", ';
+                }
                 if ($this->event === Event::CONTEXTMENU) $code .= '.on("contextmenu", ';
                 if ($this->event === Event::CLICK_OUTSIDE) $code = '$(window).click';
                 if ($this->event === Event::TIMED) {
@@ -106,23 +109,26 @@ class HtmlEventProtocol extends EventProtocol {
                 }
                 $code .= '})';
                 if ($this->event === Event::ONLOAD) $code .= '(' . ($this->forceObject ? : '$("' . $this->parent->idc() . '")') . ')';
-                if ($this->event === Event::INPUT) $code .= ')';
-                if ($this->event === Event::ONKEYUP) $code .= ')';
-                if ($this->event === Event::CONTENTMODIFY) $code .= ')';
-                if ($this->event === Event::OBJECTMODIFY) $code .= ')';
-                if ($this->event === Event::VARIABLE_CHANGE) $code .= ')';
-                if ($this->event === Event::OPEN_LIST) $code .= ')';
-                if ($this->event === Event::CLOSE_LIST) $code .= ')';
-                if ($this->event === Event::MOVEUP) $code .= ')';
-                if ($this->event === Event::MOVEDOWN) $code .= ')';
-                if ($this->event === Event::NEXT_STEP) $code .= ')';
-                if ($this->event === Event::NEXT_DEAD) $code .= ')';
-                if ($this->event === Event::MOVEDELETE) $code .= ')';
-                if ($this->event === Event::NEW_FILE) $code .= ')';
-                if ($this->event === Event::DIRTY) $code .= ')';
-                if ($this->event === Event::CONTEXTMENU) $code .= ')';
-                if ($this->event === Event::DRAGSTART) $code .= ')';
-                if ($this->event === Event::DRAGDROP) $code .= ')';
+                switch ($this->event) {
+                    case Event::INPUT:
+                    case Event::ONKEYUP:
+                    case Event::CONTENTMODIFY:
+                    case Event::OBJECTMODIFY:
+                    case Event::VARIABLE_CHANGE:
+                    case Event::OPEN_LIST:
+                    case Event::CLOSE_LIST:
+                    case Event::MOVEUP:
+                    case Event::MOVEDOWN:
+                    case Event::NEXT_STEP:
+                    case Event::NEXT_DEAD:
+                    case Event::MOVEDELETE:
+                    case Event::NEW_FILE:
+                    case Event::DIRTY:
+                    case Event::CONTEXTMENU:
+                    case Event::DRAGSTART:
+                    case Event::DRAGDROP:
+                    case Event::CLOSE_MODAL: $code .= ')';
+                }
                 if ($this->event === Event::TIMED) {
                     $code .= ',' . ($this->parameters['interval'] * 1000) . ')})()';
                 }
