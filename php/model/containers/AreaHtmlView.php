@@ -26,6 +26,7 @@ class AreaHtmlView extends ContainerHtmlView {
         $this->style(Tools::css('.c-area', [' > ', '.sub-title'], 'padding: 0',
             'margin-bottom: 10px'));
         $this->style(Tools::css('.c-area.fit', [], 'height: fit-content'));
+        $this->style(Tools::css('.c-area.invisible', [], 'display: none'));
     }
 
     /**

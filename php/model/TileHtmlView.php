@@ -32,6 +32,8 @@ class TileHtmlView extends HtmlView {
             'padding: 10px'));
         $this->style(Tools::css('.tiles', [' > ', '.tile', ':hover'],
             'background: var(--system-background)'));
+        $this->style(Tools::css('.tiles', [' > ', '.tile', '.active'],
+            'background: var(--system-background-hover)', 'border-color: var(--dark-system-background)'));
     }
 
     /**
