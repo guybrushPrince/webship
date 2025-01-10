@@ -139,11 +139,12 @@ let addHintListener = (id, content) => {
 let ms = (s,e) => {
     try {
         let w = s.width(), d = $(document).width();
-        let l = $(e.target).scrollTop();
+        let l = $(e.target).is("textarea") || $(e.target).is("iframe") ? 0 : $(e.target).scrollLeft();
         if (e.pageX !== undefined) l += e.pageX;
         else l += $(e.target).offset().left + 50;
         l = (l + w > d ? d - w : l);
-        s.css("top", (e.pageY !== undefined ? e.pageY : $(e.target).offset().top + 50) + $(e.target).scrollTop()).css("left", l);
+        let ta = $(e.target).is("textarea") || $(e.target).is("iframe") ? 0 : $(e.target).scrollTop();
+        s.css("top", (e.pageY !== undefined ? e.pageY : $(e.target).offset().top + 50) + ta).css("left", l);
     } catch (e) {}
 }
 
