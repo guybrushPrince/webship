@@ -334,13 +334,14 @@ class HtmlView extends View {
 
     /**
      * Add texts.
-     * @param string[]|null $texts A language-indexed optional set of texts.
+     * @param string[]|string|null $texts A language-indexed optional set of texts.
      * @return HtmlView|TextView
      */
-    public function texts(?array $texts = null) : HtmlView|TextView {
+    public function texts(array|string|null $texts = null) : HtmlView|TextView {
         $textView = new TextView();
         $this->add($textView);
         if ($texts) {
+            if (is_string($texts)) $texts = [ View::getLanguage() => $texts ];
             foreach ($texts as $lang => $text) {
                 $textView->text($lang, $text);
             }

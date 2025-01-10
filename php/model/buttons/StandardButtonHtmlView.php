@@ -30,13 +30,17 @@ class StandardButtonHtmlView extends ButtonHtmlView {
             'font-family: Roboto Condensed, Roboto, sans-serif', 'position: relative', 'margin: .5rem 0 1rem 0',
             '-webkit-transition: -webkit-box-shadow .25s', 'transition: box-shadow .25s',
             '-webkit-box-shadow: var(--shadow-flow-1)', 'box-shadow: var(--shadow-flow-1)',
-            'transition: background 0.5s', 'border-radius: 5px', 'box-sizing: border-box'));
+            'transition: background 0.5s', 'border-radius: 5px', 'box-sizing: border-box', 'gap: 10px'));
         $this->style(Tools::css('button.std-button', [':hover'],
             'background: var(--dark-system-background)'));
         $this->style(Tools::css('button.std-button', [' > ', 'img'], 'height: 100%'));
 
         $this->style(Tools::css('button.std-button.plain', [], 'background: none',
             '-webkit-box-shadow: none', 'box-shadow: none'));
+
+        $this->style(Tools::css('button.std-button.small', [], 'margin: 0', 'height: 30px',
+            'max-height: 30px', 'width: auto', 'min-height: auto'));
+        $this->style(Tools::css('button.std-button.small', [' > ', 'img'], 'height: 50%'));
 
         $this->style(Tools::css('button.std-button.only-img', [], 'width: 30px', 'height: 30px',
             'padding: 5px', 'margin: 0', 'min-height: 30px', 'max-height: 30px', 'min-width: 30px', 'max-width: 30px'));
@@ -83,6 +87,15 @@ class StandardButtonHtmlView extends ButtonHtmlView {
      */
     public function plain() : static {
         $this->addClass('plain');
+        return $this;
+    }
+
+    /**
+     * Sets the button small.
+     * @return $this
+     */
+    public function small() : static {
+        $this->addClass('small');
         return $this;
     }
 }

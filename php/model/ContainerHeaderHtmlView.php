@@ -1,7 +1,5 @@
 <?php
 
-include_once dirname(__FILE__) . '/HtmlView.php';
-
 /**
  * Class ContainerHeaderHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
@@ -10,9 +8,9 @@ class ContainerHeaderHtmlView extends HtmlView {
 
     /**
      * ContainerHeaderHtmlView constructor.
-     * @param array|string $classes
+     * @param string[]|string $classes Some classes.
      */
-    public function __construct($classes = array()) {
+    public function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('container-header'), $classes));
 
@@ -23,8 +21,6 @@ class ContainerHeaderHtmlView extends HtmlView {
             'text-transform: none', 'font-weight: lighter', 'font-family: Roboto, sans-serif', 'width: 100%',
             'box-sizing: border-box'));
     }
-
-    // Short cuts
 
     /**
      * Get the parent.
