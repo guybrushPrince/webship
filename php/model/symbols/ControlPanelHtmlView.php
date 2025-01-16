@@ -189,6 +189,24 @@ class ControlPanelHtmlView extends HtmlView {
     }
 
     /**
+     * Creates a button being a link.
+     * @param string $url The url.
+     * @param string $img The image.
+     * @param bool $download Whether it shall be downloadable, or not.
+     * @param string|string[] $classes Some additional classes.
+     * @return LinkHtmlView
+     */
+    public function linkButton(string $url, string $img, bool $download = false,
+                               string|array $classes = []) : LinkHtmlView {
+        $link = new LinkHtmlView($url, [], $download);
+        $this->add($link);
+        $but = $link->add(StandardButtonHtmlView::create($url));
+        $but->img($img);
+        $but->onlyImg(true);
+        return $link;
+    }
+
+    /**
      * Create a standard delete button in the control panel.
      * @param string $id The id.
      * @param string|string[] $classes Some classes.

@@ -351,6 +351,16 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     }
                     return $code;
                 }
+                case 'retain': {
+                    $view = $modify["view"];
+                    if ($view instanceof TemplateObject) {
+                        $name = $view->getName();
+                    } else $name = null;
+                    $view = $this->reduceView($modify["view"]);
+                    $view = $this->createViewSelector($view);
+                    if (!$name) return $view;
+                    else return 'con["' . $name . '"] = ' . $view . ';';
+                }
                 case 'gc': {
                     return 'gc();';
                 }
