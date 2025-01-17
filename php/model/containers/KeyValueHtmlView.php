@@ -57,7 +57,7 @@ class KeyValueHtmlView extends HtmlView {
         }
 
         $this->style(Tools::css('.kv', [], 'display: flex', 'flex-direction: row', 'flex-wrap: nowrap',
-            'width: 100%', 'align-items: center', 'padding: 10px', 'box-sizing: border-box', 'gap: 10px'));
+            'width: 100%', 'align-items: center', 'padding: 10px', 'box-sizing: border-box', 'gap: 0 10px'));
         $this->style(Tools::css('.kv.frame', [], 'border: 1px solid var(--ultra-light-system-background)'));
         $this->style(Tools::css('.kv', [' > ', '.k'], 'display: flex', 'flex-direction: row',
             'align-items: center', 'justify-content: flex-start', 'margin: 0'));
