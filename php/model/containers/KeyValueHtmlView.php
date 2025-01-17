@@ -71,6 +71,11 @@ class KeyValueHtmlView extends HtmlView {
         $this->style(Tools::css('.kv.ver', [], 'flex-direction: column'));
         $this->style(Tools::css('.kv.ver', [' > ', '*'], 'width: 100%'));
         $this->style(Tools::css('.kv.np', [], 'padding: 0'));
+
+        $this->style(Tools::css('.kv.disabled', [], 'position: relative', 'cursor: not-allowed'));
+        $this->style(Tools::css('.kv.disabled', [':after'], 'content: ""', 'display: block',
+            'position: absolute', 'width: 100%', 'height: 100%', 'top: 0', 'left: 0', 'background: var(--thing-overlay)',
+            'border-radius: 5px'));
     }
 
     /**
