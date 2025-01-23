@@ -405,6 +405,7 @@ let eventBus = (function () {
 let reheight = function(el = undefined) {
     let v = el;
     if (el === undefined) v = this;
+    if ('target' in v) v = v.target;
     v = $(v);
     if (!v.is('textarea')) v = v.find('textarea').toArray();
     else v = [v];
