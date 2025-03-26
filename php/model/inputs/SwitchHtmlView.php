@@ -19,31 +19,45 @@ class SwitchHtmlView extends InputHtmlView {
         $this->localClasses = array_merge(['switch'], is_array($classes) ? $classes : ['classes']);
 
         $this->style(Tools::css('.switch', '', 'position: relative',
-            'display: inline-block', 'width: 60px', 'height: 34px'));
+            'display: inline-block',
+            '--sw-width: 60px', '--sw-height: 34px', '--sw-gap-left: 4px', '--sw-gap-bottom: 4px',
+            '--sw-ball: calc(var(--sw-height) - var(--sw-gap-bottom))',
+            'width: var(--sw-width)', 'height: var(--sw-height)'));
         $this->style(Tools::css('.switch', [' ', 'input'], 'opacity: 0', 'width: 0', 'height: 0'));
         $this->style(Tools::css('.switch', [' ', 'input[type="checkbox"]'], 'height: 0'));
         $this->style(Tools::css('.switch', [' ', '.slider'], 'position: absolute', 'cursor: pointer',
             'top: 0', 'left: 0', 'right: 0', 'bottom: 0', 'background-color: #ccc', '-webkit-transition: .4s',
-            'transition: .4s', 'border-radius: 34px'));
+            'transition: .4s', 'border-radius: var(--sw-height)'));
         $this->style(Tools::css('.switch', [' ', '.slider', ':before'], 'position: absolute',
-            'content: ""', 'height: 26px', 'width: 26px', 'left: 4px', 'bottom: 4px', 'background-color: white',
+            'content: ""',
+            'height: var(--sw-ball)', 'width: var(--sw-ball)', 'left: var(--sw-gap-left)', 'bottom: var(--sw-gap-bottom)',
+            'background-color: white',
             '-webkit-transition: .4s', 'transition: .4s', 'border-radius: 50%'));
         $this->style(Tools::css('.switch', [' ', 'input:checked', ' + ', '.slider'],
             'background-color: var(--slider-checked)'));
         $this->style(Tools::css('.switch', [' ', 'input:focus', ' + ', '.slider'],
             'box-shadow: 0 0 1px var(--slider-checked);'));
         $this->style(Tools::css('.switch', [' ', 'input:checked', ' + ', '.slider:before'],
-            '-webkit-transform: translateX(26px)', '-ms-transform: translateX(26px)',
-            'transform: translateX(26px)'));
+            '-webkit-transform: translateX(var(--sw-ball))', '-ms-transform: translateX(var(--sw-ball))',
+            'transform: translateX(var(--sw-ball))'));
         $this->style(Tools::css('.switch', [' ', 'input:disabled', ' + ', '.slider'],
             'background-color: var(--system-background)', 'opacity: 0.5', 'cursor: not-allowed'));
+
+        $this->style(Tools::css('.switch.mini', '', '--sw-width: 30px',
+            '--sw-height: 17px', '--sw-gap-bottom: 0', '--sw-gap-left: -2px', '--sw-ball: var(--sw-height)'));
+        $this->style(Tools::css('.switch.mini', [' > ', '.slider::before'],
+            'border: 1px solid var(--slider-checked)', 'box-sizing: border-box'));
+        $this->style(Tools::css('.switch.mini', [' > ', 'input:not(:checked)', ' + ', '.slider::before'],
+            'border-color: 1px solid #ccc'));
     }
 
     /**
      * @inheritDoc
      */
     public function generateOpeningTag() {
-        return '<label class="' . implode(' ', $this->localClasses) . '">' . parent::generateOpeningTag();
+        return '<label class="' . implode(' ', $this->localClasses) . '"' .
+            ($this->notices ? ' title="' . (array_key_exists(View::getLanguage(), $this->notices) ? $this->notices[View::getLanguage()] : array_pop($this->notices)) . '"' : '') .
+            '>' . parent::generateOpeningTag();
     }
 
     /**
@@ -66,6 +80,14 @@ class SwitchHtmlView extends InputHtmlView {
         return $switch;
     }
 
+    /**
+     * Creates a mini switch.
+     * @return $this
+     */
+    public function mini() : static {
+        $this->localClasses[] = 'mini';
+        return $this;
+    }
 
 }
 ?>

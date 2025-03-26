@@ -114,6 +114,9 @@ class ControlPanelHtmlView extends HtmlView {
         $this->style(Tools::css('.ctr.fix', [' ', 'button.std-button.del', ':hover'],
             'background: var(--delete-2-hover-2)', 'border-color: var(--neutral)'));
 
+        $this->style(Tools::css('.ctr.small', [], 'min-height: 20px', 'height: 20px',
+            'margin: 0 !important', '--cell-height: 20px', '--cell-width: 20px'));
+
         $this->style(Tools::css('.ctr.plain', [' ', 'button.std-button'], 'border: none'));
     }
 
@@ -297,6 +300,15 @@ class ControlPanelHtmlView extends HtmlView {
      */
     public function reverse() : static {
         $this->addClass('reverse');
+        return $this;
+    }
+
+    /**
+     * Sets it small.
+     * @return $this
+     */
+    public function small() : static {
+        $this->addClass('small');
         return $this;
     }
 }
