@@ -304,5 +304,24 @@ class LabelledInputHtmlView extends InputHtmlView {
         $input->inside = false;
         return $input;
     }
+
+    /**
+     * Create a mini radio.
+     * @param string|string[]|null $labels The label(s).
+     * @param string $id The id.
+     * @param bool|null $selected Whether the checkbox is checked, or not.
+     * @param string[]|string $classes Some classes.
+     * @return LabelledInputHtmlView
+     */
+    public static function createMiniRadio(string|array|null $labels, string $id, ?bool $selected = false,
+                                           array|string $classes = []) : LabelledInputHtmlView {
+        $input = new LabelledInputHtmlView($labels, $id, 'radio', null, null, null, $classes);
+        $input->texts()->text(View::getLanguage(), (!$selected ? '' : 'checked'));
+        if (!is_array($labels)) $labels = [ self::getLanguage() => $labels ];
+        foreach ($labels as $lang => $label) $input->notice($lang, $label);
+        $input->mini = true;
+        $input->inside = false;
+        return $input;
+    }
 }
 ?>

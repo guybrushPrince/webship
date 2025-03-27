@@ -39,9 +39,11 @@ class LabelledSelectHtmlView extends SelectHtmlView {
      * @param string|string[] $labels The label(s).
      * @param string $id The id.
      * @param string[]|string $classes Some classes.
+     * @param string $default The default value.
      */
-    private function __construct(string|array|null $labels, string $id, array|string $classes = []) {
-        parent::__construct($id, $id, $classes);
+    private function __construct(string|array|null $labels, string $id, array|string $classes = [],
+                                 string $default = '-1') {
+        parent::__construct($id, $id, $classes, false, $default);
         if ($labels === null) $labels = '';
         if ($labels === '') $this->labelLess = true;
         $this->labels = is_array($labels) ? $labels : [self::getLanguage() => $labels];
@@ -95,11 +97,12 @@ class LabelledSelectHtmlView extends SelectHtmlView {
      * @param string|string[]|null $labels The label(s).
      * @param string $id The id.
      * @param string[]|string $classes Some classes.
+     * @param string $default The default value.
      * @return LabelledSelectHtmlView
      */
     public static function createSelect(string|array|null $labels, string $id,
-                                        array|string $classes = []) : LabelledSelectHtmlView {
-        return new LabelledSelectHtmlView($labels, $id, $classes);
+                                        array|string $classes = [], string $default = '-1') : LabelledSelectHtmlView {
+        return new LabelledSelectHtmlView($labels, $id, $classes, $default);
     }
 
     /**
@@ -107,13 +110,15 @@ class LabelledSelectHtmlView extends SelectHtmlView {
      * @param string|string[]|null $labels The label(s).
      * @param string $id The id.
      * @param string[]|string $classes Some classes.
+     * @param string $default The default value.
      * @return LabelledSelectHtmlView
      */
     public static function createMiniSelect(string|array|null $labels, string $id,
-                                            array|string $classes = []) : LabelledSelectHtmlView {
-        $input = new LabelledSelectHtmlView($labels, $id, $classes);
+                                            array|string $classes = [], string $default = '-1') : LabelledSelectHtmlView {
+        $input = new LabelledSelectHtmlView($labels, $id, $classes, $default);
         $input->mini = true;
         return $input;
     }
+
 }
 ?>

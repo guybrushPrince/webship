@@ -45,6 +45,13 @@ class StandardButtonHtmlView extends ButtonHtmlView {
         $this->style(Tools::css('button.std-button.only-img', [], 'width: 30px', 'height: 30px',
             'padding: 5px', 'margin: 0', 'min-height: 30px', 'max-height: 30px', 'min-width: 30px', 'max-width: 30px'));
         $this->style(Tools::css('button.std-button:disabled', [], 'opacity: 0.25', 'cursor: not-allowed'));
+
+        $this->style(Tools::css('button.std-button.list-b', [], 'margin: 0',
+            'justify-content: flex-start', 'text-align: left', 'min-height: 40px', 'height: 40px', 'font-size: 14px',
+            'border-radius: 0', 'width: 100%'));
+        $this->style(Tools::css('button.std-button.list-b', [' > ', 'img'], 'height: 50%'));
+        $this->style(Tools::css('button.std-button.list-b', [' > ', 'img.invisible'],
+            'visibility: hidden'));
     }
 
     /**
@@ -60,10 +67,11 @@ class StandardButtonHtmlView extends ButtonHtmlView {
     /**
      * Adds an image to the button.
      * @param string $image The button.
+     * @param string[]|string $classes Some classes.
      * @return StandardButtonHtmlView $this
      */
-    public function img(string $image) : static {
-        $this->add(new ImageHtmlView($image));
+    public function img(string $image, string|array $classes = []) : static {
+        $this->add(new ImageHtmlView($image, $classes));
         if (count($this->subviews) > 1) {
             $imgView = array_pop($this->subviews);
             array_unshift($this->subviews, $imgView);
@@ -96,6 +104,15 @@ class StandardButtonHtmlView extends ButtonHtmlView {
      */
     public function small() : static {
         $this->addClass('small');
+        return $this;
+    }
+
+    /**
+     * Defines the button to be in a list.
+     * @return $this
+     */
+    public function list() : static {
+        $this->addClass('list-b');
         return $this;
     }
 }

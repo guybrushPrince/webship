@@ -38,18 +38,20 @@ class SelectHtmlView extends HtmlView {
 
     /**
      * SelectHtmlView constructor.
-     * @param string $id The id.
+     * @param string|int $id The id.
      * @param string $name The name.
-     * @param array|string $classes
+     * @param string[]|string $classes Some classes.
+     * @param string $default The default value.
      */
-    public function __construct($id, $name, $classes = array(), bool $hidden = false) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct(array_merge(array('select'), $classes));
+    public function __construct(string|int $id, string $name, string|array $classes = [], bool $hidden = false,
+                                string $default = '-1') {
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        parent::__construct(array_merge([ 'select' ], $classes));
         $this->id = $id;
         $this->name = $name;
         $this->hidden = $hidden;
 
-        $this->option('-1')->texts()->
+        $this->option($default)->texts()->
             text(Language::ENGLISH, 'Please select')->
             text(Language::GERMAN,  'Bitte auswählen');
 
@@ -78,7 +80,11 @@ class SelectHtmlView extends HtmlView {
                 $this->classes[] = "singleton";
             }
             return '<select class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '" id="' . $this->id .
-                '" name="' . $this->name . '"' . ($this->disabled ? ' disabled' : '') . ($this->hidden ? ' hidden' : '') . '>';
+                '" name="' . $this->name . '"' . ($this->disabled ? ' disabled' : '') . ($this->hidden ? ' hidden' : '') .
+                ($this->data ? ' ' . implode(' ', array_map(function($key, $val) {
+                        return 'data-' . $key . ($val !== null ? '="' . $val . '"' : '');
+                    }, array_keys($this->data), $this->data)) : '') .
+                '>';
         }
     }
 
@@ -93,7 +99,7 @@ class SelectHtmlView extends HtmlView {
 
     /**
      * Add an option.
-     * @param string|CObject|BObject $value The value.
+     * @param string|CObject|BObject|array $value The value (array only for specializations).
      * @param array|string $classes Classes.
      * @param boolean $selected Whether it is selected.
      * @return OptionHtmlView

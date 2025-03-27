@@ -60,7 +60,7 @@ class ControlPanelHtmlView extends HtmlView {
             'height: calc(var(--cell-height) * var(--ctr-rows) + var(--cell-gap) * (var(--ctr-rows) - 1))',
             'width: calc(var(--cell-width) * var(--ctr-cols) + var(--cell-gap) * (var(--ctr-cols) - 1))',
             'column-gap: var(--cell-gap)', 'row-gap: var(--cell-gap)', 'padding: 3px',
-            'grid-auto-rows: 0', 'overflow: hidden'));
+            'grid-auto-rows: 0', 'overflow: hidden', 'align-items: center'));
         $this->style(Tools::css('.ctr.wb', [], 'border: 1px solid var(--system-background)',
             'border-radius: 5px'));
         $this->style(Tools::css('.ctr.ub', [], 'width: fit-content', 'display: flex',
@@ -76,19 +76,19 @@ class ControlPanelHtmlView extends HtmlView {
             'grid-column-end: span var(--ctr-cols)', 'grid-row-end: span var(--ctr-rows)',
             'grid-template-columns: repeat(var(--ctr-cols), 1fr)', 'grid-template-rows: repeat(var(--ctr-rows), 1fr)',
             'box-sizing: content-box',
-            'min-height: calc(var(--cell-height) * var(--ctr-rows))',
-            'min-width: calc(var(--cell-width) * var(--ctr-cols))',
-            'height: calc(var(--cell-height) * var(--ctr-rows))',
-            'width: calc(var(--cell-width) * var(--ctr-cols))',
-            'column-gap: 2px', 'row-gap: 2px', 'padding: 3px',
-            'grid-auto-rows: 0', 'overflow: hidden'));
+            'min-height: calc(var(--cell-height) * var(--ctr-rows) + var(--cell-gap) * (var(--ctr-rows) - 1))',
+            'min-width: calc(var(--cell-width) * var(--ctr-cols) + var(--cell-gap) * (var(--ctr-cols) - 1))',
+            'height: calc(var(--cell-height) * var(--ctr-rows) + var(--cell-gap) * (var(--ctr-rows) - 1))',
+            'width: calc(var(--cell-width) * var(--ctr-cols) + var(--cell-gap) * (var(--ctr-cols) - 1))',
+            'column-gap: 2px', 'row-gap: 2px', 'padding: 0px',
+            'grid-auto-rows: 0', 'overflow: hidden', 'align-items: center'));
         $this->style(Tools::css('.ctr', [' ', '.ctr.area.wb'], 'border: 1px solid var(--system-background)',
             'border-radius: 5px'));
 
         $this->style(Tools::css('.ctr.flexibleX', [], 'min-width: 0', 'width: fit-content',
             'width: -moz-fit-content'));
-        $this->style(Tools::css('.ctr.flexibleY', [',', '.ctr.fix.flexibleY'], 'min-height: 0', 'height: fit-content',
-            'height: -moz-fit-content'));
+        $this->style(Tools::css('.ctr.flexibleY', [',', '.ctr.fix.flexibleY'], 'min-height: 0',
+            'height: fit-content', 'height: -moz-fit-content', 'grid-template-rows: min-content 1fr'));
 
         $this->style(Tools::css('.ctr', [' ', '.std-job-but'], 'grid-column-end: span 2'));
         $this->style(Tools::css('.ctr', [' ', '.del:hover'], 'background: var(--delete-2-hover-2)'));
@@ -278,9 +278,18 @@ class ControlPanelHtmlView extends HtmlView {
     /**
      * Add a mini-view.
      * @param HtmlView $mini The mini-view to add.
+     * @param int|null $xSpan The x-axis span of the element (default 1).
+     * @param int|null $ySpan The y-axis span of the element (default 1).
      * @return $this
      */
-    public function addMini(HtmlView $mini) : static {
+    public function addMini(HtmlView $mini, ?int $xSpan = null, ?int $ySpan = null) : static {
+        if ($xSpan || $ySpan) {
+            $wrapper = new HtmlView();
+            if ($xSpan) $wrapper->addLocalStyle('grid-column-end: span ' . $xSpan);
+            if ($ySpan) $wrapper->addLocalStyle('grid-row-end: span ' . $ySpan);
+            $wrapper->add($mini);
+            $mini = $wrapper;
+        }
         $this->add($mini);
         return $this;
     }

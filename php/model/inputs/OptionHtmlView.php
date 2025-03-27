@@ -28,9 +28,9 @@ class OptionHtmlView extends HtmlView {
      * OptionHtmlView constructor.
      * @param string|CObject|BObject|null $value The value.
      * @param array|string $classes
-     * @param boolean $selected Whether this option is selected.
+     * @param bool $selected Whether this option is selected.
      */
-    public function __construct($value, $classes = array(), $selected = false) {
+    public function __construct($value, array|string $classes = [], bool $selected = false) {
         parent::__construct(array_merge(array('option'), $classes));
         if ($value instanceof CObject || $value instanceof BObject ||
             (!is_string($value) && !is_int($value) && !is_float($value) && !is_numeric($value) && !is_null($value))) {
@@ -76,5 +76,20 @@ class OptionHtmlView extends HtmlView {
         return $this;
     }
 
+    /**
+     * Get the value behind the option.
+     * @return string
+     */
+    public function getValue() : string {
+        return $this->value;
+    }
+
+    /**
+     * Is the option selected?
+     * @return bool
+     */
+    public function isSelected() : bool {
+        return $this->selected;
+    }
 }
 ?>
