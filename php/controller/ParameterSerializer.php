@@ -66,6 +66,9 @@ class ParameterSerializer {
                             $name = $info["name"];
                             $selector .= '.find("input[data-intern-scope=\"' . $name . '\"]").toArray().filter((i) => (!$(i).is(":checkbox") || $(i).is(":checked"))).map((i) => {let v = $(i).val(); return isJson(v.replaceAll("\'", "\"")) ? JSON.parse(v.replaceAll("\'", "\"")) : v;}).flat().unique()';
                         } else {
+                            if ($view instanceof ContentSelectHtmlView) {
+                                $selector = '$("select' . $view->idc() . '")';
+                            }
                             $selector .= '.val()';
                         }
                     } else if (!$scope) {

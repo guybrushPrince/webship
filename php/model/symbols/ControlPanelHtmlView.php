@@ -81,7 +81,7 @@ class ControlPanelHtmlView extends HtmlView {
             'height: calc(var(--cell-height) * var(--ctr-rows) + var(--cell-gap) * (var(--ctr-rows) - 1))',
             'width: calc(var(--cell-width) * var(--ctr-cols) + var(--cell-gap) * (var(--ctr-cols) - 1))',
             'column-gap: 2px', 'row-gap: 2px', 'padding: 0px',
-            'grid-auto-rows: 0', 'overflow: hidden', 'align-items: center'));
+            'grid-auto-rows: 0', 'overflow: visible', 'align-items: center'));
         $this->style(Tools::css('.ctr', [' ', '.ctr.area.wb'], 'border: 1px solid var(--system-background)',
             'border-radius: 5px'));
 
@@ -247,13 +247,12 @@ class ControlPanelHtmlView extends HtmlView {
      * @param Job $job The job to state the progress of.
      * @param int $xDim The x-dimension of the view.
      * @param int $yDim The y-dimension of the view.
-     * @return JobProgressHtmlView
+     * @return HtmlView
      */
-    public function progress(Job $job, int $xDim, int $yDim) : JobProgressHtmlView {
+    public function progress(Job $job, int $xDim, int $yDim) : HtmlView {
         $progress = JobProgressHtmlView::createJob($job, 'var(--neutral)', 'var(--font-info)',
-            '100%; grid-column-end: span ' . $xDim . '; grid-row-end: span ' . $yDim);
-        $this->add($progress);
-        return $progress;
+            '100%');
+        return $this->addMini($progress, $xDim, $yDim, true);
     }
 
     /**
@@ -280,9 +279,11 @@ class ControlPanelHtmlView extends HtmlView {
      * @param HtmlView $mini The mini-view to add.
      * @param int|null $xSpan The x-axis span of the element (default 1).
      * @param int|null $ySpan The y-axis span of the element (default 1).
-     * @return $this
+     * @param bool|null $ret If the added view or the ctr shall be returned.
+     * @return $this|HtmlView
      */
-    public function addMini(HtmlView $mini, ?int $xSpan = null, ?int $ySpan = null) : static {
+    public function addMini(HtmlView $mini, ?int $xSpan = null, ?int $ySpan = null,
+                            ?bool $ret = false) : static|HtmlView {
         if ($xSpan || $ySpan) {
             $wrapper = new HtmlView();
             if ($xSpan) $wrapper->addLocalStyle('grid-column-end: span ' . $xSpan);
@@ -291,6 +292,7 @@ class ControlPanelHtmlView extends HtmlView {
             $mini = $wrapper;
         }
         $this->add($mini);
+        if ($ret) return $mini;
         return $this;
     }
 

@@ -75,6 +75,10 @@ class HtmlEventProtocol extends EventProtocol {
                     case Event::DRAGSTART:
                     case Event::NEXT_STEP:
                     case Event::NEXT_DEAD:
+                    case Event::JOB_START:
+                    case Event::JOB_IN_PROGRESS:
+                    case Event::JOB_DONE:
+                    case Event::JOB_ERROR:
                     case Event::CLOSE_MODAL: $code .= '.on("' . $this->event . '", ';
                 }
                 if ($this->event === Event::CONTEXTMENU) $code .= '.on("contextmenu", ';
@@ -127,6 +131,10 @@ class HtmlEventProtocol extends EventProtocol {
                     case Event::CONTEXTMENU:
                     case Event::DRAGSTART:
                     case Event::DRAGDROP:
+                    case Event::JOB_START:
+                    case Event::JOB_IN_PROGRESS:
+                    case Event::JOB_DONE:
+                    case Event::JOB_ERROR:
                     case Event::CLOSE_MODAL: $code .= ')';
                 }
                 if ($this->event === Event::TIMED) {

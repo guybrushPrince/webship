@@ -72,6 +72,10 @@ class HtmlModifyProtocol extends ModifyProtocol {
                             $selector .= '.attr("' . $scope . '")';
                         }
                         $modify["value"] = $selector;
+                    } else if ($modify["value"] instanceof JSProperty) {
+                        $modify["value"] = $modify["value"]->getName();
+                    } else if ($modify["value"] instanceof TemplateObject) {
+                        $modify["value"] = 'con[\'' . $modify["value"]->getName() . '\']';
                     } else {
                         $modify["value"] = (is_string($modify["value"]) ? '"' . $modify["value"] . '"' : $modify["value"]);
                     }
@@ -141,7 +145,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         return $this->createViewSelector($view) . '.val("' . $value . '");';
                     } else return '';
                 }
-                case 'disable'; {
+                case 'disable': {
                     $view = $this->reduceView($modify["view"], false);
                     if ($view) {
                         if (!is_array($view)) $view = array($view);
@@ -150,6 +154,16 @@ class HtmlModifyProtocol extends ModifyProtocol {
                                 else return '" + con["' . $v->getName() . '"] + "';
                             }, $view)) . '").find("input, select, button").';
                         return $c . 'unbind();' . $c . 'prop("disabled", true);';
+                    } else return '';
+                }
+                case 'scrollTop': {
+                    $view = $modify["view"];
+                    if ($view instanceof TemplateObject) {
+                        $name = $view->getName();
+                    } else $name = null;
+                    $view = $this->reduceView($modify["view"]);
+                    if ($view) {
+                        return $this->createViewSelector($view) . '.scrollTop(0);';
                     } else return '';
                 }
                 case 'add':
