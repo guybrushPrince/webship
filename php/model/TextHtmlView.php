@@ -81,6 +81,9 @@ class TextHtmlView extends HtmlView {
             (array_key_exists(View::$language, $hints) ?
                 ' placeholder="' . implode(' ', $hints[View::$language]) . '"' :
                 '') .
+            ($this->data ? ' ' . implode(' ', array_map(function($key, $val) {
+                    return 'data-' . $key . ($val !== null ? '="' . $val . '"' : '');
+                }, array_keys($this->data), $this->data)) : '') .
             ($this->disabled ? ' disabled' : '') .
             '>';
     }

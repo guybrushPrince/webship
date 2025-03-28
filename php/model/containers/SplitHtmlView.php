@@ -6,7 +6,6 @@
  * @package webship
  * @subpackge php/model/containers
  *
- *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
  */
@@ -30,28 +29,71 @@ class SplitHtmlView extends HtmlView {
      */
     private HtmlView $right;
 
-    public function __construct(int $leftSize = 50, int $rightSize = 50, int $gap = 0, array|string $classes = []) {
+    /**
+     * Constructor.
+     * @param int $leftSize The size of the left split view.
+     * @param int|null $rightSize The size of the right split view (if null, it is computed from 100).
+     * @param int $leftGap The gap between the left view and the separator.
+     * @param int|null $rightGap The gap between the right view and the separator (if null, it is equal to $leftGap.
+     * @param string[]|string $classes Some classes.
+     */
+    public function __construct(int $leftSize = 50, ?int $rightSize = null, int $leftGap = 0, ?int $rightGap = null,
+                                array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         $classes[] = 'std-split';
         parent::__construct($classes);
 
+        if (is_null($rightSize)) $rightSize = 100 - $leftSize;
+
         $leftSizeRatio = round($leftSize / ($leftSize + $rightSize), 2) * 100;
         $rightSizeRatio = round($rightSize / ($leftSize + $rightSize), 2) * 100;
+        if (is_null($rightGap)) $rightGap = $leftGap;
 
         $this->left = new HtmlView();
         $this->separator = new HtmlView();
         $this->right = new HtmlView();
 
+        $this->add($this->left);
+        $this->add($this->separator);
+        $this->add($this->right);
+
         $this->style(Tools::css('.std-split', [], 'width: 100%', 'padding: 0',
             'box-sizing: border-box', 'position: relative', 'display: flex', 'flex-direction: row',
-            'flex-wrap: nowrap'));
+            'flex-wrap: nowrap', '--separator-width: 5px', '--separator-color: var(--light-system-background)',
+            '--separator-distance-left: ' . $leftGap . 'px', '--separator-distance-right: ' . $rightGap . 'px'));
         $this->style(Tools::css('.std-split', [' > ', 'div:nth-child(1)'],
-            'width: calc(' . $leftSizeRatio . '% - )',
-            'padding-right: 20px', 'box-sizing: border-box', 'border-right: 1px solid var(--light-system-background)'));
-        $this->style(Tools::css('.std-split', [' > ', 'div:nth-child(2)'], 'width: ' . $leftSizeRatio . '%',
-            'padding-right: 20px', 'box-sizing: border-box', 'border-right: 1px solid var(--light-system-background)'));
+            'width: calc(' . $leftSizeRatio . '% - var(--separator-width))',
+            'padding-right: var(--separator-distance-left)', 'box-sizing: border-box'));
+        $this->style(Tools::css('.std-split', [' > ', 'div:nth-child(2)'],
+            'width: var(--separator-width)',
+            'box-sizing: border-box', 'border-left: var(--separator-width) solid var(--separator-color)'));
         $this->style(Tools::css('.std-split', [' > ', 'div:nth-child(3)'], 'width: ' . $rightSizeRatio . '%',
-            'padding-left: 20px', 'box-sizing: border-box'));
+            'padding-left: var(--separator-distance-right)', 'box-sizing: border-box'));
     }
+
+    /**
+     * Get the left view.
+     * @return HtmlView
+     */
+    public function getLeft() : HtmlView {
+        return $this->left;
+    }
+
+    /**
+     * Get the right view.
+     * @return HtmlView
+     */
+    public function getRight() : HtmlView {
+        return $this->right;
+    }
+
+    /**
+     * Get the separator view.
+     * @return HtmlView
+     */
+    public function getSeparator() : HtmlView {
+        return $this->separator;
+    }
+
 }
 ?>

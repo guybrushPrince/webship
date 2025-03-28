@@ -24,6 +24,9 @@ $.fn.existsGetElse = function (e = () => {}) {
     if (this.exists()) return this;
     else return e();
 }
+$.fn.findWithSelf = function (s) {
+    return this.find(s).addBack(s);
+};
 let isJson = function (item) {
     let value = typeof item !== "string" ? JSON.stringify(item) : item;
     try {
@@ -35,7 +38,7 @@ let isJson = function (item) {
 };
 Array.prototype.unique = function () { return [...new Set(this)]; }
 
-let context = { currentTaskId: 0, currentHintId: 0, tabId: 0, tabOffset: [], windows: [] };
+let context = { currentTaskId: 0, currentHintId: 0, tabId: 0, tabOffset: [], windows: [], formContexts: [] };
 
 let lastDelay = [];
 let delay = (function () {
@@ -426,4 +429,108 @@ let checkIfEmpty = function(el, clazz) {
             $(e).addClass(clazz);
         } else $(e).removeClass(clazz);
     });
+};
+
+let scaleChildren = function (el) {
+    el = $(el);
+    let h = el.parent().outerHeight();
+    $(el).children('div').toArray().forEach(function (c) {
+        c = $(c);
+        let o = $(c.children().toArray()[0]);
+        let hc = o.outerHeight();
+        let wc = o.outerWidth();
+        let r = Math.min(1, h / hc);
+        let nw = wc * r;
+        let nh = hc * r;
+        c.css('--closed-scale', r);
+        c.css('--closed-translate', ((-1/2) * (hc - nh)) + 'px ' + ((-1/2) * (wc - nw)) + 'px');
+    });
+};
+
+let addConSelectFunctionality = function (el,max = 1,def = -1) {
+    def = '' + def;
+    el = $(el);
+    let li = el.find('.c-list');
+    let sel = $(el).find('select');
+    let ens = li.children('div');
+    if (sel.length > 0 && ens.length > 0) {
+        if (max === null) max = ens.length - 1;
+        ens.click(function (ev) {
+            let t = $(this);
+            let tv = t.children('[data-opt-value]').data('opt-value');
+            if (t.hasClass('def')) { // Please select
+                if (t.hasClass('selected') && max >= 2) {
+                    if (ens.filter('.selected').length >= 2) {
+                        t.removeClass('selected');
+                        sel.val([]).trigger('change');
+                    } else {
+                        el.removeClass('open');
+                    }
+                } else {
+                    ens.removeClass('selected');
+                    t.addClass('selected');
+                    sel.val(tv).trigger('change');
+                    el.removeClass('open');
+                }
+            } else if (max === 1) { // Please select
+                ens.removeClass('selected');
+                t.addClass('selected');
+                sel.val(tv).trigger('change');
+                el.removeClass('open');
+            } else {
+                console.log('non-def max > 1');
+                let ov = sel.val();
+                if (!t.hasClass('selected')) {
+                    if (ov.includes(def)) {
+                        ens.filter('.def.selected').removeClass('selected');
+                        ov = [];
+                    }
+                    ov.push(tv);
+                    if (ens.filter('.selected').length < max) {
+                        t.addClass('selected');
+                        sel.val(ov).trigger('change');
+                        if (ens.filter('.selected').length >= max) {
+                            ens.filter(':not(.selected):not(.def)').addClass('max-reached');
+                        }
+                    }
+                } else {
+                    ov = ov.filter((v) => v !== tv);
+                    t.removeClass('selected');
+                    if (ov.length === 0) {
+                        ov.push(def);
+                        ens.filter(':not(.selected).def').addClass('selected');
+                    }
+                    sel.val(ov).trigger('change');
+                    ens.removeClass('max-reached');
+                }
+            }
+        });
+    }
+};
+
+let setOpenSelectPosition = function(el) {
+    el = $(el);
+    el.addClass('open');
+    let li = el.find('.c-list');
+    let o = el.offset();
+    let y = o.top, l = o.left, dw = $(document).width(), lw = li.outerWidth();
+    let x = (l + lw) <= dw ? l : dw - lw;
+    li.css('top', y).css('left', x);
+};
+
+let applySelectChanges = function (el) {
+    el = $(el);
+    el.on('change', function () {
+        console.log(['change', el, el.val()]);
+        let vals = el.val();
+        if (vals === null) return;
+        let cs = el.parent();
+        if (!Array.isArray(vals)) vals = [ vals ];
+        console.log(['change-values', el, vals]);
+        cs.find('.c-list').children().removeClass('selected');
+        vals.forEach((v) => {
+            cs.find('[data-opt-value="' + v + '"]').parent().addClass('selected');
+        });
+    });
+    el.trigger('change');
 }

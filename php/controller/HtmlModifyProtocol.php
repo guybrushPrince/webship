@@ -145,7 +145,9 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         return $this->createViewSelector($view) . '.val("' . $value . '");';
                     } else return '';
                 }
+                case 'enable':
                 case 'disable': {
+                    $disabled = $modify["operation"] === 'disable';
                     $view = $this->reduceView($modify["view"], false);
                     if ($view) {
                         if (!is_array($view)) $view = array($view);
@@ -153,7 +155,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                                 if ($v instanceof View) return $v->idc();
                                 else return '" + con["' . $v->getName() . '"] + "';
                             }, $view)) . '").find("input, select, button").';
-                        return $c . 'unbind();' . $c . 'prop("disabled", true);';
+                        return $c . 'unbind();' . $c . 'prop("disabled", ' . ($disabled ? 'true' : 'false') . ');';
                     } else return '';
                 }
                 case 'scrollTop': {

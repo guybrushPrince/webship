@@ -69,6 +69,7 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
 
         if (!$knownParent) $this->js('$("' . $this->idc() . '").trigger("' . Event::NEW_TAB . '");');
         $this->js('$("' . $this->idc() . ' > .tab-header").click(function(event) {' .
+            '$(this).parent().trigger("' . Event::CHANGE_TAB . '");' .
             'let tabs = $(this).parent().parent().children(".tab"); ' .
             'tabs.removeClass("active");' .
             'let max = Math.max.apply(Math, tabs.map((i, c) => parseInt($(c).css("z-index"))));' .
