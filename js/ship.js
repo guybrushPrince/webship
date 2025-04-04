@@ -27,6 +27,7 @@ $.fn.existsGetElse = function (e = () => {}) {
 $.fn.findWithSelf = function (s) {
     return this.find(s).addBack(s);
 };
+let isString = (s) => typeof s === "string";
 let isJson = function (item) {
     let value = typeof item !== "string" ? JSON.stringify(item) : item;
     try {
@@ -478,7 +479,6 @@ let addConSelectFunctionality = function (el,max = 1,def = -1) {
                 sel.val(tv).trigger('change');
                 el.removeClass('open');
             } else {
-                console.log('non-def max > 1');
                 let ov = sel.val();
                 if (!t.hasClass('selected')) {
                     if (ov.includes(def)) {
@@ -521,12 +521,10 @@ let setOpenSelectPosition = function(el) {
 let applySelectChanges = function (el) {
     el = $(el);
     el.on('change', function () {
-        console.log(['change', el, el.val()]);
         let vals = el.val();
         if (vals === null) return;
         let cs = el.parent();
         if (!Array.isArray(vals)) vals = [ vals ];
-        console.log(['change-values', el, vals]);
         cs.find('.c-list').children().removeClass('selected');
         vals.forEach((v) => {
             cs.find('[data-opt-value="' + v + '"]').parent().addClass('selected');

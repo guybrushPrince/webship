@@ -363,7 +363,8 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'function': {
                     $code = $modify["code"];
                     if ($code instanceof TemplateObject) {
-                        $code = 'con["' . $code->getName() . '"](result)';
+                        $code = '(function(con) { let f = con["' . $code->getName() . '"]; ' .
+                            'if (isString(f)) eval(f); else f(); })(con);';
                     }
                     return $code;
                 }
