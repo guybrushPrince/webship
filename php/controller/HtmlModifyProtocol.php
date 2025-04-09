@@ -155,7 +155,8 @@ class HtmlModifyProtocol extends ModifyProtocol {
                                 if ($v instanceof View) return $v->idc();
                                 else return '" + con["' . $v->getName() . '"] + "';
                             }, $view)) . '").find("input, select, button").';
-                        return $c . 'unbind();' . $c . 'prop("disabled", ' . ($disabled ? 'true' : 'false') . ');';
+                        $code = $disabled ? $c . 'unbind();' : $c . 'rebind();';
+                        return $code . $c . 'prop("disabled", ' . ($disabled ? 'true' : 'false') . ');';
                     } else return '';
                 }
                 case 'scrollTop': {

@@ -9,16 +9,22 @@ include_once dirname(__FILE__) . '/../../../ship/php/EventProtocol.php';
 class HtmlEventProtocol extends EventProtocol {
 
     /**
-     * Whether the event should be handled with a delay.
-     * @var integer|boolean
+     * Whether the event should be handled with a delay, or not.
+     * @var int|bool
      */
-    private $delay = false;
+    private int|bool $delay = false;
 
     /**
-     * Whether the event should only be handled by the specified target.
+     * Whether the event should only be handled by the specified target, or not.
      * @var bool
      */
-    private $sameTarget = false;
+    private bool $sameTarget = false;
+
+    /**
+     * Whether the current event shall be attached permanently, or not.
+     * @var bool
+     */
+    private bool $attachEventPermanently = false;
 
     /**
      * Additional parameters.
@@ -39,6 +45,7 @@ class HtmlEventProtocol extends EventProtocol {
         parent::__construct($event, $parent, "HtmlModifyProtocol");
         $this->delay = (array_key_exists('delay', $params) ? $params['delay'] : false);
         $this->sameTarget = (array_key_exists('sameTarget', $params) ? $params['sameTarget'] : false);
+        $this->attachEventPermanently = (array_key_exists('attach', $params) ? $params['attach'] : false);
         $this->parameters = $params;
         $this->forceObject = $forceObject;
     }
@@ -49,17 +56,19 @@ class HtmlEventProtocol extends EventProtocol {
     public function generate() : string {
         $code = '';
         if ($this->parent instanceof HtmlView) {
+            $fn = ($this->attachEventPermanently ? '._on' : '.on');
+
             if (!($this->parent instanceof SubmitHtmlView && $this->event === Event::CLICK)) {
                 if (!$this->forceObject) $code .= '$("' . $this->parent->idc() . '")';
                 else $code .= $this->forceObject;
-                if ($this->event === Event::CLICK) $code .= '.click';
-                if ($this->event === Event::CHANGE) $code .= '.change';
-                if ($this->event === Event::ONMOUSEOVER) $code .= '.mouseover';
-                if ($this->event === Event::ONMOUSEOUT) $code .= '.mouseout';
-                if ($this->event === Event::ONFOCUSOUT) $code .= '.focusout';
-                if ($this->event === Event::ONFOCUSIN) $code .= '.focusin';
-                if ($this->event === Event::ONKEYUP) $code .= '.on("keyup", ';
-                if ($this->event === Event::INPUT) $code .= '.on("input", ';
+                if ($this->event === Event::CLICK) $code .= $fn . '("click", ';
+                if ($this->event === Event::CHANGE) $code .= $fn . '("change", ';
+                if ($this->event === Event::ONMOUSEOVER) $code .= $fn . '("mouseover", ';
+                if ($this->event === Event::ONMOUSEOUT) $code .= $fn . '("mouseout", ';
+                if ($this->event === Event::ONFOCUSOUT) $code .= $fn . '("focusout", ';
+                if ($this->event === Event::ONFOCUSIN) $code .= $fn . '("focusin", ';
+                if ($this->event === Event::ONKEYUP) $code .= $fn . '("keyup", ';
+                if ($this->event === Event::INPUT) $code .= $fn . '("input", ';
                 switch ($this->event) {
                     case Event::CONTENTMODIFY:
                     case Event::OBJECTMODIFY:
@@ -79,10 +88,10 @@ class HtmlEventProtocol extends EventProtocol {
                     case Event::JOB_IN_PROGRESS:
                     case Event::JOB_DONE:
                     case Event::JOB_ERROR:
-                    case Event::CLOSE_MODAL: $code .= '.on("' . $this->event . '", ';
+                    case Event::CLOSE_MODAL: $code .= $fn . '("' . $this->event . '", ';
                 }
-                if ($this->event === Event::CONTEXTMENU) $code .= '.on("contextmenu", ';
-                if ($this->event === Event::CLICK_OUTSIDE) $code = '$(window).click';
+                if ($this->event === Event::CONTEXTMENU) $code .= $fn . '("contextmenu", ';
+                if ($this->event === Event::CLICK_OUTSIDE) $code = '$(window)' . $fn . '("click", ';
                 if ($this->event === Event::TIMED) {
                     $code = '(() => { let i = setInterval(';
                 }
@@ -114,6 +123,13 @@ class HtmlEventProtocol extends EventProtocol {
                 $code .= '})';
                 if ($this->event === Event::ONLOAD) $code .= '(' . ($this->forceObject ? : '$("' . $this->parent->idc() . '")') . ')';
                 switch ($this->event) {
+                    case Event::CLICK:
+                    case Event::CLICK_OUTSIDE:
+                    case Event::CHANGE:
+                    case Event::ONMOUSEOVER:
+                    case Event::ONMOUSEOUT:
+                    case Event::ONFOCUSOUT:
+                    case Event::ONFOCUSIN:
                     case Event::INPUT:
                     case Event::ONKEYUP:
                     case Event::CONTENTMODIFY:
@@ -156,7 +172,7 @@ class HtmlEventProtocol extends EventProtocol {
                     $method = 'click';
                     $v = $submitView;
                 }
-                $code .= '$("' . $v->idc() . '").on("' . $method . '", ';
+                $code .= '$("' . $v->idc() . '")' . $fn . '("' . $method . '", ';
                 $code .= 'function(' . $v->id() . ') {';
                 $code .= 'var keycode = (event.keyCode ? event.keyCode : event.which);';
                 $code .= 'if(keycode == \'13\' || event.type === "submit" || event.type === "click") {';
@@ -167,11 +183,11 @@ class HtmlEventProtocol extends EventProtocol {
                 $code .= 'return true;';
                 $code .= '});';
                 if (!($v instanceof SubmitHtmlView)) {
-                    $code .= '$("' . $submitView->idc() . '").click';
+                    $code .= '$("' . $submitView->idc() . '")' . $fn . '("click", ';
                     $code .= '(function(' . $submitView->id() . ') {';
                     $code .= 'let _i_n_ = "anonymous";';
                     $code .= $this->generateCode($this->children);
-                    $code .= '});';
+                    $code .= '}));';
                 }
 
             }

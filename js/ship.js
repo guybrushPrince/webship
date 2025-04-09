@@ -27,6 +27,32 @@ $.fn.existsGetElse = function (e = () => {}) {
 $.fn.findWithSelf = function (s) {
     return this.find(s).addBack(s);
 };
+$.fn._on = function (e,s,d,h) {
+    let f = '__i_sh';
+    let fn = (typeof s === 'function' ? s : (typeof d === 'function' ? d : h))
+    let da = this.data(f);
+    if (da === undefined) da = {};
+    let ev = e;
+    if (!Array.isArray(e)) ev = [ e ];
+    ev.reduce((a,e) => {
+        if (!(e in a)) a[e] = [];
+        a[e].push(fn);
+        return a;
+    }, da);
+    this.data(f, da);
+    return this.on(e,s,d,h);
+};
+$.fn.rebind = function () {
+    let f = '__i_sh';
+    this.toArray().forEach((el) => {
+        let da = $(el).data(f);
+        if (da === undefined) return;
+        Object.keys(da).forEach((e) => {
+            da[e].forEach((h) => $(el).on(e, h));
+        });
+    });
+    return this;
+};
 let isString = (s) => typeof s === "string";
 let isJson = function (item) {
     let value = typeof item !== "string" ? JSON.stringify(item) : item;
@@ -56,7 +82,7 @@ let delay = (function () {
         clearTimeout(timer);
         if (callback !== false) timer = setTimeout(callback, time);
     }
-})();
+})();''
 
 let isObject = function(x) { return typeof x === 'object' && !Array.isArray(x) && x !== null; }
 
