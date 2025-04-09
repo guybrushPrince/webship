@@ -1,7 +1,14 @@
 <?php
 /**
- * Class BasicEvents
+ * Class BasicEvents.
+ *
+ * <p>Provides events / scripts being usually required for typical web applications.</p>
+ *
+ * @package webship
+ * @subpackge php/basics
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
  */
 class BasicEvents implements EventAdder {
     /**

@@ -3,6 +3,8 @@
 /**
  * Controller BasicsController.
  *
+ * <p>A controller for basic functionality.</p>
+ *
  * @package webship
  * @subpackage php/basics
  *

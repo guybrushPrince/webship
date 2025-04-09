@@ -1,6 +1,6 @@
 <?php
 
-include_once dirname(__FILE__) . '/../../../ship/php/Context.php';
+include_once __DIR__ . '/../../../ship/php/Context.php';
 
 /**
  * Class HtmlContext

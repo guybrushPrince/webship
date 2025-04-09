@@ -156,12 +156,12 @@ class InputHtmlView extends HtmlView {
      * @return $this
      */
     public function val(string|CliffSerializable|null|array|int|bool $value) : InputHtmlView {
-        if ($value instanceof CliffSerializable ||
+        if ($value instanceof IShippable ||
             (!is_bool($value) && !is_string($value) && !is_int($value) && !is_float($value) && !is_numeric($value) &&
                 !is_null($value) && !is_array($value))) {
-            $key = $value->getKey();
+            $key = ShipperRegister::getKey($value);
             $val = (is_integer($key) ? ActionRegister::convertKey($key) : $key);
-            $class = get_class($value);
+            $class = ShipperRegister::getClass($value);
             $this->value = $class . '<::>' . $val;
         } else {
             if (is_array($value)) $value = Tools::jsonEncode($value);

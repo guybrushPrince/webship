@@ -1,4 +1,7 @@
 <?php
+
+include_once __DIR__ . '/../../../ship/php/interoperability/ShipperRegister.php';
+
 /**
  * Class ParameterSerializer
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
@@ -90,7 +93,7 @@ class ParameterSerializer {
      * Serialize the value.
      * @param Protocol $protocol The protocol.
      * @param string|TemplateObject $param The parameter.
-     * @param string|array|bool|Context|CObject $value The value.
+     * @param string|array|bool|Context|IShippable $value The value.
      * @param DirectView|null $entry The entry / context view.
      * @param array $parameters The parameters.
      * @return string|array
@@ -211,11 +214,11 @@ class ParameterSerializer {
      * @return string[]
      */
     public static function handleObject(object $value, ?string $param = null) : array {
-        $key = $value->getKey();
+        $key = ShipperRegister::getKey($value);
         // Convert it
         $key = (is_integer($key) ? ActionRegister::convertKey($key) : $key);
         // Convert the type of the object
-        $type = get_class($value);
+        $type = ShipperRegister::getClass($value);
         if ($param !== null) {
             return ['"' . $param . '"' . ': ' . (is_string($key) ? '"' . $key . '"' : $key),
                 '"' . $param . 'IClass' . '"' . ': "' . $type . '"'];

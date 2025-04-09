@@ -28,9 +28,9 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
 
     /**
      * Related object (for moves).
-     * @var CObject|null
+     * @var IShippable|null
      */
-    private ?CObject $relatedObject = null;
+    private ?IShippable $relatedObject = null;
 
     /**
      * MovePanelItemHtmlView constructor.
@@ -206,10 +206,10 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
 
     /**
      * Relate an object to this view.
-     * @param CObject|null $object The object.
+     * @param IShippable|null $object The object.
      * @return void
      */
-    public function relate(?CObject $object) : void {
+    public function relate(?IShippable $object) : void {
         $this->relatedObject = $object;
     }
 

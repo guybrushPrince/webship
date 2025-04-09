@@ -152,8 +152,8 @@ class FolderHtmlView extends StandardHtmlView {
                                         ?Closure $downFunction = null,
                                         ?Closure $upFunction = null) : HtmlView {
         $view = new HtmlView('f-group');
-        if ($folderGroup instanceof CliffSerializable) {
-            $view->ref('folderGroup-' . $folderGroup->getKey());
+        if ($folderGroup instanceof IShippable) {
+            $view->ref('folderGroup-' . ShipperRegister::getKey($folderGroup));
         }
         if ($folderGroup->isFolded()) $view->addClass('folded');
 

@@ -3,6 +3,8 @@
 /**
  * Enumeration WebshipScopes.
  *
+ * <p>Predefined <i>Ship Scopes</i> that specify specific contexts.</p>
+ *
  * @package webship
  * @subpackage php/basics
  *

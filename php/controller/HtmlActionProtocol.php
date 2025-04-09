@@ -1,15 +1,24 @@
 <?php
 
-include_once dirname(__FILE__) . '/../../../ship/php/ActionProtocol.php';
+include_once __DIR__ . '/../../../ship/php/ActionProtocol.php';
 
 /**
- * Class HtmlActionProtocol
+ * Class HtmlActionProtocol.
+ *
+ * <p>WebShip implementation of {@link ActionProtocol} specified in Ship.</p>
+ *
+ * @see ActionProtocol
+ *
+ * @package webship
+ * @subpackge php/controller
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
  */
 class HtmlActionProtocol extends ActionProtocol {
 
     /**
-     * The url to the server
+     * The url to the server.
      * @var bool|string
      */
     public static bool|string $serverURL = false;
@@ -17,8 +26,10 @@ class HtmlActionProtocol extends ActionProtocol {
     /**
      * @inheritDoc
      */
-    public function __construct(ModifyProtocol $parent, $controller, $method, $parameters = array(), $title = array(), $seaStar = false) {
-        parent::__construct($parent, $controller, $method, "HtmlModifyProtocol", $parameters, $title, $seaStar);
+    public function __construct(ModifyProtocol $parent, string $controller, string $method,
+                                array $parameters = [], array $title = [], bool|int $seaStar = false) {
+        parent::__construct($parent, $controller, $method, "HtmlModifyProtocol",
+            $parameters, $title, $seaStar);
         if (!HtmlActionProtocol::$serverURL) {
             $ini = parse_ini_file(dirname(__FILE__) . "/../../../cfg.ini", TRUE);
             $urls = $ini["urls"];
@@ -30,6 +41,7 @@ class HtmlActionProtocol extends ActionProtocol {
 
     /**
      * @inheritDoc
+     * @throws ReflectionException
      */
     public function generate() : string {
         if ($this->seaStar !== SeaStarMethod::EVENT) {
