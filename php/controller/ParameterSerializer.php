@@ -66,8 +66,8 @@ class ParameterSerializer {
                         } else if ($view instanceof CodeEditorHtmlView) {
                             $selector = 'cm' . $view->id() . '.getValue()';
                         } else if ($view instanceof FieldSetHtmlView) {
-                            $name = $info["name"];
-                            $selector .= '.find("input[data-intern-scope=\"' . $name . '\"]").toArray().filter((i) => (!$(i).is(":checkbox") || $(i).is(":checked"))).map((i) => {let v = $(i).val(); return isJson(v.replaceAll("\'", "\"")) ? JSON.parse(v.replaceAll("\'", "\"")) : v;}).flat().unique()';
+                            $selector = 'addFieldSetSel(' . $selector . ', "' . $info["name"] . '")';
+                            //.find("input[data-intern-scope=\"' . $name . '\"]").toArray().filter((i) => (!$(i).is(":checkbox") || $(i).is(":checked"))).map((i) => {let v = $(i).val(); return isJson(v.replaceAll("\'", "\"")) ? JSON.parse(v.replaceAll("\'", "\"")) : v;}).flat().unique()';
                         } else {
                             if ($view instanceof ContentSelectHtmlView) {
                                 $selector = '$("select' . $view->idc() . '")';
@@ -106,6 +106,20 @@ class ParameterSerializer {
             $param = $param->getName();
         } else $isView = false;
         if (is_array($value)) {
+            if ($isView && !Tools::hasStringKeys($value)) {
+                return '"' . $param . '"' . ': "' . implode(',',
+                        array_filter(
+                            array_map(function (string|HtmlView $val) use ($protocol, $entry) : ?string {
+                                if ($val instanceof HtmlView) return $val->idc();
+                                if (!$protocol->innerView()) $innerView = $entry;
+                                else $innerView = $protocol->innerView();
+                                $info = $innerView->get($val, true);
+                                if ($info) return $info["view"]->idc();
+                                else return null;
+                            }, $value), 'is_string'
+                        )) . '"';
+            }
+
             return '"' . $param . '"' . ': {' . implode(',', array_map(function ($key) use ($protocol, $value, $entry, $asIs) {
                     $field = $value[$key];
                     if (!$protocol->innerView()) $innerView = $entry;
@@ -127,8 +141,8 @@ class ParameterSerializer {
                                 } else if ($view instanceof CodeEditorHtmlView) {
                                     $selector = 'cm' . $view->id() . '.getValue()';
                                 } else if ($view instanceof FieldSetHtmlView) {
-                                    $name = $info["name"];
-                                    $selector .= '.find("input[data-intern-scope=\"' . $name . '\"]").toArray().filter((i) => (!$(i).is(":checkbox") || $(i).is(":checked"))).map((i) => {let v = $(i).val(); return isJson(v.replaceAll("\'", "\"")) ? JSON.parse(v.replaceAll("\'", "\"")) : v;}).flat().unique()';
+                                    $selector .= 'addFieldSetSel(' . $selector . ', "' . $info["name"] . '")';//
+                                    //'.find("input[data-intern-scope=\"' . $name . '\"]").toArray().filter((i) => (!$(i).is(":checkbox") || $(i).is(":checked"))).map((i) => {let v = $(i).val(); return isJson(v.replaceAll("\'", "\"")) ? JSON.parse(v.replaceAll("\'", "\"")) : v;}).flat().unique()';
                                 } else {
                                     $selector .= '.val()';
                                 }

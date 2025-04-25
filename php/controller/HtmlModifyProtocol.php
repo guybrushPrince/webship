@@ -57,8 +57,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     // Idea: The appended protocol is wrapped in an anonymous function that is called.
                     $anonymousProtocol = $modify["protocol"]; // It is a template object
                     if ($anonymousProtocol instanceof TemplateObject) {
-                        $f = 'con["' . $anonymousProtocol->getName() . '"]';
-                        return 'callFunc(' . $f . ', result);';
+                        return 'callFunc(' . $this->asContext($anonymousProtocol) . ', result);';
                     } else return '';
                 }
                 case 'setCookie': {
@@ -80,7 +79,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     } else if ($val instanceof JSProperty) {
                         $val = $val->getName();
                     } else if ($val instanceof TemplateObject) {
-                        $val = 'con[\'' . $val->getName() . '\']';
+                        $val = str_replace('"', "'", $this->asContext($val));
                     } else if ($val instanceof IShippable) {
                         $val = '"' . ShipperRegister::getObjectString($val) . '"';
                     } else {
@@ -157,10 +156,8 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
                         $data = $this->generateData($modify["data"]);
-                        $event = $modify["event"];
-                        $sel = $this->createViewSelector($view);
-                        if ($event instanceof TemplateObject) $event = '" + con["' . $event->getName() . '"] + "';
-                        return 'triggerEvent(' . $sel . ', "' . $event . '"' . $data . ');';
+                        $event = $this->handleEventType($modify["event"]);
+                        return 'triggerEvent(' . $this->createViewSelector($view) . ', ' . $event . $data . ');';
                     } else {
                         return '';
                     }
@@ -168,32 +165,12 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'throwObjectEvent': {
                     $obj = $modify["object"];
                     if ($obj instanceof IShippable || $obj instanceof TemplateObject || (is_array($obj) && !Tools::isEmpty($obj))) {
-                        $event = $modify["event"];
-                        if ($event instanceof TemplateObject) $event = '" + con["' . $event->getName() . '"] + "';
-
-                        $scopesInfo = $modify["scopes"];
-                        $scopes = '';
-                        if ($scopesInfo) {
-                            if (!($scopesInfo instanceof TemplateObject)) {
-                                $scopes = ', ' . Tools::jsonEncode($scopesInfo);
-                            } else {
-                                $scopes = ', con["' . $scopesInfo->getName() . '"]';
-                            }
-                        }
-
+                        $event = $this->handleEventType($modify["event"]);
+                        $scopes = $this->generateScopes($modify["scopes"]);
                         $data = $this->generateData($modify["data"]);
-                        if (!is_array($obj)) $obj = [ $obj ];
-                        $objId = implode(',', array_map(function (IShippable|TemplateObject $object) : string {
-                            if ($object instanceof IShippable) {
-                                $objId = ParameterSerializer::handleObject($object);
-                                $objId = '"' . $objId["IClass"] . $objId["value"] . '"';
-                            } else {
-                                $objId = 'con["' . $object->getName() . 'IClass"] + con["' . $object->getName() . '"]';
-                            }
-                            return $objId;
-                        }, $obj));
-
-                        return 'eventBus.trigger([' . $objId . '], "' . $event . '", _i_n_' . $scopes . $data . ');';
+                        $objIds = $this->createObjectIdList($obj);
+                        return 'eventBus.trigger([' . implode(',', $objIds) . '], ' .
+                            $event . ', _i_n_' . $scopes . $data . ');';
                     } else {
                         return '';
                     }
@@ -201,32 +178,12 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'unbindObjectEvent': {
                     $obj = $modify["object"];
                     if ($obj instanceof IShippable || $obj instanceof TemplateObject || (is_array($obj) && !Tools::isEmpty($obj))) {
-                        $event = $modify["event"];
-                        if ($event instanceof TemplateObject) $event = '" + con["' . $event->getName() . '"] + "';
-
-                        $scopesInfo = $modify["scopes"];
-                        $scopes = '';
-                        if ($scopesInfo) {
-                            if (!($scopesInfo instanceof TemplateObject)) {
-                                $scopes = ', ' . Tools::jsonEncode($scopesInfo);
-                            } else {
-                                $scopes = ', con["' . $scopesInfo->getName() . '"]';
-                            }
-                        }
-
-                        if (!is_array($obj)) $obj = [ $obj ];
-                        $objId = implode(',', array_map(function (IShippable|TemplateObject $object) : string {
-                            if ($object instanceof IShippable) {
-                                $objId = ParameterSerializer::handleObject($object);
-                                $objId = '"' . $objId["IClass"] . $objId["value"] . '"';
-                            } else {
-                                $objId = 'con["' . $object->getName() . 'IClass"] + con["' . $object->getName() . '"]';
-                            }
-                            return $objId;
-                        }, $obj));
-
+                        $event = $this->handleEventType($modify["event"]);
+                        $scopes = $this->generateScopes($modify["scopes"]);
+                        $objIds = $this->createObjectIdList($obj);
                         $view = $this->reduceView($modify["view"]);
-                        return 'eventBus.unbind(' . $this->createViewSelector($view) . ', [' . $objId . '], "' . $event . '"' . $scopes . ');';
+                        return 'eventBus.unbind(' . $this->createViewSelector($view) . ', ' .
+                            '[' . implode(',', $objIds) . '], ' . $event . $scopes . ');';
                     } else {
                         return '';
                     }
@@ -239,30 +196,16 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'addClasses': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        $classes = array_map(function($c) {
-                            if (is_string($c)) return $c;
-                            else if ($c instanceof TemplateObject) {
-                                return '" + con["' . $c->getName() . '"] + "';
-                            }
-                        }, $modify["classes"]);
-                        return $this->createViewSelector($view) . '.addClass("' . implode(' ', $classes) . '");';
-                    } else {
-                        return '';
-                    }
+                        return $this->createViewSelector($view) .
+                            '.addClass(' . $this->generateClasses($modify['classes']) . ');';
+                    } else return '';
                 }
                 case 'removeClasses': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
-                        $classes = array_map(function($c) {
-                            if (is_string($c)) return $c;
-                            else if ($c instanceof TemplateObject) {
-                                return '" + con["' . $c->getName() . '"] + "';
-                            }
-                        }, $modify["classes"]);
-                        return $this->createViewSelector($view) . '.removeClass("' . implode(' ', $classes) . '");';
-                    } else {
-                        return '';
-                    }
+                        return $this->createViewSelector($view) .
+                            '.removeClass(' . $this->generateClasses($modify['classes']) . ');';
+                    } else return '';
                 }
                 case 'empty': {
                     $view = $this->reduceView($modify["view"]);
@@ -271,88 +214,58 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 }
                 case 'removeClassesSiblings': {
                     $view = $this->reduceView($modify["view"]);
-                    if ($view) {
-                        $classes = array_map(function($c) {
-                            if (is_string($c)) return $c;
-                            else if ($c instanceof TemplateObject) {
-                                return '" + con["' . $c->getName() . '"] + "';
-                            }
-                        }, $modify["classes"]);
-                        return $this->createViewSelector($view) . '.find(".' . implode(',.', $classes) . '").removeClass("' . implode(' ', $classes) . '");';
-                    } else {
-                        return '';
-                    }
+                    if ($view) return 'remClassSib(' . $this->createViewSelector($view) . ',' .
+                        $this->generateClasses($modify["classes"], null) . ');';
+                    else return '';
                 }
                 case 'toggleClasses': {
-                    $c = 'if (typeof res === "undefined") {var res = $(result);}';
-                    $classes = implode(' ', array_map(function($c) {
-                        if (is_string($c)) return $c;
-                        else if ($c instanceof TemplateObject) {
-                            return '" + con["' . $c->getName() . '"] + "';
-                        }
-                    }, $modify["classes"]));
+                    $classes = $this->generateClasses($modify['classes']);
                     if ($modify["view"]) {
                         $view = $this->reduceView($modify["view"]);
-                        if ($view) {
-                            return $this->createViewSelector($view) . '.toggleClass("' . $classes . '");';
-                        } else {
-                            return '';
-                        }
+                        if ($view) return $this->createViewSelector($view) . '.toggleClass(' . $classes . ');';
+                        else return '';
                     } else {
-                        return $c . 'res.toggleClass("' . $classes . '");';
+                        $c = 'if (typeof res === "undefined") {var res = $(result);}';
+                        return $c . 'res.toggleClass(' . $classes . ');';
                     }
                 }
                 case 'mousePosition': {
                     $view = $this->reduceView($modify["view"]);
-                    if ($view) {
-                        $code = '(function() {';
-                        $code .= 'ms(' . $this->createViewSelector($view) . ', e);';
-                        $code .= '})();';
-                        return $code;
-                    } else {
-                        return '';
-                    }
+                    if ($view) return '(function() {' . 'ms(' . $this->createViewSelector($view) . ', e);' . '})();';
+                    else return '';
                 }
                 case 'openWindow': {
-                    $url = $modify["url"];
-                    $name = $modify["name"];
                     $protocol = $modify["protocol"]; // It is a template object
                     $view = $modify["view"];
                     if ($protocol instanceof TemplateObject) {
-                        $f = 'con["' . $protocol->getName() . '"]';
-                        $handler = 'result = (typeof result !== "undefined") ? result : undefined;' .
-                            'if (isFunction(' . $f . ')) ' . $f . '(result);';
+                        $handler = 'callFunc(' . $this->asContext($protocol) . ', ' .
+                            '(typeof result !== "undefined") ? result : undefined)';
                     } else $handler = null;
-                    if ($url instanceof TemplateObject) {
-                        $url = '" + con["' . $url->getName() . '"] + "';
-                    }
-                    if ($name instanceof TemplateObject) {
-                        $name = '" + con["' . $name->getName() . '"] + "';
-                    }
+                    $url = $this->asContext($modify["url"], null, true);
+                    $name = $this->asContext($modify["name"], null, true);
+
                     if ($view) {
                         $view = $this->reduceView($modify["view"]);
                         $view = $this->createViewSelector($view);
                     }
-                    return 'openWindow("' . $url . '", "' . $name . '", ' . ($handler ? 'function() {' . $handler . '}' : '() => {}') . ', ' .
+                    return 'openWindow(' . $url . ', ' . $name . ', ' .
+                        ($handler ? 'function() {' . $handler . '}' : '() => {}') . ', ' .
                         ($view ? $view . '.html()' : 'null' ) . ');';
                 }
                 case 'function': {
                     $code = $modify["code"];
-                    if ($code instanceof TemplateObject) {
-                        $code = '(function(con) { let f = con["' . $code->getName() . '"]; ' .
-                            'if (isString(f)) eval(f); else f(); })(con);';
-                    }
-                    return $code;
+                    if ($code instanceof TemplateObject) return 'callAnFunc(con, "' . $code->getName() . '");';
+                    else return $code;
                 }
                 case 'retain': {
                     $view = $modify["view"];
                     if ($view instanceof TemplateObject) {
-                        $name = $view->getName();
-                    } else $name = null;
+                        $template = $view;
+                    } else $template = null;
                     $view = $this->reduceView($modify["view"]);
                     $view = $this->createViewSelector($view);
-                    if (!$name) return $view;
-                    else return 'con["' . $name . '"] = ' . $view . ';';
+                    if (!$template) return $view;
+                    else return $this->asContext($template) . ' = ' . $view . ';';
                 }
                 case 'gc': {
                     return 'gc();';
@@ -363,16 +276,17 @@ class HtmlModifyProtocol extends ModifyProtocol {
     }
 
     /**
-     * Reduces the view to a string representation (if available)
-     * @param string|array|DirectView $view The view(s).
-     * @param boolean $class Whether the idc or id is returned.
-     * @return array|DirectView|bool|string
+     * Reduces the view to a string representation (if available).
+     * @param TemplateObject|DirectView|array|string|null $view The view(s).
+     * @param bool $class Whether the idc or id is returned.
+     * @return TemplateObject|DirectView|array|string|null|false
      */
-    private function reduceView($view, $class = true) {
+    private function reduceView(TemplateObject|DirectView|array|string|null $view, bool $class = true) :
+        TemplateObject|DirectView|array|string|null|false {
         if (is_array($view)) {
             $view = Tools::flatten(array_filter(array_map(function($v) use ($class) {
                 return $this->reduceSingleView($v, $class);
-            }, $view), function($v) { return ($v ? true: false);}));
+            }, $view), function($v) { return (bool) $v;}));
             if (count($view) > 0) return ($class ? implode(',', $view) : $view);
             return false;
         } else return $this->reduceSingleView($view, $class);
@@ -380,11 +294,12 @@ class HtmlModifyProtocol extends ModifyProtocol {
 
     /**
      * Reduces a single view to a string representation.
-     * @param string|DirectView $view The view.
+     * @param TemplateObject|DirectView|array|string|null $view The view.
      * @param bool $class Whether the view or its class/id should be returned.
-     * @return bool|DirectView|string|string[]
+     * @return TemplateObject|DirectView|array|string|null|false
      */
-    private function reduceSingleView($view, $class = true) {
+    private function reduceSingleView(TemplateObject|DirectView|array|string|null $view, bool $class = true) :
+        TemplateObject|DirectView|array|string|null|false {
         if (is_string($view)) {
             $view = $this->innerView()->get($view, true); // true is important!
             if ($view !== null) $view = $view["view"];
@@ -414,7 +329,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
         if (is_array($view)) return '$("' . rtrim(implode(',', array_map(function($v) {
             return $this->createInnerViewSelector($v);
         }, $view)), ' + "') . '")';
-        if ($view instanceof TemplateObject) return '$(asSel(con["' . $view->getName() . '"]))';
+        if ($view instanceof TemplateObject) return '$(asSel(' . $this->asContext($view) . '))';
         return '';
     }
 
@@ -429,8 +344,35 @@ class HtmlModifyProtocol extends ModifyProtocol {
         if (is_array($view)) return implode(',', array_map(function($v) {
             return $this->createInnerViewSelector($v);
         }, $view));
-        if ($view instanceof TemplateObject) return '" + con["' . $view->getName() . '"] + "';
+        if ($view instanceof TemplateObject) return '" + ' . $this->asContext($view) . ' + "';
         return '';
+    }
+
+    /**
+     * Creates an array of ids or access tokens out of an array of objects or a single object.
+     * @param IShippable|TemplateObject|array $objects The object(s).
+     * @return string[]
+     */
+    private function createObjectIdList(IShippable|TemplateObject|array $objects) : array {
+        if (!is_array($objects)) $objects = [ $objects ];
+        return array_map(function (IShippable|TemplateObject $object) : string {
+            if ($object instanceof IShippable) {
+                $objId = ParameterSerializer::handleObject($object);
+                $objId = '"' . $objId["IClass"] . $objId["value"] . '"';
+            } else {
+                $objId = $this->asContext($object, 'IClass') . ' + ' . $this->asContext($object);
+            }
+            return $objId;
+        }, $objects);
+    }
+
+    /**
+     * Handles an event if it is not given - just a template.
+     * @param TemplateObject|string|int $event The event.
+     * @return string
+     */
+    private function handleEventType(TemplateObject|string|int $event) : string {
+        return $this->asContext($event);
     }
 
     /**
@@ -503,6 +445,22 @@ class HtmlModifyProtocol extends ModifyProtocol {
     }
 
     /**
+     * Represents the template object as context access.
+     * @param TemplateObject|string $object The template object (or a string).
+     * @param string|null $extension An extension being applied to the name of the template.
+     * @param bool $stringWithTags If a given string shall be used with tags.
+     * @return string
+     */
+    public function asContext(TemplateObject|string $object, ?string $extension = null,
+                              bool $stringWithTags = false) : string {
+        if ($object instanceof TemplateObject) {
+            if (is_null($extension)) $extension = '';
+            return 'con["' . $object->getName() . $extension . '"]';
+        } else if (!$stringWithTags) return $object;
+        else return '"' . $object . '"';
+    }
+
+    /**
      * Generate the information about data.
      * @param TemplateObject|array|null $dataInfo The data information (if available).
      * @return string
@@ -523,10 +481,42 @@ class HtmlModifyProtocol extends ModifyProtocol {
                             return $values;
                         }, []));
             } else {
-                return ', con["' . $dataInfo->getName() . '"]';
+                return ', ' . $this->asContext($dataInfo);
             }
         }
         return '';
+    }
+
+    /**
+     * Generates a string representation of the scope(s).
+     * @param TemplateObject|array|null $scopesInfo The scope information.
+     * @return string
+     */
+    private function generateScopes(TemplateObject|array|null $scopesInfo) : string {
+        if ($scopesInfo) {
+            if (!($scopesInfo instanceof TemplateObject)) {
+                return ', ' . Tools::jsonEncode($scopesInfo);
+            } else {
+                return ', ' . $this->asContext($scopesInfo);
+            }
+        }
+        return '';
+    }
+
+    /**
+     * Generates a JS code fragment for classes.
+     * @param array $classes An array of class-representing objects (string, TemplateObject).
+     * @param string|null $join The string that is used in JS to join the classes.
+     * @return string
+     */
+    private function generateClasses(array $classes, ?string $join = ' ') : string {
+        return '[' . implode(',', array_filter(array_map(function($c) : ?string {
+            if (is_string($c)) return '"' . $c . '"';
+            else if ($c instanceof TemplateObject) {
+                return $this->asContext($c);
+            }
+            return null;
+        }, $classes), 'is_string')) . ']' . (is_null($join) ? '' : '.join("' . $join . '")');
     }
 
 }

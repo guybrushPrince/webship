@@ -228,6 +228,10 @@ let callFunc = function(f,r) {
     r = (typeof r !== "undefined") ? r : undefined;
     if (isFunction(f)) f(r);
 };
+let callAnFunc = function(con,n) {
+    let f = con[n];
+    if (isString(f)) eval(f); else f();
+};
 let setCookie = function(t,v,r) {
     let d = new Date();
     if (t) d.setTime(d.getTime() + 86400);
@@ -235,6 +239,18 @@ let setCookie = function(t,v,r) {
 };
 let delElem = function(s,e) {
     $(s).trigger(!isString(e) ? "" + e : e).remove();
+};
+let remClassSib = function(s,c) {
+    if (!Array.isArray(c)) c = [c];
+    $(s).find('.' + c.join(',.')).removeClass(c.join(' '));
+};
+let addFieldSetSel = function(s,n) {
+    return $(s).find("input[data-intern-scope=\"" + n + "\"").toArray()
+        .filter((i) => (!$(i).is(":checkbox") || $(i).is(":checked")))
+        .map((i) => {
+            let v = $(i).val(); return isJson(v.replaceAll("'", "\"")) ? JSON.parse(v.replaceAll("'", "\"")) : v;
+        })
+        .flat().unique();
 };
 let drag = function(p, d, info, im = "in-move", mcl = "movable", h = "hover", o = "over",
                     mp = "move-position") {
