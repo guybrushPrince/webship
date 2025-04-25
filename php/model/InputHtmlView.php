@@ -159,10 +159,7 @@ class InputHtmlView extends HtmlView {
         if ($value instanceof IShippable ||
             (!is_bool($value) && !is_string($value) && !is_int($value) && !is_float($value) && !is_numeric($value) &&
                 !is_null($value) && !is_array($value))) {
-            $key = ShipperRegister::getKey($value);
-            $val = (is_integer($key) ? ActionRegister::convertKey($key) : $key);
-            $class = ShipperRegister::getClass($value);
-            $this->value = $class . '<::>' . $val;
+            $this->value = ShipperRegister::getObjectString($value);
         } else {
             if (is_array($value)) $value = Tools::jsonEncode($value);
             $this->value = $value;

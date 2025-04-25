@@ -147,7 +147,7 @@ class NamelessHtmlView extends HtmlView {
         $obj = ($textBox ? $target->getTextBoxEntry() : $target->getLanguageDescription($language));
         $text = ($text !== null) ?: '';
 
-        return '<span data-' . $entry . '="' . ActionRegister::convertKey($obj->getKey()) . '" ' .
+        return '<span data-' . $entry . '="' . ShipperRegister::convertKey($obj->getKey()) . '" ' .
             'data-field="' . $field . '" ' . 'data-lang="' . $language . '">' . $text . '</span>';
     }
 

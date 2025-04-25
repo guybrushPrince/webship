@@ -136,7 +136,7 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
         $key = null;
         if ($this->relatedObject) {
             $key = $this->relatedObject->getId();
-            $key = (is_integer($key) ? ActionRegister::convertKey($key) : $key);
+            $key = (is_integer($key) ? ShipperRegister::convertKey($key) : $key);
         }
 
         if ($this->isDraggable) {

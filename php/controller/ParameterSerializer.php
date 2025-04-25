@@ -216,7 +216,7 @@ class ParameterSerializer {
     public static function handleObject(object $value, ?string $param = null) : array {
         $key = ShipperRegister::getKey($value);
         // Convert it
-        $key = (is_integer($key) ? ActionRegister::convertKey($key) : $key);
+        $key = (is_integer($key) ? ShipperRegister::convertKey($key) : $key);
         // Convert the type of the object
         $type = ShipperRegister::getClass($value);
         if ($param !== null) {

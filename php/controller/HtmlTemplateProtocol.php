@@ -12,7 +12,7 @@ class HtmlTemplateProtocol extends TemplateProtocol {
      * @param string $name The name of the template/event.
      * @param string $environment The environment.
      */
-    public function __construct($name, $environment = 'global') {
+    public function __construct(string $name, string $environment = 'global') {
         parent::__construct($name, "HtmlModifyProtocol", $environment);
     }
 
@@ -22,7 +22,7 @@ class HtmlTemplateProtocol extends TemplateProtocol {
      * @param string $environment The environment.
      * @return ModifyProtocol
      */
-    public static function _new($name, $environment = 'global') {
+    public static function _new(string $name, string $environment = 'global') : ModifyProtocol {
         $template = new HtmlTemplateProtocol($name, $environment);
         return $template->modify();
     }
@@ -30,7 +30,7 @@ class HtmlTemplateProtocol extends TemplateProtocol {
     /**
      * @inheritDoc
      */
-    protected function createListener() {
+    protected function createListener() : string {
         $name = $this->getCallName();
         $code = 'if (typeof ' . $name . ' === "undefined") {';
         $code .= 'var ' . $name . ' = function(con) {';
@@ -44,13 +44,14 @@ class HtmlTemplateProtocol extends TemplateProtocol {
     /**
      * @inheritDoc
      */
-    public function createThrower(array $context = array(), $entryView = null) : string {
+    public function createThrower(array $context = array(),
+                                  DirectView|Protocol|null $entryView = null) : string {
         $view = ($entryView instanceof DirectView || $entryView === null) ? $entryView : $entryView->innerView();
         $data = ParameterSerializer::serialize($this, $this->collectParameters(), $context, $view);
         return $this->getCallName() . '(Object.assign({' . implode(',', $data) . '}, (typeof eData !== "undefined" ? eData : {})));';
     }
 
-    private function generateCode(array $protocols) {
+    private function generateCode(array $protocols) : string {
         return implode(array_map(function (Protocol $p) {
             return $p->generate();
         }, $protocols));

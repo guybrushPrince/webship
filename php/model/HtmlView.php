@@ -211,7 +211,7 @@ class HtmlView extends View {
     /**
      * @inheritDoc
      */
-    public function ref(string $id, bool|string $scope = false, View|bool $view = false) : static {
+    public function ref(string|IShippable $id, bool|string $scope = false, DirectView|bool $view = false) : static {
         if ($scope !== false && $scope !== 'value') $this->data('intern-scope', $scope);
         return parent::ref($id, $scope, $view);
     }
@@ -220,18 +220,17 @@ class HtmlView extends View {
     /**
      * @inheritDoc
      */
-    public function protocol(int $event, array $params = []) : ModifyProtocol {
+    public function protocol(int $event, array $params = []) : ?ModifyProtocol {
         $pro = new HtmlEventProtocol($event, $this, $params);
         if (!$this->uniqueId) $this->uniqueId = $this->generateId();
         $this->protocols[] = $pro;
-        $pro = $pro->modify();
-        return $pro;
+        return $pro->modify();
     }
 
     /**
      * @inheritDoc
      */
-    public function firstProtocol(int $event, array $params = []) : HtmlModifyProtocol {
+    public function firstProtocol(int $event, array $params = []) : ?ModifyProtocol {
         $pro = new HtmlEventProtocol($event, $this, $params);
         if (!$this->uniqueId) $this->uniqueId = $this->generateId();
         array_unshift($this->protocols, $pro);

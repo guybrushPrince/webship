@@ -82,7 +82,7 @@ let delay = (function () {
         clearTimeout(timer);
         if (callback !== false) timer = setTimeout(callback, time);
     }
-})();''
+})();
 
 let isObject = function(x) { return typeof x === 'object' && !Array.isArray(x) && x !== null; }
 
@@ -217,7 +217,25 @@ let asSel = function(v) {
     if (typeof v === 'object') v = Object.values(v);
     return (!Array.isArray(v) ? v : v.join(','));
 };
-
+let triggerEvent = function(s,e,d = undefined) {
+    s = $(s);
+    if (!isString(e)) e = '' + e;
+    console.log(["Trigger", e, s.toArray(), d]);
+    if (d === undefined || d === null) s.trigger(e);
+    else s.trigger(e,d);
+};
+let callFunc = function(f,r) {
+    r = (typeof r !== "undefined") ? r : undefined;
+    if (isFunction(f)) f(r);
+};
+let setCookie = function(t,v,r) {
+    let d = new Date();
+    if (t) d.setTime(d.getTime() + 86400);
+    document.cookie = (!(v === undefined) ? v : r) + ";expires=" + d.toUTCString() + ";path=/";
+};
+let delElem = function(s,e) {
+    $(s).trigger(!isString(e) ? "" + e : e).remove();
+};
 let drag = function(p, d, info, im = "in-move", mcl = "movable", h = "hover", o = "over",
                     mp = "move-position") {
     $(d).on('mousedown', (e) => p.draggable = true);
@@ -386,52 +404,75 @@ let eventBus = (function () {
         this.unbind = function (view, objId, event, scope = undefined) {
             event = "e" + event;
             if (scope === undefined) scope = 'undefined';
-            if (!this.registry.hasOwnProperty(objId)) return;
-            let reg = this.registry[objId];
-            if (!reg.hasOwnProperty(scope)) return;
-            let sc = reg[scope];
-            if (!sc.hasOwnProperty(event)) return;
-            sc[event] = sc[event].filter((el) => {
-                return !$(el.view).is($(view));
+            let obs = (!Array.isArray(objId)) ? [ objId ] : objId;
+            obs.forEach((objId) => {
+                if (!this.registry.hasOwnProperty(objId)) return;
+                let reg = this.registry[objId];
+                if (!reg.hasOwnProperty(scope)) return;
+                let sc = reg[scope];
+                if (!sc.hasOwnProperty(event)) return;
+                sc[event] = sc[event].filter((el) => {
+                    return !$(el.view).is($(view));
+                });
             });
         };
         this.trigger = function (objId, event, callee = undefined, scopes = undefined, data = undefined) {
             event = "e" + event;
-            if (this.registry.hasOwnProperty(objId)) {
-                let reg = this.registry[objId];
-                if (scopes !== undefined) {
-                    if (typeof scopes === 'object') scopes = Object.values(scopes);
-                    if (!Array.isArray(scopes)) scopes = [ scopes ];
-                }
-                else scopes = Object.getOwnPropertyNames(reg);
-                scopes.forEach((scope) => {
-                    if (reg.hasOwnProperty(scope)) {
-                        let sc = reg[scope];
-                        if (sc.hasOwnProperty(event)) {
-                            let ev = sc[event];
-                            ev.forEach((b) => {
-                                let locData = data;
-                                if (data !== undefined) {
-                                    locData = Object.assign({}, data);
-                                    if (b.igData !== null && b.igData !== undefined) {
-                                        for (let f of b.igData) {
-                                            delete locData[f];
-                                        }
-                                    }
-                                    locData = Object.assign(locData, {_object: objId});
-                                } else locData = { _object: objId };
-
-                                console.log(['Event Bus', event, objId, scope, locData, b, b.view.toArray()]);
-                                b.fun(Object.assign(locData, {_view: b.view}));
-                            });
-                        }
+            let obs = (!Array.isArray(objId)) ? [ objId ] : objId;
+            obs.forEach((objId) => {
+                if (this.registry.hasOwnProperty(objId)) {
+                    let reg = this.registry[objId];
+                    if (scopes !== undefined) {
+                        if (typeof scopes === 'object') scopes = Object.values(scopes);
+                        if (!Array.isArray(scopes)) scopes = [ scopes ];
                     }
-                });
-            }
+                    else scopes = Object.getOwnPropertyNames(reg);
+                    scopes.forEach((scope) => {
+                        if (reg.hasOwnProperty(scope)) {
+                            let sc = reg[scope];
+                            if (sc.hasOwnProperty(event)) {
+                                let ev = sc[event];
+                                ev.forEach((b) => {
+                                    let locData = data;
+                                    if (data !== undefined) {
+                                        locData = Object.assign({}, data);
+                                        if (b.igData !== null && b.igData !== undefined) {
+                                            for (let f of b.igData) {
+                                                delete locData[f];
+                                            }
+                                        }
+                                        locData = Object.assign(locData, {_object: objId});
+                                    } else locData = { _object: objId };
+
+                                    console.log(['Event Bus', event, objId, scope, locData, b, b.view.toArray()]);
+                                    b.fun(Object.assign(locData, {_view: b.view}));
+                                });
+                            }
+                        }
+                    });
+                }
+            });
         };
     }
     return new EventBus();
 })();
+let resize = function(s = undefined) {
+    if (s === undefined) s = this;
+    if ('target' in s) s = s.target;
+    s = $(s);
+    try {
+        s.toArray().forEach((el) => {
+            el.onload = function() {
+                $(this).height($(this).contents().find("div[id]").height() + 20);
+                $(this).contents().find("body").css("overflow-y", "hidden");
+            };
+        });
+    } catch (ex) { }
+    try {
+        s.height(s.contents().find("div[id]").height() + 20);
+        s.contents().find("body").css("overflow-y", "hidden");
+    } catch (ex) { }
+};
 let reheight = function(el = undefined) {
     let v = el;
     if (el === undefined) v = this;
@@ -449,7 +490,49 @@ let reheight = function(el = undefined) {
         v.height(v.prop("scrollHeight") - (pt + pb));
     });
 };
-
+let reset = function(s) {
+    $(s).removeAttr("style");
+};
+let focus = function (s) {
+    $(s).focus();
+};
+let setValue = function (s,v,c = undefined) {
+    if (c !== undefined && isString(v)) {
+        let cl = v + 'IClass';
+        v = (cl in c ? c[cl] + "<::>" : "") + c[v];
+    }
+    $(s).val(v);
+};
+let disEnable = function(s,d = true) {
+    s = $(s);
+    let i = $(s).find("input, select, button");
+    if (d) i.unbind();
+    else i.rebind();
+    i.prop("disabled", d);
+};
+let clear = function(s) {
+    $(s).each((i,d) => d.reset());
+};
+let replaceDom = function(sStr,n,e) {
+    let s = $(sStr);
+    if (!isString(e)) e = '' + e;
+    let ids = s.toArray().map(i => $(i).data("id")).join(" ");
+    let sel = n.filter(":not(style):not(script)");
+    sel.data("id", sel.data("id") + " " + ids);
+    sel.addClass((sStr + ids).replace(/\./g, ""));
+    s.trigger(e).replaceWith(domAction(n));
+};
+let domAction = function(res, t = false) {
+    if (!t) {
+        return () => {
+            let r = $(res);
+            $("body").append(r.filter("style"));
+            return r.filter(":not(style)");
+        };
+    } else {
+        return res;
+    }
+};
 let checkIfEmpty = function(el, clazz) {
     $(el).toArray().forEach((e) => {
         if ($(e).children('span').toArray().filter((s) => $.trim(($(s).html()))).length === 0) {

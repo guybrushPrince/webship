@@ -11,7 +11,7 @@ class HtmlContext extends Context {
     /**
      * @inheritDoc
      */
-    public function generate() {
+    public function generate() : string {
         return 'context["' . $this->field . '"]';
     }
 
@@ -20,7 +20,7 @@ class HtmlContext extends Context {
      * @param string $field The field.
      * @return Context
      */
-    public static function getOrCreate($field) {
+    public static function getOrCreate(string $field) : Context {
         return Context::get($field, __CLASS__);
     }
 
