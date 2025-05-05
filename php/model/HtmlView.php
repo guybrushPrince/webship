@@ -9,17 +9,29 @@ include_once dirname(__FILE__) . '/../../../ship/php/model/View.php';
  */
 class HtmlView extends View {
 
+    private const DELIVERED = '__style_delivered';
+    private const UNDELIVERED = '__style_undelivered';
+
+    private const DEBUG = false;
+
     /**
      * Styling code.
-     * @var string[]
+     * @var string[][]
      */
-    protected array $styles = array();
+    protected static array $styles = [];
 
     /**
      * Local styles.
      * @var string[]
      */
     protected array $localStyles = [];
+
+    /**
+     * Styles that may change dynamical by PHP but cannot be solved via variables.
+     * Do not use them frequently.
+     * @var string[]
+     */
+    protected array $dynamicStyles = [];
 
     /**
      * JavaScript codes.
@@ -101,7 +113,7 @@ class HtmlView extends View {
             $code .= '<script>' . $this->generateJS() . '</script>';
         }
         $code .= $this->generateClosingTag();
-        $code .= ($complete ? '<style type="text/css">' . $this->generateStyle() . '</style>' : '');
+        $code .= ($complete ? '<style type="text/css">' . $this->generateStyle($force) . '</style>' : '');
         return $code;
     }
 
@@ -120,25 +132,33 @@ class HtmlView extends View {
 
     /**
      * Add a style to the view.
-     * @param string|array $style The code.
+     * @param string|string[] $style The code.
      */
-    public function addStyle($style) {
-        if (!is_array($style)) $style = array( $style );
+    public static function addStyle(string|array $style) : void {
+        if (!is_array($style)) $style = [ $style ];
+        $class = get_called_class();
         foreach ($style as $s) {
             if (isset($_SESSION)) {
-                if (!array_key_exists('styles', $_SESSION)) $_SESSION['styles'] = array();
-                if (!in_array($s, $_SESSION['styles'])) {
-                    $_SESSION['styles'][] = $s;
-                }
-                if (!in_array($s, $this->styles)) {
-                    $this->styles[] = $s;
-                }
-            } else {
-                if (!in_array($s, $this->styles)) {
-                    $this->styles[] = $s;
+                if (!array_key_exists('styles', $_SESSION)) $_SESSION['styles'] = [];
+                if (!array_key_exists($class, $_SESSION['styles'])) {
+                    $_SESSION['styles'][$class] = self::UNDELIVERED;
                 }
             }
+            if (!array_key_exists($class, self::$styles)) self::$styles[$class] = [];
+            if (!in_array($s, self::$styles[$class])) {
+                self::$styles[$class][] = $s;
+            }
         }
+    }
+
+    /**
+     * Adds a dynamic style.
+     * @param string|string[] $style The dynamic style(s) to add.
+     * @return void
+     */
+    public function addDynamicStyle(string|array $style) : void {
+        if (!is_array($style)) $style = [ $style ];
+        $this->dynamicStyles = array_merge($this->dynamicStyles, $style);
     }
 
     /**
@@ -153,27 +173,46 @@ class HtmlView extends View {
 
     /**
      * Generates a complete style sheet.
+     * @param bool $force Whether the generation of a new style shall be forced, or not.
      * @return string
      * @throws DatabaseError
      */
-    public function generateStyle() : string {
+    public function generateStyle(bool $force = false) : string {
         $styles = array();
-        return implode("\n", array_unique($this->collectStyles($styles)));
+        return implode("\n", array_unique($this->collectStyles($styles, $force)));
     }
 
     /**
      * Collect the styles.
-     * @param array $styles The styles.
-     * @return array
+     * @param string[] $styles The styles.
+     * @param bool $force Whether the generation of a new style shall be forced, or not.
+     * @param string[]|null $checkContainer (Internal) container for CSS.
+     * @return string[]
      * @throws DatabaseError
      */
-    private function collectStyles(&$styles) {
+    private function collectStyles(array &$styles, bool $force = false, ?array &$checkContainer = null) : array {
         if ($this->isSafe()) {
-            foreach ($this->styles as $s) {
-                if (!in_array($s, $styles)) $styles[] = $s;
+            $class = get_called_class();
+            DebugLogger::instance()->debug('Try to deliver', $class);
+            if (is_null($checkContainer)) {
+                if (isset($_SESSION)) {
+                    if (!array_key_exists('styles', $_SESSION)) $_SESSION['styles'] = [];
+                    $checkContainer = &$_SESSION['styles'];
+                } else $checkContainer = [];
             }
+            if (!array_key_exists($class, $checkContainer) ||
+                $checkContainer[$class] === self::UNDELIVERED ||
+                self::DEBUG || $force) {
+                if (!array_key_exists($class, self::$styles)) self::$styles[$class] = [];
+                DebugLogger::instance()->debug('Deliver', $class);
+                foreach (self::$styles[$class] as $s) {
+                    if (!in_array($s, $styles)) $styles[] = $s;
+                }
+                $checkContainer[$class] = self::DELIVERED;
+            }
+            $styles = array_merge($styles, $this->dynamicStyles);
             foreach ($this->subviews as $subView) {
-                if ($subView instanceof HtmlView) $subView->collectStyles($styles);
+                if ($subView instanceof HtmlView) $subView->collectStyles($styles, false, $checkContainer);
             }
         }
         return $styles;
@@ -251,11 +290,11 @@ class HtmlView extends View {
 
     /**
      * @see HtmlView->addStyle
-     * @param string|array $style The code.
+     * @param string|string[] $style The code.
      * @return static
      */
-    public function style($style) : static {
-        $this->addStyle($style);
+    public function style(string|array $style) : static {
+        self::addStyle($style);
         return $this;
     }
 
@@ -435,10 +474,11 @@ class HtmlView extends View {
 
     /**
      * Shortcut for notice.
-     * @param string[] $texts The language-indexed texts.
+     * @param string[]|string $texts The language-indexed texts.
      * @return $this
      */
-    public function notices(array $texts) : static {
+    public function notices(array|string $texts) : static {
+        if (!is_array($texts)) $texts = [ self::getLanguage() => $texts ];
         foreach ($texts as $lang => $text) {
             $this->notice($lang, $text);
         }

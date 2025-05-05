@@ -13,7 +13,10 @@ class TileHtmlView extends HtmlView {
      */
     public function __construct(int $tileWidth = 108, string|array $classes = []) {
         $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct(array_merge(['tiles', 'w' . $tileWidth], $classes));
+        parent::__construct(array_merge(['tiles'], $classes));
+
+        $this->localStyle('--tw: ' . $tileWidth . 'px');
+        $this->localStyle('--fs: ' . round($tileWidth / 9, 2) . 'px');
 
         $this->style(Tools::css('.tiles', [], 'width: 100%', 'display: flex', 'flex-wrap: wrap',
             'flex-direction: row',
@@ -23,11 +26,9 @@ class TileHtmlView extends HtmlView {
             'align-items: center',
             'justify-content: flex-start', 'margin-right: 10px', 'border: 1px solid var(--system-background-hover)',
             'padding: 10px', 'box-sizing: border-box', 'cursor: pointer', 'transition: background 0.5s',
-            'text-align: center', 'margin-bottom: 10px', 'background: var(--ultra-light-system-background)'));
+            'text-align: center', 'margin-bottom: 10px', 'background: var(--ultra-light-system-background)',
+            'width: var(--tw)', 'max-width: var(--tw)', 'height: var(--tw)', 'font-size: var(--fs)'));
         $this->style(Tools::css('.tiles', [' > ', '.tile', ' > ', 'span.small'], 'display: none'));
-        $this->style(Tools::css('.tiles.w' . $tileWidth, [' > ', '.tile'], 'width: ' . $tileWidth . 'px',
-            'max-width: ' . $tileWidth . 'px', 'height: ' . $tileWidth . 'px',
-            'font-size: ' . round($tileWidth / 9, 2) . 'px'));
         $this->style(Tools::css('.tiles', [' > ', '.tile', ' > ', 'img'], 'height: 50%',
             'padding: 10px'));
         $this->style(Tools::css('.tiles', [' > ', '.tile', ':hover'],

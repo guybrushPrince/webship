@@ -214,8 +214,9 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 }
                 case 'removeClassesSiblings': {
                     $view = $this->reduceView($modify["view"]);
+                    $onlyChildren = $this->asContext($modify["children"]);
                     if ($view) return 'remClassSib(' . $this->createViewSelector($view) . ',' .
-                        $this->generateClasses($modify["classes"], null) . ');';
+                        $this->generateClasses($modify["classes"], null) . ($onlyChildren ? ', true' : '') . ');';
                     else return '';
                 }
                 case 'toggleClasses': {

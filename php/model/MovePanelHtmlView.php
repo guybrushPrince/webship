@@ -44,14 +44,8 @@ class MovePanelHtmlView extends PanelHtmlView {
         }
 
 
-        if ($firstSubview) {
-            $this->style(Tools::css($firstSubview->idc() . '.movable', [' > ', '.move.up'],
-                'display: none !important'));
-        }
-        if ($lastSubview) {
-            $this->style(Tools::css($lastSubview->idc() . '.movable', [' > ', '.move.down'],
-                'display: none !important'));
-        }
+        if ($firstSubview) $firstSubview->addClass('first');
+        if ($lastSubview) $lastSubview->addClass('last');
         if ($this->outside) $this->classes[] = 'outside';
         return parent::generateOpeningTag();
     }

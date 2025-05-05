@@ -85,7 +85,7 @@ class TabContainerHtmlView extends ContainerHtmlView {
             '})();');
     }
 
-    // Short cuts
+    // Shortcuts
 
     /**
      * Creates a new tab.

@@ -55,14 +55,17 @@ class SearchHtmlView extends ContainerHtmlView {
             $this->searchButton->notice(self::getLanguage(), $notes[self::getLanguage()]);
         }
 
-        $this->style(Tools::css('.search', [' > ', 'form', ' > ', '.container'], 'padding-bottom: 30px',
-            'padding-top: 10px'));
-        $this->style(Tools::css('.search', [' > ', 'form', ' > ', '.container:before'], 'content: \'' .
+        $this->localStyle('--text: \'' .
             [
                 Language::ENGLISH => 'Search',
                 Language::GERMAN  => 'Suche'
             ][self::getLanguage()] .
-            ':\'', 'padding-right: 20px', 'text-transform: uppercase', 'letter-spacing: 3px',
+            ':\'');
+
+        $this->style(Tools::css('.search', [' > ', 'form', ' > ', '.container'], 'padding-bottom: 30px',
+            'padding-top: 10px'));
+        $this->style(Tools::css('.search', [' > ', 'form', ' > ', '.container:before'],
+            'content: var(--text)', 'padding-right: 20px', 'text-transform: uppercase', 'letter-spacing: 3px',
             'color: var(--font-light)'));
 
         $this->style(Tools::css('.search', [' ', 'input'], 'width: 75%',

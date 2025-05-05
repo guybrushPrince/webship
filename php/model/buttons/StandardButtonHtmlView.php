@@ -41,6 +41,8 @@ class StandardButtonHtmlView extends ButtonHtmlView {
         $this->style(Tools::css('button.std-button.small', [], 'margin: 0', 'height: 30px',
             'max-height: 30px', 'width: auto', 'min-height: auto'));
         $this->style(Tools::css('button.std-button.small', [' > ', 'img'], 'height: 50%'));
+        $this->style(Tools::css('button.std-button.sm-img', [' > ', 'img'], 'height: 50%',
+            'margin: 5px'));
 
         $this->style(Tools::css('button.std-button.only-img', [], 'width: 30px', 'height: 30px',
             'padding: 5px', 'margin: 0', 'min-height: 30px', 'max-height: 30px', 'min-width: 30px', 'max-width: 30px'));
@@ -70,12 +72,13 @@ class StandardButtonHtmlView extends ButtonHtmlView {
      * @param string[]|string $classes Some classes.
      * @return StandardButtonHtmlView $this
      */
-    public function img(string $image, string|array $classes = []) : static {
+    public function img(string $image, bool $small = false, string|array $classes = []) : static {
         $this->add(new ImageHtmlView($image, $classes));
         if (count($this->subviews) > 1) {
             $imgView = array_pop($this->subviews);
             array_unshift($this->subviews, $imgView);
         }
+        if ($small) $this->addClass('sm-img');
         return $this;
     }
 

@@ -88,9 +88,7 @@ abstract class DashboardItem extends CObject {
             $view = $scope->add(new HtmlView('settings'));
         } else $view = new HtmlView('settings');
 
-        $view->style(Tools::css('.settings', [' ', '.dash-grid'], 'width: 300px',
-            'height: ' . (300 * ($rows / $cols)) . 'px'));
-        $view->style(Tools::css('.settings', [' ', '.hidden'], 'display: none'));
+        $view->localStyle('--dim-h: ' . (300 * ($rows / $cols)) . 'px');
 
         $dashGrid = DashGridContainerHtmlView::create($item, $cols, $rows, true);
 

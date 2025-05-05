@@ -42,12 +42,12 @@ class KeyValueHtmlView extends HtmlView {
 
         if ($afterText) $valueRatio -= 5;
 
-        if (!$for) $keyView = $this->add(new HtmlView(['k', 'd' . $keyRatio]));
-        else $keyView = $this->add(new FormLabelHtmlView($for, ['k', 'd' . $keyRatio]));
+        if (!$for) $keyView = $this->add(new HtmlView(['k']));
+        else $keyView = $this->add(new FormLabelHtmlView($for, ['k']));
         if (!is_array($key)) $key = [self::getLanguage() => $key];
         foreach ($key as $l => $k) $keyView->texts()->text($l, $forceKeySize ? str_replace(' ', '&nbsp;', $k) : $k);
 
-        $this->valueView = new HtmlView(['v', 'd' . $valueRatio]);
+        $this->valueView = new HtmlView(['v']);
         $this->add($this->valueView);
 
         if ($afterText) {
@@ -56,16 +56,17 @@ class KeyValueHtmlView extends HtmlView {
             foreach ($afterText as $l => $t) $afterView->texts()->text($l, $t);
         }
 
+        $this->localStyle('--kr: ' . $keyRatio . '%');
+        $this->localStyle('--vr: ' . $valueRatio . '%');
+
         $this->style(Tools::css('.kv', [], 'display: flex', 'flex-direction: row', 'flex-wrap: nowrap',
             'width: 100%', 'align-items: center', 'padding: 10px', 'box-sizing: border-box', 'gap: 0 10px'));
         $this->style(Tools::css('.kv.frame', [], 'border: 1px solid var(--ultra-light-system-background)'));
         $this->style(Tools::css('.kv', [' > ', '.k'], 'display: flex', 'flex-direction: row',
-            'align-items: center', 'justify-content: flex-start', 'margin: 0'));
+            'align-items: center', 'justify-content: flex-start', 'margin: 0', 'width: var(--kr)'));
         $this->style(Tools::css('.kv', [' > ', '.v'], 'display: flex', 'flex-direction: row',
-            'align-items: center', 'justify-content: flex-start', 'margin: 0'));
+            'align-items: center', 'justify-content: flex-start', 'margin: 0', 'width: var(--vr)'));
         $this->style(Tools::css('.kv', [' > ', '.v', ' > ', 'input[type="checkbox"]'], 'width: 25px'));
-        $this->style(Tools::css('.kv', [' > ', '.d' . $keyRatio], 'width: ' . $keyRatio . '%'));
-        $this->style(Tools::css('.kv', [' > ', '.d' . $valueRatio], 'width: ' . $valueRatio . '%'));
         $this->style(Tools::css('.kv', [' > ', '.ka'], 'width: 5%'));
         $this->style(Tools::css('.kv.frame', [' + ', '.kv.frame'], 'border-top: none'));
         $this->style(Tools::css('.kv.ver', [], 'flex-direction: column'));

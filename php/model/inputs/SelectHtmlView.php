@@ -55,10 +55,7 @@ class SelectHtmlView extends HtmlView {
             text(Language::ENGLISH, 'Please select')->
             text(Language::GERMAN,  'Bitte auswählen');
 
-        $coreClasses = array_diff($this->classes, $classes);
-        $coreSelector = '.' . implode('.', $coreClasses);
-
-        $this->style(Tools::css($coreSelector, '', 'box-sizing: border-box', 'padding: 5px',
+        $this->style(Tools::css('select', '', 'box-sizing: border-box', 'padding: 5px',
             'height: 50px', 'width: 100%', 'font-family: Roboto Condensed, Roboto, HelveticaNeue, sans-serif',
             'font-size: 16px'));
     }

@@ -16,10 +16,7 @@ class ContainerHtmlView extends HtmlView {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct(array_merge(['container'], $classes));
 
-        $coreClasses = array_diff($this->classes, $classes);
-        $coreSelector = '.' . implode('.', $coreClasses);
-
-        $this->style(Tools::css($coreSelector, '', 'display: flex',
+        $this->style(Tools::css('.container', '', 'display: flex',
             'flex-wrap: wrap', 'align-items: flex-start', 'align-content: flex-start', 'width: 100%',
             'box-sizing: border-box'));
         $this->style(Tools::css('.container', '.ver', 'flex-direction: column'));
@@ -44,9 +41,15 @@ class ContainerHtmlView extends HtmlView {
             'width: fit-content'));
         $this->style(Tools::css('.container', [' > ', '.container-item', '.ver'], 'flex-direction: column'));
         $this->style(Tools::css('.container', [' > ', '.container-item', '.hor'], 'flex-direction: row'));
+        $this->style(Tools::css('.container.c100', [' > ', '.container-item'], 'width: 100%'));
+
+        $this->style(Tools::css('.container.short-hint', [], 'display: inline',
+            'opacity: 0.6', 'font-size: 10px'));
     }
 
-    // Short cuts
+    ///////////////////////////
+    // Shortcuts
+    ///////////////////////////
 
     /**
      * Create a header.

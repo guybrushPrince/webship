@@ -21,6 +21,10 @@ class BasicEvents implements EventAdder {
         HtmlTemplateProtocol::_new('RemoveClass', 'basics')->
             removeClass(TemplateObject::_new('view'), TemplateObject::_new('class'));
 
+        HtmlTemplateProtocol::_new('RemoveClassesFromSiblings', 'basics')->
+            removeClassSiblings(TemplateObject::_new('view'), TemplateObject::_new('class'),
+                TemplateObject::_new('onlyChildren'));
+
         HtmlTemplateProtocol::_new('ToggleClass', 'basics')->
             toggleClass(TemplateObject::_new('view'), TemplateObject::_new('class'));
 

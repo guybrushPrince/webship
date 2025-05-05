@@ -240,9 +240,10 @@ let setCookie = function(t,v,r) {
 let delElem = function(s,e) {
     $(s).trigger(!isString(e) ? "" + e : e).remove();
 };
-let remClassSib = function(s,c) {
+let remClassSib = function(s,c,oc = false) {
     if (!Array.isArray(c)) c = [c];
-    $(s).find('.' + c.join(',.')).removeClass(c.join(' '));
+    let sel = !oc ? $(s).find('.' + c.join(',.')) : $(s).children('.' + c.join(',.'));
+    sel.removeClass(c.join(' '));
 };
 let addFieldSetSel = function(s,n) {
     return $(s).find("input[data-intern-scope=\"" + n + "\"").toArray()

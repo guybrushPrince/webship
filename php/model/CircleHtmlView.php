@@ -16,10 +16,7 @@ class CircleHtmlView extends HtmlView {
         $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(array('circle'), $classes));
 
-        $coreClasses = array_diff($this->classes, $classes);
-        $coreSelector = '.' . implode('.', $coreClasses);
-
-        $this->style(Tools::css($coreSelector, '', 'width: 50px', 'border-radius: 25px'));
+        $this->style(Tools::css('.circle', '', 'width: 50px', 'border-radius: 25px'));
     }
 
     // Short cuts

@@ -38,8 +38,8 @@ class CSSColorGradientHtmlView extends HtmlView {
         $classes[] = 'css-gradient';
         parent::__construct($classes);
 
-        $this->style = 'background: linear-gradient(90deg, ' . $fromColor . ' 0%, ' . $toColor . ' 100%);' .
-            'width: ' . ($width ? $width : '100%');
+        $this->localStyle('background: linear-gradient(90deg, ' . $fromColor . ' 0%, ' . $toColor . ' 100%);' .
+            'width: ' . ($width ? $width : '100%'));
         $this->state = $state;
 
         $this->style(Tools::css('.css-gradient', [], 'height: 20px', 'box-sizing: border-box',
@@ -53,8 +53,7 @@ class CSSColorGradientHtmlView extends HtmlView {
      * @inheritDoc
      */
     public function generateOpeningTag() {
-        $tag = substr(parent::generateOpeningTag(), 0, -1);
-        $tag .= ' style="' . $this->style . '">';
+        $tag = parent::generateOpeningTag();
         $tag .= '<div style="left: ' . $this->state . '%" title="' . $this->state . '%"></div>';
         return $tag;
     }

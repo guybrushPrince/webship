@@ -23,5 +23,17 @@ class SubTitleHtmlView extends HtmlView {
             'text-transform: none', 'font-size: 1.25em', 'font-weight: lighter', 'width: 100%',
             'width: 100%'));
     }
+
+    /**
+     * Create a subtitle view.
+     * @param string[]|string $texts The (sub) title.
+     * @param string|string[] $classes Some classes.
+     * @return SubTitleHtmlView
+     */
+    public static function create(array|string $texts, string|array $classes = []) : SubTitleHtmlView {
+        $view = new SubTitleHtmlView($classes);
+        $view->texts($texts);
+        return $view;
+    }
 }
 ?>

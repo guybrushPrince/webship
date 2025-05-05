@@ -3,21 +3,24 @@
 include_once dirname(__FILE__) . '/HtmlView.php';
 
 /**
- * Class PlusHtmlView
+ * Class PlusHtmlView.
+ *
+ * @package webship
+ * @subpackge php/model
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
  */
 class PlusHtmlView extends HtmlView {
 
     /**
-     * PlusHtmlView constructor.
-     * @param string $target The target.
+     * Constructor.
+     * @param string|string[] $classes Some classes..
      */
-    public function __construct($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct(array_merge(array('plus'), $classes));
+    public function __construct(array|string $classes = []) {
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        parent::__construct(array_merge([ 'plus' ], $classes));
     }
-
-    // Short cuts
 
 }
 ?>

@@ -57,17 +57,25 @@ class SplitHtmlView extends HtmlView {
         $this->add($this->separator);
         $this->add($this->right);
 
+        $this->localStyle([
+            '--separator-distance-left: ' . $leftGap . 'px',
+            '--separator-distance-right: ' . $rightGap . 'px',
+            '--separator-left-ratio: ' . $leftSizeRatio . '%',
+            '--separator-right-ratio: ' . $rightSizeRatio . '%'
+        ]);
+
         $this->style(Tools::css('.std-split', [], 'width: 100%', 'padding: 0',
             'box-sizing: border-box', 'position: relative', 'display: flex', 'flex-direction: row',
             'flex-wrap: nowrap', '--separator-width: 5px', '--separator-color: var(--light-system-background)',
-            '--separator-distance-left: ' . $leftGap . 'px', '--separator-distance-right: ' . $rightGap . 'px'));
+            ));
         $this->style(Tools::css('.std-split', [' > ', 'div:nth-child(1)'],
-            'width: calc(' . $leftSizeRatio . '% - var(--separator-width))',
+            'width: calc(var(--separator-left-ratio) - var(--separator-width))',
             'padding-right: var(--separator-distance-left)', 'box-sizing: border-box'));
         $this->style(Tools::css('.std-split', [' > ', 'div:nth-child(2)'],
             'width: var(--separator-width)',
             'box-sizing: border-box', 'border-left: var(--separator-width) solid var(--separator-color)'));
-        $this->style(Tools::css('.std-split', [' > ', 'div:nth-child(3)'], 'width: ' . $rightSizeRatio . '%',
+        $this->style(Tools::css('.std-split', [' > ', 'div:nth-child(3)'],
+            'width: var(--separator-right-ratio)',
             'padding-left: var(--separator-distance-right)', 'box-sizing: border-box'));
     }
 

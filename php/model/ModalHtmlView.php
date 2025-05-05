@@ -49,7 +49,7 @@ class ModalHtmlView extends HtmlView {
         $this->style(Tools::css('.modal.invisible', [], 'display: none !important'));
         $this->style(Tools::css('.modal', [' > ', '.modal-overlay'], 'position: fixed',
             'top: 0', 'left: 0', 'width: 100%', 'height: 100%', 'background: var(--window-overlay)', 'z-index: 100001',
-            'overflow-y: auto'/*, '-webkit-filter: blur(1px)', '-ms-filter: blur(1px)', 'filter: blur(1px)'*/));
+            'overflow-y: auto'));
         $this->style(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container'],
             'position: absolute',
             'left: 12.5%', 'top: 10%', 'width: 75%', 'overflow-y: initial',

@@ -58,6 +58,9 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
         $this->style(Tools::css($coreSelector, array(' > .move.delete', ':after'), 'content: "X"',
             'width: 100%'));
 
+        $this->style(Tools::css($coreSelector, ['.first', ' > ', '.move.up'], 'display: none !important'));
+        $this->style(Tools::css($coreSelector, ['.last', ' > ', '.move.down'], 'display: none !important'));
+
         $this->style(Tools::css($coreSelector, [' > ', '.move-position'], 'width: 100%', 'height: 0',
             'background: var(--move-position-background)', 'border-radius: 5px',
             'border: 0 dashed var(--menu-background)', 'align-items: center', 'justify-content: center',

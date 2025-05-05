@@ -54,14 +54,13 @@ class TextHtmlView extends HtmlView {
         $this->rows = $rows;
         $this->max = $max;
 
-        $coreClasses = array_diff($this->classes, $classes);
-        $coreSelector = '.' . implode('.', $coreClasses);
+        $this->localStyle('--rows: ' . $rows);
 
-        $this->style(Tools::css($coreSelector, '', 'box-sizing: border-box', 'padding: 5px',
-            'height: ' . ($rows * 50) . 'px', 'width: 100%', 'font-family: Roboto Condensed, Roboto, HelveticaNeue, sans-serif',
+        $this->style(Tools::css('textarea', '', 'box-sizing: border-box', 'padding: 5px',
+            'height: calc(var(--rows) * 50px)', 'width: 100%', 'font-family: Roboto Condensed, Roboto, HelveticaNeue, sans-serif',
             'font-size: 16px'));
 
-        $this->style(Tools::css($coreSelector, '.resizable', 'height: 31px', 'overflow: hidden'));
+        $this->style(Tools::css('textarea', '.resizable', 'height: 31px', 'overflow: hidden'));
 
         if ($resizable) {
             $this->protocol(Event::INPUT)->reheight($this);

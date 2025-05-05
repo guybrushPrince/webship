@@ -88,7 +88,7 @@ class NamelessHtmlView extends HtmlView {
      * @return string
      */
     public function stringify() : string {
-        return $this->generate(true);
+        return $this->generate(true, false, true);
     }
 
     /**

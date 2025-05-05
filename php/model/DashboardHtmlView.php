@@ -98,6 +98,12 @@ class DashboardHtmlView extends HtmlView {
             'overflow: hidden', 'padding: 0', 'background: var(--main-title-color)'));
         $this->style(Tools::css('.dashboard', [' ', '.coast-image', ' > ', '.box', ' ', 'img'],
             /*'transform: scale(2)', */'transform-origin: 100% 100%'));
+
+
+
+        $this->style(Tools::css('.settings', [' ', '.dash-grid'], 'width: 300px',
+            'height: var(--dim-h)'));
+        $this->style(Tools::css('.settings', [' ', '.hidden'], 'display: none'));
     }
 
     /**

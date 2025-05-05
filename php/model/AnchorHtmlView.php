@@ -12,13 +12,13 @@ class AnchorHtmlView extends HtmlView {
      * The name.
      * @var string
      */
-    private $name;
+    private string $name;
 
     /**
      * AnchorHtmlView constructor.
      * @param string $name The name.
      */
-    public function __construct($name, $classes = array()) {
+    public function __construct(string $name, $classes = array()) {
         parent::__construct(array_merge(array('anchor'), is_array($classes) ? $classes : [$classes]));
         $this->name = $name;
     }

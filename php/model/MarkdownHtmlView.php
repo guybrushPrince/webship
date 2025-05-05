@@ -39,10 +39,7 @@ class MarkdownHtmlView extends HtmlView {
         $this->isFile = $isFile;
         $this->replaceOrigin = $replaceOrigin;
 
-        $coreClasses = array_diff($this->classes, $classes);
-        $coreSelector = '.' . implode('.', $coreClasses);
-
-        $this->style(Tools::css($coreSelector, '', 'width: 100%'));
+        $this->style(Tools::css('.markdown', [], 'width: 100%'));
     }
 
     /**
