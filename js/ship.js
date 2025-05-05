@@ -534,6 +534,7 @@ let replaceDom = function(sStr,n,e) {
     let s = $(sStr);
     if (!isString(e)) e = '' + e;
     let ids = s.toArray().map(i => $(i).data("id")).join(" ");
+    if (ids !== '') ids = ' ' + ids;
     let sel = n.filter(":not(style):not(script)");
     sel.data("id", sel.data("id") + " " + ids);
     sel.addClass((sStr + ids).replace(/\./g, ""));
