@@ -1,22 +1,43 @@
 <?php
 
 /**
- * Class ContentButtonHtmlView
+ * View ContentButtonHtmlView.
+ *
+ * <p>A button that allows for showing small configuration things.</p>
+ *
+ * @package webship
+ * @subpackge php/model/buttons
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
  */
 class ContentButtonHtmlView extends HtmlView {
 
     /**
+     * The button view.
+     * @var StandardButtonHtmlView
+     */
+    private StandardButtonHtmlView $button;
+
+    /**
+     * The content view.
+     * @var HtmlView
+     */
+    private HtmlView $content;
+
+    /**
      * ContentButton constructor.
      * @param string $id The id of the button.
-     * @param array $classes The classes.
-     * @param array $contentClasses Additional classes for the content.
+     * @param string[]|string $classes Some classes.
+     * @param string[]|string $contentClasses Additional classes for the content.
      */
-    public function __construct(string $id, $classes = array(), $contentClasses = array()) {
+    public function __construct(string $id, array|string $classes = [], array|string $contentClasses = []) {
         parent::__construct(array_merge(['content-button'], $contentClasses));
         $overlay = $this->add(new HtmlView('overlay'))->ref('overlay');
-        $this->add(new ButtonHtmlView($id, 'button', $classes));
-        $this->add(new HtmlView('content'));
+        $this->button = StandardButtonHtmlView::create($id, $classes);
+        $this->add($this->button);
+        $this->content = new HtmlView('content');
+        $this->add($this->content);
 
         $this->style(Tools::css('.content-button', '', 'position: relative'));
         $this->style(Tools::css('.content-button', [' > ', 'form'], 'padding: 0', 'margin: 0',
@@ -52,10 +73,10 @@ class ContentButtonHtmlView extends HtmlView {
 
     /**
      * Returns the button.
-     * @return ButtonHtmlView
+     * @return StandardButtonHtmlView
      */
-    public function button() : ButtonHtmlView {
-        return $this->subviews[1];
+    public function button() : StandardButtonHtmlView {
+        return $this->button;
     }
 
     /**
@@ -64,7 +85,7 @@ class ContentButtonHtmlView extends HtmlView {
      * @return View
      */
     public function content(HtmlView $view) : View {
-        return $this->subviews[2]->add($view);
+        return $this->content->add($view);
     }
 }
 ?>

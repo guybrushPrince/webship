@@ -28,6 +28,10 @@ class ContainerHtmlView extends HtmlView {
         $this->style(Tools::css('.container', '.gap10', 'gap: 10px'));
         $this->style(Tools::css('.container', '.gap15', 'gap: 15px'));
         $this->style(Tools::css('.container', '.gap20', 'gap: 20px'));
+        $this->style(Tools::css('.container', '.p', 'padding: 5px'));
+        $this->style(Tools::css('.container', '.p10', 'padding: 10px'));
+        $this->style(Tools::css('.container', '.p15', 'padding: 15px'));
+        $this->style(Tools::css('.container', '.p20', 'padding: 20px'));
         $this->style(Tools::css('.container', '.hcent', 'justify-content: center',
             'justify-items: center'));
         $this->style(Tools::css('.container', '.hend', 'justify-content: flex-end',
