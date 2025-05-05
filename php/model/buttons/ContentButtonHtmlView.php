@@ -36,23 +36,48 @@ class ContentButtonHtmlView extends HtmlView {
         $overlay = $this->add(new HtmlView('overlay'))->ref('overlay');
         $this->button = StandardButtonHtmlView::create($id, $classes);
         $this->add($this->button);
-        $this->content = new HtmlView('content');
+        $this->content = new ContainerHtmlView(['ver', 'gap5', 'content']);
         $this->add($this->content);
 
-        $this->style(Tools::css('.content-button', '', 'position: relative'));
-        $this->style(Tools::css('.content-button', [' > ', 'form'], 'padding: 0', 'margin: 0',
-            'display: inherit', 'width: inherit', 'height: inherit'));
-        $this->style(Tools::css('.content-button', [' > ', 'form', ' > ', '.overlay'],
+        $overlay->protocol(Event::CLICK)->toggleClass($this, 'active');
+
+        self::addCSS();
+    }
+
+    /**
+     * Generates the CSS code.
+     * @return void
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.content-button', '', 'position: relative',
+            '--hover: var(--dark-system-background)', '--bottom-distance: 1rem'));
+        self::addStyle(Tools::css('.content-button', [' > ', 'form'], 'padding: 0', 'margin: 0',
+            'display: inherit', 'width: inherit', 'height: inherit', 'box-sizing: border-box'));
+        self::addStyle(Tools::css('.content-button', [' > ', 'form', ' > ', '.overlay'],
             'width: 100%', 'height: 100%', 'position: absolute', 'top: 0', 'left: 0', 'cursor: pointer',
             'z-index: 1'));
-        $this->style(Tools::css('.content-button.active', [' > ', 'form', ' > ', '.overlay'],
+        self::addStyle(Tools::css('.content-button', [' > ', 'form', ' > ', '.overlay:hover', ' + ', 'button'],
+            'background: var(--hover)'));
+        self::addStyle(Tools::css('.content-button.active', [' > ', 'form', ' > ', '.overlay'],
             'display: none'));
-        $this->style(Tools::css('.content-button', [' > ', 'form', ' > ', '.content'], 'display: none',
-            'width: 100%'));
-        $this->style(Tools::css('.content-button.active', [' > ', 'form', ' > ', '.content'],
-            'display: inherit'));
+        self::addStyle(Tools::css('.content-button', [' > ', 'form', ' > ', '.content'], 'display: none',
+            'width: 100%', 'position: absolute', 'background: var(--light-system-background)',
+            'border: 1px solid var(--dark-system-background)', 'border-radius: 3px', 'padding: 5px',
+            '-webkit-box-shadow: var(--shadow-flow-1)', 'box-shadow: var(--shadow-flow-1)'));
+        self::addStyle(Tools::css('.content-button.active', [' > ', 'form', ' > ', '.content'],
+            'display: flex'));
+    }
 
-        $overlay->protocol(Event::CLICK)->toggleClass($this, 'active');
+    /**
+     * Create a new content button.
+     * @param string $id The id of the button.
+     * @param string[]|string $classes Some classes.
+     * @param string[]|string $contentClasses Additional classes for the content.
+     * @return ContentButtonHtmlView
+     */
+    public static function create(string $id, array|string $classes = [],
+                                  array|string $contentClasses = []) : ContentButtonHtmlView {
+        return new ContentButtonHtmlView($id, $classes, $contentClasses);
     }
 
     /**

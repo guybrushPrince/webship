@@ -51,8 +51,6 @@ class SectionHtmlView extends HtmlView {
             $this->js('(function() { let open = false; $("' . $this->section->idc() . '").on("click", function() { if (!open) $("' . $this->idc() . '").trigger("' . Event::OPEN_LIST . '"); open = true; }); })();');
         } else $this->js('(function() { let open = true; $("' . $this->section->idc() . '").on("click", function() { if (open) $("' . $this->idc() . '").trigger("' . Event::CLOSE_LIST . '"); open = false; }); })();');
 
-        $this->localStyle('--icon: ' . HtmlActionProtocol::$serverURL . '/webship/pic/arrow-down-sign-to-navigate.svg');
-
         $this->style(Tools::css('.sect', [],'width: 100%', 'display: flex',
             'flex-direction: column', 'padding: 0 0 16px 0'));
         $this->style(Tools::css('.sect.fit', [],'width: -moz-fit-content', 'width: fit-content',
@@ -66,7 +64,7 @@ class SectionHtmlView extends HtmlView {
             'cursor: pointer'));
         $this->style(Tools::css('.sect', [' > ', '.section', ':after'], 'content: ""',
             'margin-left: 5px', 'background-repeat: no-repeat', 'width: 10px', 'height: 10px', 'background-size: cover',
-            'background-image: url(var(--icon))',
+            'background-image: url(' . HtmlActionProtocol::$serverURL . '/webship/pic/arrow-down-sign-to-navigate.svg)',
             'box-sizing: border-box', 'display: inline-block', 'opacity: 0.25', 'transition: opacity 0.5s'));
         $this->style(Tools::css('.sect', [' > ', '.section', ':hover', ':after'],
             'opacity: 1'));
