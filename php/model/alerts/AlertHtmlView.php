@@ -22,6 +22,7 @@ class AlertHtmlView extends HtmlView {
             'margin-bottom: 20px', 'margin-top: 20px', 'border: 1px solid var(--light-system-background)',
             'border-radius: 4px', 'color: var(--font-dark)', 'background-color: var(--ultra-light-system-background)',
             'position: relative', 'box-sizing: border-box'));
+        $this->style(Tools::css('.alert:not(.cover).tiny', 'font-size: 10px'));
         $this->style(Tools::css('.alert.cover', [], 'display: flex',
             'flex-direction: row', 'align-items: center', 'justify-content: center', 'width: 100%',
             'height: 100%', 'top: 0', 'left: 0', 'z-index: 10010', 'background: none'));
@@ -69,6 +70,7 @@ class AlertHtmlView extends HtmlView {
         $this->style(Tools::css('.alert:not(.cover).with-image', [], 'display: flex',
             'flex-direction: row', 'flex-wrap: nowrap', 'gap: 15px'));
         $this->style(Tools::css('.alert:not(.cover).with-image', [' > ', 'img'], 'width: 25px'));
+        $this->style(Tools::css('.alert:not(.cover).with-image.tiny', [' > ', 'img'], 'width: 15px'));
         $this->style(Tools::css('.alert.cover', [' > ', '.a-message.with-image'], 'display: flex',
             'flex-direction: row', 'flex-wrap: nowrap', 'gap: 15px'));
         $this->style(Tools::css('.alert.cover', [' > ', '.a-message.with-image', ' > ', 'img'],
@@ -79,7 +81,7 @@ class AlertHtmlView extends HtmlView {
 
     /**
      * Creates an alert html view.
-     * @param string[] $message The multilingual messages.
+     * @param string[]|string $message The multilingual messages.
      * @param bool $screen If it should cover the screen.
      * @param bool $fullView If it should cover the view.
      * @param AlertHtmlView|null $v A view that is recycled.
@@ -88,9 +90,10 @@ class AlertHtmlView extends HtmlView {
      * @return AlertHtmlView
      * @throws DatabaseError
      */
-    public static function create(array $message = [], bool $screen = false, bool $fullView = false,
+    public static function create(array|string $message = [], bool $screen = false, bool $fullView = false,
                                   ?AlertHtmlView $v = null, ?string $property = null,
                                   ?string $image = null) : AlertHtmlView {
+        if (!is_array($message)) $message = [ View::getLanguage() => $message ];
         if ($property !== null) {
             $show = BreakwaterUtil::getUserParameter($property, Type::BOOLEAN, true);
             if (!$show) {
@@ -166,6 +169,15 @@ class AlertHtmlView extends HtmlView {
      */
     public function inline() : static {
         $this->addClass('inline');
+        return $this;
+    }
+
+    /**
+     * Creates a tiny alert.
+     * @return $this
+     */
+    public function tiny() : static {
+        $this->addClass('tiny');
         return $this;
     }
 }

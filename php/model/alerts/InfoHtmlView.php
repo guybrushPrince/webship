@@ -24,7 +24,7 @@ class InfoHtmlView extends AlertHtmlView {
     /**
      * @inheritDoc
      */
-    public static function create(array $message = [], bool $screen = false, bool $fullView = false,
+    public static function create(array|string $message = [], bool $screen = false, bool $fullView = false,
                                   ?AlertHtmlView $v = null, ?string $property = null,
                                   ?string $image = null) : AlertHtmlView {
         return parent::create($message, $screen, $fullView, $v ?: new InfoHtmlView(), $property,
