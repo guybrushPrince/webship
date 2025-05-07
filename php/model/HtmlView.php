@@ -193,7 +193,6 @@ class HtmlView extends View {
     private function collectStyles(array &$styles, bool $force = false, ?array &$checkContainer = null) : array {
         if ($this->isSafe()) {
             $class = get_called_class();
-            DebugLogger::instance()->debug('Try to deliver', $class);
             if (is_null($checkContainer)) {
                 if (isset($_SESSION)) {
                     if (!array_key_exists('styles', $_SESSION)) $_SESSION['styles'] = [];

@@ -23,13 +23,14 @@ class StandardButtonHtmlView extends ButtonHtmlView {
         parent::__construct($id, $type, array_merge(['std-button'], $classes));
 
         $this->style(Tools::css('button.std-button', [], 'display: flex', 'flex-direction: row',
+            '--common-width: 175px', '--common-height: 50px', '--bottom-distance: 1rem',
+            '--common-margin: .5rem 0 var(--bottom-distance) 0',
             'align-items: center', 'justify-content: center',
-            'width: 175px', 'margin-right: 20px', 'min-height: 50px', 'cursor: pointer',
+            'width: var(--common-width)', 'min-height: var(--common-height)', 'cursor: pointer',
             'border: 1px solid var(--dark-system-background)', 'background: var(--card-background)',
             'color: var(--main-font)', 'font-size: 16px', 'text-align: center',
-            '--bottom-distance: 1rem',
             'font-family: Roboto Condensed, Roboto, sans-serif', 'position: relative',
-            'margin: .5rem 0 var(--bottom-distance) 0',
+            'margin: var(--common-margin)',
             '-webkit-transition: -webkit-box-shadow .25s', 'transition: box-shadow .25s',
             '-webkit-box-shadow: var(--shadow-flow-1)', 'box-shadow: var(--shadow-flow-1)',
             'transition: background 0.5s', 'border-radius: 5px', 'box-sizing: border-box', 'gap: 10px',
@@ -51,6 +52,10 @@ class StandardButtonHtmlView extends ButtonHtmlView {
 
         $this->style(Tools::css('button.std-button.only-img', [], 'width: 30px', 'height: 30px',
             'padding: 5px', 'margin: 0', 'min-height: 30px', 'max-height: 30px', 'min-width: 30px', 'max-width: 30px'));
+        $this->style(Tools::css('button.std-button.long.only-img', [], 'width: var(--common-height)',
+            'height: var(--common-height)', 'padding: 5px', 'margin: var(--common-margin)',
+            'min-height: var(--common-height)', 'max-height: var(--common-height)', 'min-width: var(--common-height)',
+            'max-width: var(--common-height)'));
         $this->style(Tools::css('button.std-button:disabled', [], 'opacity: 0.25', 'cursor: not-allowed'));
 
         $this->style(Tools::css('button.std-button.list-b', [], 'margin: 0',
@@ -89,10 +94,14 @@ class StandardButtonHtmlView extends ButtonHtmlView {
 
     /**
      * Set that the button only uses an image.
-     * @param bool $img Whether it is only an image, or not.
+     * @param bool|string $img Whether it is only an image, or not.
      * @return $this
      */
-    public function onlyImg(bool $img) : static {
+    public function onlyImg(bool|string $img) : static {
+        if (is_string($img)) {
+            $this->img($img);
+            $img = true;
+        }
         if ($img) $this->classes[] = 'only-img';
         return $this;
     }
