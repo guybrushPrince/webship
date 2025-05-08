@@ -118,10 +118,6 @@ class AlertHtmlView extends HtmlView {
             $overlay->protocol(Event::CLICK)->doIt('Delete', ['view' => $v], 'basics');
             $con = $v->add(new HtmlView('a-message'));
             $con->ref('alert-content');
-            $control = ControlPanelHtmlView::create(1, 1, false)->fix()->plain();
-            $con->add($control);
-            $closer = $control->add(new CloserHtmlView());
-            $closer->protocol(Event::CLICK)->doIt('Delete', ['view' => $v], 'basics');
         }
         $v->box = $con;
         if (/*!$screen && */$image) {
@@ -135,21 +131,23 @@ class AlertHtmlView extends HtmlView {
 
 
 
-        if (!$screen && !$fullView && $property !== null) {
+        if ($screen || $fullView || $property !== null) {
             $con->ref('alert-view');
             $control = ControlPanelHtmlView::create(1, 1, false)->fix()->plain();
             $con->add($control);
             $closer = $control->add(new CloserHtmlView());
-            $closer->notice(Language::ENGLISH, 'Do not show this hint anymore.');
-            $closer->notice(Language::GERMAN, 'Diesen Hinweis nicht mehr anzeigen.');
-            $closer->protocol(Event::CLICK)->
-                doIt('ChangeParameter', [
+            if ($property) {
+                $closer->notice(Language::ENGLISH, 'Do not show this hint anymore.');
+                $closer->notice(Language::GERMAN, 'Diesen Hinweis nicht mehr anzeigen.');
+                $closer->protocol(Event::CLICK)->doIt('ChangeParameter', [
                     'target' => BreakwaterUtil::getUserConfiguration(BreakwaterUtil::getCurrentUser()),
                     'parameter' => $property,
                     'type' => Type::BOOLEAN,
                     'value' => false
-                ], 'texts')->
-                doIt('Delete', ['view' => $v], 'basics');
+                ], 'texts')->doIt('Delete', ['view' => $v], 'basics');
+            } else {
+                $closer->protocol(Event::CLICK)->doIt('Delete', ['view' => $v], 'basics');
+            }
         }
 
         return $v;
