@@ -46,14 +46,22 @@ class NamelessHtmlView extends HtmlView {
             $imageView->notice(Language::GERMAN,  'Du hast noch keinen Text spezifiziert');
         }
 
-        $this->style(Tools::css('.unknown', [], 'width: -moz-fit-content', 'width: fit-content',
+        self::addCSS();
+    }
+
+    /**
+     * Generate the CSS code.
+     * @return void
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.unknown', [], 'width: -moz-fit-content', 'width: fit-content',
             'display: flex', 'flex-direction: row'));
-        $this->style(Tools::css('.unknown', [' > ', 'span:empty'], 'display: none'));
-        $this->style(Tools::css('.unknown', [' > ', 'img'], 'height: 10px'));
-        $this->style(Tools::css('.unknown.hidden', [' > ', 'img'], 'display: none'));
-        $this->style(Tools::css('.unknown', [' > ', 'span:not(:empty)', ' ~ ', 'img'],
+        self::addStyle(Tools::css('.unknown', [' > ', 'span:empty'], 'display: none'));
+        self::addStyle(Tools::css('.unknown', [' > ', 'img'], 'height: 10px'));
+        self::addStyle(Tools::css('.unknown.hidden', [' > ', 'img'], 'display: none'));
+        self::addStyle(Tools::css('.unknown', [' > ', 'span:not(:empty)', ' ~ ', 'img'],
             'display: none'));
-        $this->style(Tools::css('.unknown', [' > ', 'span:not(:empty)', ' ~ ', 'span'],
+        self::addStyle(Tools::css('.unknown', [' > ', 'span:not(:empty)', ' ~ ', 'span'],
             'display: none'));
     }
 
@@ -88,7 +96,7 @@ class NamelessHtmlView extends HtmlView {
      * @return string
      */
     public function stringify() : string {
-        return $this->generate(true, false, true);
+        return $this->generate(true);
     }
 
     /**

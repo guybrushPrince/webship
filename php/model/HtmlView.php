@@ -65,6 +65,8 @@ class HtmlView extends View {
         $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct();
         $this->classes = $classes;
+
+        NamelessHtmlView::addCSS();
     }
 
     /**
@@ -203,7 +205,6 @@ class HtmlView extends View {
                 $checkContainer[$class] === self::UNDELIVERED ||
                 self::DEBUG || $force) {
                 if (!array_key_exists($class, self::$styles)) self::$styles[$class] = [];
-                DebugLogger::instance()->debug('Deliver', $class);
                 foreach (self::$styles[$class] as $s) {
                     if (!in_array($s, $styles)) $styles[] = $s;
                 }
