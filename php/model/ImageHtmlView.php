@@ -32,7 +32,7 @@ class ImageHtmlView extends HtmlView {
         $this->src = $src;
         $this->alt = $alt;
 
-        $this->style(Tools::css('.min-img', [], 'width: 20px', 'height: 20px'));
+        $this->style(Tools::css('.container.min-img', [], 'width: 20px', 'height: 20px'));
         $this->style(Tools::css('.min-img', [' > ', 'img'], 'width: 100%'));
         $this->style(Tools::css('img.image.cover', [], 'object-fit: cover'));
     }
@@ -63,7 +63,7 @@ class ImageHtmlView extends HtmlView {
      * @return HtmlView
      */
     public static function mini(string $src, string|array $classes = []) : HtmlView {
-        $mini = new HtmlView('min-img');
+        $mini = new ContainerHtmlView(['hor', 'vcent', 'min-img']);
         $mini->add(new ImageHtmlView($src, $classes));
         return $mini;
     }

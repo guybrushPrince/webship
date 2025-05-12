@@ -27,9 +27,15 @@ class ContentSelectHtmlView extends SelectHtmlView {
 
     /**
      * The default value of the select if nothing is selected.
-     * @var string|null
+     * @var IShippable|string|null
      */
-    private string|null $default;
+    private IShippable|string|null $default;
+
+    /**
+     * If the default view was already added.
+     * @var OptionHtmlView|null
+     */
+    private ?OptionHtmlView $defaultOption = null;
 
     /**
      * The maximum of available selections.
@@ -38,7 +44,7 @@ class ContentSelectHtmlView extends SelectHtmlView {
     private ?int $maxSelections;
 
     /**
-     * Whether their should be a minimal represented to the user.
+     * Whether there should be a minimal represented to the user.
      * @var bool
      */
     private bool $mini = false;
@@ -48,11 +54,13 @@ class ContentSelectHtmlView extends SelectHtmlView {
      * @param int|string $id The id of the select.
      * @param string $name The name of the select.
      * @param string[]|string $classes Some classes.
-     * @param string|null $default The default value.
+     * @param IShippable|array|string|null $default The default value.
      */
-    private function __construct(int|string $id, string $name, array|string $classes = [],
-                                 string|null $default = null) {
-        $this->default = $default;
+    protected function __construct(int|string $id, string $name, array|string $classes = [],
+                                   array|IShippable|string|null $default = null) {
+        if (!is_array($default)) {
+            $this->default = $default;
+        } else $this->default = $default[1];
         $this->contentOptions = new ContainerHtmlView(['c-list', 'ver']);
         $this->contentOptions->ref('entry-list');
         parent::__construct($id, $name, $classes, true, $default);
@@ -131,7 +139,6 @@ class ContentSelectHtmlView extends SelectHtmlView {
             'background-repeat: no-repeat', 'background-size: 7px 7px', 'background-position-y: center'));
         $this->style(Tools::css('.content-select.mini', [' > ', '.overlay:after'],
             'filter: brightness(0) saturate(100%) invert(39%) sepia(18%) saturate(1267%) hue-rotate(155deg) brightness(97%) contrast(98%)'));
-
     }
 
     /**
@@ -139,12 +146,27 @@ class ContentSelectHtmlView extends SelectHtmlView {
      * @param int|string $id The id of the select.
      * @param int|null $maxSelections The number of maximal selections.
      * @param string[]|string $classes Some classes.
-     * @param string|null $default The default value if nothing is selected.
+     * @param IShippable|array|string|null $default The default value if nothing is selected.
      * @return ContentSelectHtmlView
      */
     public static function create(int|string $id, ?int $maxSelections = 1, array|string $classes = [],
-                                  ?string $default = '-1') : ContentSelectHtmlView {
+                                  IShippable|array|string|null $default = '-1') : ContentSelectHtmlView {
         $select = new ContentSelectHtmlView($id, $id, $classes, $default);
+        self::addFunctionality($select, $maxSelections, $default);
+        return $select;
+    }
+
+    /**
+     * Add standard functionality.
+     * @param ContentSelectHtmlView $select The content select.
+     * @param int|null $maxSelections The maximum number of selections.
+     * @param IShippable|array|string|null $default The default value.
+     * @return ContentSelectHtmlView
+     */
+    protected static function addFunctionality(ContentSelectHtmlView $select, ?int $maxSelections = 1,
+                                               IShippable|array|string|null $default = '-1') : ContentSelectHtmlView {
+        if (is_array($default)) $default = $default[1];
+        if ($default instanceof IShippable) $default = ShipperRegister::getObjectString($default);
         $select->maxSelections = $maxSelections;
         if (is_null($maxSelections)) $maxSelections = 'null';
         if (is_null($default)) $default = 'null';
@@ -167,10 +189,21 @@ class ContentSelectHtmlView extends SelectHtmlView {
      * @inheritDoc
      */
     public function option($value, $classes = array(), $selected = false) : OptionHtmlView {
-        if (!is_array($value) && !($value instanceof CliffSerializable) && $value !== $this->default)
+        if (!is_array($value) && !($value instanceof IShippable) && $value !== $this->default)
             throw new NotImplementedException();
         $addClass = [];
-        if ($value === $this->default) {
+        $isDefault = false;
+
+        // Get comparable values.
+        $cValue = $value;
+        if (is_array($value)) $cValue = $value[1];
+        if ($cValue instanceof IShippable) $cValue = ShipperRegister::getObjectString($cValue);
+
+        $cDefault = $this->default;
+        if ($cDefault instanceof IShippable) $cDefault = ShipperRegister::getObjectString($cDefault);
+
+        if (!is_array($value) && $cValue === $cDefault) {
+            if (!is_null($this->defaultOption)) return $this->defaultOption;
             $view = new ContainerHtmlView(array_merge(['hor', 'vcent', 'hcent', 'w100', 'def'], $classes));
             $view->texts([
                 Language::ENGLISH => 'Please select',
@@ -181,6 +214,15 @@ class ContentSelectHtmlView extends SelectHtmlView {
                 is_null($value) ? 'undefined' : $value
             ];
             $addClass[] = 'def';
+            $isDefault = true;
+        } else if (is_array($value) && $cValue === $cDefault) {
+            if (!is_null($this->defaultOption)) return $this->defaultOption;
+            $value = [
+                $value[0],
+                is_null($value[1]) ? 'undefined' : $value[1]
+            ];
+            $addClass[] = 'def';
+            $isDefault = true;
         } else if (!is_array($value)) {
             $value = [
                 Representer::getVisualRepresentation($value, self::getLanguage(), false),
@@ -190,6 +232,7 @@ class ContentSelectHtmlView extends SelectHtmlView {
         $view = $value[0];
         $value = $value[1];
         $option = parent::option($value, $classes, $selected);
+        if ($isDefault) $this->defaultOption = $option;
         $view->data(self::_DATA_VALUE, $option->getValue());
         if ($selected) $c = [ self::_SELECTED ];
         else $c = [];

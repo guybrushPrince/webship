@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class AreaHtmlView.
+ * View AreaHtmlView.
  *
  * @package webship
  * @subpackge php/model/containers
@@ -16,17 +16,34 @@ class AreaHtmlView extends ContainerHtmlView {
      * Constructor.
      * @param string|string[] $classes Some classes.
      */
-    public function __construct(string|array $classes = []) {
+    private function __construct(string|array $classes = []) {
         parent::__construct($classes);
         $this->classes[] = 'c-area';
+        $this->classes[] = 'ver';
+        $this->classes[] = 'p20';
 
-        $this->style(Tools::css('.c-area', [], 'background: var(--ultra-light-system-background)',
-            'border-radius: 10px', 'margin-top: 10px', 'padding: 20px', 'box-sizing: border-box',
+        self::addCSS();
+    }
+
+    /**
+     * Generate the CSS code.
+     * @return void
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.c-area', [], 'background: var(--ultra-light-system-background)',
+            'border-radius: 10px', 'margin-top: 10px', 'box-sizing: border-box',
             'border: solid 1px var(--system-background)', 'height: -moz-fit-content'));
-        $this->style(Tools::css('.c-area', [' > ', '.sub-title'], 'padding: 0',
+        self::addStyle(Tools::css('.c-area', [' > ', '.sub-title'], 'padding: 0',
             'margin-bottom: 10px'));
-        $this->style(Tools::css('.c-area.fit', [], 'height: fit-content'));
-        $this->style(Tools::css('.c-area.invisible', [], 'display: none'));
+        self::addStyle(Tools::css('.c-area.fit', [], 'height: fit-content'));
+        self::addStyle(Tools::css('.c-area.invisible', [], 'display: none'));
+
+        self::addStyle(Tools::css('.c-area.small', [], 'background: none',
+            'border-radius: inherit', 'border: inherit'));
+        self::addStyle(Tools::css('.c-area.small', [' > ', ':not(.sub-title)'],
+            'border-radius: 10px', 'border: solid 1px var(--system-background)'));
+        self::addStyle(Tools::css('.c-area.small', [' > ', '.sub-title'], 'margin-bottom: 0',
+            'font-size: 12px', 'color: var(--font-light)'));
     }
 
     /**
@@ -75,6 +92,15 @@ class AreaHtmlView extends ContainerHtmlView {
      */
     public function fit() : static {
         $this->classes[] = 'fit';
+        return $this;
+    }
+
+    /**
+     * Produces a finer area.
+     * @return $this
+     */
+    public function small(): static {
+        $this->classes[] = 'small';
         return $this;
     }
 

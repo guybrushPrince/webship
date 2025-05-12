@@ -484,5 +484,17 @@ class HtmlView extends View {
         }
         return $this;
     }
+
+    /**
+     * Add multiple arrays to a view.
+     * @param HtmlView[] $views An array of views to add.
+     * @return $this
+     */
+    public function addViews(array $views) : static {
+        $this->each($views, function (HtmlView $th, HtmlView $that) {
+            $th->add($that);
+        });
+        return $this;
+    }
 }
 ?>

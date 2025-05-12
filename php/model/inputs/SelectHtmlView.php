@@ -37,19 +37,27 @@ class SelectHtmlView extends HtmlView {
     private string $opening = 'select';
 
     /**
+     * Whether the singleton option shall be ignored or not.
+     * @var bool
+     */
+    private bool $ignoreSingleton = false;
+
+    /**
      * SelectHtmlView constructor.
      * @param string|int $id The id.
      * @param string $name The name.
      * @param string[]|string $classes Some classes.
-     * @param string $default The default value.
+     * @param IShippable|array|string|null $default The default value (array is just for super classes).
      */
     public function __construct(string|int $id, string $name, string|array $classes = [], bool $hidden = false,
-                                string $default = '-1') {
+                                IShippable|array|string|null $default = '-1') {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct(array_merge([ 'select' ], $classes));
         $this->id = $id;
         $this->name = $name;
         $this->hidden = $hidden;
+
+        if (is_null($default)) $default = 'null';
 
         $this->option($default)->texts()->
             text(Language::ENGLISH, 'Please select')->
@@ -72,7 +80,7 @@ class SelectHtmlView extends HtmlView {
             $this->opening = 'div';
             return '<div class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '">';
         } else  {
-            if (count($this->subviews) === 2) {
+            if (count($this->subviews) === 2 && !$this->ignoreSingleton) {
                 $this->subviews = array($this->subviews[1]);
                 $this->classes[] = "singleton";
             }
@@ -98,7 +106,7 @@ class SelectHtmlView extends HtmlView {
      * Add an option.
      * @param string|IShippable|array $value The value (array only for specializations).
      * @param array|string $classes Classes.
-     * @param boolean $selected Whether it is selected.
+     * @param bool $selected Whether it is selected.
      * @return OptionHtmlView
      */
     public function option($value, $classes = array(), $selected = false) : OptionHtmlView {
@@ -123,6 +131,16 @@ class SelectHtmlView extends HtmlView {
      */
     public function getId() : ?string {
         return $this->id;
+    }
+
+    /**
+     * Whether it is singleton or not.
+     * @param bool $singleton Singleton?
+     * @return $this
+     */
+    public function singleton(bool $singleton) : static {
+        $this->ignoreSingleton = !$singleton;
+        return $this;
     }
 }
 ?>
