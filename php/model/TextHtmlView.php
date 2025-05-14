@@ -105,5 +105,17 @@ class TextHtmlView extends HtmlView {
         return $this;
     }
 
+    /**
+     * Create a textarea.
+     * @param string $id The id of the field.
+     * @param bool $resizable Whether it is resizable.
+     * @param int $rows The number of rows.
+     * @param string[]|string $classes Some classes.
+     * @return TextHtmlView
+     */
+    public static function create(string $id, bool $resizable = false, int $rows = 3,
+                                  array|string $classes = []) : TextHtmlView {
+        return new TextHtmlView($id, $id, $rows, false, $classes, $resizable);
+    }
 }
 ?>

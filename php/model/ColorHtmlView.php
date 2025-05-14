@@ -26,7 +26,7 @@ class ColorHtmlView extends HtmlView {
             '--dc: ' . $color
         ]);
 
-        $this->notices([self::getLanguage() => $title]);
+        if ($title) $this->notices([self::getLanguage() => $title]);
 
         $this->style(Tools::css('.color-v', [], 'background: var(--bg) !important',
             'color: var(--fc)', '--dev-color: var(--dc)'));
