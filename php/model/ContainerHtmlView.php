@@ -50,6 +50,11 @@ class ContainerHtmlView extends HtmlView {
 
         $this->style(Tools::css('.container.short-hint', [], 'display: inline',
             'opacity: 0.6', 'font-size: 10px'));
+
+        $this->style(Tools::css('.container.with-default', [' > ', '.default:first-child:last-child'],
+            'display: inherit'));
+        $this->style(Tools::css('.container.with-default', [' > ', '.default'],
+            'display: none'));
     }
 
     ///////////////////////////

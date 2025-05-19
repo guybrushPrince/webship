@@ -116,6 +116,9 @@ class ControlPanelHtmlView extends HtmlView {
 
         $this->style(Tools::css('.ctr.small', [], 'min-height: 20px', 'height: 20px',
             'margin: 0 !important', '--cell-height: 20px', '--cell-width: 20px'));
+        $this->style(Tools::css('.ctr.small', [' ', 'button.std-button'], 'box-shadow: none',
+            '-webkit-box-shadow: none', '-moz-box-shadow: none', 'background: none', 'border-color: var(--font-info)',
+            'width: 20px', 'height: 20px', 'min-width: 20px', 'min-height: 20px', 'padding: 3px'));
 
         $this->style(Tools::css('.ctr.plain', [' ', 'button.std-button'], 'border: none'));
     }

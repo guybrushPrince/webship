@@ -14,34 +14,47 @@ class CloserHtmlView extends StandardButtonHtmlView {
     /**
      * CloserHtmlView constructor.
      * @param string[]|string $classes Some classes.
+     * @param string|null $img The closer image.
+     * @param string|null $id An optional button id.
      */
-    public function __construct(string|array $classes = [], string $img = '/tardis/pic/cancel.svg') {
+    public function __construct(string|array $classes = [], string|null $img = '/tardis/pic/cancel.svg',
+                                ?string $id = null) {
         $classes = is_array($classes) ? $classes : [ $classes ];
-        parent::__construct('closer', array_merge([ 'closer' ], $classes));
+        parent::__construct(is_null($id) ? 'closer' : $id, array_merge([ 'closer' ], $classes));
 
+        if (is_null($img)) $img = '/tardis/pic/cancel.svg';
         $this->img($img);
         $this->onlyImg(true);
 
-        $this->style(Tools::css('button.std-button.closer', [],
-            'box-sizing: border-box'));
+        self::addCSS();
+    }
 
-        $this->style(Tools::css('button.std-button.closer.mini', [], 'min-height: 25px',
+    /**
+     * Generate the CSS code.
+     * @return void
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('button.std-button.closer', [], 'box-sizing: border-box'));
+
+        self::addStyle(Tools::css('button.std-button.closer.mini', [], 'min-height: 25px',
             'min-width: 25px', 'height: 25px', 'width: 25px', 'border: none', 'margin: 0'));
 
-        $this->style(Tools::css('button.std-button.closer.plain', [' > ','img'], 'border-radius: 50%',
+        self::addStyle(Tools::css('button.std-button.closer.plain', [' > ','img'], 'border-radius: 50%',
             'transition: background 0.25s'));
-        $this->style(Tools::css('button.std-button.closer.plain:hover', [' > ','img'],
+        self::addStyle(Tools::css('button.std-button.closer.plain:hover', [' > ','img'],
             'background: var(--dark-system-background)'));
     }
 
     /**
      * Return a new closer html view.
      * @param string[]|string $classes Some classes.
-     * @param string $img A path to an image.
+     * @param string|null $img A path to an image.
+     * @param string|null $id An optional button id.
      * @return CloserHtmlView
      */
-    public static function _new(string|array $classes = [], string $img = '/tardis/pic/cancel.svg') : CloserHtmlView {
-        return new CloserHtmlView($classes, $img);
+    public static function _new(string|array $classes = [], string|null $img = '/tardis/pic/cancel.svg',
+                                ?string $id = null) : CloserHtmlView {
+        return new CloserHtmlView($classes, $img, $id);
     }
 
     /**

@@ -19,7 +19,8 @@ class ColorHtmlView extends HtmlView {
         $classes[] = 'color-v';
         parent::__construct($classes);
 
-        $font = Tools::getFontColor($color);
+        if ($color === 'none') $font = '#000000';
+        else $font = Tools::getFontColor($color);
         $this->localStyle([
             '--bg: ' . $color,
             '--fc: ' . $font,

@@ -27,7 +27,7 @@ class TagHtmlView extends ColorHtmlView {
         if (is_null($color)) $color = Tools::textToColor($tag);
         parent::__construct($color, $classes, $tag);
 
-        if (!$content) $this->texts($tag);
+        if (!$content) $this->container(['ver', 'vcent', 'hcent', 'h100'])->texts($tag);
         else $this->add($content);
 
         self::addCSS();
@@ -38,8 +38,10 @@ class TagHtmlView extends ColorHtmlView {
      * @return void
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.ctag', [], 'padding: 5px', 'border-radius: 5px',
-            'width: fit-content', 'width: -moz-fit-content', 'font-weight: bold', 'letter-spacing: 2px'));
+        self::addStyle(Tools::css('.ctag', [], 'padding: 0 5px', 'border-radius: 5px',
+            'width: fit-content', 'width: -moz-fit-content', 'font-weight: bold', 'letter-spacing: 2px',
+            'box-sizing: border-box', 'height: 30px', 'display: flex', 'flex-direction: row',
+            'align-items: center'));
     }
 
     /**
