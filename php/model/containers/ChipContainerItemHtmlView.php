@@ -20,7 +20,8 @@ class ChipContainerItemHtmlView extends ContainerItemHtmlView {
         parent::__construct(array_merge([ 'chip' ], $classes));
 
         $this->style(Tools::css('.chip', [' > ', 'button.std-button.closer.mini'],
-            'min-height: 20px', 'height: 20px', 'padding: 2.5px', 'min-width: 20px', 'width: 20px'));
+            'min-height: 20px', 'height: 20px', 'padding: 2.5px', 'min-width: 20px', 'width: 20px',
+            'background: none'));
         $this->style(Tools::css('.chip', [' ', '.container'], 'height: auto', 'padding-top: 0',
             'padding-bottom: 0'));
         $this->style(Tools::css('.chip', [' ', '.container-item'], 'height: auto', 'padding-top: 0',

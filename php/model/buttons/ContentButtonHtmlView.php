@@ -63,7 +63,8 @@ class ContentButtonHtmlView extends HtmlView {
         self::addStyle(Tools::css('.content-button', [' > ', 'form', ' > ', '.content'], 'display: none',
             'width: 100%', 'position: absolute', 'background: var(--light-system-background)',
             'border: 1px solid var(--dark-system-background)', 'border-radius: 3px', 'padding: 5px',
-            '-webkit-box-shadow: var(--shadow-flow-1)', 'box-shadow: var(--shadow-flow-1)'));
+            '-webkit-box-shadow: var(--shadow-flow-1)', 'box-shadow: var(--shadow-flow-1)',
+            'min-width: 100px', 'z-index: 100'));
         self::addStyle(Tools::css('.content-button.active', [' > ', 'form', ' > ', '.content'],
             'display: flex'));
     }
