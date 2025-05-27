@@ -26,6 +26,12 @@ class ContentButtonHtmlView extends HtmlView {
     private HtmlView $content;
 
     /**
+     * The overlay view.
+     * @var HtmlView
+     */
+    private HtmlView $overlay;
+
+    /**
      * ContentButton constructor.
      * @param string $id The id of the button.
      * @param string[]|string $classes Some classes.
@@ -33,11 +39,16 @@ class ContentButtonHtmlView extends HtmlView {
      */
     public function __construct(string $id, array|string $classes = [], array|string $contentClasses = []) {
         parent::__construct(array_merge(['content-button'], $contentClasses));
-        $overlay = $this->add(new HtmlView('overlay'))->ref('overlay');
+        $this->overlay = new HtmlView('overlay');
+        $overlay = $this->add($this->overlay)->ref('overlay');
         $this->button = StandardButtonHtmlView::create($id, $classes);
         $this->add($this->button);
         $this->content = new ContainerHtmlView(['ver', 'gap5', 'content']);
         $this->add($this->content);
+        $control = ControlPanelHtmlView::create(1, 1, false)->fix();
+        $this->content->add($control);
+        $closer = $control->addMini((new CloserHtmlView('close-' . $id))->mini());
+        $closer->protocol(Event::CLICK_OUTSIDE)->removeClass($this, 'active');
 
         $overlay->protocol(Event::CLICK)->toggleClass($this, 'active');
 
@@ -64,7 +75,7 @@ class ContentButtonHtmlView extends HtmlView {
             'width: 100%', 'position: absolute', 'background: var(--light-system-background)',
             'border: 1px solid var(--dark-system-background)', 'border-radius: 3px', 'padding: 5px',
             '-webkit-box-shadow: var(--shadow-flow-1)', 'box-shadow: var(--shadow-flow-1)',
-            'min-width: 100px', 'z-index: 100'));
+            'min-width: 170px', 'z-index: 100'));
         self::addStyle(Tools::css('.content-button.active', [' > ', 'form', ' > ', '.content'],
             'display: flex'));
     }
@@ -112,6 +123,24 @@ class ContentButtonHtmlView extends HtmlView {
      */
     public function content(HtmlView $view) : View {
         return $this->content->add($view);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function notice(int $language, string $text) : static{
+        $this->button->notice($language, $text);
+        $this->overlay->notice($language, $text);
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function notices(array|string $texts) : static {
+        $this->button->notices($texts);
+        $this->overlay->notices($texts);
+        return $this;
     }
 }
 ?>
