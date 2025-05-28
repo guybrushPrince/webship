@@ -48,7 +48,7 @@ class ContentButtonHtmlView extends HtmlView {
         $control = ControlPanelHtmlView::create(1, 1, false)->fix();
         $this->content->add($control);
         $closer = $control->addMini((new CloserHtmlView('close-' . $id))->mini());
-        $closer->protocol(Event::CLICK_OUTSIDE)->removeClass($this, 'active');
+        $closer->protocol(Event::CLICK)->removeClass($this, 'active');
 
         $overlay->protocol(Event::CLICK)->toggleClass($this, 'active');
 
@@ -73,7 +73,7 @@ class ContentButtonHtmlView extends HtmlView {
             'display: none'));
         self::addStyle(Tools::css('.content-button', [' > ', 'form', ' > ', '.content'], 'display: none',
             'width: 100%', 'position: absolute', 'background: var(--light-system-background)',
-            'border: 1px solid var(--dark-system-background)', 'border-radius: 3px', 'padding: 5px',
+            'border: 1px solid var(--dark-system-background)', 'border-radius: 3px', 'padding: 5px 25px 5px 5px;',
             '-webkit-box-shadow: var(--shadow-flow-1)', 'box-shadow: var(--shadow-flow-1)',
             'min-width: 170px', 'z-index: 100'));
         self::addStyle(Tools::css('.content-button.active', [' > ', 'form', ' > ', '.content'],
