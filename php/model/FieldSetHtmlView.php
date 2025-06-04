@@ -30,7 +30,7 @@ class FieldSetHtmlView extends HtmlView {
 
         $this->style(Tools::css('fieldset', [], 'display: flex', 'flex-wrap: wrap',
             'flex-direction: row', 'align-items: center', 'justify-items: center', 'width: fit-content',
-            'width: -moz-fit-content', 'border: none', 'padding: 0', 'margin: 0'));
+            'width: -moz-fit-content', 'border: none', 'padding: 0', 'margin: 0', 'box-sizing: border-box'));
         $this->style(Tools::css('fieldset:not(.plain)', [], 'border: 1px solid var(--border-13)',
             'border-radius: 5px', 'padding: 8px 10px', 'width: 100%', 'margin: 0 2px'));
         $this->style(Tools::css('fieldset.gap5' , [], 'gap:  5px'));

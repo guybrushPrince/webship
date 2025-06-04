@@ -33,6 +33,12 @@ class InputHtmlView extends HtmlView {
     private ?string $value = null;
 
     /**
+     * If the value shall be forced to return.
+     * @var bool
+     */
+    private bool $force = false;
+
+    /**
      * The minimum length of the content.
      * @var int|float|string|null
      */
@@ -151,11 +157,19 @@ class InputHtmlView extends HtmlView {
     }
 
     /**
+     * Shall it be forced to return the value?
+     * @return bool
+     */
+    public function shallForce() : bool {
+        return $this->force;
+    }
+
+    /**
      * Sets the value (for checkboxes) stored behind the checkbox.
      * @param string|CliffSerializable|null|array|int|bool $value The value.
      * @return $this
      */
-    public function val(string|CliffSerializable|null|array|int|bool $value) : InputHtmlView {
+    public function val(string|CliffSerializable|null|array|int|bool $value, bool $force = false) : InputHtmlView {
         if ($value instanceof IShippable ||
             (!is_bool($value) && !is_string($value) && !is_int($value) && !is_float($value) && !is_numeric($value) &&
                 !is_null($value) && !is_array($value))) {
@@ -164,6 +178,7 @@ class InputHtmlView extends HtmlView {
             if (is_array($value)) $value = Tools::jsonEncode($value);
             $this->value = $value;
         }
+        $this->force = $force;
         return $this;
     }
 

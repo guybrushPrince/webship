@@ -298,8 +298,10 @@ class LabelledInputHtmlView extends InputHtmlView {
                                               array|string $classes = []) : LabelledInputHtmlView {
         $input = new LabelledInputHtmlView($labels, $id, 'checkbox', null, null, null, $classes);
         $input->texts()->text(View::getLanguage(), (!$checked ? '' : 'checked'));
-        if (!is_array($labels)) $labels = [ self::getLanguage() => $labels ];
-        foreach ($labels as $lang => $label) $input->notice($lang, $label);
+        if (!is_null($labels)) {
+            if (!is_array($labels)) $labels = [ self::getLanguage() => $labels ];
+            foreach ($labels as $lang => $label) $input->notice($lang, $label);
+        }
         $input->mini = true;
         $input->inside = false;
         return $input;

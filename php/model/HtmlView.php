@@ -65,8 +65,6 @@ class HtmlView extends View {
         $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct();
         $this->classes = $classes;
-
-        NamelessHtmlView::addCSS();
     }
 
     /**

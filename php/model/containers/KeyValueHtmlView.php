@@ -64,7 +64,8 @@ class KeyValueHtmlView extends HtmlView {
         $this->localStyle('--vr: ' . $valueRatio . '%');
 
         $this->style(Tools::css('.kv', [], 'display: flex', 'flex-direction: row', 'flex-wrap: nowrap',
-            'width: 100%', 'align-items: center', 'padding: 10px', 'box-sizing: border-box', 'gap: 0 10px'));
+            'width: 100%', 'align-items: center', 'padding: 10px', 'box-sizing: border-box', 'gap: 0 10px',
+            'box-sizing: border-box'));
         $this->style(Tools::css('.kv.frame', [], 'border: 1px solid var(--ultra-light-system-background)'));
         $this->style(Tools::css('.kv', [' > ', '.k'], 'display: flex', 'flex-direction: row',
             'align-items: center', 'justify-content: flex-start', 'margin: 0', 'width: var(--kr)'));
@@ -156,6 +157,9 @@ class KeyValueHtmlView extends HtmlView {
         if ($value->type() !== 'checkbox')
             return self::createTextField($key, $value, $frame, $keySize, $valueSize, $classes);
         if ($swap) {
+            $tmp = $valueSize;
+            $valueSize = $keySize;
+            $keySize = $tmp;
             $view = new KeyValueHtmlView($key, $frame, $valueSize, $keySize, $classes, $value->getId());
             $view->valueView->add($value);
             $view->subviews = [ $view->subviews[1], $view->subviews[0] ];
