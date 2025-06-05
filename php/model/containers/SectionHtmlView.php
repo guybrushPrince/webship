@@ -53,6 +53,8 @@ class SectionHtmlView extends HtmlView {
 
         $this->style(Tools::css('.sect', [],'width: 100%', 'display: flex',
             'flex-direction: column', 'padding: 0 0 16px 0'));
+        $this->style(Tools::css('.sect.compatible', [],'padding: 16px 0 0 0'));
+
         $this->style(Tools::css('.sect.fit', [],'width: -moz-fit-content', 'width: fit-content',
             'padding-right: 20px'));
         $this->style(Tools::css('.sect:last-child', [],'padding: 0'));

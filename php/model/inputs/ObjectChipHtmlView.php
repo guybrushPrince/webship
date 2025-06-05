@@ -49,6 +49,9 @@ class ObjectChipHtmlView extends HtmlView {
             'flex-wrap: nowrap', 'align-items: center', 'border-radius: 5px', 'padding: 0',
             'transition: 0.5s background', 'width: -moz-fit-content', 'width: fit-content',
             'background: var(--premier-color)', 'color: var(--premier-font)', 'gap: 10px'));
+        $this->style(Tools::css('.obj-chip.clickable', [], 'cursor: pointer',
+            'transition: 0.5s opacity'));
+        $this->style(Tools::css('.obj-chip.clickable:hover', [], 'opacity: 0.8'));
         if (!is_null($type)) {
             if (!$swap) {
                 $this->localStyle('--premier-color: var(--' . $type . ')');
@@ -73,14 +76,16 @@ class ObjectChipHtmlView extends HtmlView {
             'font-size: 12px', 'padding: 5px 10px', 'box-sizing: border-box', 'height: 100%',
             'border-radius: 5px 0 0 5px', 'white-space: nowrap'));
 
-        $this->style(Tools::css('.obj-chip', [' > ', 'div:last-child:not(:first-child)'],
+        $this->style(Tools::css('.obj-chip', [' > ', 'div:nth-child(2):not(:first-child):not(.del)'],
             'display: flex', 'flex-direction: row', 'flex-wrap: nowrap', 'align-items: center',
             'padding: 5px 10px 5px 0', 'white-space: nowrap'));
+
+        $this->style(Tools::css('.obj-chip', [' > ', 'div.del'], 'height: 20px'));
     }
 
     /**
      * Creates a new object chip.
-     * @param string $type The type of the object (for default color settings).
+     * @param string|null $type The type of the object (for default color settings).
      * @param string|string[] $prefix The prefix.
      * @param string|string[]|HtmlView|null $content The content (possibly empty).
      * @param string[]|string $classes Some classes.
@@ -91,12 +96,34 @@ class ObjectChipHtmlView extends HtmlView {
      * @param string|null $secondaryFont The secondary font.
      * @return ObjectChipHtmlView
      */
-    public static function create(string $type, string|array $prefix, string|HtmlView|array|null $content,
+    public static function create(?string $type, string|array $prefix, string|HtmlView|array|null $content,
                                   array|string $classes = [],
                                   bool $swap = false, ?string $premierColor = null, ?string $premierFont = null,
                                   ?string $secondaryColor = null, ?string $secondaryFont = null) : ObjectChipHtmlView {
         return new ObjectChipHtmlView($type, $prefix, $content, $swap, $premierColor, $premierFont, $secondaryColor,
             $secondaryFont, $classes);
+    }
+
+    /**
+     * Add a deletion-view to the object chip.
+     * @param string|null $id The id of the closer.
+     * @param string $img The image.
+     * @return HtmlView
+     */
+    public function del(?string $id = null, string $img = '/tardis/pic/cancel.svg') : HtmlView {
+        $delView = new ContainerHtmlView(['del', 'hor', 'vcent', 'hcent']);
+        $delView->add(CloserHtmlView::_new([], $img, $id)->plain()->mini());
+        $this->add($delView);
+        return $delView;
+    }
+
+    /**
+     * Set the chip clickable.
+     * @return $this
+     */
+    public function clickable() : static {
+        $this->addClass('clickable');
+        return $this;
     }
 
 }

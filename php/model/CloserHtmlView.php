@@ -37,7 +37,7 @@ class CloserHtmlView extends StandardButtonHtmlView {
         self::addStyle(Tools::css('button.std-button.closer', [], 'box-sizing: border-box'));
 
         self::addStyle(Tools::css('button.std-button.closer.mini', [], 'min-height: 25px',
-            'min-width: 25px', 'height: 25px', 'width: 25px', 'border: none', 'margin: 0'));
+            'min-width: 25px', 'height: 25px', 'width: 25px', 'border: none', 'margin: 0', 'background: initial'));
 
         self::addStyle(Tools::css('button.std-button.closer.plain', [' > ','img'], 'border-radius: 50%',
             'transition: background 0.25s'));
