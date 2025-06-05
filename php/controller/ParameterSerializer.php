@@ -61,8 +61,12 @@ class ParameterSerializer {
                     $selector .= '$("' . $view->idc() . '")';
                     if ($scope === "value") {
                         if ($view instanceof InputHtmlView && $view->type() === 'checkbox') {
-                            $selector .= '.is(":checked")';
-                            if ($view->getValue()) $selector .= ' ? $("' . $view->idc() . '").val() : null';
+                            $isChecked = '.is(":checked")';
+                            if ($view->getValue()) {
+                                $val = '.val()';
+                                if (!$view->shallForce()) $selector .= $isChecked . ' ? $("' . $view->idc() . '")' . $val . ' : null';
+                                else $selector .= $val;
+                            } else $selector .= $isChecked;
                         } else if ($view instanceof CodeEditorHtmlView) {
                             $selector = 'cm' . $view->id() . '.getValue()';
                         } else if ($view instanceof FieldSetHtmlView) {
