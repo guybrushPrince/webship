@@ -36,7 +36,7 @@ class SwitchHtmlView extends InputHtmlView {
         $this->style(Tools::css('.switch', [' ', 'input:checked', ' + ', '.slider'],
             'background-color: var(--slider-checked)'));
         $this->style(Tools::css('.switch', [' ', 'input:focus', ' + ', '.slider'],
-            'box-shadow: 0 0 1px var(--slider-checked);'));
+            'box-shadow: 0 0 1px var(--slider-checked)'));
         $this->style(Tools::css('.switch', [' ', 'input:checked', ' + ', '.slider:before'],
             '-webkit-transform: translateX(var(--sw-ball))', '-ms-transform: translateX(var(--sw-ball))',
             'transform: translateX(var(--sw-ball))'));

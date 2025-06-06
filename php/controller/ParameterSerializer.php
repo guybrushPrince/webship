@@ -67,6 +67,8 @@ class ParameterSerializer {
                                 if (!$view->shallForce()) $selector .= $isChecked . ' ? $("' . $view->idc() . '")' . $val . ' : null';
                                 else $selector .= $val;
                             } else $selector .= $isChecked;
+                        } else if ($view instanceof MultipleSwitchInputHtmlView) {
+                            $selector .= '.find("input:checked").val()';
                         } else if ($view instanceof CodeEditorHtmlView) {
                             $selector = 'cm' . $view->id() . '.getValue()';
                         } else if ($view instanceof FieldSetHtmlView) {

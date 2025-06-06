@@ -100,7 +100,7 @@ class SelectHtmlView extends HtmlView {
         return '</' . $this->opening . '>';
     }
 
-    // Short cuts
+    // Shortcuts
 
     /**
      * Add an option.
