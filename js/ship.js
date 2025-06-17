@@ -228,9 +228,9 @@ let callFunc = function(f,r) {
     r = (typeof r !== "undefined") ? r : undefined;
     if (isFunction(f)) f(r);
 };
-let callAnFunc = function(con,n) {
+let callAnFunc = function(con,n,result) {
     let f = con[n];
-    if (isString(f)) eval(f); else f();
+    if (isString(f)) eval(f); else f(result);
 };
 let setCookie = function(t,v,r) {
     let d = new Date();

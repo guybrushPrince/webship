@@ -18,6 +18,8 @@ class TableRowHtmlView extends HtmlView {
         $this->style(Tools::css('.table > .tr', ['.vbot'], 'align-items: flex-end'));
         $this->style(Tools::css('.table > .tr > .cell', ['.hend'], 'display: flex',
             'justify-content: flex-end', 'justify-items: flex-end'));
+        $this->style(Tools::css('.table > .tr > .cell', ['.hcent'], 'display: flex',
+            'justify-content: center', 'justify-items: center'));
     }
 
     /**

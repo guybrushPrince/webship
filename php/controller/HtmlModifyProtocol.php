@@ -255,7 +255,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 }
                 case 'function': {
                     $code = $modify["code"];
-                    if ($code instanceof TemplateObject) return 'callAnFunc(con, "' . $code->getName() . '");';
+                    if ($code instanceof TemplateObject) return 'callAnFunc(con, "' . $code->getName() . '", result);';
                     else return $code;
                 }
                 case 'retain': {
