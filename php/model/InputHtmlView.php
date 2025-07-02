@@ -69,6 +69,12 @@ class InputHtmlView extends HtmlView {
     private bool $autoComplete = true;
 
     /**
+     * An optional range list.
+     * @var int[]|string[]|array|null
+     */
+    private array|null $legend = null;
+
+    /**
      * InputHtmlView constructor.
      * @param string|null $id The id.
      * @param string $name The name.
@@ -81,7 +87,7 @@ class InputHtmlView extends HtmlView {
     public function __construct(?string $id, string $name, string $type,
                                 int|string|float|null $min = null, int|string|float|null $max = null,
                                 int|float|null $step = null,
-                                string|array $classes = []) {
+                                string|array $classes = [], array|null $legend = null) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct(array_merge([ 'input' ], $classes));
         $this->id = $id;
@@ -90,6 +96,7 @@ class InputHtmlView extends HtmlView {
         $this->min = $min;
         $this->max = $max;
         $this->step = $step;
+        $this->legend = $legend;
 
         $coreClasses = array_diff($this->classes, $classes);
         $coreSelector = '.' . implode('.', $coreClasses);
@@ -109,10 +116,11 @@ class InputHtmlView extends HtmlView {
         return '<input class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' .
             ($this->id ? ' id="' . $this->id . '"' : '') . ' name="' . $this->name .
             '" type="' . $this->type . '"' .
-            ($this->type === 'number' || $this->type === 'date' && $this->min ? ' min="' . $this->min . '"' : '') .
-            ($this->type === 'number' || $this->type === 'date' && $this->max ? ' max="' . $this->max . '"' : '') .
+            ($this->type === 'number' || $this->type === 'range' || $this->type === 'date' && $this->min ? ' min="' . $this->min . '"' : '') .
+            ($this->type === 'number' || $this->type === 'range' || $this->type === 'date' && $this->max ? ' max="' . $this->max . '"' : '') .
             ($this->type === 'text'   && $this->max ? ' maxlength="' . $this->max . '"' : '') .
-            (($this->type === 'number' || $this->type === 'time') && $this->step ? ' step="' . $this->step . '"' : '') .
+            (($this->type === 'number' || $this->type === 'range' || $this->type === 'time') && $this->step ? ' step="' . $this->step . '"' : '') .
+            ($this->type === 'range' && !is_null($this->legend) ? ' list="' . $this->name . '-legend' . '"' : '') .
             (array_key_exists(View::$language, $this->hints) ?
                 ' placeholder="' . implode(' ' ,$this->hints[View::$language]) . '"' :
                 '') .
@@ -131,7 +139,13 @@ class InputHtmlView extends HtmlView {
      * @inheritDoc
      */
     public function generateClosingTag() {
-        return ($this->type !== 'checkbox' ? '">' : '>');
+        $code = ($this->type !== 'checkbox' ? '">' : '>');
+        if (!is_null($this->legend)) {
+            $code .= '<datalist id="' . $this->name . '-legend' . '">' . implode(array_map(function ($l) {
+                    return '<option label="' . $l . '">' . $l . '</option>';
+                }, $this->legend)) . '</datalist>';
+        }
+        return $code;
     }
 
     /**

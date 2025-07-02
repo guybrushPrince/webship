@@ -61,8 +61,8 @@ class LabelledInputHtmlView extends InputHtmlView {
     private function __construct(string|array|null $labels, string $id, string $type,
                                  int|string|float|null $min = null, int|string|float|null $max = null,
                                  int|float|null $step = null,
-                                 array|string $classes = []) {
-        parent::__construct($id, $id, $type, $min, $max, $step, $classes);
+                                 array|string $classes = [], array|null $legend = null) {
+        parent::__construct($id, $id, $type, $min, $max, $step, $classes, $legend);
         if ($labels === null) $labels = '';
         if ($labels === '') $this->labelLess = true;
         $this->labels = is_array($labels) ? $labels : [ self::getLanguage() => $labels ];
@@ -177,6 +177,35 @@ class LabelledInputHtmlView extends InputHtmlView {
                                               int|float|null $step = null) : LabelledInputHtmlView {
         $input = new LabelledInputHtmlView($labels, $id, 'number', $min, $max, $step, $classes);
         if ($value || is_int($value) || is_float($value)) $input->texts()->text(self::getLanguage(), $value);
+        return $input;
+    }
+
+    /**
+     * Create a numeric range input field.
+     * @param string|string[]|null $labels The label(s).
+     * @param string $id The id.
+     * @param string[]|string $classes Some classes.
+     * @param int|float|null $value The start value.
+     * @param int|float|null $min The minimum value.
+     * @param int|float|null $max The maximum value.
+     * @param int|float|null $step The step size.
+     * @param array|null $legend A list of legend (x-axis) values.
+     * @return LabelledInputHtmlView
+     */
+    public static function createRangeField(string|array|null $labels, string $id, array|string $classes = [],
+                                            int|float|null $value = null,
+                                            int|float|null $min = null, int|float|null $max = null,
+                                            int|float|null $step = null,
+                                            array|null $legend = null) : LabelledInputHtmlView {
+        if (is_null($legend) && !is_null($min) && !is_null($max)) {
+            $legend = [
+                $min,
+                ($max - $min) / 2,
+                $max
+            ];
+        }
+        $input = new LabelledInputHtmlView($labels, $id, 'range', $min, $max, $step, $classes, $legend);
+        if ($value || is_int($value) || is_float($value)) $input->texts($value);
         return $input;
     }
 
