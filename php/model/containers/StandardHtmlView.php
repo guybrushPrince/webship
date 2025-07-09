@@ -21,7 +21,15 @@ class StandardHtmlView extends HtmlView {
         $classes[] = 'std';
         parent::__construct($classes);
 
-        $this->style(Tools::css('.std', [], 'width: 100%', 'padding: 20px 20px',
+        self::addCSS();
+    }
+
+    /**
+     * Add CSS styles.
+     * @return void
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.std', [], 'width: 100%', 'padding: 20px 20px',
             'box-sizing: border-box', 'position: relative'));
     }
 }

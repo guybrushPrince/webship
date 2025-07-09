@@ -30,6 +30,9 @@ class CodeEditorHtmlView extends TextHtmlView {
         parent::__construct($id, $id, 3, false, $classes, true);
 
         $this->style(Tools::css('.code-editor', [], 'width: 100%'));
+        $this->style(Tools::css('.code-editor', ['.fit'], 'height: fit-content',
+            'height: -moz-fit-content'));
+        $this->style(Tools::css('.code-editor', ['.fit', ' > ', '.CodeMirror'], 'height: 100%'));
 
         $this->style(Tools::css('.code-editor', [' > ', 'textarea'], 'width: 100%',
             'font-family: Consolas, "Courier New", monospace', 'font-weight: normal', 'font-size: 14px',
