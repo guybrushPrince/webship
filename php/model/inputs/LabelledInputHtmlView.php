@@ -214,13 +214,16 @@ class LabelledInputHtmlView extends InputHtmlView {
      * @param string|string[]|null $labels The label(s).
      * @param string $id The id.
      * @param string[]|string $classes Some classes.
+     * @param string|null $value The start value.
      * @param int|null $min The minimum length.
      * @param int|null $max The maximum length.
      * @return LabelledInputHtmlView
      */
     public static function createMiniField(string|array|null $labels, string $id, array|string $classes = [],
+                                           ?string $value = null,
                                            ?int $min = null, ?int $max = null) : LabelledInputHtmlView {
         $input = new LabelledInputHtmlView($labels, $id, 'text', $min, $max, null, $classes);
+        if ($value) $input->texts()->text(self::getLanguage(), $value);
         $input->mini = true;
         return $input;
     }
