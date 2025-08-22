@@ -33,9 +33,12 @@ class OptionHtmlView extends HtmlView {
     public function __construct($value, array|string $classes = [], bool $selected = false) {
         parent::__construct(array_merge(array('option'), $classes));
         if ($value instanceof IShippable ||
-            (!is_string($value) && !is_int($value) && !is_float($value) && !is_numeric($value) && !is_null($value))) {
+            (!is_string($value) && !is_int($value) && !is_float($value) && !is_numeric($value) && !is_null($value) &&
+                !is_array($value))) {
             $value = ShipperRegister::getObjectString($value);
-        }
+        } else if (is_array($value)) {
+            $value = Tools::jsonEncode($value);
+        } else if (is_null($value)) $value = 'null';
         $this->value = $value;
         $this->selected = $selected;
     }

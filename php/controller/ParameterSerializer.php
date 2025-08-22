@@ -73,7 +73,6 @@ class ParameterSerializer {
                             $selector = 'cm' . $view->id() . '.getValue()';
                         } else if ($view instanceof FieldSetHtmlView) {
                             $selector = 'addFieldSetSel(' . $selector . ', "' . $info["name"] . '")';
-                            //.find("input[data-intern-scope=\"' . $name . '\"]").toArray().filter((i) => (!$(i).is(":checkbox") || $(i).is(":checked"))).map((i) => {let v = $(i).val(); return isJson(v.replaceAll("\'", "\"")) ? JSON.parse(v.replaceAll("\'", "\"")) : v;}).flat().unique()';
                         } else {
                             if ($view instanceof ContentSelectHtmlView) {
                                 $selector = '$("select' . $view->idc() . '")';
@@ -147,8 +146,7 @@ class ParameterSerializer {
                                 } else if ($view instanceof CodeEditorHtmlView) {
                                     $selector = 'cm' . $view->id() . '.getValue()';
                                 } else if ($view instanceof FieldSetHtmlView) {
-                                    $selector .= 'addFieldSetSel(' . $selector . ', "' . $info["name"] . '")';//
-                                    //'.find("input[data-intern-scope=\"' . $name . '\"]").toArray().filter((i) => (!$(i).is(":checkbox") || $(i).is(":checked"))).map((i) => {let v = $(i).val(); return isJson(v.replaceAll("\'", "\"")) ? JSON.parse(v.replaceAll("\'", "\"")) : v;}).flat().unique()';
+                                    $selector .= 'addFieldSetSel(' . $selector . ', "' . $info["name"] . '")';
                                 } else {
                                     $selector .= '.val()';
                                 }
