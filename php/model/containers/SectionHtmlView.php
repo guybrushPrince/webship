@@ -51,26 +51,34 @@ class SectionHtmlView extends HtmlView {
             $this->js('(function() { let open = false; $("' . $this->section->idc() . '").on("click", function() { if (!open) $("' . $this->idc() . '").trigger("' . Event::OPEN_LIST . '"); open = true; }); })();');
         } else $this->js('(function() { let open = true; $("' . $this->section->idc() . '").on("click", function() { if (open) $("' . $this->idc() . '").trigger("' . Event::CLOSE_LIST . '"); open = false; }); })();');
 
-        $this->style(Tools::css('.sect', [],'width: 100%', 'display: flex',
-            'flex-direction: column', 'padding: 0 0 16px 0'));
-        $this->style(Tools::css('.sect.compatible', [],'padding: 16px 0 0 0'));
+        self::addCSS();
+    }
 
-        $this->style(Tools::css('.sect.fit', [],'width: -moz-fit-content', 'width: fit-content',
+    /**
+     * Add the CSS styles.
+     * @return void
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.sect', [],'width: 100%', 'display: flex',
+            'flex-direction: column', 'padding: 0 0 16px 0'));
+        self::addStyle(Tools::css('.sect.compatible', [],'padding: 16px 0 0 0'));
+
+        self::addStyle(Tools::css('.sect.fit', [],'width: -moz-fit-content', 'width: fit-content',
             'padding-right: 20px'));
-        $this->style(Tools::css('.sect:last-child', [],'padding: 0'));
-        $this->style(Tools::css('.sect.fit:last-child', [],'padding: 0'));
-        $this->style(Tools::css('.sect.closed', [' > ', 'div:not(.section)'],'display: none !important'));
-        $this->style(Tools::css('.sect.fit:not(.closed)', [],'width: 100%'));
-        $this->style(Tools::css('.sect', [' > ', '.section'], 'font-family: Roboto, sans-serif',
+        self::addStyle(Tools::css('.sect:last-child', [],'padding: 0'));
+        self::addStyle(Tools::css('.sect.fit:last-child', [],'padding: 0'));
+        self::addStyle(Tools::css('.sect.closed', [' > ', 'div:not(.section)'],'display: none !important'));
+        self::addStyle(Tools::css('.sect.fit:not(.closed)', [],'width: 100%'));
+        self::addStyle(Tools::css('.sect', [' > ', '.section'], 'font-family: Roboto, sans-serif',
             'text-transform: none', 'font-size: 1.25em', 'font-weight: lighter', 'width: 100%',
             'cursor: pointer'));
-        $this->style(Tools::css('.sect', [' > ', '.section', ':after'], 'content: ""',
+        self::addStyle(Tools::css('.sect', [' > ', '.section', ':after'], 'content: ""',
             'margin-left: 5px', 'background-repeat: no-repeat', 'width: 10px', 'height: 10px', 'background-size: cover',
             'background-image: url(' . HtmlActionProtocol::$serverURL . '/webship/pic/arrow-down-sign-to-navigate.svg)',
             'box-sizing: border-box', 'display: inline-block', 'opacity: 0.25', 'transition: opacity 0.5s'));
-        $this->style(Tools::css('.sect', [' > ', '.section', ':hover', ':after'],
+        self::addStyle(Tools::css('.sect', [' > ', '.section', ':hover', ':after'],
             'opacity: 1'));
-        $this->style(Tools::css('.sect', [' > ', 'div:nth-child(2)'],'width: 100%',
+        self::addStyle(Tools::css('.sect', [' > ', 'div:nth-child(2)'],'width: 100%',
             'padding: 10px 20px', 'box-sizing: border-box'));
     }
 
