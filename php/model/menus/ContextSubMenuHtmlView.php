@@ -1,46 +1,66 @@
 <?php
 
 /**
- * Class ContextSubMenuHtmlView
+ * View ContextSubMenuHtmlView.
+ *
+ * <p>A submenu of a context menu.</p>
+ *
+ * @package webship
+ * @subpackge php/model/menus
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
  */
 class ContextSubMenuHtmlView extends SubMenuHtmlView {
 
     /**
      * ContextSubMenuHtmlView constructor.
-     * @param array|string $classes
+     * @param string[]|string $classes Some classes.
      */
-    public function __construct($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct(array_merge(array('context'), $classes));
+    public function __construct(array|string $classes = []) {
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        parent::__construct(array_merge([ 'context' ], $classes));
 
-        $coreClasses = array_diff($this->classes, $classes);
-        $coreSelector = '.' . implode('.', $coreClasses);
+        self::addCSS();
+    }
 
-        $this->style(Tools::css('li' . $coreSelector, array(':after'),
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('nav.menu.context', [' ', 'li.sub-menu-entry',':after'],
             'content: ""', 'padding-left: 5px'));
-
-        $this->style(Tools::css('ul' . $coreSelector, '',
+        self::addStyle(Tools::css('nav.menu.context', [' ', 'li.sub-menu-entry', ' > ', 'ul'],
             'display: none', 'list-style-type: none', 'margin: 0', 'background: var(--fine-system-background)',
             'border: 1px solid var(--system-background)', 'padding: 0'));
-
-        $this->style(Tools::css('ul' . $coreSelector, array(' > ', 'li'), 'width: fit-content',
+        self::addStyle(Tools::css('nav.menu.context', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li'],
+            'width: fit-content',
             'min-height: 30px', 'height: auto', 'padding: 5px 20px', 'box-sizing: border-box', 'position: relative',
             'flex-basis: 100%', 'width: -moz-fit-content'));
-
-        $this->style(Tools::css('ul' . $coreSelector, array(' > ', 'li', ':hover'),
+        self::addStyle(Tools::css('nav.menu.context', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li',
+            ':hover'],
             'background: var(--system-background)'));
     }
 
-    // Short cuts
+    /**
+     * @inheritDoc
+     */
+    public static function create(array|string|null $texts = null, array|string $classes = []): ContextSubMenuHtmlView {
+        $entry = self::_new($classes);
+        if (!is_null($texts)) $entry->texts($texts);
+        return $entry;
+    }
+
+    //
+    // Shortcuts
+    //
 
     /**
      * Create a context menu entry.
-     * @param array|string $classes A set of classes.
+     * @param string[]|string $classes A set of classes.
      * @return ContextMenuEntryHtmlView
      */
-    public function entry($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public function entry(array|string $classes = []) : ContextMenuEntryHtmlView {
         $entry = new ContextMenuEntryHtmlView($classes);
         $this->add($entry);
         return $entry;
@@ -48,11 +68,10 @@ class ContextSubMenuHtmlView extends SubMenuHtmlView {
 
     /**
      * Create a context sub menu entry.
-     * @param array|string $classes A set of classes.
+     * @param string[]|string $classes A set of classes.
      * @return ContextSubMenuHtmlView
      */
-    public function submenu($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public function submenu(array|string $classes = []) : ContextSubMenuHtmlView {
         $entry = new ContextSubMenuHtmlView($classes);
         $this->add($entry);
         return $entry;
@@ -60,11 +79,10 @@ class ContextSubMenuHtmlView extends SubMenuHtmlView {
 
     /**
      * Return a new context sub menu html view.
-     * @param array|string $classes Classes.
+     * @param string[]|string $classes Some classes.
      * @return ContextSubMenuHtmlView
      */
-    public static function _new($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public static function _new(array|string $classes = []) : ContextSubMenuHtmlView {
         return new ContextSubMenuHtmlView($classes);
     }
 }

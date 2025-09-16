@@ -1,8 +1,15 @@
 <?php
 
 /**
- * Class SubMenuHtmlView
+ * View SubMenuHtmlView.
+ *
+ * <p>A submenu within a menu.</p>
+ *
+ * @package webship
+ * @subpackge php/model/menus
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
  */
 class SubMenuHtmlView extends MenuEntryHtmlView {
 
@@ -10,38 +17,52 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
      * SubMenuHtmlView constructor.
      * @param string[]|string $classes Some classes.
      */
-    public function __construct($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct(array_merge(array('sub-menu-entry'), $classes));
+    public function __construct(array|string $classes = []) {
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        parent::__construct(array_merge([ 'sub-menu-entry' ], $classes));
 
-        $coreClasses = array_diff($this->classes, $classes);
-        $coreSelector = '.' . implode('.', $coreClasses);
+        self::addCSS();
+    }
 
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
         // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from
         // <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-        $this->style(Tools::css('li' . $coreSelector, array(':after'),
+        self::addStyle(Tools::css('nav.menu', [' ', 'li.sub-menu-entry', ':after'],
             'content: ""', 'margin-left: 5px', 'background-image: url("' .
-                HtmlActionProtocol::$serverURL . '/webship/pic/arrow-down-sign-to-navigate.svg")',
+            HtmlActionProtocol::$serverURL . '/webship/pic/arrow-down-sign-to-navigate.svg")',
             'background-repeat: no-repeat', 'width: 10px', 'height: 10px', 'background-size: cover',
             'box-sizing: border-box'));
 
-        $this->style(Tools::css('ul' . $coreSelector, '',
+        self::addStyle(Tools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul'],
             'display: none', 'list-style-type: none', 'margin: 0', 'background: var(--main-menu-hover)',
             'padding: 0',
             '-webkit-box-shadow: var(--shadow-flow-4)', '-moz-box-shadow: var(--shadow-flow-4)',
             'box-shadow: var(--shadow-flow-4)', 'border-radius: 0 6px 6px 6px'));
 
-        $this->style(Tools::css('ul' . $coreSelector, array(' > ', 'li'), 'width: fit-content',
+        self::addStyle(Tools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li'],
+            'width: fit-content',
             'height: 50px', 'padding: 10px 20px', 'box-sizing: border-box', 'position: relative', 'flex-basis: 100%',
             'width: -moz-fit-content'));
 
-        $this->style(Tools::css('ul' . $coreSelector, array(' > ', 'li', ':hover'),
+        self::addStyle(Tools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li', ':hover'],
             'background: var(--main-menu)'));
 
-        $this->style(Tools::css('ul' . $coreSelector, [' > ', 'li:first-child'],
+        self::addStyle(Tools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li:first-child'],
             'border-radius: 0 6px 0 0'));
-        $this->style(Tools::css('ul' . $coreSelector, [' > ', 'li:last-child'],
+        self::addStyle(Tools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li:last-child'],
             'border-radius: 0 0 6px 6px'));
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function create(array|string|null $texts = null, array|string $classes = []) : MenuEntryHtmlView {
+        $entry = self::_new($classes);
+        if (!is_null($texts)) $entry->texts($texts);
+        return $entry;
     }
 
     /**
@@ -55,33 +76,31 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
             return !($view instanceof MenuEntryHtmlView);
         });
         $this->subviews = $menuEntries;
-        return '<li class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' .
-            ($this->notices ? ' title="' . (array_key_exists(View::getLanguage(), $this->notices) ? $this->notices[View::getLanguage()] : array_pop($this->notices)) . '"' : '') .
-            '>' .
-            implode(array_map(function (View $view) {
+        $tag = parent::generateOpeningTag();
+        return '<li ' . substr($tag, 4) . implode(array_map(function (View $view) {
                 return $view->generateSafe();
             }, $nonMenuEntries)) .
-            '<ul class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' . '>';
+            '<ul>';
     }
 
     /**
      * @inheritDoc
      */
     public function generateClosingTag() {
-        return '</li></ul>';
+        return '</ul></li>';
     }
 
 
-
-    // Short cuts
+    //
+    // Shortcuts
+    //
 
     /**
      * Create a menu entry.
-     * @param array|string $classes A set of classes.
+     * @param string[]|string $classes A set of classes.
      * @return MenuEntryHtmlView
      */
-    public function entry($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public function entry(array|string $classes = []) : MenuEntryHtmlView {
         $entry = new MenuEntryHtmlView($classes);
         $this->add($entry);
         return $entry;
@@ -89,11 +108,10 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
 
     /**
      * Create a sub menu entry.
-     * @param array|string $classes A set of classes.
-     * @return MenuEntryHtmlView
+     * @param string[]|string $classes A set of classes.
+     * @return SubMenuHtmlView
      */
-    public function submenu($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public function submenu(array|string $classes = []) : SubMenuHtmlView {
         $entry = new SubMenuHtmlView($classes);
         $this->add($entry);
         return $entry;
@@ -101,11 +119,10 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
 
     /**
      * Return a new sub menu html view.
-     * @param array|string $classes Classes.
+     * @param string[]|string $classes Some classes.
      * @return SubMenuHtmlView
      */
-    public static function _new($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public static function _new(array|string $classes = []) : SubMenuHtmlView {
         return new SubMenuHtmlView($classes);
     }
 }

@@ -131,6 +131,12 @@ class HtmlView extends View {
     }
 
     /**
+     * Add CSS code.
+     * @return void
+     */
+    public static function addCSS() : void {}
+
+    /**
      * Add a style to the view.
      * @param string|string[] $style The code.
      */

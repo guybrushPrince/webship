@@ -3,7 +3,7 @@
 include_once dirname(__FILE__) . '/HtmlView.php';
 
 /**
- * Class ContainerHtmlView
+ * Class ContainerHtmlView.
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  */
 class ContainerHtmlView extends HtmlView {
@@ -24,6 +24,8 @@ class ContainerHtmlView extends HtmlView {
         $this->style(Tools::css('.container', '.single', 'flex-wrap: nowrap'));
         $this->style(Tools::css('.container', '.vcent', 'align-items: center',
             'align-content: center'));
+        $this->style(Tools::css('.container', '.scroll-x', 'overflow-x: auto'));
+        $this->style(Tools::css('.container', '.scroll-y', 'overflow-y: auto'));
         $this->style(Tools::css('.container', '.gap', 'gap: 5px'));
         $this->style(Tools::css('.container', '.gap5', 'gap: 5px'));
         $this->style(Tools::css('.container', '.gap10', 'gap: 10px'));
@@ -90,6 +92,107 @@ class ContainerHtmlView extends HtmlView {
      */
     public static function _new(string|array $classes = []) : static {
         return new ContainerHtmlView($classes);
+    }
+
+    /**
+     * Set a vertical orientation.
+     * @return $this
+     */
+    public function vertical() : static {
+        $this->addClass('ver');
+        return $this;
+    }
+
+    /**
+     * Set a horizontal orientation.
+     * @return $this
+     */
+    public function horizontal() : static {
+        $this->addClass('hor');
+        return $this;
+    }
+
+    /**
+     * Do not allow multiple rows/columns.
+     * @return $this
+     */
+    public function one() : static {
+        $this->addClass('single');
+        return $this;
+    }
+
+    /**
+     * Align the items vertically centered.
+     * @return $this
+     */
+    public function centerVertical() : static {
+        $this->addClass('vcent');
+        return $this;
+    }
+
+    /**
+     * Align the items horizontally centered.
+     * @return $this
+     */
+    public function centerHorizontal() : static {
+        $this->addClass('hcent');
+        return $this;
+    }
+
+    /**
+     * Set the gap between the elements of the container.
+     * @param int $gapSize The size of the gap.
+     * @return $this
+     */
+    public function gap(int $gapSize) : static {
+        $this->addClass('gap' . $gapSize);
+        return $this;
+    }
+
+    /**
+     * Set the padding of the container.
+     * @param int $padding The padding.
+     * @return $this
+     */
+    public function padding(int $padding) : static {
+        $this->addClass('padding' . $padding);
+        return $this;
+    }
+
+    /**
+     * Allow the container to scroll horizontally if necessary.
+     * @return $this
+     */
+    public function scrollHorizontal() : static {
+        $this->addClass('scroll-x');
+        return $this;
+    }
+
+    /**
+     * Allow the container to scroll vertically if necessary.
+     * @return $this
+     */
+    public function scrollVertical() : static {
+        $this->addClass('scroll-y');
+        return $this;
+    }
+
+    /**
+     * Set the height to 100% (full height).
+     * @return $this
+     */
+    public function fullHeight() : static {
+        $this->addClass('h100');
+        return $this;
+    }
+
+    /**
+     * Set the width to 100% (full width).
+     * @return $this
+     */
+    public function fullWidth() : static {
+        $this->addClass('w100');
+        return $this;
     }
 }
 ?>
