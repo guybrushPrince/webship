@@ -36,6 +36,8 @@ class HtmlActionProtocol extends ActionProtocol {
 
             HtmlActionProtocol::$serverURL = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ?
                     "https://" : "http://") . $_SERVER['SERVER_NAME'] . '/' . $urls['baseUrl'];
+
+            if (!HtmlActionProtocol::$serverURL) HtmlActionProtocol::$serverURL = $urls['fallback'];
         }
     }
 
