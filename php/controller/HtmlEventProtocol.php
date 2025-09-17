@@ -95,6 +95,9 @@ class HtmlEventProtocol extends EventProtocol {
                 if ($this->event === Event::TIMED) {
                     $code = '(() => { let i = setInterval(';
                 }
+                if ($this->event === Event::DELAYED) {
+                    $code = '(() => { let i = setTimeout(';
+                }
                 if ($this->event === Event::ONLOAD) $code = '';
                 $code .= '(function(e' . ($this->event === Event::CONTENTMODIFY || $this->event === Event::OBJECTMODIFY ||
                     $this->event === Event::DIRTY || $this->event === Event::DRAGDROP || $this->event === Event::DRAGSTART ? ',eData={}' : '') . ') {';
@@ -113,12 +116,16 @@ class HtmlEventProtocol extends EventProtocol {
 
                 if ($this->event !== Event::ONLOADCONTENT) $code .= $this->generateCode($this->children);
                 if ((!array_key_exists('include children', $this->parameters) ||
-                        !$this->parameters["include children"]) && $this->event !== Event::TIMED) $code .= 'sp(e);';
+                        !$this->parameters["include children"]) &&
+                        !in_array($this->event, [ Event::TIMED, Event::DELAYED ])) $code .= 'sp(e);';
 
 
                 if ($this->delay) $code .= '}};' . 'lastDelay.push(l);' . 'delay(lastDelay, ' . $this->delay . ');';
                 if ($this->event === Event::TIMED) {
                     $code .= 'if (' . ($this->forceObject ? : '$("[data-id=' . $this->parent->id() . '").length === 0') . ') clearInterval(i);';
+                }
+                if ($this->event === Event::DELAYED) {
+                    $code .= 'if (' . ($this->forceObject ? : '$("[data-id=' . $this->parent->id() . '").length === 0') . ') clearTimeout(i);';
                 }
                 $code .= '})';
                 if ($this->event === Event::ONLOAD) $code .= '(' . ($this->forceObject ? : '$("' . $this->parent->idc() . '")') . ')';
@@ -153,7 +160,7 @@ class HtmlEventProtocol extends EventProtocol {
                     case Event::JOB_ERROR:
                     case Event::CLOSE_MODAL: $code .= ')';
                 }
-                if ($this->event === Event::TIMED) {
+                if (in_array($this->event, [ Event::TIMED, Event::DELAYED ])) {
                     $code .= ',' . ($this->parameters['interval'] * 1000) . ')})()';
                 }
                 $code .= ';';
