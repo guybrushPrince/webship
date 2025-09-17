@@ -1,5 +1,7 @@
 <?php
 
+use progression\ui\Representer;
+
 /**
  * Class ContentSelectHtmlView.
  *

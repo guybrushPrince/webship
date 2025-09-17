@@ -65,7 +65,7 @@ let isJson = function (item) {
 };
 Array.prototype.unique = function () { return [...new Set(this)]; }
 
-let context = { currentTaskId: 0, currentHintId: 0, tabId: 0, tabOffset: [], windows: [], formContexts: [] };
+let context = { currentTaskId: 0, currentHintId: 0, tabId: 0, tabOffset: [], windows: [], formContexts: {} };
 
 let lastDelay = [];
 let delay = (function () {
@@ -108,6 +108,10 @@ let nId = function() {
 
 let hId = function() {
     return context.currentHintId++;
+};
+
+let escBS = function(c) {
+    return c.replaceAll("\\", "\\\\");
 };
 
 let request = function(

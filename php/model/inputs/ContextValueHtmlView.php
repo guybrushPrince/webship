@@ -1,5 +1,12 @@
 <?php
 
+use progression\ContextSerializer;
+use progression\ContextVariable;
+use progression\IProgressionSerializable;
+use progression\NotImplementedException;
+use progression\SimplePersistence;
+use progression\ui\Representer;
+
 /**
  * Class ContextValueHtmlView.
  *
@@ -157,13 +164,24 @@ class ContextValueHtmlView extends HtmlView {
 
     /**
      * Builds a context value (or a more complex structure).
-     * @param string|bool|int|float|ContextVariable|IProgressionSerializable|array $value The value.
+     * @param string|bool|int|float|ContextVariable|IProgressionSerializable|array|null $value The value.
      * @return ContextValueHtmlView
+     * @throws NotImplementedException
      */
-    public static function buildContext(string|bool|int|float|ContextVariable|IProgressionSerializable|array $value) : ContextValueHtmlView {
+    public static function buildContext(string|bool|int|float|ContextVariable|IProgressionSerializable|array|null $value) : ContextValueHtmlView {
         if ($value instanceof IProgressionSerializable) {
             $view = ContextValueHtmlView::create('object');
-            $view->texts($value->getPermanentClass() . $value->getPermanentId());
+            $isVisualRepresented = Representer::hasVisualRepresentation($value->getPermanentClass());
+            if ($isVisualRepresented) {
+                SimplePersistence::instance()->unsafeMode();
+                $obj = ContextSerializer::deserializeObject($value->getPermanentId(), $value->getPermanentClass());
+                $withFunctionality = false;
+                if ($obj instanceof HoldFile) $withFunctionality = true;
+                $rep = Representer::getVisualRepresentation($obj, View::getLanguage(), $withFunctionality);
+                $view->add($rep);
+            } else {
+                $view->texts($value->getPermanentClass() . $value->getPermanentId());
+            }
             return $view;
         } else if ($value instanceof ContextVariable) {
             $view = ContextValueHtmlView::create('con-variable');
@@ -184,6 +202,10 @@ class ContextValueHtmlView extends HtmlView {
         } else if (is_float($value)) {
             $view = ContextValueHtmlView::create('float');
             $view->texts($value);
+            return $view;
+        } else if (is_null($value)) {
+            $view = ContextValueHtmlView::create('null');
+            $view->texts('NULL');
             return $view;
         } else {
             // It is an array

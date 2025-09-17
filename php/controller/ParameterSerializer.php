@@ -170,7 +170,7 @@ class ParameterSerializer {
             return '"' . $param . '"' . ': ' . $value->generate();
         } else if ($value instanceof JSObject) {
             return ['"' . $param . '"' . ': ' . $value->getName() . '.' . $value->getIdProp(),
-                '"' . $param . 'IClass' . '"' . ': ' . $value->getName() . '.' . $value->getClassProp()];
+                '"' . $param . 'IClass' . '"' . ': ' . $value->getName() . '.' . $value->getClassProp() . ''];
         } else if ($value instanceof JSProperty) {
             return '"' . $param . '"' . ': ' . $value->getName();
         } else if ($value instanceof JSNegation) {
@@ -237,6 +237,7 @@ class ParameterSerializer {
         $key = (is_integer($key) ? ShipperRegister::convertKey($key) : $key);
         // Convert the type of the object
         $type = ShipperRegister::getClass($value);
+        $type = self::escapeBackslashes($type);
         if ($param !== null) {
             return ['"' . $param . '"' . ': ' . (is_string($key) ? '"' . $key . '"' : $key),
                 '"' . $param . 'IClass' . '"' . ': "' . $type . '"'];
@@ -264,6 +265,15 @@ class ParameterSerializer {
             $c[is_int($k) ? 'i' . $k : str_replace(' ', '__WS__', $k)] = (is_array($a[$k]) ? self::preserveArrayKeys($a[$k]) : $a[$k]);
             return $c;
         }, []);
+    }
+
+    /**
+     * Replaces all backslashes within a class name (resulting from namespace).
+     * @param string $clazz The class name.
+     * @return string
+     */
+    private static function escapeBackslashes(string $clazz) : string {
+        return str_replace("\\", "\\\\", $clazz);
     }
 }
 ?>
