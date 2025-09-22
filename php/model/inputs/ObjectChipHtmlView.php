@@ -1,7 +1,9 @@
 <?php
 
 /**
- * Class ObjectChipHtmlView.
+ * View ObjectChipHtmlView.
+ *
+ * <p>Represents an object as a "chip" with the type and a name.</p>
  *
  * @package webship
  * @subpackge php/model/inputs
@@ -45,13 +47,8 @@ class ObjectChipHtmlView extends HtmlView {
             } else $contentView->texts($content);
         }
 
-        $this->style(Tools::css('.obj-chip', [], 'display: flex', 'flex-direction: row',
-            'flex-wrap: nowrap', 'align-items: center', 'border-radius: 5px', 'padding: 0',
-            'transition: 0.5s background', 'width: -moz-fit-content', 'width: fit-content',
-            'background: var(--premier-color)', 'color: var(--premier-font)', 'gap: 10px'));
-        $this->style(Tools::css('.obj-chip.clickable', [], 'cursor: pointer',
-            'transition: 0.5s opacity'));
-        $this->style(Tools::css('.obj-chip.clickable:hover', [], 'opacity: 0.8'));
+        self::addCSS();
+
         if (!is_null($type)) {
             if (!$swap) {
                 $this->localStyle('--premier-color: var(--' . $type . ')');
@@ -70,17 +67,33 @@ class ObjectChipHtmlView extends HtmlView {
             if ($premierFont) $this->localStyle('--premier-font: ' . $premierFont);
             if ($secondaryFont) $this->localStyle('--secondary-font: ' . $secondaryFont);
         }
-        $this->style(Tools::css('.obj-chip', [' > ', 'div:first-child'], 'display: flex',
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.obj-chip', [], 'display: flex', 'flex-direction: row',
+            'flex-wrap: nowrap', 'align-items: center', 'border-radius: 5px', 'padding: 0',
+            'transition: 0.5s background', 'width: -moz-fit-content', 'width: fit-content',
+            'background: var(--premier-color)', 'color: var(--premier-font)', 'gap: 10px'));
+        self::addStyle(Tools::css('.obj-chip.clickable', [], 'cursor: pointer',
+            'transition: 0.5s opacity'));
+        self::addStyle(Tools::css('.obj-chip.clickable:hover', [], 'opacity: 0.8'));
+
+        self::addStyle(Tools::css('.obj-chip', [' > ', 'div:first-child'], 'display: flex',
             'flex-direction: row', 'flex-wrap: nowrap', 'align-items: center', 'background: var(--secondary-color)',
             'color: var(--secondary-font)', 'border-right: 2px solid var(--premier-color)', 'font-weight: bold',
             'font-size: 12px', 'padding: 5px 10px', 'box-sizing: border-box', 'height: 100%',
             'border-radius: 5px 0 0 5px', 'white-space: nowrap'));
 
-        $this->style(Tools::css('.obj-chip', [' > ', 'div:nth-child(2):not(:first-child):not(.del)'],
+        self::addStyle(Tools::css('.obj-chip', [' > ', 'div:nth-child(2):not(:first-child):not(.del)'],
             'display: flex', 'flex-direction: row', 'flex-wrap: nowrap', 'align-items: center',
             'padding: 5px 10px 5px 0', 'white-space: nowrap'));
 
-        $this->style(Tools::css('.obj-chip', [' > ', 'div.del'], 'height: 20px'));
+        self::addStyle(Tools::css('.obj-chip', [' ', 'span.acronym'], 'font-weight: bold'));
+
+        self::addStyle(Tools::css('.obj-chip', [' > ', 'div.del'], 'height: 20px'));
     }
 
     /**

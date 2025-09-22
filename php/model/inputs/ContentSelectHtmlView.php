@@ -272,11 +272,8 @@ class ContentSelectHtmlView extends SelectHtmlView {
      */
     public function generateClosingTag() {
         $overlay = new HtmlView('overlay');
-        /*$overlay->protocol(Event::CLICK, ['sameTarget' => true])->doIt('ToggleClass', [
-            'view' => $this,
-            'class' => 'open'
-        ], 'basics');*/
-        $overlay->js('$("' . $overlay->idc() . '").on("click", (e) => { setOpenSelectPosition($("div' . $this->idc(). '")); scaleChildren($("' . $this->idc() . '").children(".c-list")); });');
+        $overlay->js('$("' . $overlay->idc() . '").on("click", (e) => { setOpenSelectPosition(' .
+            '$("div' . $this->idc(). '")); scaleChildren($("' . $this->idc() . '").children(".c-list")); });');
         return parent::generateClosingTag() . $this->contentOptions->generate(true) .
             $overlay->generate(true) . '</div>';
     }

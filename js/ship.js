@@ -548,8 +548,8 @@ let domAction = function(res, t = false) {
     if (!t) {
         return () => {
             let r = $(res);
-            $("body").append(r.filter("style"));
-            return r.filter(":not(style)");
+            $("body").append(r.filter("style").add(r.find("style")));
+            return r.filter(":not(style)").remove("style");
         };
     } else {
         return res;
