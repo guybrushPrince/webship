@@ -31,17 +31,23 @@ class RibbonHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
+        self::addStyle(Tools::css('.ribbon', [], '--dark-ribbon-color: var(--font-info)',
+            '--font-color: var(--font-info)', '--background-color: var(--border-info)'));
+        self::addStyle(Tools::css('.ribbon', ['.error'], '--dark-ribbon-color: var(--error-font)',
+            '--font-color: var(--error-font)', '--background-color: var(--error-border)'));
+
         /* common */
         self::addStyle(Tools::css('.ribbon', [], 'width: 150px', 'height: 150px',
             'overflow: hidden', 'position: absolute', 'z-index: 2'));
         self::addStyle(Tools::css('.ribbon', ['::before'], 'position: absolute', 'z-index: -1',
-            'content: ""', 'display: block', 'border: 5px solid var(--font-info)'));
+            'content: ""', 'display: block', 'border: 5px solid var(--dark-ribbon-color)'));
         self::addStyle(Tools::css('.ribbon', ['::after'], 'position: absolute', 'z-index: -1',
-            'content: ""', 'display: block', 'border: 5px solid var(--font-info)'));
+            'content: ""', 'display: block', 'border: 5px solid var(--dark-ribbon-color)'));
         self::addStyle(Tools::css('.ribbon', [' ', 'span'], 'position: absolute', 'display: flex',
             'flex-direction: row', 'align-items: center', 'justify-content: center',
-            'width: 225px', 'height: 48px', 'background-color: var(--border-info)', 'box-shadow: 0 5px 10px rgba(0,0,0,.1)',
-            'color: var(--font-info)', 'font: 700 18px/1 Lato, sans-serif', 'text-shadow: 0 1px 1px rgba(0,0,0,.2)',
+            'width: 225px', 'height: 48px', 'background-color: var(--background-color)',
+            'box-shadow: 0 5px 10px rgba(0,0,0,.1)',
+            'color: var(--font-color)', 'font: 700 18px/1 Lato, sans-serif', 'text-shadow: 0 1px 1px rgba(0,0,0,.2)',
             'text-transform: uppercase'));
 
         self::addStyle(Tools::css('.ribbon.tiny', [], 'width: 50px', 'height: 50px'));
@@ -49,8 +55,10 @@ class RibbonHtmlView extends HtmlView {
             'flex-direction: row', 'align-items: center', 'justify-content: center', 'width: 74px', 'font-size: 11px',
             'padding: 0', 'height: 15px', 'top: 13px', 'right: -6px', 'font-family: monospace',
             'box-shadow: 0 1.33px 3.33px rgba(0,0,0,.1)'));
-        self::addStyle(Tools::css('.ribbon.tiny', ['::before'], 'border: 2.5px solid #2980b9'));
-        self::addStyle(Tools::css('.ribbon.tiny', ['::after'], 'border: 2.5px solid #2980b9'));
+        self::addStyle(Tools::css('.ribbon.tiny', ['::before'],
+            'border: 2.5px solid var(--dark-ribbon-color)'));
+        self::addStyle(Tools::css('.ribbon.tiny', ['::after'],
+            'border: 2.5px solid var(--dark-ribbon-color)'));
 
         /* top left*/
 
@@ -140,5 +148,13 @@ class RibbonHtmlView extends HtmlView {
         return $this;
     }
 
+    /**
+     * Set it as an error.
+     * @return $this
+     */
+    public function error() : static {
+        $this->addClass('error');
+        return $this;
+    }
 }
 ?>
