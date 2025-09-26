@@ -31,19 +31,19 @@ class ContainerItemHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.container', [' > ', '.container-item'], 'display: flex',
+        self::addStyle(Tools::css('.container-item',[], 'display: flex',
             'flex-wrap: wrap', 'padding: 5px', 'box-sizing: border-box'));
-        self::addStyle(Tools::css('.container', [' > ', '.container-item', '.long'], 'flex-wrap: wrap',
+        self::addStyle(Tools::css('.container-item', ['.long'], 'flex-wrap: wrap',
             'flex-direction: row'));
-        self::addStyle(Tools::css('.container', [' > ', '.container-item', '.w100'], 'width: 100%'));
-        self::addStyle(Tools::css('.container', [' > ', '.container-item', '.h100'], 'height: 100%'));
-        self::addStyle(Tools::css('.container', [' > ', '.container-item', '.scroll'], 'overflow-y: auto'));
-        self::addStyle(Tools::css('.container', [' > ', '.container-item', '.p-0'], 'padding: 0'));
-        self::addStyle(Tools::css('.container', [' > ', '.container-item', '.h-l'],
+        self::addStyle(Tools::css('.container-item', ['.w100'], 'width: 100%'));
+        self::addStyle(Tools::css('.container-item', ['.h100'], 'height: 100%'));
+        self::addStyle(Tools::css('.container-item', ['.scroll'], 'overflow-y: auto'));
+        self::addStyle(Tools::css('.container-item', ['.p-0'], 'padding: 0'));
+        self::addStyle(Tools::css('.container-item', ['.h-l'],
             'justify-content: flex-start', 'align-items: center'));
-        self::addStyle(Tools::css('.container', [' > ', '.container-item', '.h-c'],
+        self::addStyle(Tools::css('.container-item', ['.h-c'],
             'justify-content: center', 'align-items: center'));
-        self::addStyle(Tools::css('.container', [' > ', '.container-item', '.h-r'],
+        self::addStyle(Tools::css('.container-item', ['.h-r'],
             'justify-content: flex-end', 'align-items: center'));
     }
 

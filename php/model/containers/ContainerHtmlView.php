@@ -9,10 +9,10 @@
  * <img src="http://localhost/coast/webship/modeldoc/container.png" />
  *
  * <code>
- *     $container = ContainerHtmlView::create(['hor', 'vcent', 'gap10']);
- *     $container->add(ColorHtmlView::create('#0000FF'))->texts('Blue');
- *     $container->add(ColorHtmlView::create('#FF0000'))->texts('Red');
- *     $container->add(ColorHtmlView::create('#00FF00'))->texts('Green');
+ *     $container = ContainerHtmlView::createIt(['hor', 'vcent', 'gap10']);
+ *     $container->add(ColorHtmlView::createIt('#0000FF'))->texts('Blue');
+ *     $container->add(ColorHtmlView::createIt('#FF0000'))->texts('Red');
+ *     $container->add(ColorHtmlView::createIt('#00FF00'))->texts('Green');
  * </code>
  *
  * @package webship

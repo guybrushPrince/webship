@@ -38,7 +38,7 @@ class ColorHtmlView extends HtmlView {
      * @param string|null $title An optional title.
      * @return ColorHtmlView
      */
-    public static function create(string $color, ?string $title = null, array|string $classes = []) : ColorHtmlView {
+    public static function createIt(string $color, ?string $title = null, array|string $classes = []) : ColorHtmlView {
         return new ColorHtmlView($color, $classes, $title);
     }
 }

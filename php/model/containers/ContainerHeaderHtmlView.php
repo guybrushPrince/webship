@@ -31,7 +31,7 @@ class ContainerHeaderHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.container', [' > ', '.container-header'], 'font-size: 20px',
+        self::addStyle(Tools::css('.container-header', [], 'font-size: 20px',
             'text-transform: none', 'font-weight: lighter', 'font-family: Roboto, sans-serif', 'width: 100%',
             'box-sizing: border-box'));
     }
