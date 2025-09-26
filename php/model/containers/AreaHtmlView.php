@@ -3,12 +3,21 @@
 /**
  * View AreaHtmlView.
  *
+ * <p>This view describes a surrounded container area with an (optional) header/title.</p>
+ * <img src="http://localhost/coast/webship/modeldoc/area.png" />
+ *
+ * <code>AreaHtmlView::create('Hello World!');</code>
+ *
  * @package webship
  * @subpackge php/model/containers
  *
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     AreaHtmlView::create('Hello World!');
  */
 class AreaHtmlView extends ContainerHtmlView {
 

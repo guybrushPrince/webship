@@ -3,13 +3,22 @@
 /**
  * View TagHtmlView.
  *
- * <p>Presents a colored tag.</p>
+ * <p>Presents a colored tag where the color is detected automatically or can be defined.</p>
+ * <img src="http://localhost/coast/webship/modeldoc/tag.png" />
+ *
+ * <code>TagHtmlView::create("Hallo Welt");</code>
+ * <code>TagHtmlView::create([Language::ENGLISH => 'Hello World', Language::GERMAN => 'Hallo Welt']);</code>
  *
  * @package webship
  * @subpackge php/model/symbols
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     TagHtmlView::create("Hallo Welt");
+ *     TagHtmlView::create([Language::ENGLISH => 'Hello World', Language::GERMAN => 'Hallo Welt']);
  */
 class TagHtmlView extends ColorHtmlView {
 

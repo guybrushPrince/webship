@@ -1,14 +1,25 @@
 <?php
 
 /**
- * Class SectionHtmlView.
+ * View SectionHtmlView.
+ *
+ * <p>A view with a title that is called a <em>section</em>. This section is a button at the same time allowing
+ * to open or close a content belonging to the section. This content is called the <em>box</em>.</p>
+ * <img src="http://localhost/coast/webship/modeldoc/section.png" />
+ *
+ * <code>
+ * SectionHtmlView::create('Hello World!', true)->box()->add(AreaHtmlView::create());
+ * </code>
  *
  * @package webship
  * @subpackge php/model/containers
  *
- *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     SectionHtmlView::create('Hello World!', true)->box()->add(AreaHtmlView::create());
  */
 class SectionHtmlView extends HtmlView {
 

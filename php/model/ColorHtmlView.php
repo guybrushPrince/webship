@@ -1,7 +1,5 @@
 <?php
 
-include_once dirname(__FILE__) . '/HtmlView.php';
-
 /**
  * Class ColorHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
@@ -31,6 +29,17 @@ class ColorHtmlView extends HtmlView {
 
         $this->style(Tools::css('.color-v', [], 'background: var(--bg) !important',
             'color: var(--fc)', '--dev-color: var(--dc)'));
+    }
+
+    /**
+     * Create a color view.
+     * @param string $color The color.
+     * @param string[]|string $classes Some classes.
+     * @param string|null $title An optional title.
+     * @return ColorHtmlView
+     */
+    public static function create(string $color, ?string $title = null, array|string $classes = []) : ColorHtmlView {
+        return new ColorHtmlView($color, $classes, $title);
     }
 }
 ?>

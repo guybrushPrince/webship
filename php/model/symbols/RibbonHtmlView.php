@@ -4,6 +4,13 @@
  * View RibbonHtmlView.
  *
  * <p>Adds a ribbon to a view.</p>
+ * <img src="http://localhost/coast/webship/modeldoc/ribbon.png" />
+ *
+ * <code>
+ *     ContainerHtmlView::create(['rel'])->
+ *         add(RibbonHtmlView::create())->
+ *             texts("Hallo Welt!");
+ * </code>
  *
  * @package webship
  * @subpackge php/model/symbols
@@ -12,6 +19,9 @@
  * @version 1.0.0
  *
  * @inspiredBy https://codepen.io/nxworld/pen/oLdoWb
+ * @view
+ * @examples
+ *     ContainerHtmlView::create(['rel'])->add(RibbonHtmlView::create())->texts("Hallo Welt!");
  */
 class RibbonHtmlView extends HtmlView {
 

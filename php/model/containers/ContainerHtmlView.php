@@ -1,10 +1,27 @@
 <?php
 
-include_once dirname(__FILE__) . '/HtmlView.php';
-
 /**
- * Class ContainerHtmlView.
+ * View ContainerHtmlView.
+ *
+ * <p>A <em>container</em> represents the simplest but also one of the most powerful Webship views.
+ * It is able to arrange many things, place a gap in between views, vertical align texts, etc.</p>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/container.png" />
+ *
+ * <code>
+ *     $container = ContainerHtmlView::create(['hor', 'vcent', 'gap10']);
+ *     $container->add(ColorHtmlView::create('#0000FF'))->texts('Blue');
+ *     $container->add(ColorHtmlView::create('#FF0000'))->texts('Red');
+ *     $container->add(ColorHtmlView::create('#00FF00'))->texts('Green');
+ * </code>
+ *
+ * @package webship
+ * @subpackge php/model
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ *
+ * @view
  */
 class ContainerHtmlView extends HtmlView {
 
@@ -16,47 +33,63 @@ class ContainerHtmlView extends HtmlView {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct(array_merge(['container'], $classes));
 
-        $this->style(Tools::css('.container', '', 'display: flex',
+        self::addCSS();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.container', '', 'display: flex',
             'flex-wrap: wrap', 'align-items: flex-start', 'align-content: flex-start', 'width: 100%',
             'box-sizing: border-box'));
-        $this->style(Tools::css('.container', '.ver', 'flex-direction: column'));
-        $this->style(Tools::css('.container', '.hor', 'flex-direction: row'));
-        $this->style(Tools::css('.container', '.single', 'flex-wrap: nowrap'));
-        $this->style(Tools::css('.container', '.vcent', 'align-items: center',
+        self::addStyle(Tools::css('.container', '.ver', 'flex-direction: column'));
+        self::addStyle(Tools::css('.container', '.hor', 'flex-direction: row'));
+        self::addStyle(Tools::css('.container', '.single', 'flex-wrap: nowrap'));
+        self::addStyle(Tools::css('.container', '.vcent', 'align-items: center',
             'align-content: center'));
-        $this->style(Tools::css('.container', '.scroll-x', 'overflow-x: auto'));
-        $this->style(Tools::css('.container', '.scroll-y', 'overflow-y: auto'));
-        $this->style(Tools::css('.container', '.gap', 'gap: 5px'));
-        $this->style(Tools::css('.container', '.gap5', 'gap: 5px'));
-        $this->style(Tools::css('.container', '.gap10', 'gap: 10px'));
-        $this->style(Tools::css('.container', '.gap15', 'gap: 15px'));
-        $this->style(Tools::css('.container', '.gap20', 'gap: 20px'));
-        $this->style(Tools::css('.container', '.p', 'padding: 5px'));
-        $this->style(Tools::css('.container', '.p10', 'padding: 10px'));
-        $this->style(Tools::css('.container', '.p15', 'padding: 15px'));
-        $this->style(Tools::css('.container', '.p20', 'padding: 20px'));
-        $this->style(Tools::css('.container', '.hcent', 'justify-content: center',
+        self::addStyle(Tools::css('.container', '.scroll-x', 'overflow-x: auto'));
+        self::addStyle(Tools::css('.container', '.scroll-y', 'overflow-y: auto'));
+        self::addStyle(Tools::css('.container', '.gap', 'gap: 5px'));
+        self::addStyle(Tools::css('.container', '.gap5', 'gap: 5px'));
+        self::addStyle(Tools::css('.container', '.gap10', 'gap: 10px'));
+        self::addStyle(Tools::css('.container', '.gap15', 'gap: 15px'));
+        self::addStyle(Tools::css('.container', '.gap20', 'gap: 20px'));
+        self::addStyle(Tools::css('.container', '.p', 'padding: 5px'));
+        self::addStyle(Tools::css('.container', '.p10', 'padding: 10px'));
+        self::addStyle(Tools::css('.container', '.p15', 'padding: 15px'));
+        self::addStyle(Tools::css('.container', '.p20', 'padding: 20px'));
+        self::addStyle(Tools::css('.container', '.hcent', 'justify-content: center',
             'justify-items: center'));
-        $this->style(Tools::css('.container', '.hend', 'justify-content: flex-end',
+        self::addStyle(Tools::css('.container', '.hend', 'justify-content: flex-end',
             'justify-items: flex-end'));
-        $this->style(Tools::css('.container', '.vbot', 'align-items: flex-end'));
-        $this->style(Tools::css('.container', '.h100', 'height: 100%'));
-        $this->style(Tools::css('.container', '.rel', 'position: relative'));
-        $this->style(Tools::css('.container', ['.self-fit'], 'width: -moz-fit-content',
+        self::addStyle(Tools::css('.container', '.vbot', 'align-items: flex-end'));
+        self::addStyle(Tools::css('.container', '.h100', 'height: 100%'));
+        self::addStyle(Tools::css('.container', '.rel', 'position: relative'));
+        self::addStyle(Tools::css('.container', ['.self-fit'], 'width: -moz-fit-content',
             'width: fit-content'));
-        $this->style(Tools::css('.container', ['.fit', ' > ', '*'], 'width: -moz-fit-content',
+        self::addStyle(Tools::css('.container', ['.fit', ' > ', '*'], 'width: -moz-fit-content',
             'width: fit-content'));
-        $this->style(Tools::css('.container', [' > ', '.container-item', '.ver'], 'flex-direction: column'));
-        $this->style(Tools::css('.container', [' > ', '.container-item', '.hor'], 'flex-direction: row'));
-        $this->style(Tools::css('.container.c100', [' > ', '.container-item'], 'width: 100%'));
+        self::addStyle(Tools::css('.container', [' > ', '.container-item', '.ver'], 'flex-direction: column'));
+        self::addStyle(Tools::css('.container', [' > ', '.container-item', '.hor'], 'flex-direction: row'));
+        self::addStyle(Tools::css('.container.c100', [' > ', '.container-item'], 'width: 100%'));
 
-        $this->style(Tools::css('.container.short-hint', [], 'display: inline',
+        self::addStyle(Tools::css('.container.short-hint', [], 'display: inline',
             'opacity: 0.6', 'font-size: 10px'));
 
-        $this->style(Tools::css('.container.with-default', [' > ', '.default:first-child:last-child'],
+        self::addStyle(Tools::css('.container.with-default', [' > ', '.default:first-child:last-child'],
             'display: inherit'));
-        $this->style(Tools::css('.container.with-default', [' > ', '.default'],
+        self::addStyle(Tools::css('.container.with-default', [' > ', '.default'],
             'display: none'));
+    }
+
+    /**
+     * Create a new container.
+     * @param string|string[] $classes Some classes.
+     * @return ContainerHtmlView
+     */
+    public static function create(string|array $classes = []) : ContainerHtmlView {
+        return self::_new($classes);
     }
 
     ///////////////////////////
