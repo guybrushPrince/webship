@@ -88,7 +88,7 @@ class ContainerHtmlView extends HtmlView {
      * @param string|string[] $classes Some classes.
      * @return ContainerHtmlView
      */
-    public static function create(string|array $classes = []) : ContainerHtmlView {
+    public static function createIt(string|array $classes = []) : ContainerHtmlView {
         return self::_new($classes);
     }
 

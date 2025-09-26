@@ -1,14 +1,22 @@
 <?php
 
 /**
- * Class StandardHtmlView.
+ * View StandardHtmlView.
+ *
+ * <p>A simple HTML view that has the full width of available space (in its surrounding environment), has
+ * a standard padding of 20px, is a border-box, and provides a relative position
+ * (e.g., for {@link ControlPanelHtmlView}).</p>
+ *
+ * <p><em>Note:</em> Although this part can be used alone, it is usually used in a specialized class.</p>
  *
  * @package webship
  * @subpackge php/model/containers
  *
- *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
+ *
+ * @view
+ * @examples
  */
 class StandardHtmlView extends HtmlView {
 
