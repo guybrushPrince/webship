@@ -1,9 +1,32 @@
 <?php
 
 /**
- * Class ModalHtmlView.
+ * View ModalHtmlView.
+ *
+ * <p>A <em>modal</em> is a kind of sub window that is opened and placed over all other elements demanding
+ * users to concentrate and react to the modal instead of the rest of the application. Modals are usually used to
+ * request information from a user.</p>
+ * <img src="http://localhost/coast/webship/modeldoc/modal.png" />
+ *
+ * <code>
+ *     $modal = ModalHtmlView::create('Hello World!', true);
+ *     $modal->submit('example-submit')->texts('Submit');
+ *     $modal->abort('example-abort')->texts('Abort');
+ *     $modal->item(ContainerHtmlView::createIt()->texts('Welcome to this modal!'));
+ * </code>
+ *
+ * @package webship
+ * @subpackge php/model
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.1.0
+ * @version 1.2.0
+ *
+ * @view
+ * @examples
+ *     $modal = ModalHtmlView::create('Hello World!', true);
+ *     $modal->submit('example-submit')->texts('Submit');
+ *     $modal->abort('example-abort')->texts('Abort');
+ *     $modal->item(ContainerHtmlView::createIt()->texts('Welcome to this modal!'));
  */
 class ModalHtmlView extends HtmlView {
 
@@ -26,12 +49,15 @@ class ModalHtmlView extends HtmlView {
     private ?array $outProtected;
 
     /**
-     * ModalHtmlView constructor.
+     * Constructor.
      * @param string[]|string $classes Some classes.
+     * @param string[]|null $outProtected Whether the modal should only be closed after request.
+     * @param bool $invisible If it shall be invisible.
      */
-    public function __construct(string|array $classes = [], ?array $outProtected = null) {
+    public function __construct(string|array $classes = [], ?array $outProtected = null, bool $invisible = true) {
         $classes = is_array($classes) ? $classes : [ $classes ];
-        parent::__construct(array_merge(['modal', 'invisible'], $classes));
+        if ($invisible) $classes[] = 'invisible';
+        parent::__construct(array_merge(['modal'], $classes));
 
         $this->outProtected = $outProtected;
 
@@ -45,26 +71,54 @@ class ModalHtmlView extends HtmlView {
         $this->controlPanel->fix()->reverse();
         $this->subviews[0]->subviews[0]->add($this->controlPanel);
 
-        $this->style(Tools::css('.modal', [], '--modal-pad: 20px'));
-        $this->style(Tools::css('.modal.invisible', [], 'display: none !important'));
-        $this->style(Tools::css('.modal', [' > ', '.modal-overlay'], 'position: fixed',
+        self::addCSS();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.modal', [], '--modal-pad: 20px'));
+        self::addStyle(Tools::css('.modal.invisible', [], 'display: none !important'));
+        self::addStyle(Tools::css('.modal', [' > ', '.modal-overlay'], 'position: fixed',
             'top: 0', 'left: 0', 'width: 100%', 'height: 100%', 'background: var(--window-overlay)', 'z-index: 100001',
             'overflow-y: auto'));
-        $this->style(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container'],
+        self::addStyle(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container'],
             'position: absolute',
             'left: 12.5%', 'top: 10%', 'width: 75%', 'overflow-y: initial',
             'background: var(--neutral)', 'z-index: 100002', 'padding: var(--modal-pad)', 'border-radius: 5px',
             '-webkit-box-shadow: var(--shadow-flow-4)',
             '-moz-box-shadow: var(--shadow-flow-4)',
             'box-shadow: var(--shadow-flow-4)'));
-        $this->style(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' > ', '.form'],
+        self::addStyle(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' > ', '.form'],
             'width: 100%'));
-        $this->style(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' ', '.alert'],
+        self::addStyle(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' ', '.alert'],
             'width: 100%'));
-        $this->style(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' > ', 'div',
+        self::addStyle(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' > ', 'div',
             ' > ', '.ctr.fix.tr'], 'right: var(--cell-gap)', 'top: calc((-1)* var(--modal-pad))'));
-        $this->style(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container',
+        self::addStyle(Tools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container',
             ' > ', 'div:not(.ctr.fix.tr)'], 'position: relative'));
+    }
+
+    /**
+     * Create a modal.
+     * @param string[]|string|null $header The header of the modal.
+     * @param bool $withCloser If the modal shall have a closer.
+     * @param string[]|null $outProtected Texts to be shown if the modal is tried to be closed.
+     * @param bool $invisible If the modal shall be initialized as invisible.
+     * @param string[]|string $classes Some classes.
+     * @return ModalHtmlView
+     */
+    public static function create(array|string|null $header, bool $withCloser = true,  ?array $outProtected = null,
+                                  bool $invisible = false, array|string $classes = []) : ModalHtmlView {
+        $view = new ModalHtmlView($classes, $outProtected, $invisible);
+        if (!is_null($header)) {
+            $head = $view->header();
+            $head->texts($header);
+        }
+
+        if ($withCloser) $view->closer();
+        return $view;
     }
 
     /**
@@ -90,6 +144,10 @@ class ModalHtmlView extends HtmlView {
         return $closer;
     }
 
+    /**
+     * Create the action when the closer is pressed.
+     * @return HtmlModifyProtocol
+     */
     private function getCloseAction() : HtmlModifyProtocol {
         $protocol = new HtmlModifyProtocol($this);
         $current = $protocol;
