@@ -83,7 +83,7 @@ class CardHtmlView extends HtmlView {
      * @param bool $editableTitle If the title shall be editable, or not.
      * @return CardHtmlView
      */
-    public static function create(array|string|null $title, array|string $classes = [],
+    public static function create(array|string|null $title = null, array|string $classes = [],
                                   bool $editableTitle = false) : CardHtmlView {
         $card = new CardHtmlView($classes);
         if (!is_null($title)) {

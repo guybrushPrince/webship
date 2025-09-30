@@ -3,13 +3,28 @@
 /**
  * View ContentButtonHtmlView.
  *
- * <p>A button that allows for showing small configuration things.</p>
+ * <p>A button that allows for showing small configuration things by first press and accept those configurations by
+ * a second press. The used button is a {@link StandardButtonHtmlView} and, therefore, all its possibilities are
+ * available for this content button as well.</p>
+ * <img src="http://localhost/coast/webship/modeldoc/contentbutton.png" />
+ *
+ * <code>
+ * $contentButton = ContentButtonHtmlView::create('example-1');
+ * $contentButton->button()->img('/webship/pic/help.svg')->texts('Press me!');
+ * $contentButton->content(TagHtmlView::create('Hello World!'));
+ * </code>
  *
  * @package webship
  * @subpackge php/model/buttons
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.0.0
+ * @version 1.3.0
+ *
+ * @view
+ * @examples
+ *     $contentButton = ContentButtonHtmlView::create('example-1');
+ *     $contentButton->button()->img('/webship/pic/help.svg')->texts('Press me!');
+ *     $contentButton->content(TagHtmlView::create('Hello World!'));
  */
 class ContentButtonHtmlView extends HtmlView {
 
@@ -37,7 +52,7 @@ class ContentButtonHtmlView extends HtmlView {
      * @param string[]|string $classes Some classes.
      * @param string[]|string $contentClasses Additional classes for the content.
      */
-    public function __construct(string $id, array|string $classes = [], array|string $contentClasses = []) {
+    private function __construct(string $id, array|string $classes = [], array|string $contentClasses = []) {
         parent::__construct(array_merge(['content-button'], $contentClasses));
         $this->overlay = new HtmlView('overlay');
         $overlay = $this->add($this->overlay)->ref('overlay');
@@ -56,8 +71,7 @@ class ContentButtonHtmlView extends HtmlView {
     }
 
     /**
-     * Generates the CSS code.
-     * @return void
+     * @inheritDoc
      */
     public static function addCSS() : void {
         self::addStyle(Tools::css('.content-button', '', 'position: relative',
@@ -128,7 +142,7 @@ class ContentButtonHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function notice(int $language, string $text) : static{
+    public function notice(int $language, string $text) : static {
         $this->button->notice($language, $text);
         $this->overlay->notice($language, $text);
         return $this;

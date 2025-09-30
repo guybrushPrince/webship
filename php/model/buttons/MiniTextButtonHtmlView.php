@@ -1,14 +1,26 @@
 <?php
 
 /**
- * Class MiniTextButtonHtmlView.
+ * View MiniTextButtonHtmlView.
+ *
+ * <p>A mini textual button that gets a color inversion when hovering.</p>
+ * <img src="http://localhost/coast/webship/modeldoc/minitextbutton.png" />
+ *
+ * <code>
+ * MiniTextButtonHtmlView::create('example-1', 'Press me!');
+ * MiniTextButtonHtmlView::delete('example-2', 'Delete me!');
+ * </code>
  *
  * @package webship
  * @subpackge php/model/buttons
  *
- *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.0.0
+ * @version 1.1.0
+ *
+ * @view
+ * @examples
+ *     MiniTextButtonHtmlView::create('example-1', 'Press me!');
+ *     MiniTextButtonHtmlView::delete('example-2', 'Delete me!');
  */
 class MiniTextButtonHtmlView extends ButtonHtmlView {
 
@@ -22,12 +34,19 @@ class MiniTextButtonHtmlView extends ButtonHtmlView {
         $classes[] = 'mini';
         parent::__construct($id, 'button', $classes);
 
-        $this->style(Tools::css('button.mini', [],'border: none', 'background: none',
+        self::addCSS();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('button.mini', [],'border: none', 'background: none',
             'height: 20px', 'border-radius: 3px', 'padding: 3px', 'width: initial', 'font-size: 10px',
             'color: var(--font-info)', 'transition: all 0.25s', 'cursor: pointer'));
-        $this->style(Tools::css('button.mini', [':hover'], 'background: var(--font-info)',
+        self::addStyle(Tools::css('button.mini', [':hover'], 'background: var(--font-info)',
             'color: var(--neutral)'));
-        $this->style(Tools::css('button.mini.del', [':hover'],'background: var(--delete-2-hover-2)',
+        self::addStyle(Tools::css('button.mini.del', [':hover'],'background: var(--delete-2-hover-2)',
             'color: var(--neutral)'));
     }
 
