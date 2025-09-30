@@ -9,10 +9,10 @@
  * <img src="http://localhost/coast/webship/modeldoc/modal.png" />
  *
  * <code>
- *     $modal = ModalHtmlView::create('Hello World!', true);
- *     $modal->submit('example-submit')->texts('Submit');
- *     $modal->abort('example-abort')->texts('Abort');
- *     $modal->item(ContainerHtmlView::createIt()->texts('Welcome to this modal!'));
+ * $modal = ModalHtmlView::create('Hello World!', true);
+ * $modal->submit('example-submit')->texts('Submit');
+ * $modal->abort('example-abort')->texts('Abort');
+ * $modal->item(ContainerHtmlView::createIt()->texts('Welcome to this modal!'));
  * </code>
  *
  * @package webship

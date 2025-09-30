@@ -7,9 +7,9 @@
  * <img src="http://localhost/coast/webship/modeldoc/ribbon.png" />
  *
  * <code>
- *     ContainerHtmlView::create(['rel'])->
- *         add(RibbonHtmlView::create())->
- *             texts("Hallo Welt!");
+ * ContainerHtmlView::create(['rel'])->
+ *     add(RibbonHtmlView::create())->
+ *         texts("Hallo Welt!");
  * </code>
  *
  * @package webship

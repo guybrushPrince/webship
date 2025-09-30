@@ -7,10 +7,10 @@
  *
  * <img src="http://localhost/coast/webship/modeldoc/closer.png" />
  * <code>
- *     $container = ContainerHtmlViewIt(['hor', 'gap20', 'vcent']);
- *     $container->add(CloserHtmlView::create('hello-world-1'));
- *     $container->add(CloserHtmlView::create('hello-world-2'))->mini();
- *     $container->add(CloserHtmlView::create('hello-world-3'))->plain();
+ * $container = ContainerHtmlViewIt(['hor', 'gap20', 'vcent']);
+ * $container->add(CloserHtmlView::create('hello-world-1'));
+ * $container->add(CloserHtmlView::create('hello-world-2'))->mini();
+ * $container->add(CloserHtmlView::create('hello-world-3'))->plain();
  * </code>
  *
  * @package webship

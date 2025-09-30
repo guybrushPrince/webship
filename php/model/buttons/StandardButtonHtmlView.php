@@ -1,28 +1,57 @@
 <?php
 
 /**
- * Class StandardButtonHtmlView.
+ * View StandardButtonHtmlView.
+ *
+ * <p>A very flexible specialization of a button that can appear differently depending on its configuration.</p>
+ * <img src="http://localhost/coast/webship/modeldoc/standardbutton.png" />
+ *
+ * <code>
+ * StandardButtonHtmlView::create('example-1')->img('/webship/pic/help.svg')->texts('Press me!');
+ * StandardButtonHtmlView::create('example-2')->onlyImg('/webship/pic/help.svg');
+ * StandardButtonHtmlView::create('example-3')->plain()->texts('Press me!');
+ * StandardButtonHtmlView::create('example-4')->small()->img('/webship/pic/help.svg')->texts('Press me!');
+ * StandardButtonHtmlView::create('example-5')->long()->img('/webship/pic/help.svg')->texts('Press me!');
+ * StandardButtonHtmlView::create('example-6')->list()->img('/webship/pic/help.svg')->texts('Press me!');
+ * </code>
  *
  * @package webship
  * @subpackge php/model/buttons
  *
- *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.0.0
+ * @version 1.1.0
+ *
+ * @view
+ * @examples
+ *     StandardButtonHtmlView::create('example-1')->img('/webship/pic/help.svg')->texts('Press me!');
+ *     StandardButtonHtmlView::create('example-2')->onlyImg('/webship/pic/help.svg');
+ *     StandardButtonHtmlView::create('example-3')->plain()->texts('Press me!');
+ *     StandardButtonHtmlView::create('example-4')->small()->img('/webship/pic/help.svg')->texts('Press me!');
+ *     StandardButtonHtmlView::create('example-5')->long()->img('/webship/pic/help.svg')->texts('Press me!');
+ *     StandardButtonHtmlView::create('example-6')->list()->img('/webship/pic/help.svg')->texts('Press me!');
  */
 class StandardButtonHtmlView extends ButtonHtmlView {
 
     /**
      * Constructor.
      * @param string|null $id The id.
-     * @param string|array $classes Some classes.
+     * @param string[]|string $classes Some classes.
+     * @param string|null $type An optional type of the button.
      */
-    protected function __construct(?string $id = null, string|array $classes = [], ?string $type = 'button') {
+    protected function __construct(?string $id = null, array|string $classes = [], ?string $type = 'button') {
         $classes = is_array($classes) ? $classes : [ $classes ];
+        $classes[] = 'std-button';
         if ($type === null) $type = 'button';
-        parent::__construct($id, $type, array_merge(['std-button'], $classes));
+        parent::__construct($id, $type, $classes);
 
-        $this->style(Tools::css('button.std-button', [], 'display: flex', 'flex-direction: row',
+        self::addCSS();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('button.std-button', [], 'display: flex', 'flex-direction: row',
             '--common-width: 175px', '--common-height: 50px', '--bottom-distance: 1rem',
             '--common-margin: .5rem 0 var(--bottom-distance) 0',
             'align-items: center', 'justify-content: center',
@@ -35,34 +64,34 @@ class StandardButtonHtmlView extends ButtonHtmlView {
             '-webkit-box-shadow: var(--shadow-flow-1)', 'box-shadow: var(--shadow-flow-1)',
             'transition: background 0.5s', 'border-radius: 5px', 'box-sizing: border-box', 'gap: 10px',
             '--hover: var(--dark-system-background)'));
-        $this->style(Tools::css('button.std-button', [':hover'],
+        self::addStyle(Tools::css('button.std-button', [':hover'],
             'background: var(--hover)'));
-        $this->style(Tools::css('button.std-button', [' > ', 'img'], 'height: 100%'));
+        self::addStyle(Tools::css('button.std-button', [' > ', 'img'], 'height: 100%'));
 
-        $this->style(Tools::css('button.std-button.plain', [], 'background: none',
+        self::addStyle(Tools::css('button.std-button.plain', [], 'background: none',
             '-webkit-box-shadow: none', 'box-shadow: none'));
 
-        $this->style(Tools::css('button.std-button.small', [], 'margin: 0', 'height: 30px',
+        self::addStyle(Tools::css('button.std-button.small', [], 'margin: 0', 'height: 30px',
             'max-height: 30px', 'width: auto', 'min-height: auto'));
-        $this->style(Tools::css('button.std-button.small', [' > ', 'img'], 'height: 50%'));
-        $this->style(Tools::css('button.std-button.sm-img', [' > ', 'img'], 'height: 50%',
+        self::addStyle(Tools::css('button.std-button.small', [' > ', 'img'], 'height: 50%'));
+        self::addStyle(Tools::css('button.std-button.sm-img', [' > ', 'img'], 'height: 50%',
             'margin: 5px'));
 
-        $this->style(Tools::css('button.std-button.long', [], 'width: 250px'));
+        self::addStyle(Tools::css('button.std-button.long', [], 'width: 250px'));
 
-        $this->style(Tools::css('button.std-button.only-img', [], 'width: 30px', 'height: 30px',
+        self::addStyle(Tools::css('button.std-button.only-img', [], 'width: 30px', 'height: 30px',
             'padding: 5px', 'margin: 0', 'min-height: 30px', 'max-height: 30px', 'min-width: 30px', 'max-width: 30px'));
-        $this->style(Tools::css('button.std-button.long.only-img', [], 'width: var(--common-height)',
+        self::addStyle(Tools::css('button.std-button.long.only-img', [], 'width: var(--common-height)',
             'height: var(--common-height)', 'padding: 5px', 'margin: var(--common-margin)',
             'min-height: var(--common-height)', 'max-height: var(--common-height)', 'min-width: var(--common-height)',
             'max-width: var(--common-height)'));
-        $this->style(Tools::css('button.std-button:disabled', [], 'opacity: 0.25', 'cursor: not-allowed'));
+        self::addStyle(Tools::css('button.std-button:disabled', [], 'opacity: 0.25', 'cursor: not-allowed'));
 
-        $this->style(Tools::css('button.std-button.list-b', [], 'margin: 0',
+        self::addStyle(Tools::css('button.std-button.list-b', [], 'margin: 0',
             'justify-content: flex-start', 'text-align: left', 'min-height: 40px', 'height: 40px', 'font-size: 14px',
             'border-radius: 0', 'width: 100%'));
-        $this->style(Tools::css('button.std-button.list-b', [' > ', 'img'], 'height: 50%'));
-        $this->style(Tools::css('button.std-button.list-b', [' > ', 'img.invisible'],
+        self::addStyle(Tools::css('button.std-button.list-b', [' > ', 'img'], 'height: 50%'));
+        self::addStyle(Tools::css('button.std-button.list-b', [' > ', 'img.invisible'],
             'visibility: hidden'));
     }
 

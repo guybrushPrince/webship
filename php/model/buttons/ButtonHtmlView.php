@@ -1,8 +1,24 @@
 <?php
 
 /**
- * Class ButtonHtmlView
+ * View ButtonHtmlView.
+ *
+ * <p>A very basic button that can be specialized by more fancy buttons.</p>
+ * <img src="http://localhost/coast/webship/modeldoc/button.png" />
+ *
+ * <code>
+ * (new ButtonHtmlView('example', 'button'))->texts('Press me!')
+ * </code>
+ *
+ * @package webship
+ * @subpackge php/model/buttons
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.3.0
+ *
+ * @view
+ * @examples
+ *     (new ButtonHtmlView('example', 'button'))->texts('Press me!')
  */
 class ButtonHtmlView extends HtmlView {
 
@@ -36,7 +52,14 @@ class ButtonHtmlView extends HtmlView {
         $this->id = $id;
         $this->type = $type;
 
-        $this->style(Tools::css('button', '', 'box-sizing: border-box', 'padding: 5px',
+        self::addCSS();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('button', '', 'box-sizing: border-box', 'padding: 5px',
             'height: 50px', 'width: 100%', 'font-family: Roboto Condensed, Roboto, HelveticaNeue, sans-serif',
             'font-size: 16px'));
     }
@@ -47,9 +70,13 @@ class ButtonHtmlView extends HtmlView {
     public function generateOpeningTag() {
         return '<button class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' .
             ($this->id ? ' id="' . $this->id . '"' : '') . ' type="' . $this->type . '"' .
-            ($this->notices ? ' title="' . (array_key_exists(View::getLanguage(), $this->notices) ? $this->notices[View::getLanguage()] : array_pop($this->notices)) . '"' : '') .
+            ($this->notices ? ' title="' . (array_key_exists(View::getLanguage(), $this->notices) ?
+                    $this->notices[View::getLanguage()] :
+                    array_pop($this->notices)
+                ) . '"' : '') .
             ($this->disabled ? ' disabled' : '') .
-            ($this->localStyles ? ' style="' . str_replace('"', "'", implode(';', $this->localStyles)) . '"' : '') . '>';
+            ($this->localStyles ? ' style="' .
+                str_replace('"', "'", implode(';', $this->localStyles)) . '"' : '') . '>';
     }
 
     /**
