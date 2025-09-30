@@ -377,9 +377,9 @@ class HtmlView extends View {
     /**
      * Add texts.
      * @param string[]|string|null $texts A language-indexed optional set of texts.
-     * @return HtmlView|TextView
+     * @return HtmlView|TextView|static
      */
-    public function texts(array|string|null $texts = null) : HtmlView|TextView {
+    public function texts(array|string|null $texts = null) : HtmlView|TextView|static {
         $textView = new TextView();
         $this->add($textView);
         if ($texts) {
@@ -387,6 +387,7 @@ class HtmlView extends View {
             foreach ($texts as $lang => $text) {
                 $textView->text($lang, $text);
             }
+            return $this;
         }
         return $textView;
     }

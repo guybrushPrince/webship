@@ -64,8 +64,7 @@ class AreaHtmlView extends ContainerHtmlView {
     public static function create(string|array|null $header = null, string|array $classes = []) : AreaHtmlView {
         $view = new AreaHtmlView($classes);
         if ($header) {
-            if (is_string($header)) $header = [ self::getLanguage() => $header ];
-            $view->header()->text(self::getLanguage(), $header[self::getLanguage()]);
+            $view->header($header);
         }
         return $view;
     }
@@ -73,10 +72,15 @@ class AreaHtmlView extends ContainerHtmlView {
     /**
      * @inheritDoc
      */
-    public function header(array|string $classes = []) : HtmlView|TextView {
-        $title = new SubTitleHtmlView();
+    public function header(array|string|null $header = null, array|string $classes = []) : HtmlView|TextView|static {
+        $title = SubTitleHtmlView::create();
         $this->add($title);
-        return $title->texts();
+        if (!is_null($header)) {
+            $title->texts($header);
+            return $this;
+        } else {
+            return $title->texts();
+        }
     }
 
     /**

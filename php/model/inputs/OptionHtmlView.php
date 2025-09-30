@@ -60,8 +60,9 @@ class OptionHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function texts(array|string|null $texts = null) : HtmlView|TextView {
-        $this->textView = parent::texts($texts);
+    public function texts(array|string|null $texts = null) : HtmlView|TextView|static {
+        parent::texts($texts);
+        $this->textView = parent::texts();
         return $this;
     }
 

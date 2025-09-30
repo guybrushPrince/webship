@@ -1,13 +1,30 @@
 <?php
 
 /**
- * Class CloserHtmlView.
+ * View CloserHtmlView.
+ *
+ * <p>A <em>closer</em> is just a special button that has a cross as sign.</p>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/closer.png" />
+ * <code>
+ *     $container = ContainerHtmlViewIt(['hor', 'gap20', 'vcent']);
+ *     $container->add(CloserHtmlView::create('hello-world-1'));
+ *     $container->add(CloserHtmlView::create('hello-world-2'))->mini();
+ *     $container->add(CloserHtmlView::create('hello-world-3'))->plain();
+ * </code>
  *
  * @package webship
  * @subpackage php/model
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.2.0
+ *
+ * @view
+ * @examples
+ *     $container = ContainerHtmlViewIt(['hor', 'gap20', 'vcent']);
+ *     $container->add(CloserHtmlView::create('hello-world-1'));
+ *     $container->add(CloserHtmlView::create('hello-world-2'))->mini();
+ *     $container->add(CloserHtmlView::create('hello-world-3'))->plain();
  */
 class CloserHtmlView extends StandardButtonHtmlView {
 
@@ -46,6 +63,18 @@ class CloserHtmlView extends StandardButtonHtmlView {
     }
 
     /**
+     * Create a closer.
+     * @param string|null $id The id (of the button).
+     * @param string|string[] $classes Some classes.
+     * @param string|null $img A different image if necessary.
+     * @return CloserHtmlView
+     */
+    public static function create(?string $id = null, array|string $classes = [],
+                                  string|null $img = '/tardis/pic/cancel.svg') : CloserHtmlView {
+        return new CloserHtmlView($classes, $img, $id);
+    }
+
+    /**
      * Return a new closer html view.
      * @param string[]|string $classes Some classes.
      * @param string|null $img A path to an image.
@@ -63,6 +92,15 @@ class CloserHtmlView extends StandardButtonHtmlView {
      */
     public function mini() : static {
         $this->addClass('mini');
+        return $this;
+    }
+
+    /**
+     * Sets it plain.
+     * @return $this
+     */
+    public function plain() : static {
+        $this->addClass('plain');
         return $this;
     }
 }
