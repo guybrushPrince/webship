@@ -229,6 +229,27 @@ class LabelledInputHtmlView extends InputHtmlView {
     }
 
     /**
+     * Create a mini numeric input field.
+     * @param string|string[]|null $labels The label(s).
+     * @param string $id The id.
+     * @param string[]|string $classes Some classes.
+     * @param int|float|null $value The start value.
+     * @param int|float|null $min The minimum value.
+     * @param int|float|null $max The maximum value.
+     * @param int|float|null $step The step size.
+     * @return LabelledInputHtmlView
+     */
+    public static function createMiniNumericField(string|array|null $labels, string $id, array|string $classes = [],
+                                                  int|float|null $value = null,
+                                                  int|float|null $min = null, int|float|null $max = null,
+                                                  int|float|null $step = null) : LabelledInputHtmlView {
+        $input = new LabelledInputHtmlView($labels, $id, 'number', $min, $max, $step, $classes);
+        if ($value || is_int($value) || is_float($value)) $input->texts()->text(self::getLanguage(), $value);
+        $input->mini = true;
+        return $input;
+    }
+
+    /**
      * Create a password input field.
      * @param string|string[]|null $labels The label(s).
      * @param string $id The id.

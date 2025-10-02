@@ -73,6 +73,7 @@ class SectionHtmlView extends HtmlView {
         self::addStyle(Tools::css('.sect', [],'width: 100%', 'display: flex',
             'flex-direction: column', 'padding: 0 0 16px 0'));
         self::addStyle(Tools::css('.sect.compatible', [],'padding: 16px 0 0 0'));
+        self::addStyle(Tools::css('.sect.single', [],'padding: 0'));
 
         self::addStyle(Tools::css('.sect.fit', [],'width: -moz-fit-content', 'width: fit-content',
             'padding-right: 20px'));
@@ -129,6 +130,15 @@ class SectionHtmlView extends HtmlView {
      */
     public function fit() : static {
         $this->classes[] = 'fit';
+        return $this;
+    }
+
+    /**
+     * Make this section singleton (so that it does not have padding).
+     * @return $this
+     */
+    public function single() : static {
+        $this->addClass('single');
         return $this;
     }
 
