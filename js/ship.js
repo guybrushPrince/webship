@@ -544,12 +544,19 @@ let replaceDom = function(sStr,n,e) {
     sel.addClass((sStr + ids).replace(/\./g, ""));
     s.trigger(e).replaceWith(domAction(n));
 };
+let extractStyle = function (res) {
+    try {
+        let r = $(res);
+        $("body").append(r.filter("style").add(r.find("style")));
+        return r.filter(":not(style)").remove("style");
+    } catch (e) {
+        return res;
+    }
+};
 let domAction = function(res, t = false) {
     if (!t) {
         return () => {
-            let r = $(res);
-            $("body").append(r.filter("style").add(r.find("style")));
-            return r.filter(":not(style)").remove("style");
+            return $(res);
         };
     } else {
         return res;
