@@ -65,7 +65,19 @@ let isJson = function (item) {
 };
 Array.prototype.unique = function () { return [...new Set(this)]; }
 
-let context = { currentTaskId: 0, currentHintId: 0, tabId: 0, tabOffset: [], windows: [], formContexts: {} };
+let context = {
+    currentTaskId: 0,
+    currentHintId: 0,
+    tabId: 0,
+    tabOffset: [],
+    windows: [],
+    formContexts: {},
+    timers: {},
+    killTimers: function () { Object.values(context.timers).forEach((i) => {
+        clearTimeout(i);
+        delete context.timers[i];
+    }); }
+};
 
 let lastDelay = [];
 let delay = (function () {
