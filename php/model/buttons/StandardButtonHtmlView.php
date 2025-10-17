@@ -4,7 +4,6 @@
  * View StandardButtonHtmlView.
  *
  * <p>A very flexible specialization of a button that can appear differently depending on its configuration.</p>
- * <img src="http://localhost/coast/webship/modeldoc/standardbutton.png" />
  *
  * <code>
  * StandardButtonHtmlView::create('example-1')->img('/webship/pic/help.svg')->texts('Press me!');
@@ -14,6 +13,7 @@
  * StandardButtonHtmlView::create('example-5')->long()->img('/webship/pic/help.svg')->texts('Press me!');
  * StandardButtonHtmlView::create('example-6')->list()->img('/webship/pic/help.svg')->texts('Press me!');
  * </code>
+ * <img src="http://localhost/coast/webship/modeldoc/standardbutton.png" />
  *
  * @package webship
  * @subpackge php/model/buttons
