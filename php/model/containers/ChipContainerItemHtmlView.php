@@ -9,7 +9,13 @@
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.2.0
  */
-class ChipContainerItemHtmlView extends ContainerItemHtmlView {
+class ChipContainerItemHtmlView extends ContainerHtmlView {
+
+    /**
+     * The content of the chip.
+     * @var ContainerHtmlView
+     */
+    private ContainerHtmlView $box;
 
     /**
      * ContainerItemHtmlView constructor.
@@ -27,9 +33,23 @@ class ChipContainerItemHtmlView extends ContainerItemHtmlView {
         $this->style(Tools::css('.chip', [' ', '.container-item'], 'height: auto', 'padding-top: 0',
             'padding-bottom: 0'));
         $this->style(Tools::css('.chip', [' ', 'select'], 'height: auto'));
+
+        $this->box = ContainerHtmlView::createIt();
+        $this->add($this->box);
     }
 
     /**
+     * Get the box (with the content).
+     * @param string[]|string|null $classes Some additional classes (if necessary).
+     * @return ContainerHtmlView
+     */
+    public function box(array|string|null $classes = null) : ContainerHtmlView {
+        if (!is_null($classes)) $this->box->addClass($classes);
+        return $this->box;
+    }
+
+    /**
+     * @deprecated
      * @inheritDoc
      */
     public function generateOpeningTag() {

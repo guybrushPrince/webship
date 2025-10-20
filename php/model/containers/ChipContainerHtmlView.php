@@ -21,9 +21,8 @@ class ChipContainerHtmlView extends ContainerHtmlView {
 
         $this->style(Tools::css('.chip-container', '', 'align-items: center', 'gap: 5px'));
 
-        $this->style(Tools::css('.chip-container', [' > ', '.chip'],
-            'background: var(--chip-background)', 'align-items: center', 'font-weight: 500',
-            'padding: 5px 15px', 'border-radius: 45px', 'height: 45px', 'box-sizing: border-box'));
+        $this->style(Tools::css('.chip-container', [' > ', '.chip'],'align-items: center',
+            'padding: 5px 5px 5px 10px', 'height: 45px', 'box-sizing: border-box', 'gap: 10px', 'width: auto'));
     }
 
     /**

@@ -1,7 +1,12 @@
 <?php
 
+use progression\CPTools;
+
 /**
  * Class SubmitHtmlView.
+ *
+ * @package webship
+ * @subpackge php/model/buttons
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.2.0
@@ -25,9 +30,29 @@ class SubmitHtmlView extends StandardButtonHtmlView {
         parent::__construct($id, array_merge(['submit'], $classes));
         $this->form = $form;
 
-        $this->style(Tools::css('button.std-button.submit', [], 'background: var(--button-submit)'));
-        $this->style(Tools::css('button.std-button.submit', [':hover'],
+        self::addCSS();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('button.std-button.submit', [], 'background: var(--button-submit)'));
+        self::addStyle(Tools::css('button.std-button.submit', [':hover'],
             'background: var(--dark-system-background)'));
+    }
+
+    /**
+     * Create a new submit button.
+     * @param string|null $id The id.
+     * @param string[]|string $classes Some classes.
+     * @param FormHtmlView|string|null $form The form or form reference.
+     * @return SubmitHtmlView
+     * @throws Exception
+     */
+    public static function create(?string $id = null, array|string $classes = [],
+                                  FormHtmlView|string|null $form = null) : SubmitHtmlView {
+        return new SubmitHtmlView(CPTools::uuid(), $form, $classes);
     }
 
     /**

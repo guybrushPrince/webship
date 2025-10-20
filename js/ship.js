@@ -65,7 +65,19 @@ let isJson = function (item) {
 };
 Array.prototype.unique = function () { return [...new Set(this)]; }
 
-let context = { currentTaskId: 0, currentHintId: 0, tabId: 0, tabOffset: [], windows: [], formContexts: {} };
+let context = {
+    currentTaskId: 0,
+    currentHintId: 0,
+    tabId: 0,
+    tabOffset: [],
+    windows: [],
+    formContexts: {},
+    timers: {},
+    killTimers: function () { Object.values(context.timers).forEach((i) => {
+        clearTimeout(i);
+        delete context.timers[i];
+    }); }
+};
 
 let lastDelay = [];
 let delay = (function () {
@@ -544,12 +556,19 @@ let replaceDom = function(sStr,n,e) {
     sel.addClass((sStr + ids).replace(/\./g, ""));
     s.trigger(e).replaceWith(domAction(n));
 };
+let extractStyle = function (res) {
+    try {
+        let r = $(res);
+        $("body").append(r.filter("style").add(r.find("style")));
+        return r.filter(":not(style)").remove("style");
+    } catch (e) {
+        return res;
+    }
+};
 let domAction = function(res, t = false) {
     if (!t) {
         return () => {
-            let r = $(res);
-            $("body").append(r.filter("style").add(r.find("style")));
-            return r.filter(":not(style)").remove("style");
+            return $(res);
         };
     } else {
         return res;

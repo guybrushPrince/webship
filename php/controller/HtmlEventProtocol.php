@@ -122,10 +122,16 @@ class HtmlEventProtocol extends EventProtocol {
 
                 if ($this->delay) $code .= '}};' . 'lastDelay.push(l);' . 'delay(lastDelay, ' . $this->delay . ');';
                 if ($this->event === Event::TIMED) {
-                    $code .= 'if (' . ($this->forceObject ? : '$("[data-id=' . $this->parent->id() . '").length === 0') . ') clearInterval(i);';
+                    $code .= 'if (' . ($this->forceObject ? : '$("[data-id=' . $this->parent->id() . '").length === 0') . ') {' .
+                        'clearInterval(i);' .
+                        'delete context.timers[i];' .
+                        '}';
                 }
                 if ($this->event === Event::DELAYED) {
-                    $code .= 'if (' . ($this->forceObject ? : '$("[data-id=' . $this->parent->id() . '").length === 0') . ') clearTimeout(i);';
+                    $code .= 'if (' . ($this->forceObject ? : '$("[data-id=' . $this->parent->id() . '").length === 0') . ') {' .
+                        'clearTimeout(i);' .
+                        'delete context.timers[i];' .
+                        '}';;
                 }
                 $code .= '})';
                 if ($this->event === Event::ONLOAD) $code .= '(' . ($this->forceObject ? : '$("' . $this->parent->idc() . '")') . ')';
@@ -161,7 +167,7 @@ class HtmlEventProtocol extends EventProtocol {
                     case Event::CLOSE_MODAL: $code .= ')';
                 }
                 if (in_array($this->event, [ Event::TIMED, Event::DELAYED ])) {
-                    $code .= ',' . ($this->parameters['interval'] * 1000) . ')})()';
+                    $code .= ',' . ($this->parameters['interval'] * 1000) . '); context.timers[i] = i;})();';
                 }
                 $code .= ';';
                 if ($this->event === Event::ONLOADCONTENT) {

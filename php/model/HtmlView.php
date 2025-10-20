@@ -205,14 +205,16 @@ class HtmlView extends View {
                     $checkContainer = &$_SESSION['styles'];
                 } else $checkContainer = [];
             }
-            if (!array_key_exists($class, $checkContainer) ||
-                $checkContainer[$class] === self::UNDELIVERED ||
-                self::DEBUG || $force) {
-                if (!array_key_exists($class, self::$styles)) self::$styles[$class] = [];
-                foreach (self::$styles[$class] as $s) {
-                    if (!in_array($s, $styles)) $styles[] = $s;
+            if (!array_key_exists($class, self::$styles)) self::$styles[$class] = [];
+            foreach (self::$styles as $class => $cStyles) {
+                if (!array_key_exists($class, $checkContainer) ||
+                    $checkContainer[$class] === self::UNDELIVERED ||
+                    self::DEBUG || $force) {
+                    foreach ($cStyles as $s) {
+                        if (!in_array($s, $styles)) $styles[] = $s;
+                    }
+                    $checkContainer[$class] = self::DELIVERED;
                 }
-                $checkContainer[$class] = self::DELIVERED;
             }
             $styles = array_merge($styles, $this->dynamicStyles);
             foreach ($this->subviews as $subView) {

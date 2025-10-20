@@ -98,6 +98,7 @@ class HtmlActionProtocol extends ActionProtocol {
                             $func .= 'if (!(isObject(result) && "__intern_fail" in result)) return;';
                             $func .= 'result = result["content"];';
                         }
+                        $func .= 'result = extractStyle(result);';
                         if (!$isJS || $hasFail && $p["operation"] === "fail") $func .= '(function(result) {' . $p["protocol"]->generate() . '})(result);';
                         else /*if ($hasFail && $p["operation"] !== "fail)) */$func .= '(function(result) {' . 'result="";' . $p["protocol"]->generate() . '})(result);';
                         if (($isCSV || $isPDF || $isZIP) && $p["operation"] === "success") {
@@ -111,12 +112,13 @@ class HtmlActionProtocol extends ActionProtocol {
                     } else if ($p["operation"] === "error") {
                         $func = '.fail(function(result) {';
                         $func .= 'result = result.responseText;';
+                        $func .= 'result = extractStyle(result);';
                         if (!$isJS) $func .= '(function(result) {' . $p["protocol"]->generate() . '})(result);';
                         else $func .= '(function(result) {' . 'result="";' . $p["protocol"]->generate() . '})(result);';
                         $func .= 'sysTF(taskId);})';
                         return $func;
                     } else {
-                        return '.always(function(result) {(function(result) {' . $p["protocol"]->generate() . '})(result);' .
+                        return '.always(function(result) {result = extractStyle(result);(function(result) {' . $p["protocol"]->generate() . '})(result);' .
                             'sysTF(taskId);})';
                     }
                 }, $this->protocol)) . ';';
@@ -136,7 +138,7 @@ class HtmlActionProtocol extends ActionProtocol {
             }
             // Add callbacks.
             $code .= implode(',', array_map(function (array $p) {
-                    return 'function(result) {' . $p["protocol"]->generate() . '}';
+                    return 'function(result) {result = extractStyle(result);' . $p["protocol"]->generate() . '}';
                 }, $this->protocol));
             $code .= ');';
         }

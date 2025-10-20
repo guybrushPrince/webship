@@ -56,6 +56,7 @@ class ContainerHtmlView extends HtmlView {
         self::addStyle(Tools::css('.container', '.gap15', 'gap: 15px'));
         self::addStyle(Tools::css('.container', '.gap20', 'gap: 20px'));
         self::addStyle(Tools::css('.container', '.p', 'padding: 5px'));
+        self::addStyle(Tools::css('.container', '.p5', 'padding: 5px'));
         self::addStyle(Tools::css('.container', '.p10', 'padding: 10px'));
         self::addStyle(Tools::css('.container', '.p15', 'padding: 15px'));
         self::addStyle(Tools::css('.container', '.p20', 'padding: 20px'));
@@ -189,7 +190,7 @@ class ContainerHtmlView extends HtmlView {
      * @return $this
      */
     public function padding(int $padding) : static {
-        $this->addClass('padding' . $padding);
+        $this->addClass('p' . $padding);
         return $this;
     }
 

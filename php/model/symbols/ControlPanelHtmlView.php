@@ -204,9 +204,10 @@ class ControlPanelHtmlView extends HtmlView {
      */
     public function linkButton(string $url, string $img, bool $download = false,
                                string|array $classes = []) : LinkHtmlView {
-        $link = new LinkHtmlView($url, [], $download);
+        $link = LinkHtmlView::create($url, LinkHtmlView::TARGET_NEW_PAGE, $classes, $download);
         $this->add($link);
-        $but = $link->add(StandardButtonHtmlView::create($url));
+        $but = StandardButtonHtmlView::create($url);
+        $link->add($but);
         $but->img($img);
         $but->onlyImg(true);
         return $link;
