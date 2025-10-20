@@ -65,6 +65,7 @@ class ContainerHtmlView extends HtmlView {
             'justify-items: flex-end'));
         self::addStyle(Tools::css('.container', '.vbot', 'align-items: flex-end'));
         self::addStyle(Tools::css('.container', '.h100', 'height: 100%'));
+        self::addStyle(Tools::css('.container', '.w50', 'width: 50%'));
         self::addStyle(Tools::css('.container', '.rel', 'position: relative'));
         self::addStyle(Tools::css('.container', ['.self-fit'], 'width: -moz-fit-content',
             'width: fit-content'));
