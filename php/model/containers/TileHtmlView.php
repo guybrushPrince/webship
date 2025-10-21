@@ -4,7 +4,7 @@
  * TileHtmlView.
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  */
-class TileHtmlView extends HtmlView {
+class TileHtmlView extends ContainerHtmlView {
 
     /**
      * Constructor.
@@ -17,24 +17,6 @@ class TileHtmlView extends HtmlView {
 
         $this->localStyle('--tw: ' . $tileWidth . 'px');
         $this->localStyle('--fs: ' . round($tileWidth / 9, 2) . 'px');
-
-        $this->style(Tools::css('.tiles', [], 'width: 100%', 'display: flex', 'flex-wrap: wrap',
-            'flex-direction: row',
-            'border: 1px solid var(--light-system-background)', 'padding: 10px 10px 0px 10px', 'box-sizing: border-box',
-            'justify-content: center'));
-        $this->style(Tools::css('.tiles', [' > ', '.tile'], 'display: flex', 'flex-direction: column',
-            'align-items: center',
-            'justify-content: flex-start', 'margin-right: 10px', 'border: 1px solid var(--system-background-hover)',
-            'padding: 10px', 'box-sizing: border-box', 'cursor: pointer', 'transition: background 0.5s',
-            'text-align: center', 'margin-bottom: 10px', 'background: var(--ultra-light-system-background)',
-            'width: var(--tw)', 'max-width: var(--tw)', 'height: var(--tw)', 'font-size: var(--fs)'));
-        $this->style(Tools::css('.tiles', [' > ', '.tile', ' > ', 'span.small'], 'display: none'));
-        $this->style(Tools::css('.tiles', [' > ', '.tile', ' > ', 'img'], 'height: 50%',
-            'padding: 10px'));
-        $this->style(Tools::css('.tiles', [' > ', '.tile', ':hover'],
-            'background: var(--system-background)'));
-        $this->style(Tools::css('.tiles', [' > ', '.tile', '.active'],
-            'background: var(--system-background-hover)', 'border-color: var(--dark-system-background)'));
     }
 
     /**
