@@ -83,24 +83,6 @@ class ContainerHtmlView extends HtmlView {
             'display: inherit'));
         self::addStyle(Tools::css('.container.with-default', [' > ', '.default'],
             'display: none'));
-
-        self::addStyle(Tools::css('.tiles', [], 'width: 100%', 'display: flex', 'flex-wrap: wrap',
-            'flex-direction: row',
-            'border: 1px solid var(--light-system-background)', 'padding: 10px 10px 0px 10px', 'box-sizing: border-box',
-            'justify-content: center'));
-        self::addStyle(Tools::css('.tiles', [' > ', '.tile'], 'display: flex', 'flex-direction: column',
-            'align-items: center',
-            'justify-content: flex-start', 'margin-right: 10px', 'border: 1px solid var(--system-background-hover)',
-            'padding: 10px', 'box-sizing: border-box', 'cursor: pointer', 'transition: background 0.5s',
-            'text-align: center', 'margin-bottom: 10px', 'background: var(--ultra-light-system-background)',
-            'width: var(--tw)', 'max-width: var(--tw)', 'height: var(--tw)', 'font-size: var(--fs)'));
-        self::addStyle(Tools::css('.tiles', [' > ', '.tile', ' > ', 'span.small'], 'display: none'));
-        self::addStyle(Tools::css('.tiles', [' > ', '.tile', ' > ', 'img'], 'height: 50%',
-            'padding: 10px'));
-        self::addStyle(Tools::css('.tiles', [' > ', '.tile', ':hover'],
-            'background: var(--system-background)'));
-        self::addStyle(Tools::css('.tiles', [' > ', '.tile', '.active'],
-            'background: var(--system-background-hover)', 'border-color: var(--dark-system-background)'));
     }
 
     /**
