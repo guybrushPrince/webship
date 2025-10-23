@@ -25,10 +25,8 @@ class TileHtmlView extends ContainerHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.tiles', [], 'width: 100%', 'display: flex', 'flex-wrap: wrap',
-            'flex-direction: row',
-            'border: 1px solid var(--light-system-background)', 'padding: 10px 10px 0px 10px', 'box-sizing: border-box',
-            'justify-content: center'));
+        self::addStyle(Tools::css('.tiles', [], 'border: 1px solid var(--light-system-background)',
+            'padding: 10px 10px 0px 10px'));
         self::addStyle(Tools::css('.tiles', [' > ', '.tile'], 'display: flex', 'flex-direction: column',
             'align-items: center',
             'justify-content: flex-start', 'margin-right: 10px', 'border: 1px solid var(--system-background-hover)',
