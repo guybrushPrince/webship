@@ -1,7 +1,5 @@
 <?php
 
-include_once dirname(__FILE__) . '/HtmlView.php';
-
 /**
  * Class MovePanelItemHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
@@ -80,7 +78,7 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
         $this->style(Tools::css($coreSelector, ['.over:not(.in-move)', ' > ', '.move-position', ' > ', 'img'],
             'height: 10px'));
 
-        $this->style(Tools::css($coreSelector, [' > ', '.drag'], 'cursor: move', 'text-align: center',
+        $this->style(Tools::css($coreSelector, [' > ', '.drag'], 'cursor: grab', 'text-align: center',
             'position: absolute', 'left: -3%', 'width: 3%', 'box-sizing: border-box', 'height: 100%',
             'transition: background 0.5s', 'display: flex', 'align-items: center', 'justify-content: center',
             'border-radius: 5px'));

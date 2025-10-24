@@ -77,6 +77,11 @@ class StandardButtonHtmlView extends ButtonHtmlView {
         self::addStyle(Tools::css('button.std-button.sm-img', [' > ', 'img'], 'height: 50%',
             'margin: 5px'));
 
+        self::addStyle(Tools::css('button.std-button.w25', [], 'width: 25%'));
+        self::addStyle(Tools::css('button.std-button.w50', [], 'width: 50%'));
+        self::addStyle(Tools::css('button.std-button.w75', [], 'width: 75%'));
+        self::addStyle(Tools::css('button.std-button.w100', [], 'width: 100%'));
+
         self::addStyle(Tools::css('button.std-button.long', [], 'width: 250px'));
 
         self::addStyle(Tools::css('button.std-button.only-img', [], 'width: 30px', 'height: 30px',
@@ -159,6 +164,16 @@ class StandardButtonHtmlView extends ButtonHtmlView {
      */
     public function long() : static {
         $this->addClass('long');
+        return $this;
+    }
+
+    /**
+     * Sets the width (25%, 50%, 75%, 100%).
+     * @param int $width The width.
+     * @return $this
+     */
+    public function width(int $width) : static {
+        $this->addClass('w' . $width);
         return $this;
     }
 

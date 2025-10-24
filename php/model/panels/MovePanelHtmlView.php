@@ -1,7 +1,5 @@
 <?php
 
-include_once dirname(__FILE__) . '/PanelHtmlView.php';
-
 /**
  * Class MovePanelHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz

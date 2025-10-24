@@ -24,14 +24,21 @@ class TitleHtmlView extends HtmlView {
         if ($img) $this->add(new ImageHtmlView($img));
         if ($dataType) $this->add(new SpanTextHtmlView('title-circle'))->data($dataType);
 
-        $this->style(Tools::css('.title', [],
+        self::addCSS();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.title', [],
             'font-family: Roboto, sans-serif', 'text-transform: none', 'padding: 0 0 16px 0',
             'font-size: 1.75em', 'font-weight: lighter', 'border: none', 'display: flex', 'flex-direction: row',
             'align-items: center'));
-        $this->style(Tools::css('.title.small', [], 'padding: 5px 0 5px 5px', 'font-size: 1.25em'));
-        $this->style(Tools::css('.title', [' > ', '.title-circle'], 'display: inline-block',
+        self::addStyle(Tools::css('.title.small', [], 'padding: 5px 0 5px 5px', 'font-size: 1.25em'));
+        self::addStyle(Tools::css('.title', [' > ', '.title-circle'], 'display: inline-block',
             'border-radius: 50%', 'width: 20px', 'height: 20px', 'margin-right: 10px'));
-        $this->style(Tools::css('.title', [' > ', 'img'], 'display: inline-block',
+        self::addStyle(Tools::css('.title', [' > ', 'img'], 'display: inline-block',
             'border-radius: 50%', 'width: 20px', 'height: 20px', 'margin-right: 10px'));
     }
 
