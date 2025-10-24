@@ -40,7 +40,7 @@ class ContainerHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.container, .tiles', '', 'display: flex',
+        self::addStyle(Tools::css('.container', '', 'display: flex',
             'flex-wrap: wrap', 'align-items: flex-start', 'align-content: flex-start', 'width: 100%',
             'box-sizing: border-box'));
         self::addStyle(Tools::css('.container', '.ver', 'flex-direction: column'));

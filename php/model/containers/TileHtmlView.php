@@ -18,6 +18,7 @@ class TileHtmlView extends ContainerHtmlView {
         $this->localStyle('--tw: ' . $tileWidth . 'px');
         $this->localStyle('--fs: ' . round($tileWidth / 9, 2) . 'px');
 
+        parent::addCSS();
         self::addCSS();
     }
 
@@ -57,10 +58,10 @@ class TileHtmlView extends ContainerHtmlView {
      * @param string|array $classes Some additional classes.
      * @return HtmlView
      */
-    public function tile(string|array $classes = []) : HtmlView {
+    public function tile(string|array $classes = []) : ContainerHtmlView {
         if (!is_array($classes)) $classes = [$classes];
         $classes[] = 'tile';
-        $tile = new HtmlView($classes);
+        $tile = new ContainerHtmlView($classes);
         $this->add($tile);
         return $tile;
     }
