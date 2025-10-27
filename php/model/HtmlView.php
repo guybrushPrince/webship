@@ -321,7 +321,7 @@ class HtmlView extends View {
      */
     public function panel($classes = array()) {
         $classes = is_array($classes) ? $classes : array($classes);
-        $panelView = PanelHtmlView::create($classes);
+        $panelView = PanelHtmlView::createIt($classes);
         $this->add($panelView);
         return $panelView;
     }
