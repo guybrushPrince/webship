@@ -45,11 +45,13 @@ class PanelHeaderHtmlView extends TitleHtmlView {
      * @inheritDoc
      * @return PanelHeaderHtmlView
      */
-    public static function create(string|array $title, ?string $dataType = null, ?string $img = null,
+    public static function create(string|array|null $title, ?string $dataType = null, ?string $img = null,
                                   string|array $classes = []) : PanelHeaderHtmlView {
-        if (!is_array($title)) $title = [ self::getLanguage() => $title ];
         $view = new PanelHeaderHtmlView($dataType, $img, $classes);
-        $view->texts($title);
+        if (!is_null($title)) {
+            if (!is_array($title)) $title = [self::getLanguage() => $title];
+            $view->texts($title);
+        }
         return $view;
     }
 
