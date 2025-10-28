@@ -83,8 +83,6 @@ class ContainerHtmlView extends HtmlView {
             'display: inherit'));
         self::addStyle(Tools::css('.container.with-default', [' > ', '.default'],
             'display: none'));
-
-
     }
 
     /**
