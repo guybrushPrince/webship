@@ -9,8 +9,21 @@
  * a specialization of this view or by adding the {@link Protocol} to it.</p>
  * <p>Since {@link MovePanelHtmlView} is a specialization of {@link PanelHtmlView}, the layout options can be reused.</p>
  *
- * <code></code>
+ * <code>
+ * $moveView = MovePanelHtmlView::createIt()->minHeightChildren(100)->addBorder();
+ * $moveView->item(['hor', 'vcent', 'p20'], true, false, false, true)->texts('Item 1');
+ * $moveView->item(['hor', 'vcent', 'p20'], true, false, false, true)->texts('Item 2');
+ * $moveView->item(['hor', 'vcent', 'p20'], true, false, false, true)->texts('Item 3');
+ * </code>
+ * <code>
+ * $moveView = MovePanelHtmlView::createIt()->outside()->separateChildren()->
+ *     rounded()->minHeightChildren(100)->addBorder();
+ * $moveView->item(['hor', 'vcent', 'p20'], true, false, true)->texts('Item 1');
+ * $moveView->item(['hor', 'vcent', 'p20'], true, false, true)->texts('Item 2');
+ * $moveView->item(['hor', 'vcent', 'p20'], true, false, true)->texts('Item 3');
+ * </code>
  *
+ * <img src="http://localhost/coast/webship/modeldoc/movepanel.png" />
  *
  * @package webship
  * @subpackge php/model/panels
@@ -20,6 +33,16 @@
  *
  * @view
  * @examples
+ *      $moveView = MovePanelHtmlView::createIt()->minHeightChildren(100)->addBorder();
+ *      $moveView->item(['hor', 'vcent', 'p20'], true, false, false, true)->texts('Item 1');
+ *      $moveView->item(['hor', 'vcent', 'p20'], true, false, false, true)->texts('Item 2');
+ *      $moveView->item(['hor', 'vcent', 'p20'], true, false, false, true)->texts('Item 3');
+ *
+ *      $moveView = MovePanelHtmlView::createIt()->outside()->separateChildren()->
+ *          rounded()->minHeightChildren(100)->addBorder();
+ *      $moveView->item(['hor', 'vcent', 'p20'], true, false, true)->texts('Item 1');
+ *      $moveView->item(['hor', 'vcent', 'p20'], true, false, true)->texts('Item 2');
+ *      $moveView->item(['hor', 'vcent', 'p20'], true, false, true)->texts('Item 3');
  */
 class MovePanelHtmlView extends PanelHtmlView {
 

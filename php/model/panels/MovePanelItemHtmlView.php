@@ -2,7 +2,32 @@
 
 /**
  * View MovePanelItemHtmlView.
+ *
+ * <p><b>Note:</b> This view should be only used within a {@link MovePanelHtmlView} to guarantee its layout and
+ * functionality.</p>
+ * <p>An item of a panel that can be moved, deleted, and dragged. All these actions are thrown as events so that
+ * specializations or instances can react on the events to perform actual actions.</p>
+ *
+ * <code>
+ * MovePanelItemHtmlView::create(true, true, false, false, ['hor', 'vcent', 'p20'])->texts('Item 1');
+ * MovePanelItemHtmlView::create(true, false, true, false, ['hor', 'vcent', 'p20'])->texts('Item 2');
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/movepanelitem.png" />
+ *
+ * @see MovePanelHtmlView
+ *
+ * @package webship
+ * @subpackge php/model/panels
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.4.0
+ *
+ * @view
+ * @examples
+ *     MovePanelItemHtmlView::create(true, true, false, false, ['hor', 'vcent', 'p20'])->texts('Item 1');
+ *     MovePanelItemHtmlView::create(true, false, true, false, ['hor', 'vcent', 'p20'])->texts('Item 2');
+ *
  */
 class MovePanelItemHtmlView extends PanelItemHtmlView {
 
@@ -204,14 +229,14 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
      * @param bool $draggable If the item shall be draggable.
      * @param bool $movable If the item shall show move cursors.
      * @param bool $autoDelete If the delete button automatically removes this item.
-     * @param array|string $classes
+     * @param string[]|string $classes Some classes.
      * @return MovePanelItemHtmlView
      */
     public static function create(bool $hasDelete = false, bool $draggable = false, bool $movable = false,
                                   bool $autoDelete = false, array|string $classes = []) : MovePanelItemHtmlView {
         $view = new MovePanelItemHtmlView($hasDelete, $autoDelete, $classes);
-        if ($movable) $view->movable($movable);
-        if ($draggable) $view->draggable($draggable);
+        $view->movable($movable);
+        $view->draggable($draggable);
         return $view;
     }
 
