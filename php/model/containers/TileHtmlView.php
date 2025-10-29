@@ -95,7 +95,7 @@ class TileHtmlView extends ContainerHtmlView {
      */
     public function tile(array|string $classes = []) : ContainerHtmlView {
         if (!is_array($classes)) $classes = [$classes];
-        $classes = array_merge($classes, ['tile', 'ver', 'p10']);
+        $classes = array_merge($classes, ['tile', 'ver', 'p10', 'single']);
         $tile = new ContainerHtmlView($classes);
         $this->add($tile);
         return $tile;
