@@ -55,8 +55,12 @@ class PanelHtmlView extends HtmlView {
 
         self::addStyle(Tools::css('.panel', ['.border'],
             'border: solid 1px var(--system-background)'));
+        self::addStyle(Tools::css('.panel', ['.border'],
+            'border: solid 1px var(--system-background)'));
         self::addStyle(Tools::css('.panel', ['.sep-children'],
             'gap: 1px', 'background: var(--system-background)'));
+        self::addStyle(Tools::css('.panel', ['.sep-children.light'],
+            'background: var(--ultra-light-system-background)'));
         self::addStyle(Tools::css('.panel', ['.sep-children', ' > ', '.panel-item'],
             'background: var(--neutral)'));
 
@@ -71,11 +75,12 @@ class PanelHtmlView extends HtmlView {
         self::addStyle(Tools::css('.panel', ['.p15'], 'padding: 15px'));
         self::addStyle(Tools::css('.panel', ['.p20'], 'padding: 20px'));
 
-        self::addStyle(Tools::css('.panel', ['.rounded'], 'border-radius: 5px'));
+        self::addStyle(Tools::css('.panel', ['.rounded'], '--radius: 5px',
+            'border-radius: var(--radius)'));
         self::addStyle(Tools::css('.panel', ['.rounded', ' > ', '*:first-child'],
-            'border-radius: 5px 5px 0 0'));
+            'border-radius: var(--radius) var(--radius) 0 0'));
         self::addStyle(Tools::css('.panel', ['.rounded', ' > ', '*:last-child'],
-            'border-radius: 0 0 5px 5px'));
+            'border-radius: 0 0 var(--radius) var(--radius)'));
 
         self::addStyle(Tools::css('.panel.ac', [' > ', '.panel-item:nth-child(even)'],
             'background: var(--fine-system-background)'));
@@ -143,19 +148,23 @@ class PanelHtmlView extends HtmlView {
 
     /**
      * Add a separation of the children.
+     * @param bool $light If the background-color should be light.
      * @return $this
      */
-    public function separateChildren() : static {
+    public function separateChildren(bool $light = false) : static {
         $this->addClass('sep-children');
+        if ($light) $this->addClass('light');
         return $this;
     }
 
     /**
      * Round the corners.
+     * @param int $radius An optional radius size.
      * @return $this
      */
-    public function rounded() : static {
+    public function rounded(int $radius = 5) : static {
         $this->addClass('rounded');
+        if ($radius !== 5) $this->localStyle('--radius: ' . $radius . 'px');
         return $this;
     }
 

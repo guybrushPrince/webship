@@ -130,7 +130,7 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
         self::addStyle(Tools::css('.panel-item.movable', [' > ', '.drag'], 'cursor: grab',
             'position: absolute', 'left: 0', 'width: 25px', 'box-sizing: border-box', 'height: 100%',
             'transition: background 0.5s', 'display: flex', 'align-items: center', 'justify-content: center',
-            'border-radius: 5px'));
+            'border-radius: 5px', 'top: 0px'));
         self::addStyle(Tools::css('.panel-item.movable', [' > ', '.drag', ':hover'],
             'background: var(--drag-background-hover)'));
         self::addStyle(Tools::css('.panel-item.movable', [' > ', '.drag', ' > ', 'img'],
