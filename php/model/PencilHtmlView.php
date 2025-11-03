@@ -1,14 +1,21 @@
 <?php
 
 /**
- * Class PencilHtmlView.
- * <p>Presents a Button with pencil icon.</p>
+ * View PencilHtmlView.
+ * <p>Presents a Button with a pencil icon.</p>
  * <img src="http://localhost/coast/webship/modeldoc/pencil.png" />
+ *
+ * <code>new PencilHtmlView();</code>
+ *
  * @package webship
  * @subpackage php/model
  *
- * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @author Dr. Dipl.-Inf. Thomas M. Prinz, Franziska Lüder
  * @version 1.2.0
+ *
+ * @view
+ * @examples
+ *      new PencilHtmlView();
  */
 class PencilHtmlView extends StandardButtonHtmlView {
 
@@ -22,6 +29,9 @@ class PencilHtmlView extends StandardButtonHtmlView {
         self::addCSS();
         $this->onlyImg(true);
     }
+    /**
+     * @inheritDoc
+     */
     public static function addCSS() : void {
         self::addStyle(Tools::css('button.std-button.pencil', [], 'color: var(--font-info)'));
         self::addStyle(Tools::css('button.std-button.pencil', [':after'], 'content: "\270E"',
