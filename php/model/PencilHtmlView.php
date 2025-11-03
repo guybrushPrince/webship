@@ -1,13 +1,21 @@
 <?php
 
 /**
- * Class PencilHtmlView.
+ * View PencilHtmlView.
+ * <p>Presents a Button with a pencil icon.</p>
+ * <img src="http://localhost/coast/webship/modeldoc/pencil.png" />
+ *
+ * <code>new PencilHtmlView();</code>
  *
  * @package webship
  * @subpackage php/model
  *
- * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @author Dr. Dipl.-Inf. Thomas M. Prinz, Franziska Lüder
  * @version 1.2.0
+ *
+ * @view
+ * @examples
+ *      new PencilHtmlView();
  */
 class PencilHtmlView extends StandardButtonHtmlView {
 
@@ -18,14 +26,18 @@ class PencilHtmlView extends StandardButtonHtmlView {
     public function __construct(string|array $classes = []) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct('pencil', array_merge([ 'pencil' ], $classes));
-
+        self::addCSS();
         $this->onlyImg(true);
-
-        $this->style(Tools::css('button.std-button.pencil', [], 'color: var(--font-info)'));
-        $this->style(Tools::css('button.std-button.pencil', [':after'], 'content: "\270E"',
+    }
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('button.std-button.pencil', [], 'color: var(--font-info)'));
+        self::addStyle(Tools::css('button.std-button.pencil', [':after'], 'content: "\270E"',
             'width: 100%', 'text-align: center', 'font-size: 14px', 'line-height: 15px'));
 
-        $this->style(Tools::css('button.std-button.pencil', ':hover',
+        self::addStyle(Tools::css('button.std-button.pencil', ':hover',
             'color: var(--neutral)'));
     }
 
