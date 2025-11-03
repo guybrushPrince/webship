@@ -170,7 +170,7 @@ class FolderHtmlView extends StandardHtmlView {
                     'language' => self::getLanguage(),
                     'fieldName' => 'header'
                 ], 'texts');
-            $title->add(new PencilHtmlView());
+            $title->add(PencilHtmlView::_new());
         } else {
             $title->texts()->text(self::getLanguage(), $folderGroup->getTitle(self::getLanguage()));
         }

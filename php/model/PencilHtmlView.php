@@ -2,33 +2,37 @@
 
 /**
  * View PencilHtmlView.
- * <p>Presents a Button with a pencil icon.</p>
+ *
+ * <p>Presents a {@link StandardButtonHtmlView} with a pencil icon, especially for {@link ControlPanelHtmlView}.</p>
+ *
  * <img src="http://localhost/coast/webship/modeldoc/pencil.png" />
  *
- * <code>new PencilHtmlView();</code>
+ * <code>PencilHtmlView::_new();</code>
  *
  * @package webship
  * @subpackage php/model
  *
- * @author Dr. Dipl.-Inf. Thomas M. Prinz, Franziska Lüder
+ * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @author Franziska Lüder
  * @version 1.2.0
  *
  * @view
  * @examples
- *      new PencilHtmlView();
+ *      PencilHtmlView::_new();
  */
 class PencilHtmlView extends StandardButtonHtmlView {
 
     /**
-     * PencilHtmlView constructor.
+     * Constructor.
      * @param string|string[] $classes Some classes.
      */
-    public function __construct(string|array $classes = []) {
+    private function __construct(string|array $classes = []) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct('pencil', array_merge([ 'pencil' ], $classes));
         self::addCSS();
         $this->onlyImg(true);
     }
+
     /**
      * @inheritDoc
      */

@@ -203,7 +203,7 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
     public function generateClosingTag() {
         $closing = '';
         if ($this->showMoves) {
-            $closing .= '<div class="' . implode(' ', array('move', 'down', $this->id() . '-down')) . '" ' .
+            $closing .= '<div class="' . implode(' ', ['move', 'down', $this->id() . '-down']) . '" ' .
                 'title="' . [
                     Language::ENGLISH => 'Move this element down by one',
                     Language::GERMAN  => 'Dieses Element um eins nach unten schieben.'

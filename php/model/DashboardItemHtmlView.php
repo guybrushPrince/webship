@@ -96,7 +96,7 @@ class DashboardItemHtmlView extends HtmlView {
             $this->controlPanel->fix()->plain();
             $this->add($this->controlPanel);
         }
-        $pencil = new PencilHtmlView($classes);
+        $pencil = PencilHtmlView::_new($classes);
         $this->controlPanel->addMini($pencil);
         $pencil->notice(Language::ENGLISH, 'Edit this element');
         $pencil->notice(Language::GERMAN,  'Dieses Element bearbeiten');
