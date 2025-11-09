@@ -1,13 +1,21 @@
 <?php
-
 /**
  * Class EmptyContentHtmlView.
+ * Presents an empty view.
  *
  * @package webship
  * @subpackage php/model
  *
  * @version 1.0.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ *
+ * @view
+ * @examples
+ * Usage: EmptyContentHtmlView::create($info, $classes)
+ *
+ * @param string|string[]|null $info (Optional) info text.
+ * @param string[]|string $classes Possible classes.
+ *
  */
 class EmptyContentHtmlView extends HtmlView {
 
@@ -18,11 +26,7 @@ class EmptyContentHtmlView extends HtmlView {
     private function __construct(string|array $classes = []) {
         parent::__construct($classes);
         $this->classes[] = 'empty-content';
-
-        $this->style(Tools::css('.empty-content', [], 'display: flex',
-            'flex-direction: column', 'width: 100%', 'align-items: center'));
-        $this->style(Tools::css('.empty-content', [' > ', 'img'], 'width: 200px'));
-        $this->style(Tools::css('.empty-content.small', [' > ', 'img'], 'width: 100px'));
+        self::addCSS();
     }
 
     /**
@@ -40,6 +44,17 @@ class EmptyContentHtmlView extends HtmlView {
             $view->add(InfoHtmlView::create($info));
         }
         return $view;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.empty-content', [], 'display: flex',
+            'flex-direction: column', 'width: 100%', 'align-items: center'));
+        self::addStyle(Tools::css('.empty-content', [' > ', 'img'], 'width: 200px'));
+        self::addStyle(Tools::css('.empty-content.small', [' > ', 'img'], 'width: 100px'));
+
     }
 
     /**

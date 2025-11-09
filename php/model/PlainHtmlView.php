@@ -1,7 +1,20 @@
 <?php
 /**
- * Class PlainHtmlView
+ * Class PlainHtmlView.
+ * Presents a Plain view.
+ *
+ * @package webship
+ * @subpackage php/model
+ *
+ * @version 1.0.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ *
+ * @view
+ * @examples
+ *  Usage: PlainHtmlView::create($classes)
+ *
+ * @param string[]|string $classes Possible classes.
+ *
  */
 class PlainHtmlView extends HtmlView {
 
