@@ -112,7 +112,7 @@ class KeyValueHtmlView extends HtmlView {
                                         bool $frame = true, int $keySize = 30, ?int $valueSize = null,
                                         array|string $classes = []) : KeyValueHtmlView {
         $view = new KeyValueHtmlView($key, $frame, $keySize, $valueSize, $classes);
-        $view->valueView->texts()->text(self::getLanguage(), $value);
+        $view->valueView->texts($value);
         return $view;
     }
 
