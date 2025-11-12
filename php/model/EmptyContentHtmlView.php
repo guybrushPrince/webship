@@ -1,7 +1,10 @@
 <?php
 /**
  * Class EmptyContentHtmlView.
- * Presents an empty view.
+ *
+ * <p>Presents an <em> empty content</em> view with a simple, full-width, empty-content image along with an optional InfoHtmlView.</p
+ * <p>You can choose between a medium (200p width) and a small image (100p width).</p>
+ *  <img src="http://localhost/coast/sunstone/pic/box.png" />
  *
  * @package webship
  * @subpackage php/model
@@ -11,10 +14,13 @@
  *
  * @view
  * @examples
- * Usage: EmptyContentHtmlView::create($info, $classes)
- *
- * @param string|string[]|null $info (Optional) info text.
- * @param string[]|string $classes Possible classes.
+ * <code>
+ *      $emptyContentView = EmptyContentHtmlView::create();
+ *      $emptyContentView = EmptyContentHtmlView::create("This is an EmptyContentView!");
+ *      $emptyContentView = EmptyContentHtmlView::create([Language::ENGLISH => "Hello empty world!, Language::GERMAN => "Hallo leere Welt!]);
+ *      $emptyContentView = EmptyContentHtmlView::create(null, ['.empty-content']);
+ *      $emptyContentView = EmptyContentHtmlView::create(null, ['.empty-content.small']);
+ * </code>
  *
  */
 class EmptyContentHtmlView extends HtmlView {
