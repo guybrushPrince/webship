@@ -1,7 +1,13 @@
 <?php
 /**
  * Class PlainHtmlView.
- * Presents a Plain view.
+ *
+ *<p>Presents a <em>plain</em> html view with <em>plain</em> text.</p
+ *
+ * <code>
+ * $plainView = new PlainHtmlView("");
+ * $plainView = new PlainHtmlView("Hello world!");
+ * </code>
  *
  * @package webship
  * @subpackage php/model
@@ -11,9 +17,8 @@
  *
  * @view
  * @examples
- *  Usage: PlainHtmlView::create($classes)
- *
- * @param string[]|string $classes Possible classes.
+ *     $plainView = new PlainHtmlView("");
+ *     $plainView = new PlainHtmlView("Hello world!");
  *
  */
 class PlainHtmlView extends HtmlView {

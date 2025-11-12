@@ -1,7 +1,15 @@
 <?php
 /**
  * Class LoadingHtmlView.
- * Presents a loading view.
+ *
+ * <p>Presents a <em> loading</em> view with a loading animation.</p
+ * <img src="http://localhost/coast/sunstone/pic/update-arrow.svg" />
+ *
+ * <code>
+ * $loadingView = new LoadingHtmlView();
+ * $loadingView = new LoadingHtmlView(['.loading','@-webkit-keyframes pulse']);
+ * $loadingView = new LoadingHtmlView(['.loading','@keyframes pulse']);
+ * </code>
  *
  * @package webship
  * @subpackage php/model
@@ -11,10 +19,10 @@
  *
  * @view
  * @examples
- *  Usage: LoadingHtmlView::create($classes)
- *
- * @param string[]|string $classes Possible classes.
- *
+ *     $loadingView = new LoadingHtmlView();
+ *     $loadingView = new LoadingHtmlView(['.loading','@-webkit-keyframes pulse']);
+ *     $loadingView = new LoadingHtmlView(['.loading','@keyframes pulse']);
+ * 
  */
 class LoadingHtmlView extends HtmlView {
 
@@ -22,7 +30,7 @@ class LoadingHtmlView extends HtmlView {
      * Constructor.
      * @param string[]|string $classes Some additional classes.
      */
-    public function __construct(array|string $classes = array()) {
+    public function __construct(array|string $classes = []) {
         parent::__construct(array_merge(['loading'], is_array($classes) ? $classes : [ $classes ]));
         self::addCSS();
     }
