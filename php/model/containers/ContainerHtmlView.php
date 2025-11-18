@@ -22,6 +22,11 @@
  * @version 1.0.0
  *
  * @view
+ * @examples
+ *     $container = ContainerHtmlView::createIt(['hor', 'vcent', 'gap10']);
+ *     $container->add(ColorHtmlView::createIt('#0000FF'))->texts('Blue');
+ *     $container->add(ColorHtmlView::createIt('#FF0000'))->texts('Red');
+ *     $container->add(ColorHtmlView::createIt('#00FF00'))->texts('Green');
  */
 class ContainerHtmlView extends HtmlView {
 
@@ -43,23 +48,40 @@ class ContainerHtmlView extends HtmlView {
         self::addStyle(Tools::css('.container', '', 'display: flex',
             'flex-wrap: wrap', 'align-items: flex-start', 'align-content: flex-start', 'width: 100%',
             'box-sizing: border-box'));
+        self::addStyle(Tools::css('.container', '.cb', 'box-sizing: content-box'));
         self::addStyle(Tools::css('.container', '.ver', 'flex-direction: column'));
         self::addStyle(Tools::css('.container', '.hor', 'flex-direction: row'));
         self::addStyle(Tools::css('.container', '.single', 'flex-wrap: nowrap'));
         self::addStyle(Tools::css('.container', '.vcent', 'align-items: center',
             'align-content: center'));
+        self::addStyle(Tools::css('.container', '.initial', 'align-items: initial',
+            'align-content: initial'));
         self::addStyle(Tools::css('.container', '.scroll-x', 'overflow-x: auto'));
         self::addStyle(Tools::css('.container', '.scroll-y', 'overflow-y: auto'));
+
         self::addStyle(Tools::css('.container', '.gap', 'gap: 5px'));
         self::addStyle(Tools::css('.container', '.gap5', 'gap: 5px'));
         self::addStyle(Tools::css('.container', '.gap10', 'gap: 10px'));
         self::addStyle(Tools::css('.container', '.gap15', 'gap: 15px'));
         self::addStyle(Tools::css('.container', '.gap20', 'gap: 20px'));
+
         self::addStyle(Tools::css('.container', '.p', 'padding: 5px'));
         self::addStyle(Tools::css('.container', '.p5', 'padding: 5px'));
         self::addStyle(Tools::css('.container', '.p10', 'padding: 10px'));
         self::addStyle(Tools::css('.container', '.p15', 'padding: 15px'));
         self::addStyle(Tools::css('.container', '.p20', 'padding: 20px'));
+
+        self::addStyle(Tools::css('.container', '.ptb', 'padding-top: 5px',
+            'padding-bottom: 5px'));
+        self::addStyle(Tools::css('.container', '.ptb5', 'padding-top: 5px',
+            'padding-bottom: 5px'));
+        self::addStyle(Tools::css('.container', '.ptb10', 'padding-top: 10px',
+            'padding-bottom: 10px'));
+        self::addStyle(Tools::css('.container', '.ptb15', 'padding-top: 15px',
+            'padding-bottom: 15px'));
+        self::addStyle(Tools::css('.container', '.ptb20', 'padding-top: 20px',
+            'padding-bottom: 20px'));
+
         self::addStyle(Tools::css('.container', '.hcent', 'justify-content: center',
             'justify-items: center'));
         self::addStyle(Tools::css('.container', '.hend', 'justify-content: flex-end',
@@ -83,6 +105,15 @@ class ContainerHtmlView extends HtmlView {
             'display: inherit'));
         self::addStyle(Tools::css('.container.with-default', [' > ', '.default'],
             'display: none'));
+
+        self::addStyle(Tools::css('.container.gap5', [' > ', '.container.w50'],
+            'width: calc(50% - 2.5px)'));
+        self::addStyle(Tools::css('.container.gap10', [' > ', '.container.w50'],
+            'width: calc(50% - 5px)'));
+        self::addStyle(Tools::css('.container.gap15', [' > ', '.container.w50'],
+            'width: calc(50% - 7.5px)'));
+        self::addStyle(Tools::css('.container.gap20', [' > ', '.container.w50'],
+            'width: calc(50% - 10px)'));
     }
 
     /**
