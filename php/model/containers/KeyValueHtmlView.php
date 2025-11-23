@@ -3,10 +3,12 @@
 /**
  * View KeyValueHtmlView.
  *
- * <p>Presents the key and the corresponding value.</p>
+ * <p>Presents the key and a view with the corresponding value in one line.
+ * There is a collumn on the left for the key and a column on the right for the value. Both use 100 % width.
+ * You have the option to show a frame or not and to change the size of the key and value fields.</p>
  * <img src="http://localhost/coast/webship/modeldoc/keyValue.png" />
  *
- * <code>KeyValueHtmlView::createString([Language::ENGLISH => 'Number of free texts:', Language::GERMAN  => 'Anzahl der Freitexte:'], $nrRepl);</code>
+ * <code></code>
  * @package webship
  * @subpackge php/model/containers
  *
@@ -15,7 +17,7 @@
  *
  * @view
  * @examples
- * KeyValueHtmlView::createString([Language::ENGLISH => 'Number of free texts:', Language::GERMAN  => 'Anzahl der Freitexte:'], $nrRepl);
+ *
  */
 class KeyValueHtmlView extends HtmlView {
 
