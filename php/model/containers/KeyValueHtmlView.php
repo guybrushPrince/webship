@@ -4,11 +4,15 @@
  * View KeyValueHtmlView.
  *
  * <p>Presents the key and a view with the corresponding value in one line.
- * There is a collumn on the left for the key and a column on the right for the value. Both use 100 % width.
+ * There is a column on the left for the key and a column on the right for the value. Both use 100 % width.
  * You have the option to show a frame or not and to change the size of the key and value fields.</p>
  * <img src="http://localhost/coast/webship/modeldoc/keyValue.png" />
  *
- * <code></code>
+ * <code>
+ * $value='value';
+ * $changer=LabelledInputHtmlView::createTextField(null, $value);
+ * add(KeyValueHtmlView::createTextField('Key', $changer, false));
+ * </code>
  * @package webship
  * @subpackge php/model/containers
  *
@@ -17,7 +21,9 @@
  *
  * @view
  * @examples
- *
+ * $value='value';
+ * $changer=LabelledInputHtmlView::createTextField(null, $value);
+ * add(KeyValueHtmlView::createTextField('Key', $changer, false));
  */
 class KeyValueHtmlView extends HtmlView {
 
