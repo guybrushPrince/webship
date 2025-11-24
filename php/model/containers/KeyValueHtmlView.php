@@ -1,13 +1,29 @@
 <?php
 
 /**
- * Class KeyValueHtmlView.
+ * View KeyValueHtmlView.
  *
+ * <p>Presents the key and a view with the corresponding value in one line.
+ * There is a column on the left for the key and a column on the right for the value. Both use 100 % width.
+ * You have the option to show a frame or not and to change the size of the key and value fields.</p>
+ * <img src="http://localhost/coast/webship/modeldoc/keyValue.png" />
+ *
+ * <code>
+ * $value='value';
+ * $changer=LabelledInputHtmlView::createTextField(null, $value);
+ * add(KeyValueHtmlView::createTextField('Key', $changer, false));
+ * </code>
  * @package webship
  * @subpackge php/model/containers
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
+ *
+ * @view
+ * @examples
+ * $value='value';
+ * $changer=LabelledInputHtmlView::createTextField(null, $value);
+ * add(KeyValueHtmlView::createTextField('Key', $changer, false));
  */
 class KeyValueHtmlView extends HtmlView {
 
@@ -63,23 +79,29 @@ class KeyValueHtmlView extends HtmlView {
         $this->localStyle('--kr: ' . $keyRatio . '%');
         $this->localStyle('--vr: ' . $valueRatio . '%');
 
-        $this->style(Tools::css('.kv', [], 'display: flex', 'flex-direction: row', 'flex-wrap: nowrap',
+
+    }
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.kv', [], 'display: flex', 'flex-direction: row', 'flex-wrap: nowrap',
             'width: 100%', 'align-items: center', 'padding: 10px', 'box-sizing: border-box', 'gap: 0 10px',
             'box-sizing: border-box'));
-        $this->style(Tools::css('.kv.frame', [], 'border: 1px solid var(--ultra-light-system-background)'));
-        $this->style(Tools::css('.kv', [' > ', '.k'], 'display: flex', 'flex-direction: row',
+        self::addStyle(Tools::css('.kv.frame', [], 'border: 1px solid var(--ultra-light-system-background)'));
+        self::addStyle(Tools::css('.kv', [' > ', '.k'], 'display: flex', 'flex-direction: row',
             'align-items: center', 'justify-content: flex-start', 'margin: 0', 'width: var(--kr)'));
-        $this->style(Tools::css('.kv', [' > ', '.v'], 'display: flex', 'flex-direction: row',
+        self::addStyle(Tools::css('.kv', [' > ', '.v'], 'display: flex', 'flex-direction: row',
             'align-items: center', 'justify-content: flex-start', 'margin: 0', 'width: var(--vr)'));
-        $this->style(Tools::css('.kv', [' > ', '.v', ' > ', 'input[type="checkbox"]'], 'width: 25px'));
-        $this->style(Tools::css('.kv', [' > ', '.ka'], 'width: 5%'));
-        $this->style(Tools::css('.kv.frame', [' + ', '.kv.frame'], 'border-top: none'));
-        $this->style(Tools::css('.kv.ver', [], 'flex-direction: column'));
-        $this->style(Tools::css('.kv.ver', [' > ', '*'], 'width: 100%'));
-        $this->style(Tools::css('.kv.np', [], 'padding: 0'));
+        self::addStyle(Tools::css('.kv', [' > ', '.v', ' > ', 'input[type="checkbox"]'], 'width: 25px'));
+        self::addStyle(Tools::css('.kv', [' > ', '.ka'], 'width: 5%'));
+        self::addStyle(Tools::css('.kv.frame', [' + ', '.kv.frame'], 'border-top: none'));
+        self::addStyle(Tools::css('.kv.ver', [], 'flex-direction: column'));
+        self::addStyle(Tools::css('.kv.ver', [' > ', '*'], 'width: 100%'));
+        self::addStyle(Tools::css('.kv.np', [], 'padding: 0'));
 
-        $this->style(Tools::css('.kv.disabled', [], 'position: relative', 'cursor: not-allowed'));
-        $this->style(Tools::css('.kv.disabled', [':after'], 'content: ""', 'display: block',
+        self::addStyle(Tools::css('.kv.disabled', [], 'position: relative', 'cursor: not-allowed'));
+        self::addStyle(Tools::css('.kv.disabled', [':after'], 'content: ""', 'display: block',
             'position: absolute', 'width: 100%', 'height: 100%', 'top: 0', 'left: 0', 'background: var(--thing-overlay)',
             'border-radius: 5px'));
     }
@@ -98,7 +120,7 @@ class KeyValueHtmlView extends HtmlView {
                                         bool $frame = true, int $keySize = 30, ?int $valueSize = null,
                                         array|string $classes = []) : KeyValueHtmlView {
         $view = new KeyValueHtmlView($key, $frame, $keySize, $valueSize, $classes);
-        $view->valueView->texts()->text(self::getLanguage(), $value);
+        $view->valueView->texts($value);
         return $view;
     }
 
