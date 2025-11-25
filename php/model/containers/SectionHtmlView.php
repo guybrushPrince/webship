@@ -77,7 +77,7 @@ class SectionHtmlView extends HtmlView {
 
         self::addStyle(Tools::css('.sect.fit', [],'width: -moz-fit-content', 'width: fit-content',
             'padding-right: 20px'));
-        self::addStyle(Tools::css('.sect:last-child', [],'padding: 0'));
+        self::addStyle(Tools::css('.sect:not(.not-last):last-child', [],'padding: 0'));
         self::addStyle(Tools::css('.sect.fit:last-child', [],'padding: 0'));
         self::addStyle(Tools::css('.sect.closed', [' > ', 'div:not(.section)'],'display: none !important'));
         self::addStyle(Tools::css('.sect.fit:not(.closed)', [],'width: 100%'));
@@ -139,6 +139,15 @@ class SectionHtmlView extends HtmlView {
      */
     public function single() : static {
         $this->addClass('single');
+        return $this;
+    }
+
+    /**
+     * Setting this section to being not the last.
+     * @return $this
+     */
+    public function notLast() : static {
+        $this->addClass('not-last');
         return $this;
     }
 

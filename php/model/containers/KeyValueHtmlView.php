@@ -1,18 +1,16 @@
 <?php
-
 /**
  * View KeyValueHtmlView.
  *
  * <p>Presents the key and a view with the corresponding value in one line.
  * There is a column on the left for the key and a column on the right for the value. Both use 100 % width.
  * You have the option to show a frame or not and to change the size of the key and value fields.</p>
- * <img src="http://localhost/coast/webship/modeldoc/keyValue.png" />
+ * <img src="http://localhost/coast/webship/modeldoc/keyvalue.png" />
  *
  * <code>
- * $value='value';
- * $changer=LabelledInputHtmlView::createTextField(null, $value);
- * add(KeyValueHtmlView::createTextField('Key', $changer, false));
+ * KeyValueHtmlView::createString('Key', 'Value', false);
  * </code>
+ *
  * @package webship
  * @subpackge php/model/containers
  *
@@ -21,9 +19,7 @@
  *
  * @view
  * @examples
- * $value='value';
- * $changer=LabelledInputHtmlView::createTextField(null, $value);
- * add(KeyValueHtmlView::createTextField('Key', $changer, false));
+ *     KeyValueHtmlView::createString('Key', 'Value', false);
  */
 class KeyValueHtmlView extends HtmlView {
 
@@ -73,13 +69,13 @@ class KeyValueHtmlView extends HtmlView {
         if ($afterText) {
             if (!is_array($afterText)) $afterText = [ self::getLanguage() => $afterText ];
             $afterView = $this->add(new HtmlView('ka'));
-            foreach ($afterText as $l => $t) $afterView->texts()->text($l, $t);
+            $afterView->texts($afterText);
         }
 
         $this->localStyle('--kr: ' . $keyRatio . '%');
         $this->localStyle('--vr: ' . $valueRatio . '%');
 
-
+        self::addCSS();
     }
     /**
      * @inheritDoc

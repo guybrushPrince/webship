@@ -27,5 +27,13 @@ class LoadingHtmlView extends HtmlView {
             '100% { background: var(--loading-dark); }'));
     }
 
+    /**
+     * Create a new loading html view.
+     * @param string[]|string $classes Some classes.
+     * @return LoadingHtmlView
+     */
+    public static function create(array|string $classes = []) : LoadingHtmlView {
+        return new LoadingHtmlView($classes);
+    }
 }
 ?>
