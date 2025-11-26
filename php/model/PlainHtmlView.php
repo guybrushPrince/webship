@@ -1,6 +1,6 @@
 <?php
 /**
- * Class PlainHtmlView.
+ * View PlainHtmlView.
  *
  *<p>Presents a <em>plain</em> html view with <em>plain</em> text.</p
  *

@@ -1,6 +1,6 @@
 <?php
 /**
- * Class LoadingHtmlView.
+ * View LoadingHtmlView.
  *
  * <p>Presents a <em> loading</em> view with a loading animation.</p
  * <img src="http://localhost/coast/sunstone/pic/update-arrow.svg" />
@@ -22,7 +22,7 @@
  *     $loadingView = new LoadingHtmlView();
  *     $loadingView = new LoadingHtmlView(['.loading','@-webkit-keyframes pulse']);
  *     $loadingView = new LoadingHtmlView(['.loading','@keyframes pulse']);
- * 
+ *
  */
 class LoadingHtmlView extends HtmlView {
 

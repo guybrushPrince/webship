@@ -1,6 +1,6 @@
 <?php
 /**
- * Class EmptyContentHtmlView.
+ * View EmptyContentHtmlView.
  *
  * <p>Presents an <em>empty content</em> view with a simple, full-width, empty-content image along with an optional InfoHtmlView.</p>
  * <p>You can choose between a medium (200p width) and a small image (100p width).</p>
@@ -25,8 +25,6 @@
  *     $emptyContentView = EmptyContentHtmlView::create();
  *     $emptyContentView = EmptyContentHtmlView::create("This is an EmptyContentView!");
  *     $emptyContentView = EmptyContentHtmlView::create([Language::ENGLISH => "Hello empty world!, Language::GERMAN => "Hallo leere Welt!]);
- *     $emptyContentView = EmptyContentHtmlView::create(null, ['.empty-content']);
- *     $emptyContentView = EmptyContentHtmlView::create(null, ['.empty-content.small']);
  *
  */
 class EmptyContentHtmlView extends HtmlView {
