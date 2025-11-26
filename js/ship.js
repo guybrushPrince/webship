@@ -410,29 +410,33 @@ let eventBus = (function () {
     function EventBus() {
         this.registry = {};
         this.bind = function (view, objId, event, fun = (data) => {}, igData = null, scope = undefined) {
-            event = "e" + event;
-            if (scope === undefined) scope = 'undefined';
-            let reg;
-            if (!this.registry.hasOwnProperty(objId)) {
-                reg = {};
-                this.registry[objId] = reg;
-            } else reg = this.registry[objId];
-            let sc;
-            if (!reg.hasOwnProperty(scope)) {
-                sc = [];
-                reg[scope] = sc;
-            } else sc = reg[scope];
-            let ev;
-            if (!sc.hasOwnProperty(event)) {
-                ev = [];
-                sc[event] = ev;
-            } else ev = sc[event];
-            sc[event] = ev = ev.filter((el) => {
-                return $('[data-id="' + el.view.attr('data-id') + '"]').length > 0;
+            let events = event;
+            if (!Array.isArray(event)) events = [ events ];
+            events.forEach((event) => {
+                event = "e" + event;
+                if (scope === undefined) scope = 'undefined';
+                let reg;
+                if (!this.registry.hasOwnProperty(objId)) {
+                    reg = {};
+                    this.registry[objId] = reg;
+                } else reg = this.registry[objId];
+                let sc;
+                if (!reg.hasOwnProperty(scope)) {
+                    sc = [];
+                    reg[scope] = sc;
+                } else sc = reg[scope];
+                let ev;
+                if (!sc.hasOwnProperty(event)) {
+                    ev = [];
+                    sc[event] = ev;
+                } else ev = sc[event];
+                sc[event] = ev = ev.filter((el) => {
+                    return $('[data-id="' + el.view.attr('data-id') + '"]').length > 0;
+                });
+                igData = (typeof igData === 'object' && igData !== null && igData !== undefined) ? Object.values(igData) : igData;
+                igData = (igData === undefined) ? null : igData;
+                ev.push({ view: view, fun: fun, igData: igData });
             });
-            igData = (typeof igData === 'object' && igData !== null && igData !== undefined) ? Object.values(igData) : igData;
-            igData = (igData === undefined) ? null : igData;
-            ev.push({ view: view, fun: fun, igData: igData });
         };
         this.unbind = function (view, objId, event, scope = undefined) {
             event = "e" + event;
@@ -455,7 +459,8 @@ let eventBus = (function () {
             obs.forEach((objId) => {
                 if (this.registry.hasOwnProperty(objId)) {
                     let reg = this.registry[objId];
-                    if (scopes !== undefined) {
+                    if (scopes !== undefined && scopes !== null) {
+                        console.log(objId, event, callee, scopes, data);
                         if (typeof scopes === 'object') scopes = Object.values(scopes);
                         if (!Array.isArray(scopes)) scopes = [ scopes ];
                     }

@@ -53,6 +53,13 @@ class LoadingHtmlView extends HtmlView {
 
     }
 
-
+    /**
+     * Create a new loading html view.
+     * @param string[]|string $classes Some classes.
+     * @return LoadingHtmlView
+     */
+    public static function create(array|string $classes = []) : LoadingHtmlView {
+        return new LoadingHtmlView($classes);
+    }
 }
 ?>

@@ -442,12 +442,13 @@ class HtmlView extends View {
     /**
      * @inheritDoc
      */
-    public function bind($object, ?int $event = null, ModifyProtocol|string|null $protocol = null,
+    public function bind($object, array|int|null $event = null, ModifyProtocol|string|null $protocol = null,
                          ?string $scope = null, ?array $ignoreData = null, ?DirectView $view = null) : static {
-        if ($object && $event && $protocol) {
+        if ($object && !is_null($event) && $protocol) {
             $objId = ParameterSerializer::handleObject($object);
+            if (!is_array($event)) $event = [ $event ];
             $this->js('eventBus.bind($("' . $this->idc() . '"), "' . $objId["IClass"] . $objId["value"] . '", ' .
-                '"' . $event . '", function(eData) { ' .
+                '["' . implode('", "', $event) . '"], function(eData) { ' .
                 ($protocol instanceof ModifyProtocol ? $protocol->generate() : $protocol) . '}, ' .
                 (is_array($ignoreData) && !Tools::isEmpty($ignoreData) ? ('["' . implode('","', $ignoreData) . '"]') : 'null') .
                 ($scope ? ', "' . $scope . '"' : '') . ');');

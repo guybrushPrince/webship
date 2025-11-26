@@ -41,7 +41,7 @@ class AreaHtmlView extends ContainerHtmlView {
     public static function addCSS() : void {
         self::addStyle(Tools::css('.c-area', [], 'background: var(--ultra-light-system-background)',
             'border-radius: 10px', 'margin-top: 10px', 'box-sizing: border-box',
-            'border: solid 1px var(--system-background)', 'height: -moz-fit-content'));
+            'border: solid 1px var(--system-background)'/*, 'height: -moz-fit-content'*/));
         self::addStyle(Tools::css('.c-area', [' > ', '.sub-title'], 'padding: 0',
             'margin-bottom: 10px'));
         self::addStyle(Tools::css('.c-area.fit', [], 'height: fit-content'));
