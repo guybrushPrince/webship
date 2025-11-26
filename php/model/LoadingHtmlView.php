@@ -2,27 +2,25 @@
 /**
  * View LoadingHtmlView.
  *
- * <p>Presents a <em> loading</em> view with a loading animation.</p
- * <img src="http://localhost/coast/sunstone/pic/update-arrow.svg" />
+ * <p>Presents a pulsating <em>loading</em> view. It can be inserted to load content asynchronously.</p>
+ * <p>Be aware that the view takes full-width and full-height.</p>
  *
  * <code>
  * $loadingView = new LoadingHtmlView();
- * $loadingView = new LoadingHtmlView(['.loading','@-webkit-keyframes pulse']);
- * $loadingView = new LoadingHtmlView(['.loading','@keyframes pulse']);
  * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/loading.png" />
  *
  * @package webship
  * @subpackage php/model
  *
- * @version 1.0.0
+ * @version 1.1.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @author Mihailo Jovic
  *
  * @view
  * @examples
  *     $loadingView = new LoadingHtmlView();
- *     $loadingView = new LoadingHtmlView(['.loading','@-webkit-keyframes pulse']);
- *     $loadingView = new LoadingHtmlView(['.loading','@keyframes pulse']);
- *
  */
 class LoadingHtmlView extends HtmlView {
 
@@ -32,6 +30,7 @@ class LoadingHtmlView extends HtmlView {
      */
     public function __construct(array|string $classes = []) {
         parent::__construct(array_merge(['loading'], is_array($classes) ? $classes : [ $classes ]));
+
         self::addCSS();
     }
 

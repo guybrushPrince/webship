@@ -119,7 +119,7 @@ class ErrorFileListHtmlView extends StandardButtonHtmlView {
                     $content = $value . PHP_EOL . PHP_EOL;
                     $key = 'z-' . $key;
                 }
-                $lPV->add(new PlainHtmlView('<pre>' . $content . '</pre>'));
+                $lPV->add(PlainHtmlView::create('<pre>' . $content . '</pre>'));
                 $subViews[$key] = $lPV;
             }
         }
