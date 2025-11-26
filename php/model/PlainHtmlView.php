@@ -1,7 +1,25 @@
 <?php
 /**
- * Class PlainHtmlView
+ * View PlainHtmlView.
+ *
+ *<p>Presents a <em>plain</em> html view with <em>plain</em> text.</p
+ *
+ * <code>
+ * $plainView = new PlainHtmlView("");
+ * $plainView = new PlainHtmlView("Hello world!");
+ * </code>
+ *
+ * @package webship
+ * @subpackage php/model
+ *
+ * @version 1.0.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ *
+ * @view
+ * @examples
+ *     $plainView = new PlainHtmlView("");
+ *     $plainView = new PlainHtmlView("Hello world!");
+ *
  */
 class PlainHtmlView extends HtmlView {
 

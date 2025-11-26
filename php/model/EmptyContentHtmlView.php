@@ -1,13 +1,31 @@
 <?php
-
 /**
- * Class EmptyContentHtmlView.
+ * View EmptyContentHtmlView.
+ *
+ * <p>Presents an <em>empty content</em> view with a simple, full-width, empty-content image along with an optional InfoHtmlView.</p>
+ * <p>You can choose between a medium (200p width) and a small image (100p width).</p>
+ *  <img src="http://localhost/coast/sunstone/pic/box.png" />
+ *
+ * <code>
+ * $emptyContentView = EmptyContentHtmlView::create();
+ * $emptyContentView = EmptyContentHtmlView::create("This is an EmptyContentView!");
+ * $emptyContentView = EmptyContentHtmlView::create([Language::ENGLISH => "Hello empty world!, Language::GERMAN => "Hallo leere Welt!]);
+ * $emptyContentView = EmptyContentHtmlView::create(null, ['.empty-content']);
+ * $emptyContentView = EmptyContentHtmlView::create(null, ['.empty-content.small']);
+ * </code>
  *
  * @package webship
  * @subpackage php/model
  *
  * @version 1.0.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ *
+ * @view
+ * @examples
+ *     $emptyContentView = EmptyContentHtmlView::create();
+ *     $emptyContentView = EmptyContentHtmlView::create("This is an EmptyContentView!");
+ *     $emptyContentView = EmptyContentHtmlView::create([Language::ENGLISH => "Hello empty world!, Language::GERMAN => "Hallo leere Welt!]);
+ *
  */
 class EmptyContentHtmlView extends HtmlView {
 
@@ -18,11 +36,7 @@ class EmptyContentHtmlView extends HtmlView {
     private function __construct(string|array $classes = []) {
         parent::__construct($classes);
         $this->classes[] = 'empty-content';
-
-        $this->style(Tools::css('.empty-content', [], 'display: flex',
-            'flex-direction: column', 'width: 100%', 'align-items: center'));
-        $this->style(Tools::css('.empty-content', [' > ', 'img'], 'width: 200px'));
-        $this->style(Tools::css('.empty-content.small', [' > ', 'img'], 'width: 100px'));
+        self::addCSS();
     }
 
     /**
@@ -40,6 +54,17 @@ class EmptyContentHtmlView extends HtmlView {
             $view->add(InfoHtmlView::create($info));
         }
         return $view;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.empty-content', [], 'display: flex',
+            'flex-direction: column', 'width: 100%', 'align-items: center'));
+        self::addStyle(Tools::css('.empty-content', [' > ', 'img'], 'width: 200px'));
+        self::addStyle(Tools::css('.empty-content.small', [' > ', 'img'], 'width: 100px'));
+
     }
 
     /**
