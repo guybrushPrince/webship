@@ -66,10 +66,10 @@ class HelpPageHtmlView extends StandardButtonHtmlView {
         $file = __DIR__ . '/../../../../' . $package . '/docs/' . ($subpackage ? $subpackage . '/' : '') .
             $doc . '_' . Language::BCP47[$language] . '.md';
         if (file_exists($file)) {
-            return new MarkdownHtmlView($file, true, ['help-page'],
+            return MarkdownHtmlView::create($file, true, ['help-page'],
                 HtmlActionProtocol::$serverURL . '/' . $package . '/docs/' .
                 ($subpackage ? $subpackage . '/' : ''));
-        } else return new MarkdownHtmlView('Cannot find help file ' . $file, false, ['help-page']);
+        } else return MarkdownHtmlView::create('Cannot find help file ' . $file, false, ['help-page']);
     }
 
     /**
