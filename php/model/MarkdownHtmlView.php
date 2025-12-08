@@ -1,10 +1,17 @@
 <?php
 
 /**
- * Class MarkdownHtmlView
+ * View MarkdownHtmlView
+ *
+ * <p>Displays the contents of a markdown file or directly displays markdown content.</p>
+ * <code>
+ *     MarkdownHtmlView::create(__DIR__.'/../../../../../test.md', true);
+ * </code>
+ * <img src="http://localhost/coast/webship/modeldoc/markdown.png" />
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  */
-class MarkdownHtmlView extends HtmlView {
+class MarkdownHtmlView extends ContainerHtmlView {
 
     /**
      * The file or the markdown content.
@@ -39,12 +46,16 @@ class MarkdownHtmlView extends HtmlView {
         $this->isFile = $isFile;
         $this->replaceOrigin = $replaceOrigin;
 
-        $this->style(Tools::css('.markdown', [], 'width: 100%'));
+        self::addCss();
     }
 
     /**
      * @inheritDoc
      */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.markdown', [], 'width: 100%'));
+        self::addStyle(Tools::css('.markdown', [], 'display: block'));
+    }
     public function generateOpeningTag() {
         $parsedown = new ParsedownExtra();
         $text = ($this->isFile ? $parsedown->text(file_get_contents($this->fileOrContent)) :
@@ -57,13 +68,14 @@ class MarkdownHtmlView extends HtmlView {
 
     /**
      * Create a markdown view..
-     * @param string $content The content.
+     * @param string $fileOrContent The file or the markdown content.
      * @param string[]|string $classes Classes.
+     * @param string|null $replaceOrigin Whether the origin (the base path) of pictures shall be changed.
      * @return MarkdownHtmlView
      */
-    public static function create(string $content, string|array $classes = []) {
+    public static function create(string $fileOrContent, bool $isFile, string|array $classes = [], ?string $replaceOrigin = null) : MarkdownHtmlView {
         $classes = is_array($classes) ? $classes : array($classes);
-        return new MarkdownHtmlView($content, false, $classes);
+        return new MarkdownHtmlView($fileOrContent, $isFile, $classes, $replaceOrigin);
     }
 }
 ?>
