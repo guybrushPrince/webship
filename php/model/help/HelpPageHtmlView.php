@@ -84,11 +84,10 @@ class HelpPageHtmlView extends StandardButtonHtmlView {
                                             ?int $language = null) : ModalHtmlView {
         if ($language === null) $language = View::getLanguage();
         $modal = new ModalHtmlView('help-center');
-        $modal->header()->texts()->
-            text(Language::ENGLISH, 'Coast Help Center')->
-            text(Language::GERMAN, 'Coast Hilfecenter');
-
-        // TODO: Add standard stuff
+        $modal->header()->texts([
+            Language::ENGLISH => 'Coast Help Center',
+            Language::GERMAN  => 'Coast Hilfecenter'
+        ]);
 
         $modal->item(self::createHelpPage($package, $subpackage, $doc, $language));
         $modal->protocol(Event::ONLOAD)->toggleClass($modal, 'invisible');
