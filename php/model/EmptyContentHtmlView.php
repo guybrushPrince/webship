@@ -9,7 +9,7 @@
  * <code>
  * $emptyContentView = EmptyContentHtmlView::create();
  * $emptyContentView = EmptyContentHtmlView::create("This is an EmptyContentView!");
- * $emptyContentView = EmptyContentHtmlView::create([Language::ENGLISH => "Hello empty world!, Language::GERMAN => "Hallo leere Welt!]);
+ * $emptyContentView = EmptyContentHtmlView::create([Language::ENGLISH => "Hello empty world!", Language::GERMAN => "Hallo leere Welt!"]);
  * $emptyContentView = EmptyContentHtmlView::create(null, ['.empty-content']);
  * $emptyContentView = EmptyContentHtmlView::create(null, ['.empty-content.small']);
  * </code>
