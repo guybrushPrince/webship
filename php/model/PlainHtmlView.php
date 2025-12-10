@@ -2,24 +2,26 @@
 /**
  * View PlainHtmlView.
  *
- *<p>Presents a <em>plain</em> html view with <em>plain</em> text.</p
+ * <p>An {@link HtmlView} that interprets the given text as plain HTML code.</p>
  *
  * <code>
- * $plainView = new PlainHtmlView("");
- * $plainView = new PlainHtmlView("Hello world!");
+ * PlainHtmlView::create('Hello world!');
+ * PlainHtmlView::create('<table><tr><td>Column 1</td><td>Column 2</td></tr><tr><td>A</td><td>B</td></tr></table>');
  * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/plain.png" />
  *
  * @package webship
  * @subpackage php/model
  *
- * @version 1.0.0
+ * @version 1.1.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @author Mihailo Jovic
  *
  * @view
  * @examples
- *     $plainView = new PlainHtmlView("");
- *     $plainView = new PlainHtmlView("Hello world!");
- *
+ *     PlainHtmlView::create('Hello world!');
+ *     PlainHtmlView::create('<table><tr><td>Column 1</td><td>Column 2</td></tr><tr><td>A</td><td>B</td></tr></table>');
  */
 class PlainHtmlView extends HtmlView {
 
@@ -30,13 +32,11 @@ class PlainHtmlView extends HtmlView {
     private string $content;
 
     /**
-     * PlainHtmlView constructor.
+     * Constructor.
      * @param string $content The plain html content.
-     * @param array|string $classes Additional classes.
      */
-    public function __construct(string $content, $classes = []) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct(array_merge(['plain'], $classes));
+    private function __construct(string $content) {
+        parent::__construct();
         $this->content = $content;
     }
 
@@ -54,6 +54,14 @@ class PlainHtmlView extends HtmlView {
         return '';
     }
 
+    /**
+     * Create a plain html view.
+     * @param string $content The HTML content.
+     * @return PlainHtmlView
+     */
+    public static function create(string $content) : PlainHtmlView {
+        return new PlainHtmlView($content);
+    }
 
 }
 ?>

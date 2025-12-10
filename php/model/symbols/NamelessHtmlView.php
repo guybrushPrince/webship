@@ -38,7 +38,7 @@ class NamelessHtmlView extends HtmlView {
         foreach ($fields as $field) {
             $code .= self::createLinkableText($target, $field, $language, $textBox, $defaultText);
         }
-        $this->add(new PlainHtmlView($code));
+        $this->add(PlainHtmlView::create($code));
         if ($img) {
             $imageView = new ImageHtmlView($img);
             $this->add($imageView);

@@ -66,10 +66,10 @@ class HelpPageHtmlView extends StandardButtonHtmlView {
         $file = __DIR__ . '/../../../../' . $package . '/docs/' . ($subpackage ? $subpackage . '/' : '') .
             $doc . '_' . Language::BCP47[$language] . '.md';
         if (file_exists($file)) {
-            return new MarkdownHtmlView($file, true, ['help-page'],
+            return MarkdownHtmlView::create($file, true, ['help-page'],
                 HtmlActionProtocol::$serverURL . '/' . $package . '/docs/' .
                 ($subpackage ? $subpackage . '/' : ''));
-        } else return new MarkdownHtmlView('Cannot find help file ' . $file, false, ['help-page']);
+        } else return MarkdownHtmlView::create('Cannot find help file ' . $file, false, ['help-page']);
     }
 
     /**
@@ -84,11 +84,10 @@ class HelpPageHtmlView extends StandardButtonHtmlView {
                                             ?int $language = null) : ModalHtmlView {
         if ($language === null) $language = View::getLanguage();
         $modal = new ModalHtmlView('help-center');
-        $modal->header()->texts()->
-            text(Language::ENGLISH, 'Coast Help Center')->
-            text(Language::GERMAN, 'Coast Hilfecenter');
-
-        // TODO: Add standard stuff
+        $modal->header()->texts([
+            Language::ENGLISH => 'Coast Help Center',
+            Language::GERMAN  => 'Coast Hilfecenter'
+        ]);
 
         $modal->item(self::createHelpPage($package, $subpackage, $doc, $language));
         $modal->protocol(Event::ONLOAD)->toggleClass($modal, 'invisible');

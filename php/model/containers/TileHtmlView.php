@@ -54,7 +54,7 @@ class TileHtmlView extends ContainerHtmlView {
         $this->gap(10);
 
         $this->localStyle('--tw: ' . $tileWidth . 'px');
-        $this->localStyle('--fs: ' . round($tileWidth / 9, 2) . 'px');
+        $this->localStyle('--fs: ' . min(round($tileWidth / 9, 2), 14) . 'px');
 
         self::addCSS();
     }
