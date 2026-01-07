@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Class ProgressStatusHtmlView.
- *
+ * View ProgressStatusHtmlView.
+ * Displays a row of squares that represent the progress of a task. Each square represents one status.
  *
  */
 class ProgressStatusHtmlView extends HtmlView {

@@ -1,7 +1,14 @@
 <?php
 
 /**
- * Class CSSColorGradientHtmlView.
+ * View CSSColorGradientHtmlView.
+ *
+ * Displays a rectangle with a color gradient and a line to mark a percentage on the gradient.
+ * When creating the view you can choose the width, the two colors and the percentage.
+ * <code>
+ *     CSSColorGradientHtmlView::create('red', 'green', 75.00, '100px');
+ * </code>
+ * <img src="http://localhost/coast/webship/modeldoc/colorGradient.png" />
  *
  * @package webship
  * @subpackge php/model/charts
