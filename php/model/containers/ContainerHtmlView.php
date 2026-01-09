@@ -51,6 +51,8 @@ class ContainerHtmlView extends HtmlView {
         self::addStyle(Tools::css('.container', '.cb', 'box-sizing: content-box'));
         self::addStyle(Tools::css('.container', '.ver', 'flex-direction: column'));
         self::addStyle(Tools::css('.container', '.hor', 'flex-direction: row'));
+        self::addStyle(Tools::css('.container', '.rev-ver', 'flex-direction: column-reverse'));
+        self::addStyle(Tools::css('.container', '.rev-hor', 'flex-direction: row-reverse'));
         self::addStyle(Tools::css('.container', '.single', 'flex-wrap: nowrap'));
         self::addStyle(Tools::css('.container', '.vcent', 'align-items: center',
             'align-content: center'));
