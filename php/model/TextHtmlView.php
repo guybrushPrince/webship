@@ -1,7 +1,5 @@
 <?php
 
-include_once dirname(__FILE__) . '/HtmlView.php';
-
 /**
  * Class TextHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
@@ -116,6 +114,14 @@ class TextHtmlView extends HtmlView {
     public static function create(string $id, bool $resizable = false, int $rows = 3,
                                   array|string $classes = []) : TextHtmlView {
         return new TextHtmlView($id, $id, $rows, false, $classes, $resizable);
+    }
+
+    /**
+     * Get the id.
+     * @return string|null
+     */
+    public function getId() : ?string {
+        return $this->id;
     }
 }
 ?>
