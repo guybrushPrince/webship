@@ -1,14 +1,23 @@
 <?php
 
 /**
- * Class CSSColorGradientHtmlView.
+ * View CSSColorGradientHtmlView.
+ *
+ * Displays a rectangle with a color gradient and a line to mark a percentage on the gradient.
+ * When creating the view you can choose the width, the two colors and the percentage.
+ * <code>
+ * CSSColorGradientHtmlView::create('red', 'green', 75.00, '100px');
+ * </code>
+ * <img src="http://localhost/coast/webship/modeldoc/colorgradient.png" />
  *
  * @package webship
  * @subpackge php/model/charts
  *
  *
- * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.0.0
+ * @author Dr. Dipl.-Inf. Thomas M. Prinz, Franziska Lüder
+ * @version 1.0.1
+ * @examples
+ * CSSColorGradientHtmlView::create('red', 'green', 75.00, '100px');
  */
 class CSSColorGradientHtmlView extends HtmlView {
 
@@ -37,14 +46,19 @@ class CSSColorGradientHtmlView extends HtmlView {
         $classes = is_array($classes) ? $classes : [ $classes ];
         $classes[] = 'css-gradient';
         parent::__construct($classes);
-
+        self::addCSS();
         $this->localStyle('background: linear-gradient(90deg, ' . $fromColor . ' 0%, ' . $toColor . ' 100%);' .
             'width: ' . ($width ? $width : '100%'));
         $this->state = $state;
+    }
 
-        $this->style(Tools::css('.css-gradient', [], 'height: 20px', 'box-sizing: border-box',
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.css-gradient', [], 'height: 20px', 'box-sizing: border-box',
             'border-radius: 3px', 'border: 1px solid var(--dark-system-background)', 'position: relative'));
-        $this->style(Tools::css('.css-gradient', [' > ', 'div'], 'height: 20px',
+        self::addStyle(Tools::css('.css-gradient', [' > ', 'div'], 'height: 20px',
             'box-sizing: border-box', 'width: 2px', 'background: var(--main-font)',
             'position: absolute', 'top: -1px'));
     }

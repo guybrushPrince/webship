@@ -35,8 +35,7 @@ class AreaHtmlView extends ContainerHtmlView {
     }
 
     /**
-     * Generate the CSS code.
-     * @return void
+     * @inheritDoc
      */
     public static function addCSS() : void {
         self::addStyle(Tools::css('.c-area', [], 'background: var(--ultra-light-system-background)',
