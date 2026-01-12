@@ -3,15 +3,17 @@
 /**
  * View ProgressStatusHtmlView.
  * Displays a row of squares that represent the progress of a task. Each square represents one status.
- *  <code>
- *     ProgressStatusHtmlView::create(["not yet worked on", "in progress", "done"], 'done', [], 'red');
+ * <code>
+ *  ProgressStatusHtmlView::create(["not yet worked on", "in progress", "done"], 'done', [], 'red');
  *  </code>
- *  <img src="http://localhost/coast/webship/modeldoc/progressRed.png" />
+ *  <img src="http://localhost/coast/webship/modeldoc/progressed.png" />
  *  <code>
- *     ProgressStatusHtmlView::create(["not yet worked on", "in progress", "done"], 'done');
+ *  ProgressStatusHtmlView::create(["not yet worked on", "in progress", "done"], 'done');
  *  </code>
  *  <img src="http://localhost/coast/webship/modeldoc/progress.png" />
  *
+ * @author Dr. Dipl.-Inf. Thomas M. Prinz, Franziska Lüder
+ * @version 1.0.1
  * @examples
  * ProgressStatusHtmlView::create(["not yet worked on", "in progress", "done"], 'done', [], 'red');
  * ProgressStatusHtmlView::create(["not yet worked on", "in progress", "done"], 'done');
@@ -28,20 +30,25 @@ class ProgressStatusHtmlView extends HtmlView {
         $classes = is_array($classes) ? $classes : [$classes];
         $classes[] = 'state-bar';
         parent::__construct($classes);
-
+        self::addCSS();
         $this->localStyle('--nr-states: ' . count($states));
         $this->localStyle('--state-size: 10px');
         $this->localStyle('--border-size: 1px');
         $this->localStyle('--background: var(--neutral)');
-        $this->style(Tools::css('.state-bar', [], 'display: grid', 'width: calc(var(--nr-states) * var(--state-size) + 2 * var(--border-size))',
+    }
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.state-bar', [], 'display: grid', 'width: calc(var(--nr-states) * var(--state-size) + 2 * var(--border-size))',
             'height: calc(var(--state-size)+2*var(--border-size))',
             '--cell-gap: 1px', 'grid-template-columns: repeat(var(--nr-states), 1fr)', 'grid-template-rows: 1fr',
             'column-gap: var(--cell-gap)', 'row-gap: var(--cell-gap)',
             'background: var(--system-background)',
             'border: var(--border-size) solid var(--system-background)'));
-        $this->style(Tools::css('.state-bar', [' > ', 'div'], 'background: var(--background)',
+        self::addStyle(Tools::css('.state-bar', [' > ', 'div'], 'background: var(--background)',
             'aspect-ratio: 1'));
-        $this->style(Tools::css('.state-bar', [' > ', 'div.undone'],
+        self::addStyle(Tools::css('.state-bar', [' > ', 'div.undone'],
             'background: var(--system-background)'));
     }
 
@@ -53,7 +60,7 @@ class ProgressStatusHtmlView extends HtmlView {
      * @param string|string[] $classes Some classes.
      * @return ProgressStatusHtmlView
      */
-    public static function create(array $states, int|string $state, ?array $stateInfos = null, string $backgroundColor = null,
+    public static function create(array $states, int|string $state, ?array $stateInfos = null, ?string $backgroundColor = null,
                                   string|array $classes = []) : ProgressStatusHtmlView {
         $view = new ProgressStatusHtmlView($states, $classes);
 
