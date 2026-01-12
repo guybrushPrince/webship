@@ -16,6 +16,8 @@
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
+ * @examples
+ * CSSColorGradientHtmlView::create('red', 'green', 75.00, '100px');
  */
 class CSSColorGradientHtmlView extends HtmlView {
 
