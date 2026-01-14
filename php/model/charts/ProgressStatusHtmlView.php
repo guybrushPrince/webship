@@ -2,29 +2,36 @@
 
 /**
  * View ProgressStatusHtmlView.
- * Displays a row of squares that represent the progress of a task. Each square represents one status.
+ *
+ * <p>Displays a row of squares that represent the progress of a task. Each square represents one status.</p>
+ *
  * <code>
- *  ProgressStatusHtmlView::create(["not yet worked on", "in progress", "done"], 'done', [], 'red');
- *  </code>
- *  <img src="http://localhost/coast/webship/modeldoc/progressed.png" />
- *  <code>
- *  ProgressStatusHtmlView::create(["not yet worked on", "in progress", "done"], 'done');
- *  </code>
- *  <img src="http://localhost/coast/webship/modeldoc/progress.png" />
+ * ProgressStatusHtmlView::create(["not yet worked on", "in progress", "done"], 'done', [], 'red');
+ * </code>
+ * <img src="http://localhost/coast/webship/modeldoc/progressred.png" />
+ *
+ * <code>
+ * ProgressStatusHtmlView::create(["not yet worked on", "in progress", "done"], 'done');
+ * </code>
+ * <img src="http://localhost/coast/webship/modeldoc/progress.png" />
+ *
+ * @package webship
+ * @subpackge php/model/charts
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz, Franziska Lüder
- * @version 1.0.1
- * @examples
- * ProgressStatusHtmlView::create(["not yet worked on", "in progress", "done"], 'done', [], 'red');
- * ProgressStatusHtmlView::create(["not yet worked on", "in progress", "done"], 'done');
+ * @version 1.1.0
  *
+ * @view
+ * @examples
+ *     ProgressStatusHtmlView::create(["not yet worked on", "in progress", "done"], 'done', [], 'red');
+ *     ProgressStatusHtmlView::create(["not yet worked on", "in progress", "done"], 'done');
  */
 class ProgressStatusHtmlView extends HtmlView {
 
     /**
      * Constructor.
      * @param int[]|string[] $states An array of possible states.
-     * @param string|string[] $classes Some classes.
+     * @param string[]|string $classes Some classes.
      */
     private function __construct(array $states, string|array $classes = []) {
         $classes = is_array($classes) ? $classes : [$classes];
@@ -34,7 +41,6 @@ class ProgressStatusHtmlView extends HtmlView {
         $this->localStyle('--nr-states: ' . count($states));
         $this->localStyle('--state-size: 10px');
         $this->localStyle('--border-size: 1px');
-        $this->localStyle('--background: var(--neutral)');
     }
     /**
      * @inheritDoc
@@ -44,6 +50,7 @@ class ProgressStatusHtmlView extends HtmlView {
             'height: calc(var(--state-size)+2*var(--border-size))',
             '--cell-gap: 1px', 'grid-template-columns: repeat(var(--nr-states), 1fr)', 'grid-template-rows: 1fr',
             'column-gap: var(--cell-gap)', 'row-gap: var(--cell-gap)',
+            '--background: var(--neutral)',
             'background: var(--system-background)',
             'border: var(--border-size) solid var(--system-background)'));
         self::addStyle(Tools::css('.state-bar', [' > ', 'div'], 'background: var(--background)',
@@ -57,6 +64,7 @@ class ProgressStatusHtmlView extends HtmlView {
      * @param int[]|string[] $states An array of possible states.
      * @param int|string $state The current state.
      * @param string[]|null|string[][] $stateInfos About each state some information to note.
+     * @param string|null $backgroundColor A
      * @param string|string[] $classes Some classes.
      * @return ProgressStatusHtmlView
      */
@@ -80,7 +88,7 @@ class ProgressStatusHtmlView extends HtmlView {
             }
         }
         if (!is_null($backgroundColor)) {
-            $view->localStyle('--background:' . $backgroundColor);
+            $view->localStyle('--background: ' . $backgroundColor);
         }
 
         return $view;
