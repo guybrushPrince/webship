@@ -11,7 +11,6 @@
  * @package webship
  * @subpackge php/model/containers
  *
- *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
  *
@@ -23,13 +22,12 @@ class AreaHtmlView extends ContainerHtmlView {
 
     /**
      * Constructor.
-     * @param string|string[] $classes Some classes.
+     * @param string[]|string $classes Some classes.
      */
-    private function __construct(string|array $classes = []) {
+    private function __construct(array|string $classes = []) {
+        if (!is_array($classes)) $classes = [ $classes ];
+        $classes = array_merge(['c-area', 'ver', 'p20'], $classes);
         parent::__construct($classes);
-        $this->classes[] = 'c-area';
-        $this->classes[] = 'ver';
-        $this->classes[] = 'p20';
 
         self::addCSS();
     }
@@ -40,7 +38,7 @@ class AreaHtmlView extends ContainerHtmlView {
     public static function addCSS() : void {
         self::addStyle(Tools::css('.c-area', [], 'background: var(--ultra-light-system-background)',
             'border-radius: 10px', 'margin-top: 10px', 'box-sizing: border-box',
-            'border: solid 1px var(--system-background)'/*, 'height: -moz-fit-content'*/));
+            'border: solid 1px var(--system-background)'));
         self::addStyle(Tools::css('.c-area', [' > ', '.sub-title'], 'padding: 0',
             'margin-bottom: 10px'));
         self::addStyle(Tools::css('.c-area.fit', [], 'height: fit-content'));

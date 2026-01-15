@@ -109,14 +109,24 @@ class KeyValueHtmlView extends HtmlView {
      * @param bool $frame Whether there shall be a frame or not.
      * @param int $keySize The size of the key.
      * @param int|null $valueSize The size of the value.
+     * @param bool $swap Whether key and value shall be swapped.
      * @param string[]|string $classes Some classes.
      * @return KeyValueHtmlView
      */
     public static function createString(View|array|string $key, string $value,
                                         bool $frame = true, int $keySize = 30, ?int $valueSize = null,
-                                        array|string $classes = []) : KeyValueHtmlView {
-        $view = new KeyValueHtmlView($key, $frame, $keySize, $valueSize, $classes);
-        $view->valueView->texts($value);
+                                        bool $swap = false, array|string $classes = []) : KeyValueHtmlView {
+        if ($swap) {
+            $tmp = $valueSize;
+            $valueSize = $keySize;
+            $keySize = $tmp;
+            $view = new KeyValueHtmlView($key, $frame, $valueSize, $keySize, $classes);
+            $view->valueView->texts($value);
+            $view->subviews = [ $view->subviews[1], $view->subviews[0] ];
+        } else {
+            $view = new KeyValueHtmlView($key, $frame, $keySize, $valueSize, $classes);
+            $view->valueView->texts($value);
+        }
         return $view;
     }
 

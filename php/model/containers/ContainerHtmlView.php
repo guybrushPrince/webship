@@ -68,10 +68,14 @@ class ContainerHtmlView extends HtmlView {
         self::addStyle(Tools::css('.container', '.gap20', 'gap: 20px'));
 
         self::addStyle(Tools::css('.container', '.p', 'padding: 5px'));
+        self::addStyle(Tools::css('.container', '.p0', 'padding: 0'));
+        self::addStyle(Tools::css('.container', '.p0i', 'padding: 0 !important'));
         self::addStyle(Tools::css('.container', '.p5', 'padding: 5px'));
         self::addStyle(Tools::css('.container', '.p10', 'padding: 10px'));
         self::addStyle(Tools::css('.container', '.p15', 'padding: 15px'));
         self::addStyle(Tools::css('.container', '.p20', 'padding: 20px'));
+
+        self::addStyle(Tools::css('.container', '.pb5i', 'padding-bottom: 5px !important'));
 
         self::addStyle(Tools::css('.container', '.ptb', 'padding-top: 5px',
             'padding-bottom: 5px'));
@@ -83,6 +87,13 @@ class ContainerHtmlView extends HtmlView {
             'padding-bottom: 15px'));
         self::addStyle(Tools::css('.container', '.ptb20', 'padding-top: 20px',
             'padding-bottom: 20px'));
+
+        self::addStyle(Tools::css('.container', '.m0',  'margin: 0'));
+        self::addStyle(Tools::css('.container', '.m0i',  'margin: 0 !important'));
+        self::addStyle(Tools::css('.container', '.m5',  'margin: 5px'));
+        self::addStyle(Tools::css('.container', '.m10', 'margin: 10px'));
+        self::addStyle(Tools::css('.container', '.m15', 'margin: 15px'));
+        self::addStyle(Tools::css('.container', '.m20', 'margin: 20px'));
 
         self::addStyle(Tools::css('.container', '.hcent', 'justify-content: center',
             'justify-items: center'));

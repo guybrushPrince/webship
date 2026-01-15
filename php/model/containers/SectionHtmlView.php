@@ -37,30 +37,37 @@ class SectionHtmlView extends HtmlView {
 
     /**
      * Constructor.
-     * @param string|string[] $section The text(s) of the sections.
+     * @param string[]|string $section The text(s) of the sections.
      * @param bool $open Whether the section is opened or closed.
-     * @param string|string[] $classes Some classes.
+     * @param string[]|string $classes Some classes.
      */
-    private function __construct(string|array $section, bool $open = false, string|array $classes = []) {
+    private function __construct(array|string $section, bool $open = false, bool $openable = true,
+                                 array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         $classes[] = 'sect';
+        if (!$openable) {
+            $open = true;
+            $classes[] = 'ao';
+        }
         parent::__construct($classes);
 
         $this->section = new HtmlView('section');
         $this->add($this->section);
         if (!is_array($section)) $section = [ self::getLanguage() => $section ];
-        foreach ($section as $l => $s) $this->section->texts()->text($l, $s);
+        $this->section->texts($section);
 
         $this->box = new HtmlView();
         $this->add($this->box);
         $this->ref('foldable');
         if (!$open) $this->addClass('closed');
 
-        $this->section->protocol(Event::CLICK)->
+        if ($openable) {
+            $this->section->protocol(Event::CLICK)->
             doIt('ToggleClass', ['view' => $this, 'class' => 'closed'], 'basics');
-        if (!$open) {
-            $this->js('(function() { let open = false; $("' . $this->section->idc() . '").on("click", function() { if (!open) $("' . $this->idc() . '").trigger("' . Event::OPEN_LIST . '"); open = true; }); })();');
-        } else $this->js('(function() { let open = true; $("' . $this->section->idc() . '").on("click", function() { if (open) $("' . $this->idc() . '").trigger("' . Event::CLOSE_LIST . '"); open = false; }); })();');
+            if (!$open) {
+                $this->js('(function() { let open = false; $("' . $this->section->idc() . '").on("click", function() { if (!open) $("' . $this->idc() . '").trigger("' . Event::OPEN_LIST . '"); open = true; }); })();');
+            } else $this->js('(function() { let open = true; $("' . $this->section->idc() . '").on("click", function() { if (open) $("' . $this->idc() . '").trigger("' . Event::CLOSE_LIST . '"); open = false; }); })();');
+        }
 
         self::addCSS();
     }
@@ -84,7 +91,10 @@ class SectionHtmlView extends HtmlView {
         self::addStyle(Tools::css('.sect', [' > ', '.section'], 'font-family: Roboto, sans-serif',
             'text-transform: none', 'font-size: 1.25em', 'font-weight: lighter', 'width: 100%',
             'cursor: pointer'));
-        self::addStyle(Tools::css('.sect', [' > ', '.section', ':after'], 'content: ""',
+        self::addStyle(Tools::css('.sect.ao', [' > ', '.section'], 'cursor: auto'));
+        self::addStyle(Tools::css('.sect.small', [' > ', '.section'], 'font-size: 1.0em',
+            'font-style: italic'));
+        self::addStyle(Tools::css('.sect:not(.ao)', [' > ', '.section', ':after'], 'content: ""',
             'margin-left: 5px', 'background-repeat: no-repeat', 'width: 10px', 'height: 10px', 'background-size: cover',
             'background-image: url(' . HtmlActionProtocol::$serverURL . '/webship/pic/arrow-down-sign-to-navigate.svg)',
             'box-sizing: border-box', 'display: inline-block', 'opacity: 0.25', 'transition: opacity 0.5s'));
@@ -92,18 +102,20 @@ class SectionHtmlView extends HtmlView {
             'opacity: 1'));
         self::addStyle(Tools::css('.sect', [' > ', 'div:nth-child(2)'],'width: 100%',
             'padding: 10px 20px', 'box-sizing: border-box'));
+        self::addStyle(Tools::css('.sect.small', [' > ', 'div:nth-child(2)'], 'padding: 5px 10px'));
     }
 
     /**
      * Creates a new section view.
-     * @param string|string[] $section The text(s) of the sections.
+     * @param string[]|string $section The text(s) of the sections.
      * @param bool $open Whether the section is opened or closed.
-     * @param string|string[] $classes Some classes.
+     * @param bool $openable If the section can be opened and closed.
+     * @param string[]|string $classes Some classes.
      * @return SectionHtmlView
      */
-    public static function create(string|array $section, bool $open = false,
-                                  string|array $classes = []) : SectionHtmlView {
-        return new SectionHtmlView($section, $open, $classes);
+    public static function create(array|string $section, bool $open = false, bool $openable = true,
+                                  array|string $classes = []) : SectionHtmlView {
+        return new SectionHtmlView($section, $open, $openable, $classes);
     }
 
     /**
@@ -130,6 +142,15 @@ class SectionHtmlView extends HtmlView {
      */
     public function fit() : static {
         $this->classes[] = 'fit';
+        return $this;
+    }
+
+    /**
+     * Sets a lower font size.
+     * @return $this
+     */
+    public function small() : static {
+        $this->classes[] = 'small';
         return $this;
     }
 
