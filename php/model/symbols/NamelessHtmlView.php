@@ -94,13 +94,17 @@ class NamelessHtmlView extends HtmlView {
     /**
      * Creates a purely textual chip without any functionality.
      * @param int|null $language The language.
+     * @param array|string|null $alternative An alternative text that is missing.
      * @return string
      */
-    public static function createChip(int|null $language = null) : string {
+    public static function createChip(int|null $language = null, array|string|null $alternative = null) : string {
         if (is_null($language)) $language = self::getLanguage();
+        if (is_null($alternative)) $alternative = 'TEXT';
+        else if (is_array($alternative)) $alternative = strtoupper($alternative[$language]);
+        else $alternative = strtoupper($alternative);
         return [
-            Language::ENGLISH => '<span class="intext-without">WITHOUT TEXT</span>',
-            Language::GERMAN  => '<span class="intext-without">OHNE TEXT</span>'
+            Language::ENGLISH => '<span class="intext-without">WITHOUT ' . $alternative . '</span>',
+            Language::GERMAN  => '<span class="intext-without">OHNE ' . $alternative . '</span>'
         ][$language];
     }
 
