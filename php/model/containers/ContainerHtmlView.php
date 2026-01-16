@@ -76,6 +76,8 @@ class ContainerHtmlView extends HtmlView {
         self::addStyle(Tools::css('.container', '.p20', 'padding: 20px'));
 
         self::addStyle(Tools::css('.container', '.pb5i', 'padding-bottom: 5px !important'));
+        self::addStyle(Tools::css('.container', '.ptb5i', 'padding-top: 5px !important',
+            'padding-bottom: 5px !important'));
 
         self::addStyle(Tools::css('.container', '.ptb', 'padding-top: 5px',
             'padding-bottom: 5px'));
