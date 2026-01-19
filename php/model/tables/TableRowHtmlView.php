@@ -10,14 +10,13 @@ use Tools;
  * <p>Displays a row of cells in a table.</p>
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  */
-class TableRowHtmlView extends HtmlView
-{
+class TableRowHtmlView extends HtmlView {
 
     /**
      * TableRowHtmlView constructor.
      * @param string[]|string $classes Some classes.
      */
-    private function __construct(array|string $classes = []){
+    private function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['tr'], $classes));
     }
@@ -44,7 +43,7 @@ class TableRowHtmlView extends HtmlView
      * @param string[]|string $classes Some classes.
      * @return HtmlView
      */
-    public function cell(array|string $classes = []): HtmlView{
+    public function cell(array|string $classes = []): HtmlView {
         $classes = is_array($classes) ? $classes : [$classes];
         $cellView = new HtmlView(array_merge(['cell'], $classes));
         $this->add($cellView);
@@ -55,7 +54,7 @@ class TableRowHtmlView extends HtmlView
      * Get the parent view.
      * @return ?TableHtmlView|?HtmlView
      */
-    public function parent(): TableHtmlView|HtmlView|null{
+    public function parent(): TableHtmlView|HtmlView|null {
         return $this->getParent();
     }
 

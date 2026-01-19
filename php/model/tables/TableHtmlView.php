@@ -40,13 +40,13 @@ use Tools;
  *      $tablerow2->cell()->texts("cell 5");
  *      $tablerow2->cell()->texts("cell 6");
  */
-class TableHtmlView extends HtmlView{
+class TableHtmlView extends HtmlView {
 
     /**
      * Constructor.
      * @param string|string[] $classes Some classes.
      */
-    protected function __construct(array|string $classes = []){
+    protected function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : array($classes);
         parent::__construct(array_merge(['table'], $classes));
         self::addCSS();
@@ -79,7 +79,7 @@ class TableHtmlView extends HtmlView{
      * @param string|string[] $classes A set of classes.
      * @return TableRowHtmlView
      */
-    public function header(array|string $classes = []): TableRowHtmlView{
+    public function header(array|string $classes = []): TableRowHtmlView {
         $classes = !is_array($classes) ? [$classes] : $classes;
         $headerView = TableRowHtmlView::create(array_merge(['header'], $classes));
         $this->add($headerView);
@@ -91,7 +91,7 @@ class TableHtmlView extends HtmlView{
      * @param string[]|string $classes A set of classes.
      * @return TableRowHtmlView
      */
-    public function row(array|string $classes = []): TableRowHtmlView{
+    public function row(array|string $classes = []): TableRowHtmlView {
         $rowView = TableRowHtmlView::create($classes);
         $this->add($rowView);
         return $rowView;
