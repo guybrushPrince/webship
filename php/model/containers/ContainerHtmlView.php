@@ -34,11 +34,18 @@ class ContainerHtmlView extends HtmlView {
      * ContainerHtmlView constructor.
      * @param string[]|string $classes
      */
-    public function __construct(array|string $classes = []) {
+    public function __construct(array|string $classes = [], string|null $color = null, string|null $fontColor = null) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct(array_merge(['container'], $classes));
 
         self::addCSS();
+
+        if (!is_null($color)) {
+            $this->localStyle('background: ' . $color);
+            if (!is_null($fontColor)) {
+                $this->localStyle('color: ' . $fontColor);
+            }
+        }
     }
 
     /**
@@ -104,6 +111,8 @@ class ContainerHtmlView extends HtmlView {
         self::addStyle(Tools::css('.container', '.vbot', 'align-items: flex-end'));
         self::addStyle(Tools::css('.container', '.h100', 'height: 100%'));
         self::addStyle(Tools::css('.container', '.w50', 'width: 50%'));
+        self::addStyle(Tools::css('.container', '.w33', 'width: calc(100% / 3)'));
+        self::addStyle(Tools::css('.container', '.w25', 'width: 25%'));
         self::addStyle(Tools::css('.container', '.rel', 'position: relative'));
         self::addStyle(Tools::css('.container', ['.self-fit'], 'width: -moz-fit-content',
             'width: fit-content'));
@@ -129,6 +138,12 @@ class ContainerHtmlView extends HtmlView {
             'width: calc(50% - 7.5px)'));
         self::addStyle(Tools::css('.container.gap20', [' > ', '.container.w50'],
             'width: calc(50% - 10px)'));
+
+        self::addStyle(Tools::css('.container', '.br0', 'border-radius: 0'));
+        self::addStyle(Tools::css('.container', '.br5', 'border-radius: 5px'));
+        self::addStyle(Tools::css('.container', '.br10', 'border-radius: 10px'));
+        self::addStyle(Tools::css('.container', '.br15', 'border-radius: 15px'));
+        self::addStyle(Tools::css('.container', '.br20', 'border-radius: 20px'));
     }
 
     /**

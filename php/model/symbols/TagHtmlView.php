@@ -51,6 +51,9 @@ class TagHtmlView extends ColorHtmlView {
             'width: fit-content', 'width: -moz-fit-content', 'font-weight: bold', 'letter-spacing: 2px',
             'box-sizing: border-box', 'height: 30px', 'display: flex', 'flex-direction: row',
             'align-items: center'));
+        self::addStyle(Tools::css('.ctag.small', [], 'border-radius: 3px',
+            'width: fit-content', 'width: -moz-fit-content', 'font-weight: normal', 'letter-spacing: normal',
+            'height: 20px'));
     }
 
     /**
@@ -65,6 +68,15 @@ class TagHtmlView extends ColorHtmlView {
                                   array|string $classes = []) : TagHtmlView {
         if (is_array($tag)) $tag = $tag[self::getLanguage()];
         return new TagHtmlView($tag, $content, $color, $classes);
+    }
+
+    /**
+     * Set the tag small.
+     * @return $this
+     */
+    public function small() : static {
+        $this->addClass('small');
+        return $this;
     }
 
 }
