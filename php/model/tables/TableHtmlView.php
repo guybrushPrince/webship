@@ -9,16 +9,16 @@ use Tools;
  * View TableHtmlView
  * <p>Displays a table of views.</p>
  * <code>
- *     $table=TableHtmlView::create([]);
- *     $headerrow = $table->header();
+ *     $table=$testArea->add(TableHtmlView::create([]));
+ *     $headerrow = $table->header('stretch');
  *     $headerrow->cell()->texts("column 1");
  *     $headerrow->cell()->texts("column 2");
  *     $headerrow->cell()->texts("column 3");
- *     $tablerow1 = $table->row();
+ *     $tablerow1 = $table->row('stretch');
  *     $tablerow1->cell()->texts("cell 1");
  *     $tablerow1->cell()->texts("cell 2");
  *     $tablerow1->cell()->texts("cell 3");
- *     $tablerow2 = $table->row();
+ *     $tablerow2 = $table->row('stretch');
  *     $tablerow2->cell()->texts("cell 4");
  *     $tablerow2->cell()->texts("cell 5");
  *     $tablerow2->cell()->texts("cell 6");
@@ -26,16 +26,16 @@ use Tools;
  * <img src="http://localhost/coast/webship/modeldoc/table.png" />
  * @author Dr. Dipl.-Inf. Thomas M. Prinz, Franziska Lüder
  * @examples
- *      $table=TableHtmlView::create([]);
- *      $headerrow = $table->header();
+ *      $table=$testArea->add(TableHtmlView::create([]));
+ *      $headerrow = $table->header('stretch');
  *      $headerrow->cell()->texts("column 1");
  *      $headerrow->cell()->texts("column 2");
  *      $headerrow->cell()->texts("column 3");
- *      $tablerow1 = $table->row();
+ *      $tablerow1 = $table->row('stretch');
  *      $tablerow1->cell()->texts("cell 1");
  *      $tablerow1->cell()->texts("cell 2");
  *      $tablerow1->cell()->texts("cell 3");
- *      $tablerow2 = $table->row();
+ *      $tablerow2 = $table->row('stretch');
  *      $tablerow2->cell()->texts("cell 4");
  *      $tablerow2->cell()->texts("cell 5");
  *      $tablerow2->cell()->texts("cell 6");

@@ -19,6 +19,7 @@ class TableRowHtmlView extends HtmlView {
     private function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['tr'], $classes));
+        self::addCSS();
     }
 
     /**
@@ -31,6 +32,7 @@ class TableRowHtmlView extends HtmlView {
             'justify-content: flex-end', 'justify-items: flex-end'));
         self::addStyle(Tools::css('.table > .tr > .cell', ['.hcent'], 'display: flex',
             'justify-content: center', 'justify-items: center'));
+        self::addStyle(Tools::css('.table > .tr.stretch > ', '.cell' ,'width: inherit'));
     }
     /**
      * Create a row for the table
