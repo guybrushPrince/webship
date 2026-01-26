@@ -6,9 +6,29 @@ use HtmlView;
 use Tools;
 
 /**
- * Class TableRowHtmlView
+ * View TableRowHtmlView.
+ *
  * <p>Displays a row of cells in a table.</p>
- * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ *
+ * <code>
+ * $tablerow1 = $table->row('stretch');
+ * $tablerow1->cell()->texts("cell 1");
+ * $tablerow1->cell()->texts("cell 2");
+ * $tablerow1->cell()->texts("cell 3");
+ * </code>
+ *
+ * @package webship
+ * @subpackge php/model/tables
+ *
+ * @author Dr. Dipl.-Inf. Thomas M. Prinz, Franziska Lüder
+ * @version 1.2.0
+ *
+ * @view
+ * @examples
+ * $tablerow1 = $table->row('stretch');
+ * $tablerow1->cell()->texts("cell 1");
+ * $tablerow1->cell()->texts("cell 2");
+ * $tablerow1->cell()->texts("cell 3");
  */
 class TableRowHtmlView extends HtmlView {
 
@@ -28,9 +48,9 @@ class TableRowHtmlView extends HtmlView {
     public static function addCSS() : void {
         self::addStyle(Tools::css('.table > .tr', ['.vcent'], 'align-items: center'));
         self::addStyle(Tools::css('.table > .tr', ['.vbot'], 'align-items: flex-end'));
-        self::addStyle(Tools::css('.table > .tr > .cell', ['.hend'], 'display: flex',
+        self::addStyle(Tools::css('.table > .tr > ',['.cell.hend'], 'display: flex',
             'justify-content: flex-end', 'justify-items: flex-end'));
-        self::addStyle(Tools::css('.table > .tr > .cell', ['.hcent'], 'display: flex',
+        self::addStyle(Tools::css('.table > .tr > ', ['.cell.hcent'], 'display: flex',
             'justify-content: center', 'justify-items: center'));
         self::addStyle(Tools::css('.table > .tr.stretch > ', '.cell' ,'width: inherit'));
     }

@@ -6,48 +6,58 @@ use HtmlView;
 use Tools;
 
 /**
- * View TableHtmlView
+ * View TableHtmlView.
+ *
  * <p>Displays a table of views.</p>
+ *
  * <code>
- *     $table=$testArea->add(TableHtmlView::create([]));
- *     $headerrow = $table->header('stretch');
- *     $headerrow->cell()->texts("column 1");
- *     $headerrow->cell()->texts("column 2");
- *     $headerrow->cell()->texts("column 3");
- *     $tablerow1 = $table->row('stretch');
- *     $tablerow1->cell()->texts("cell 1");
- *     $tablerow1->cell()->texts("cell 2");
- *     $tablerow1->cell()->texts("cell 3");
- *     $tablerow2 = $table->row('stretch');
- *     $tablerow2->cell()->texts("cell 4");
- *     $tablerow2->cell()->texts("cell 5");
- *     $tablerow2->cell()->texts("cell 6");
+ * $table = TableHtmlView::create();
+ * $headerrow = $table->header('stretch');
+ * $headerrow->cell()->texts('column 1');
+ * $headerrow->cell()->texts('column 2');
+ * $headerrow->cell()->texts('column 3');
+ * $tablerow1 = $table->row('stretch');
+ * $tablerow1->cell()->texts('cell 1');
+ * $tablerow1->cell()->texts('cell 2');
+ * $tablerow1->cell()->texts('cell 3');
+ * $tablerow2 = $table->row('stretch');
+ * $tablerow2->cell()->texts('cell 4');
+ * $tablerow2->cell()->texts('cell 5');
+ * $tablerow2->cell()->texts('cell 6');
  * </code>
+ *
  * <img src="http://localhost/coast/webship/modeldoc/table.png" />
+ *
+ * @package webship
+ * @subpackge php/model/tables
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz, Franziska Lüder
+ * @version 1.2.0
+ *
+ * @view
  * @examples
- *      $table=$testArea->add(TableHtmlView::create([]));
- *      $headerrow = $table->header('stretch');
- *      $headerrow->cell()->texts("column 1");
- *      $headerrow->cell()->texts("column 2");
- *      $headerrow->cell()->texts("column 3");
- *      $tablerow1 = $table->row('stretch');
- *      $tablerow1->cell()->texts("cell 1");
- *      $tablerow1->cell()->texts("cell 2");
- *      $tablerow1->cell()->texts("cell 3");
- *      $tablerow2 = $table->row('stretch');
- *      $tablerow2->cell()->texts("cell 4");
- *      $tablerow2->cell()->texts("cell 5");
- *      $tablerow2->cell()->texts("cell 6");
+ * $table = TableHtmlView::create();
+ * $headerrow = $table->header('stretch)'
+ * $headerrow->cell()->texts('column 1')
+ * $headerrow->cell()->texts('column 2')
+ * $headerrow->cell()->texts('column 3')
+ * $tablerow1 = $table->row('stretch');
+ * $tablerow1->cell()->texts('cell 1');
+ * $tablerow1->cell()->texts('cell 2');
+ * $tablerow1->cell()->texts('cell 3');
+ * $tablerow2 = $table->row('stretch');
+ * $tablerow2->cell()->texts('cell 4');
+ * $tablerow2->cell()->texts('cell 5');
+ * $tablerow2->cell()->texts('cell 6');
  */
 class TableHtmlView extends HtmlView {
 
     /**
      * Constructor.
-     * @param string|string[] $classes Some classes.
+     * @param string[]|string $classes Some classes.
      */
     protected function __construct(array|string $classes = []) {
-        $classes = is_array($classes) ? $classes : array($classes);
+        $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['table'], $classes));
         self::addCSS();
     }
@@ -56,7 +66,7 @@ class TableHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.table', '', 'display: flex',
+        self::addStyle(Tools::css('.table', [''], 'display: flex',
             'flex-wrap: wrap', 'flex-direction: column', 'align-items: flex-start', 'width: 100%',
             'box-sizing: border-box'));
         self::addStyle(Tools::css('.table', [' > ', '.tr'], 'display: flex',
