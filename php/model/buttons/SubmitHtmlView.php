@@ -3,13 +3,26 @@
 use progression\CPTools;
 
 /**
- * Class SubmitHtmlView.
+ * View SubmitHtmlView.
+ *
+ * <p>Displays a submit button which is green by default.</p>
+ *
+ * <code>
+ * $submitButton = SubmitHtmlView::create();
+ * $submitButton->texts('ok');
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/submitbutton.png" />
  *
  * @package webship
  * @subpackge php/model/buttons
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.2.0
+ *
+ * @example
+ * $submitButton = SubmitHtmlView::create();
+ * $submitButton->texts('ok');
  */
 class SubmitHtmlView extends StandardButtonHtmlView {
 
