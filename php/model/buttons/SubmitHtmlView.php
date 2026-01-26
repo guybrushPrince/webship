@@ -52,7 +52,7 @@ class SubmitHtmlView extends StandardButtonHtmlView {
      */
     public static function create(?string $id = null, array|string $classes = [],
                                   FormHtmlView|string|null $form = null) : SubmitHtmlView {
-        return new SubmitHtmlView(CPTools::uuid(), $form, $classes);
+        return new SubmitHtmlView(is_null($id) ? CPTools::uuid() : $id, $form, $classes);
     }
 
     /**

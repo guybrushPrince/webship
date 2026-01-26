@@ -6,7 +6,7 @@
  * <p>Displays a button that opens a help page rendered using MarkdownHtmlView.</p>
  *
  * <code>
- * $help = HelpPageHtmlView::createIt('sphinx', 'concepts', 'variable');
+ * HelpPageHtmlView::createIt('sphinx', 'concepts', 'variable');
  * </code>
  *
  * <img src="http://localhost/coast/webship/modeldoc/help.png" />
@@ -18,7 +18,7 @@
  * @version 1.2.0
  *
  * @example
- * $help = HelpPageHtmlView::createIt('sphinx', 'concepts', 'variable');
+ *     HelpPageHtmlView::createIt('sphinx', 'concepts', 'variable');
  */
 class HelpPageHtmlView extends StandardButtonHtmlView {
 
