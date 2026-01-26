@@ -1,13 +1,24 @@
 <?php
 
 /**
- * Class HelpPageHtmlView.
+ * View HelpPageHtmlView.
+ *
+ * <p>Displays a button that opens a help page rendered using MarkdownHtmlView.</p>
+ *
+ * <code>
+ * $help = HelpPageHtmlView::createIt('sphinx', 'concepts', 'variable');
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/help.png" />
  *
  * @package webship
  * @subpackage php/model/help
  *
- * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.0.0
+ * @author Dr. Dipl.-Inf. Thomas M. Prinz, Franziska Lüder
+ * @version 1.2.0
+ *
+ * @example
+ * $help = HelpPageHtmlView::createIt('sphinx', 'concepts', 'variable');
  */
 class HelpPageHtmlView extends StandardButtonHtmlView {
 
@@ -33,8 +44,14 @@ class HelpPageHtmlView extends StandardButtonHtmlView {
             'add' => 'main-app',
             'error' => 'main-app'
         ], 'basics');
+        self::addCSS();
+    }
 
-        $this->style(Tools::css('.help-page', [' ', 'img'], 'position: relative', 'max-width: 500px',
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.help-page', [' ', 'img'], 'position: relative', 'max-width: 500px',
             'width: 100%', 'display: block', 'margin-left: auto', 'margin-right: auto'));
     }
 
