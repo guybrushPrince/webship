@@ -49,6 +49,8 @@ class TableRowHtmlView extends ContainerHtmlView {
      */
     public static function addCSS() : void {
         self::addStyle(Tools::css('.table > .tr.stretch', [' > ', '.cell'] ,'width: inherit'));
+        self::addStyle(Tools::css('.table > .tr:not(.stretch)', [' > ', '.cell'] ,
+            'width: -moz-fit-content', 'width: fit-content'));
         self::addStyle(Tools::css('.table > .tr.header', [], 'font-weight: bold'));
     }
     /**

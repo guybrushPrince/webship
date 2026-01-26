@@ -2,6 +2,7 @@
 
 namespace webship\tables;
 
+use ContainerHtmlView;
 use HtmlView;
 use Tools;
 
@@ -11,7 +12,7 @@ use Tools;
  * <p>Displays a table created of some sub views.</p>
  *
  * <code>
- * $table = TableHtmlView::create();
+ * $table = TableHtmlView::createIt();
  * $headerRow = $table->header()->stretch();
  * $headerRow->cell()->texts('column 1');
  * $headerRow->cell()->texts('column 2');
@@ -36,7 +37,7 @@ use Tools;
  *
  * @view
  * @examples
- *     $table = TableHtmlView::create();
+ *     $table = TableHtmlView::createIt();
  *     $headerRow = $table->header()->stretch();
  *     $headerRow->cell()->texts('column 1');
  *     $headerRow->cell()->texts('column 2');
@@ -50,7 +51,7 @@ use Tools;
  *     $tableRow2->cell()->texts('cell 5');
  *     $tableRow2->cell()->texts('cell 6');
  */
-class TableHtmlView extends HtmlView {
+class TableHtmlView extends ContainerHtmlView {
 
     /**
      * Constructor.
@@ -59,25 +60,21 @@ class TableHtmlView extends HtmlView {
     protected function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct(array_merge(['table'], $classes));
+
         self::addCSS();
     }
 
     /**
      * @inheritDoc
      */
-    public static function addCSS() : void {
-        self::addStyle(Tools::css('.table', [], 'display: flex',
-            'flex-wrap: wrap', 'flex-direction: column', 'align-items: flex-start', 'width: 100%',
-            'box-sizing: border-box'));
-
-    }
+    public static function addCSS() : void { }
 
     /**
      * create a TableHtmlView
      * @param string[]|string $classes Some classes.
      * @return TableHtmlView
      */
-    public static function create(array|string $classes = []): TableHtmlView {
+    public static function createIt(array|string $classes = []): TableHtmlView {
         return new TableHtmlView($classes);
     }
 
