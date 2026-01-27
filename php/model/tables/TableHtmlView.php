@@ -67,26 +67,35 @@ class TableHtmlView extends ContainerHtmlView {
     /**
      * @inheritDoc
      */
-    public static function addCSS() : void { }
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.table.fixed', [' > ', '.tr'], 'display: grid',
+            'grid-template-columns: var(--table)'));
+    }
 
     /**
      * create a TableHtmlView
      * @param string[]|string $classes Some classes.
+     * @param string[]|null $dimensions Some optional dimensions of the columns.
      * @return TableHtmlView
      */
-    public static function createIt(array|string $classes = []): TableHtmlView {
-        return new TableHtmlView($classes);
+    public static function createIt(array|string $classes = [], array $dimensions = null): TableHtmlView {
+        $table = new TableHtmlView($classes);
+        if (!is_null($dimensions)) {
+            $table->addClass('fixed');
+            $table->localStyle('--table: ' . implode(' ', $dimensions));
+        }
+        return $table;
     }
 
 
     /**
      * Create a header.
      * @param string[]|string $classes A set of classes.
+     * @param bool $border Whether the header shall have a border, or not.
      * @return TableRowHtmlView
      */
-    public function header(array|string $classes = []): TableRowHtmlView {
-        $classes = !is_array($classes) ? [ $classes ] : $classes;
-        $headerView = TableRowHtmlView::create(array_merge(['header'], $classes));
+    public function header(array|string $classes = [], bool $border = false): TableRowHtmlView {
+        $headerView = TableRowHtmlView::createHeader($border, $classes);
         $this->add($headerView);
         return $headerView;
     }
@@ -100,6 +109,15 @@ class TableHtmlView extends ContainerHtmlView {
         $rowView = TableRowHtmlView::create($classes);
         $this->add($rowView);
         return $rowView;
+    }
+
+    /**
+     * Stretches each of the children so that 100% of width is reached.
+     * @return $this
+     */
+    public function stretch() : static {
+        $this->addClass('stretch');
+        return $this;
     }
 }
 ?>

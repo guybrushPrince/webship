@@ -103,8 +103,8 @@ class NamelessHtmlView extends HtmlView {
         else if (is_array($alternative)) $alternative = strtoupper($alternative[$language]);
         else $alternative = strtoupper($alternative);
         return [
-            Language::ENGLISH => '<span class="intext-without">WITHOUT ' . $alternative . '</span>',
-            Language::GERMAN  => '<span class="intext-without">OHNE ' . $alternative . '</span>'
+            Language::ENGLISH => '<span class="intext intext-without">WITHOUT ' . $alternative . '</span>',
+            Language::GERMAN  => '<span class="intext intext-without">OHNE ' . $alternative . '</span>'
         ][$language];
     }
 

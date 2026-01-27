@@ -48,19 +48,38 @@ class TableRowHtmlView extends ContainerHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.table > .tr.stretch', [' > ', '.cell'] ,'width: inherit'));
-        self::addStyle(Tools::css('.table > .tr:not(.stretch)', [' > ', '.cell'] ,
+        self::addStyle(Tools::css('.table > .tr', [' > ', '.cell'] ,
             'width: -moz-fit-content', 'width: fit-content'));
+        self::addStyle(Tools::css('.table > .tr.stretch', [' > ', '.cell'] ,'width: inherit'));
+        self::addStyle(Tools::css('.table.stretch > .tr', [' > ', '.cell'] ,'width: inherit'));
         self::addStyle(Tools::css('.table > .tr.header', [], 'font-weight: bold'));
+        self::addStyle(Tools::css('.table > .tr.header.border', [], 'align-items: flex-end',
+            'border-bottom: 1px solid var(--system-background)', 'padding-bottom: 4px'));
+        self::addStyle(Tools::css('.table > .tr.header.border', [' > ', '.cell'], 'align-items: flex-end',
+            'align-content: flex-end'));
     }
     /**
      * Create a row for a table.
      * @param string[]|string $classes Some classes.
      * @return TableRowHtmlView
      */
-    public static function create(array|string $classes=[]) : TableRowHtmlView {
+    public static function create(array|string $classes = []) : TableRowHtmlView {
         return new TableRowHtmlView($classes);
     }
+
+    /**
+     * Create a header row in the table.
+     * @param bool $border The bottom border.
+     * @param string[]|string $classes Some classes.
+     * @return TableRowHtmlView
+     */
+    public static function createHeader(bool $border = false, array|string $classes = []) : TableRowHtmlView {
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        $classes[] = 'header';
+        if ($border) $classes[] = 'border';
+        return new TableRowHtmlView($classes);
+    }
+
     /**
      * Create a cell for the table.
      * @param string[]|string $classes Some classes.
