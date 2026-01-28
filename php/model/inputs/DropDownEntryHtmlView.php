@@ -1,13 +1,21 @@
 <?php
 
 /**
- * Class DropDownEntryHtmlView.
+ * View DropDownEntryHtmlView.
+ *
+ * <p> An entry for a DropDownHtmlView. </p>
+ *
+ * <code>
+ * $view = DropDownEntryHtmlView::create();
+ * </code>
  *
  * @package webship
  * @subpackge php/model/inputs
  *
  * @version 1.0.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @view
+
  */
 class DropDownEntryHtmlView extends HtmlView {
 
@@ -19,11 +27,7 @@ class DropDownEntryHtmlView extends HtmlView {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct(array_merge(['drop-down-entry'], $classes));
 
-        $this->style(Tools::css('.drop-down-entry', [], 'display: flex', 'flex-wrap: wrap',
-            'cursor: pointer', 'font-size: 15px', 'font-weight: normal', 'align-items: center'));
-        $this->style(Tools::css('.drop-down-entry', [':hover'], 'background: var(--main-menu)'));
-        $this->style(Tools::css('.drop-down-entry', [':hover', ' > ', ' ul.sub-menu-entry'],
-            'display: flex', 'flex-wrap: wrap', 'position: absolute', 'left: 0', 'top: 35px'));
+        self::addCSS();
     }
 
     /**
@@ -33,6 +37,17 @@ class DropDownEntryHtmlView extends HtmlView {
      */
     public static function create(string|array $classes = []) : DropDownEntryHtmlView {
         return new DropDownEntryHtmlView($classes);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.drop-down-entry', [], 'display: flex', 'flex-wrap: wrap',
+            'cursor: pointer', 'font-size: 15px', 'font-weight: normal', 'align-items: center'));
+        self::addStyle(Tools::css('.drop-down-entry', [':hover'], 'background: var(--main-menu)'));
+        self::addStyle(Tools::css('.drop-down-entry', [':hover', ' > ', ' ul.sub-menu-entry'],
+            'display: flex', 'flex-wrap: wrap', 'position: absolute', 'left: 0', 'top: 35px'));
     }
 
     /**

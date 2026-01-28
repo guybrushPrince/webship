@@ -1,8 +1,21 @@
 <?php
 
 /**
- * Class EditableHtmlView
+ * View EditableHtmlView
+ *
+ * <p> A basic view which can be edited </p>
+ *
+ * <code>
+ * $view = new EditableHtmlView('text');
+ * </code>
+ *
+ * @package webship
+ * @subpackge php/models/inputs
+ *
+ * @version 1.0.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @view
+ *
  */
 class EditableHtmlView extends HtmlView {
 
@@ -16,7 +29,7 @@ class EditableHtmlView extends HtmlView {
      * EditableHtmlView constructor.
      * @param array|string $classes (optional) Possible classes
      */
-    public function __construct($classes = array()) {
+    public function __construct($classes = []) {
         parent::__construct(array_merge(['editable'], is_array($classes) ? $classes : [ $classes ]));
         $this->style(Tools::css('textarea.editable', [], 'border: none', 'overflow: auto',
             'outline: none', '-webkit-box-shadow: none', '-moz-box-shadow: none', 'box-shadow: none', 'resize: none',
