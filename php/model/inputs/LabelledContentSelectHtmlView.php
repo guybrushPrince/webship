@@ -3,12 +3,18 @@
 /**
  * View LabelledContentSelectHtmlView.
  *
+ * <p> A view to create a labeled HtmlView with classes </p>
+ *
+ * <code>
+ * $view = LabelledContentSelectHtmlView::createSelect('lable', 'lableid',1, [], [(new HtmlView())->texts('text')])
+ * </code>
+ *
  * @package webship
  * @subpackge php/model/inputs
  *
- *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
+ * @view
  */
 class LabelledContentSelectHtmlView extends ContentSelectHtmlView {
 

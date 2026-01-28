@@ -1,14 +1,20 @@
 <?php
 
 /**
- * Class CheckboxHtmlView.
+ * View CheckboxHtmlView.
+ *
+ * <p> A CheckboxHtmlView for checkable <em> checkboxes</em>.</p
+ *
+ *  <code>
+ *  CheckboxHtmlView::create($id . 'checkbox1', true); // adds a checked checkbox with the id "checkbox1"
+ *  </code>
  *
  * @package webship
  * @subpackge php/model/inputs
  *
- *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
+ * @view
  */
 class CheckboxHtmlView extends InputHtmlView {
 
@@ -23,7 +29,7 @@ class CheckboxHtmlView extends InputHtmlView {
         $this->texts()->text(View::getLanguage(), (!$checked ? '' : 'checked'));
         $this->addClass('fit');
     }
-
+    
     /**
      * Create a new checkbox.
      * @param string|null $id The id.

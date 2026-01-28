@@ -8,15 +8,20 @@ use progression\SimplePersistence;
 use progression\ui\Representer;
 
 /**
- * Class ContextValueHtmlView.
+ * View ContextValueHtmlView.
  *
- * Visualizes values within arrays, objects, as well as classes.
+ * <p> Visualizes values within arrays, objects, as well as classes. </p>
+ *
+ * <code>
+ * $view = ContextValueHtmlView::create('object', $classes);
+ * </code>
  *
  * @package webship
  * @subpackge php/model/inputs
  *
  * @version 1.0.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @view
  */
 class ContextValueHtmlView extends HtmlView {
 
@@ -34,56 +39,7 @@ class ContextValueHtmlView extends HtmlView {
         if (!is_array($classes)) $classes = [ $classes ];
         $classes[] = 'context-value';
         parent::__construct($classes);
-
-        $this->style(Tools::css('.context-value', [], '--info-gap: 5px', 'display: flex',
-            'gap: var(--info-gap)', 'flex-direction: row'));
-        $this->style(Tools::css('.context-value.scalar', [], 'align-items: stretch',
-            'border: 1px solid var(--color)', 'width: fit-content', 'width: -moz-fit-content',
-            'padding-right: 3px', 'border-radius: 3px', 'color: var(--color)'));
-        $this->style(Tools::css('.context-value.scalar', [':before'], 'content: var(--type)',
-            'background: var(--color)', 'color: var(--font)', 'padding: 2px', 'display: flex', 'flex-direction: row',
-            'align-items: center'));
-        $this->style(Tools::css('.context-value.scalar', [' > ', 'div:first-child'],
-            'display: flex', 'flex-direction: row', 'align-items: center'));
-        $this->style(Tools::css('.context-value.scalar.con-variable', [], 'padding-right: 0'));
-        $this->style(Tools::css('.context-value.scalar.con-variable', [':after'], 'content: "}}"',
-            'background: var(--color)', 'color: var(--font)', 'padding: 2px', 'display: flex', 'flex-direction: row',
-            'align-items: center'));
-
-        $this->style(Tools::css('.context-value.array', [], 'justify-content: stretch',
-            'min-height: 15px', '--parenthesis: 2px'));
-        $this->style(Tools::css('.context-value.array', [':before'], 'content: ""', 'display: block',
-            'width: var(--parenthesis)', 'border: var(--parenthesis) solid #000', 'border-right: none',
-            'box-sizing: content-box'));
-        $this->style(Tools::css('.context-value.array', [' > ', 'div:first-child'], 'display: flex',
-            'flex-direction: row', 'flex-wrap: wrap', 'align-items: center', 'gap: var(--info-gap)',
-            'max-width: calc(100% - (4 * var(--parenthesis) + 2 * var(--info-gap)))'));
-        $this->style(Tools::css('.context-value.array', [':after'], 'content: ""', 'display: block',
-            'width: var(--parenthesis)', 'border: var(--parenthesis) solid #000', 'border-left: none',
-            'box-sizing: content-box'));
-
-        $this->style(Tools::css('.context-value.jobject', [], 'justify-content: stretch',
-            'min-height: 15px', '--parenthesis: 2px', 'align-items: stretch', 'gap: 0'));
-        $this->style(Tools::css('.context-value.jobject', [' > ', 'div:first-child'], 'display: flex',
-            'flex-direction: row', 'flex-wrap: wrap', 'align-items: center', 'width: calc(2 * var(--parenthesis))'));
-        $this->style(Tools::css('.context-value.jobject', [' > ', 'div:first-child:before'],
-            'content: ""', 'display: inline-block',
-            'height: var(--parenthesis)', 'width: calc(2 * var(--parenthesis))', 'background: #000'));
-        $this->style(Tools::css('.context-value.jobject', [' > ', 'div:nth-child(2)'],
-            'width: calc(2 * var(--parenthesis))', 'border: var(--parenthesis) solid #000',
-            'border-radius: 10px', 'border-right: none', 'margin-right: var(--info-gap)'));
-        $this->style(Tools::css('.context-value.jobject', [' > ', 'div:nth-child(3)'], 'display: flex',
-            'flex-direction: row', 'flex-wrap: wrap', 'align-items: center', 'gap: var(--info-gap)',
-            'max-width: calc(100% - (20 * var(--parenthesis) - 2 * var(--info-gap)))'));
-        $this->style(Tools::css('.context-value.jobject', [' > ', 'div:nth-child(4)'],
-            'width: calc(2 * var(--parenthesis))', 'border: var(--parenthesis) solid #000',
-            'border-radius: 10px', 'border-left: none', 'margin-left: var(--info-gap)'));
-        $this->style(Tools::css('.context-value.jobject', [' > ', 'div:last-child'], 'display: flex',
-            'flex-direction: row', 'flex-wrap: wrap', 'align-items: center', 'width: calc(2 * var(--parenthesis))'));
-        $this->style(Tools::css('.context-value.jobject', [' > ', 'div:last-child:after'],
-            'content: ""', 'display: inline-block',
-            'height: var(--parenthesis)', 'width: calc(2 * var(--parenthesis))', 'background: #000'));
-        $this->style(Tools::css('.context-value.wrap', [], 'flex-wrap: wrap'));
+        self::addCSS();
     }
 
     /**
@@ -138,6 +94,61 @@ class ContextValueHtmlView extends HtmlView {
             $this->container->add($view);
         }
         return $view;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.context-value', [], '--info-gap: 5px', 'display: flex',
+            'gap: var(--info-gap)', 'flex-direction: row'));
+        self::addStyle(Tools::css('.context-value.scalar', [], 'align-items: stretch',
+            'border: 1px solid var(--color)', 'width: fit-content', 'width: -moz-fit-content',
+            'padding-right: 3px', 'border-radius: 3px', 'color: var(--color)'));
+        self::addStyle(Tools::css('.context-value.scalar', [':before'], 'content: var(--type)',
+            'background: var(--color)', 'color: var(--font)', 'padding: 2px', 'display: flex', 'flex-direction: row',
+            'align-items: center'));
+        self::addStyle(Tools::css('.context-value.scalar', [' > ', 'div:first-child'],
+            'display: flex', 'flex-direction: row', 'align-items: center'));
+        self::addStyle(Tools::css('.context-value.scalar.con-variable', [], 'padding-right: 0'));
+        self::addStyle(Tools::css('.context-value.scalar.con-variable', [':after'], 'content: "}}"',
+            'background: var(--color)', 'color: var(--font)', 'padding: 2px', 'display: flex', 'flex-direction: row',
+            'align-items: center'));
+
+        self::addStyle(Tools::css('.context-value.array', [], 'justify-content: stretch',
+            'min-height: 15px', '--parenthesis: 2px'));
+        self::addStyle(Tools::css('.context-value.array', [':before'], 'content: ""', 'display: block',
+            'width: var(--parenthesis)', 'border: var(--parenthesis) solid #000', 'border-right: none',
+            'box-sizing: content-box'));
+        self::addStyle(Tools::css('.context-value.array', [' > ', 'div:first-child'], 'display: flex',
+            'flex-direction: row', 'flex-wrap: wrap', 'align-items: center', 'gap: var(--info-gap)',
+            'max-width: calc(100% - (4 * var(--parenthesis) + 2 * var(--info-gap)))'));
+        self::addStyle(Tools::css('.context-value.array', [':after'], 'content: ""', 'display: block',
+            'width: var(--parenthesis)', 'border: var(--parenthesis) solid #000', 'border-left: none',
+            'box-sizing: content-box'));
+
+        self::addStyle(Tools::css('.context-value.jobject', [], 'justify-content: stretch',
+            'min-height: 15px', '--parenthesis: 2px', 'align-items: stretch', 'gap: 0'));
+        self::addStyle(Tools::css('.context-value.jobject', [' > ', 'div:first-child'], 'display: flex',
+            'flex-direction: row', 'flex-wrap: wrap', 'align-items: center', 'width: calc(2 * var(--parenthesis))'));
+        self::addStyle(Tools::css('.context-value.jobject', [' > ', 'div:first-child:before'],
+            'content: ""', 'display: inline-block',
+            'height: var(--parenthesis)', 'width: calc(2 * var(--parenthesis))', 'background: #000'));
+        self::addStyle(Tools::css('.context-value.jobject', [' > ', 'div:nth-child(2)'],
+            'width: calc(2 * var(--parenthesis))', 'border: var(--parenthesis) solid #000',
+            'border-radius: 10px', 'border-right: none', 'margin-right: var(--info-gap)'));
+        self::addStyle(Tools::css('.context-value.jobject', [' > ', 'div:nth-child(3)'], 'display: flex',
+            'flex-direction: row', 'flex-wrap: wrap', 'align-items: center', 'gap: var(--info-gap)',
+            'max-width: calc(100% - (20 * var(--parenthesis) - 2 * var(--info-gap)))'));
+        self::addStyle(Tools::css('.context-value.jobject', [' > ', 'div:nth-child(4)'],
+            'width: calc(2 * var(--parenthesis))', 'border: var(--parenthesis) solid #000',
+            'border-radius: 10px', 'border-left: none', 'margin-left: var(--info-gap)'));
+        self::addStyle(Tools::css('.context-value.jobject', [' > ', 'div:last-child'], 'display: flex',
+            'flex-direction: row', 'flex-wrap: wrap', 'align-items: center', 'width: calc(2 * var(--parenthesis))'));
+        self::addStyle(Tools::css('.context-value.jobject', [' > ', 'div:last-child:after'],
+            'content: ""', 'display: inline-block',
+            'height: var(--parenthesis)', 'width: calc(2 * var(--parenthesis))', 'background: #000'));
+        self::addStyle(Tools::css('.context-value.wrap', [], 'flex-wrap: wrap'));
     }
 
     /**

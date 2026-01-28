@@ -1,13 +1,20 @@
 <?php
 
 /**
- * Class DropDownHtmlView.
+ * View DropDownHtmlView.
+ *
+ *  <p> A view with dropdowns. </p>
+ *
+ *  <code>
+ *  $view = DropDownHtmlView::create();
+ *  </code>
  *
  * @package webship
  * @subpackge php/model/inputs
  *
  * @version 1.0.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @view
  */
 class DropDownHtmlView extends HtmlView {
 
@@ -18,24 +25,7 @@ class DropDownHtmlView extends HtmlView {
     private function __construct(string|array $classes = []) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct(array_merge(['drop-down'], $classes));
-
-        $this->style(Tools::css('.drop-down', [], 'position: relative', 'display: inline-flex',
-            'flex-direction: column', 'width: fit-content', 'transition: width 0.5s'));
-        $this->style(Tools::css('.drop-down:hover', [],
-            'width: 100px'));
-        $this->style(Tools::css('.drop-down:hover', [' > ', '[data-drop-down-content]'],
-            'position: fixed', 'z-index: 10000', 'top: 0'));
-        $this->style(Tools::css('.drop-down', [' > ', '[data-drop-down-content]'],
-            'margin: 0', 'padding: 0'));
-        $this->style(Tools::css('.drop-down', [' > ', '[data-drop-down-content]', ' > ', ':not(:first-child)'],
-            'display: none'));
-        $this->style(Tools::css('.drop-down', [' > ', '[data-drop-down-content]', ' > ', '*:first-child'],
-            'font-weight: bold'));
-        $this->style(Tools::css('.drop-down:hover', [' > ', '[data-drop-down-content]', ' > ',
-            ':not(:first-child)'], 'display: block'));
-        $this->style(Tools::css('.drop-down', [' > ', '[data-drop-down-content]', ' > ', '*'],
-            'width: fit-content', 'height: 35px', 'padding: 10px 20px', 'box-sizing: border-box',
-            'position: relative', 'width: -moz-fit-content', 'background: var(--main-menu-hover)'));
+        self::addCSS();
     }
 
     /**
@@ -45,6 +35,29 @@ class DropDownHtmlView extends HtmlView {
      */
     public static function create(string|array $classes = []) : DropDownHtmlView {
         return new DropDownHtmlView($classes);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.drop-down', [], 'position: relative', 'display: inline-flex',
+            'flex-direction: column', 'width: fit-content', 'transition: width 0.5s'));
+        self::addStyle(Tools::css('.drop-down:hover', [],
+            'width: 100px'));
+        self::addStyle(Tools::css('.drop-down:hover', [' > ', '[data-drop-down-content]'],
+            'position: fixed', 'z-index: 10000', 'top: 0'));
+        self::addStyle(Tools::css('.drop-down', [' > ', '[data-drop-down-content]'],
+            'margin: 0', 'padding: 0'));
+        self::addStyle(Tools::css('.drop-down', [' > ', '[data-drop-down-content]', ' > ', ':not(:first-child)'],
+            'display: none'));
+        self::addStyle(Tools::css('.drop-down', [' > ', '[data-drop-down-content]', ' > ', '*:first-child'],
+            'font-weight: bold'));
+        self::addStyle(Tools::css('.drop-down:hover', [' > ', '[data-drop-down-content]', ' > ',
+            ':not(:first-child)'], 'display: block'));
+        self::addStyle(Tools::css('.drop-down', [' > ', '[data-drop-down-content]', ' > ', '*'],
+            'width: fit-content', 'height: 35px', 'padding: 10px 20px', 'box-sizing: border-box',
+            'position: relative', 'width: -moz-fit-content', 'background: var(--main-menu-hover)'));
     }
 
     /**
