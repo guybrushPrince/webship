@@ -63,6 +63,8 @@ class ContainerHtmlView extends HtmlView {
         self::addStyle(Tools::css('.container', '.single', 'flex-wrap: nowrap'));
         self::addStyle(Tools::css('.container', '.vcent', 'align-items: center',
             'align-content: center'));
+        self::addStyle(Tools::css('.container', '.vbot', 'align-items: flex-end',
+            'align-content: flex-end'));
         self::addStyle(Tools::css('.container', '.initial', 'align-items: initial',
             'align-content: initial'));
         self::addStyle(Tools::css('.container', '.scroll-x', 'overflow-x: auto'));
@@ -108,7 +110,6 @@ class ContainerHtmlView extends HtmlView {
             'justify-items: center'));
         self::addStyle(Tools::css('.container', '.hend', 'justify-content: flex-end',
             'justify-items: flex-end'));
-        self::addStyle(Tools::css('.container', '.vbot', 'align-items: flex-end'));
         self::addStyle(Tools::css('.container', '.h100', 'height: 100%'));
         self::addStyle(Tools::css('.container', '.w50', 'width: 50%'));
         self::addStyle(Tools::css('.container', '.w33', 'width: calc(100% / 3)'));

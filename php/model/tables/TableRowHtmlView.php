@@ -52,11 +52,16 @@ class TableRowHtmlView extends ContainerHtmlView {
             'width: -moz-fit-content', 'width: fit-content'));
         self::addStyle(Tools::css('.table > .tr.stretch', [' > ', '.cell'] ,'width: inherit'));
         self::addStyle(Tools::css('.table.stretch > .tr', [' > ', '.cell'] ,'width: inherit'));
+        self::addStyle(Tools::css('.table > .tr.stretch', [' > ', '.cell.full'] ,'grid-column: 1/-1'));
         self::addStyle(Tools::css('.table > .tr.header', [], 'font-weight: bold'));
         self::addStyle(Tools::css('.table > .tr.header.border', [], 'align-items: flex-end',
             'border-bottom: 1px solid var(--system-background)', 'padding-bottom: 4px'));
         self::addStyle(Tools::css('.table > .tr.header.border', [' > ', '.cell'], 'align-items: flex-end',
             'align-content: flex-end'));
+        self::addStyle(Tools::css('.table > .tr.hoverable', [], 'transition: 0.5s background'));
+        self::addStyle(Tools::css('.table > .tr.hoverable', [':hover'],
+            'background: var(--light-system-background)'));
+        self::addStyle(Tools::css('.table > .tr.h40px', [' > ', '.cell'],'min-height: 40px'));
     }
     /**
      * Create a row for a table.
@@ -87,9 +92,19 @@ class TableRowHtmlView extends ContainerHtmlView {
      */
     public function cell(array|string $classes = []) : ContainerHtmlView {
         $classes = is_array($classes) ? $classes : [ $classes ];
-        $cellView = ContainerHtmlView::createIt((array_merge([ 'cell' ], $classes)));
+        $cellView = ContainerHtmlView::createIt(array_merge([ 'cell' ], $classes));
         $this->add($cellView);
         return $cellView;
+    }
+
+    /**
+     * Create a full width cell (spanning all others.
+     * @param string[]|string $classes Some classes.
+     * @return ContainerHtmlView
+     */
+    public function full(array|string $classes = []) : ContainerHtmlView {
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        return $this->cell(array_merge([ 'full' ], $classes));
     }
 
     /**
@@ -98,6 +113,15 @@ class TableRowHtmlView extends ContainerHtmlView {
      */
     public function stretch() : static {
         $this->addClass('stretch');
+        return $this;
+    }
+
+    /**
+     * Makes the row hoverable.
+     * @return $this
+     */
+    public function hoverable() : static {
+        $this->addClass('hoverable');
         return $this;
     }
 

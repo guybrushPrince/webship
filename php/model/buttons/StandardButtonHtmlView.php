@@ -83,6 +83,7 @@ class StandardButtonHtmlView extends ButtonHtmlView {
         self::addStyle(Tools::css('button.std-button.w100', [], 'width: 100%'));
 
         self::addStyle(Tools::css('button.std-button.long', [], 'width: 250px'));
+        self::addStyle(Tools::css('button.std-button.sl', [], 'margin: 0'));
 
         self::addStyle(Tools::css('button.std-button.only-img', [], 'width: 30px', 'height: 30px',
             'padding: 5px', 'margin: 0', 'min-height: 30px', 'max-height: 30px', 'min-width: 30px', 'max-width: 30px'));
@@ -164,6 +165,15 @@ class StandardButtonHtmlView extends ButtonHtmlView {
      */
     public function long() : static {
         $this->addClass('long');
+        return $this;
+    }
+
+    /**
+     * Sets the button spaceless.
+     * @return $this
+     */
+    public function spaceless() : static {
+        $this->addClass('sl');
         return $this;
     }
 

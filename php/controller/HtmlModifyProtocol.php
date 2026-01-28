@@ -38,6 +38,15 @@ class HtmlModifyProtocol extends ModifyProtocol {
     }
 
     /**
+     * Create a new html modify protocol for a given {@link HtmlView}.
+     * @param HtmlView $view The view binding.
+     * @return HtmlModifyProtocol
+     */
+    public static function create(HtmlView $view) : HtmlModifyProtocol {
+        return new HtmlModifyProtocol($view);
+    }
+
+    /**
      * @inheritDoc
      */
     public function generate() : string {
