@@ -2,9 +2,10 @@
 /**
  * View EmptyContentHtmlView.
  *
- * <p>Presents an <em>empty content</em> view with a simple, full-width, empty-content image along with an optional InfoHtmlView.</p>
- * <p>You can choose between a medium (200p width) and a small image (100p width).</p>
- *  <img src="http://localhost/coast/sunstone/pic/box.png" />
+ * <p>Presents a full-width <em>empty content</em> view with a simple, empty-content image along with an optional
+ * {@link InfoHtmlView}.</p>
+ * <p>You can choose between a medium (200p width) and a small image (100p width) by using
+ * {@link EmptyContentHtmlView::small()}.</p>
  *
  * <code>
  * $emptyContentView = EmptyContentHtmlView::create();
@@ -14,17 +15,20 @@
  * $emptyContentView = EmptyContentHtmlView::create(null, ['.empty-content.small']);
  * </code>
  *
+ * <img src="http://localhost/coast/webship/modeldoc/emptycontent.png" />
+ *
  * @package webship
  * @subpackage php/model
  *
- * @version 1.0.0
+ * @version 1.1.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @author Mihailo Jovic
  *
  * @view
  * @examples
  *     $emptyContentView = EmptyContentHtmlView::create();
- *     $emptyContentView = EmptyContentHtmlView::create("This is an EmptyContentView!");
- *     $emptyContentView = EmptyContentHtmlView::create([Language::ENGLISH => "Hello empty world!, Language::GERMAN => "Hallo leere Welt!]);
+ *     $emptyContentView = EmptyContentHtmlView::create('This is an EmptyContentView!');
+ *     $emptyContentView = EmptyContentHtmlView::create([Language::ENGLISH => 'Hello empty world!', Language::GERMAN => 'Hallo leere Welt!']);
  *
  */
 class EmptyContentHtmlView extends HtmlView {
@@ -36,6 +40,7 @@ class EmptyContentHtmlView extends HtmlView {
     private function __construct(string|array $classes = []) {
         parent::__construct($classes);
         $this->classes[] = 'empty-content';
+
         self::addCSS();
     }
 

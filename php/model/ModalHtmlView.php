@@ -153,8 +153,8 @@ class ModalHtmlView extends HtmlView {
         $current = $protocol;
         if ($this->outProtected) {
             $current = $protocol->alert($this->outProtected)->
-            no()->parent()->
-            yes();
+                no()->parent()->
+                yes();
         }
         $current->throwevent(Event::CLOSE_MODAL, $this)->delete($this);
         return $protocol;
@@ -193,10 +193,9 @@ class ModalHtmlView extends HtmlView {
             $this->subviews[0]->subviews[0]->add($this->control);
         }
         $this->control->add($abort);
-        $abort->
-            protocol(Event::CLICK)->
-                throwevent(Event::CLOSE_MODAL, $this)->
-                delete($this);
+        $abort->protocol(Event::CLICK)->
+            throwevent(Event::CLOSE_MODAL, $this)->
+            delete($this);
         return $abort;
     }
 

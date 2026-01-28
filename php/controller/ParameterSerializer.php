@@ -212,7 +212,7 @@ class ParameterSerializer {
         } else if ($value === null) {
             return '"' . $param . '"' . ': null';
         } else if (is_string($value)) {
-            if (!$isView) return '"' . $param . '"' . ': ' . '"' . $value . '"';
+            if (!$isView) return '"' . $param . '"' . ': ' . '"' . str_replace('\\', '\\\\', $value) . '"';
             else {
                 if (!$protocol->innerView()) $innerView = $entry;
                 else $innerView = $protocol->innerView();

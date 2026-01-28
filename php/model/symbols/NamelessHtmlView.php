@@ -38,7 +38,7 @@ class NamelessHtmlView extends HtmlView {
         foreach ($fields as $field) {
             $code .= self::createLinkableText($target, $field, $language, $textBox, $defaultText);
         }
-        $this->add(new PlainHtmlView($code));
+        $this->add(PlainHtmlView::create($code));
         if ($img) {
             $imageView = new ImageHtmlView($img);
             $this->add($imageView);
@@ -89,6 +89,23 @@ class NamelessHtmlView extends HtmlView {
             $classes[] = 'hidden';
         }
         return (new NamelessHtmlView($target, $fields, $language, $textBox, $defaultText, $img, $classes))->stringify();
+    }
+
+    /**
+     * Creates a purely textual chip without any functionality.
+     * @param int|null $language The language.
+     * @param array|string|null $alternative An alternative text that is missing.
+     * @return string
+     */
+    public static function createChip(int|null $language = null, array|string|null $alternative = null) : string {
+        if (is_null($language)) $language = self::getLanguage();
+        if (is_null($alternative)) $alternative = 'TEXT';
+        else if (is_array($alternative)) $alternative = strtoupper($alternative[$language]);
+        else $alternative = strtoupper($alternative);
+        return [
+            Language::ENGLISH => '<span class="intext intext-without">WITHOUT ' . $alternative . '</span>',
+            Language::GERMAN  => '<span class="intext intext-without">OHNE ' . $alternative . '</span>'
+        ][$language];
     }
 
     /**

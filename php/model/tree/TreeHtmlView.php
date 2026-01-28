@@ -1,7 +1,8 @@
 <?php
 
 /**
- * Class TreeHtmlView
+ * View TreeHtmlView
+ * <p>Displays a tree with entries and subtrees.</p>
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  */
 class TreeHtmlView extends HtmlView {
@@ -11,41 +12,48 @@ class TreeHtmlView extends HtmlView {
      * @param string[]|string $classes
      */
     public function __construct(array|string $classes = []) {
-        $classes = is_array($classes) ? $classes : array($classes);
+        $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['tree'], $classes));
         $this->ref('tree');
 
-        $this->style(Tools::css('ul.tree', '', 'padding-top: 0', 'padding-bottom: 0'));
-        $this->style(Tools::css('ul.tree', [' > ', 'li', ' ', 'a'], 'text-align: left',
+        self::addCss();
+
+    }
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('ul.tree', '', 'padding-top: 0', 'padding-bottom: 0'));
+        self::addStyle(Tools::css('ul.tree', [' > ', 'li', ' ', 'a'], 'text-align: left',
             'justify-content: flex-start'));
-        $this->style(Tools::css('ul.tree', [' > ', 'li'], 'min-height: 20px', 'list-style-type: none'));
-        $this->style(Tools::css('ul.tree', [' > ', 'li:not(:last-child)'],
+        self::addStyle(Tools::css('ul.tree', [' > ', 'li'], 'min-height: 20px', 'list-style-type: none', '--indent: -40px'));
+        self::addStyle(Tools::css('ul.tree', [' > ', 'li:not(:last-child)'],
             'border-bottom: 1px solid var(--system-background-hover)'));
-        $this->style(Tools::css('ul.tree', [' > ', 'li.entry'], 'margin-left: -40px'));
-        $this->style(Tools::css('ul.tree', [' > ', 'li.sub'], 'margin-left: -40px', 'cursor: pointer'));
-        $this->style(Tools::css('ul.tree:not(.open)', [' > ', 'li.sub'],
+        self::addStyle(Tools::css('ul.tree', [' > ', 'li.entry'], 'margin-left: var(--indent)'));
+        self::addStyle(Tools::css('ul.tree', [' > ', 'li.sub'], 'margin-left: var(--indent)', 'cursor: pointer'));
+        self::addStyle(Tools::css('ul.tree:not(.open)', [' > ', 'li.sub'],
             'list-style-type: disclosure-closed', 'border-bottom: none'));
-        $this->style(Tools::css('ul.tree:not(.open)', [' > ', 'li.sub',  ' ~ ', 'li'],
+        self::addStyle(Tools::css('ul.tree:not(.open)', [' > ', 'li.sub',  ' ~ ', 'li'],
             'display: none'));
-        $this->style(Tools::css('ul.tree.open', [' > ', 'li.sub'],
+        self::addStyle(Tools::css('ul.tree.open', [' > ', 'li.sub'],
             'list-style-type: disclosure-open'));
-        $this->style(Tools::css('ul.tree.open', [' > ', 'li.sub',  ' ~ ', 'li'], 'display: inherit'));
-        $this->style(Tools::css('ul.tree', [' > ', 'li', ' ', 'span.default'], 'padding-left: 0',
+        self::addStyle(Tools::css('ul.tree.open', [' > ', 'li.sub',  ' ~ ', 'li'], 'display: inherit'));
+        self::addStyle(Tools::css('ul.tree', [' > ', 'li', ' ', 'span.default'], 'padding-left: 0',
             'display: flex', 'flex-direction: row', 'align-items: center', 'min-height: 20px', 'font-style: italic'));
-        $this->style(Tools::css('ul.tree', [' > ', 'li.selectable'], 'transition: 0.5s',
+        self::addStyle(Tools::css('ul.tree', [' > ', 'li.selectable'], 'transition: 0.5s',
             'cursor: pointer'));
-        $this->style(Tools::css('ul.tree', [' > ', 'li.selectable:hover'],
+        self::addStyle(Tools::css('ul.tree', [' > ', 'li.selectable:hover'],
             'background: var(--system-background-hover)'));
 
-        $this->style(Tools::css('ul.tree', [' ', '.leaf-info'], 'display: flex', 'flex-direction: row',
+        self::addStyle(Tools::css('ul.tree', [' ', '.leaf-info'], 'display: flex', 'flex-direction: row',
             'flex-wrap: nowrap', 'min-height: 20px', 'align-items: center'));
-        $this->style(Tools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow'],'display: flex',
+        self::addStyle(Tools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow'],'display: flex',
             'flex-direction: row', 'width: 15px', 'min-width: 15px', 'height: 15px', 'border-radius: 50%',
             'background: var(--system-background)', 'justify-content: center', 'align-items: center',
             'margin-left: 10px', 'transition: 0.5s', 'cursor: pointer'));
-        $this->style(Tools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow:hover'],
+        self::addStyle(Tools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow:hover'],
             'background: var(--dark-system-background)'));
-        $this->style(Tools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow', ' > ', 'img'],
+        self::addStyle(Tools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow', ' > ', 'img'],
             'width: 10px', 'height: 10px'));
     }
 
@@ -53,7 +61,7 @@ class TreeHtmlView extends HtmlView {
      * @inheritDoc
      */
     public function generateOpeningTag() : string {
-        return '<ul class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '">';
+        return '<ul class="' . implode(' ', array_merge($this->classes, [$this->id()])) . '">';
     }
 
     /**
@@ -75,7 +83,7 @@ class TreeHtmlView extends HtmlView {
      * @param string|string[] $classes Some additional classes.
      * @return TreeHtmlView
      */
-    public static function create($classes = []) : TreeHtmlView {
+    public static function create(array|string $classes = []) : TreeHtmlView {
         return new TreeHtmlView($classes);
     }
 
@@ -84,7 +92,7 @@ class TreeHtmlView extends HtmlView {
      * @param string|string[] $classes Some additional classes.
      * @return TreeLeafHtmlView
      */
-    public function leaf($classes = []) : TreeLeafHtmlView {
+    public function leaf(array|string $classes = []) : TreeLeafHtmlView {
         $leaf = new TreeLeafHtmlView($classes);
         $this->add($leaf);
         return $leaf;
@@ -95,7 +103,7 @@ class TreeHtmlView extends HtmlView {
      * @param string|string[] $classes Some additional classes.
      * @return TreeLeafHtmlView
      */
-    public function entryLeaf($classes = []) : TreeLeafHtmlView {
+    public function entryLeaf(array|string $classes = []) : TreeLeafHtmlView {
         return $this->leaf(array_merge(['entry'], (is_array($classes) ? $classes : [$classes])));
     }
 
@@ -104,7 +112,7 @@ class TreeHtmlView extends HtmlView {
      * @param string|string[] $classes Some additional classes.
      * @return TreeLeafHtmlView
      */
-    public function subtree($classes = []) : TreeLeafHtmlView {
+    public function subtree(array|string $classes = []) : TreeLeafHtmlView {
         return $this->leaf(array_merge(['sub'], (is_array($classes) ? $classes : [$classes])));
     }
 

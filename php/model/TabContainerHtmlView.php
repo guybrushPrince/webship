@@ -19,10 +19,10 @@ class TabContainerHtmlView extends ContainerHtmlView {
      */
     public function __construct(array|string $classes = array()) {
         $classes = is_array($classes) ? $classes : [ $classes ];
-        parent::__construct(array_merge([ 'tabbed' ], $classes));
+        parent::__construct(array_merge([ 'tabbed' ], $classes), 'var(--main-menu)');
 
         $this->style(Tools::css('.tabbed', [], 'position: relative',
-            'width: 100%', 'height: 100%', 'overflow-y: clip', 'background: var(--main-menu)'));
+            'width: 100%', 'height: 100%', 'overflow-y: clip'/*, 'background: var(--main-menu)'*/));
         $this->style(Tools::css('.tabbed', [' > ', '.tab'], 'position: absolute', 'left: 0', 'top: 27px',
             'width: 100%', 'box-sizing: border-box', 'overflow-y: visible', 'height: 100%', 'padding: 0'));
 

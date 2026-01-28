@@ -39,6 +39,10 @@ class StandardHtmlView extends HtmlView {
     public static function addCSS() : void {
         self::addStyle(Tools::css('.std', [], 'width: 100%', 'padding: 20px 20px',
             'box-sizing: border-box', 'position: relative'));
+        self::addStyle(Tools::css('.std', ['.p0'], 'padding: 0'));
+        self::addStyle(Tools::css('.std', ['.p5'], 'padding: 5px'));
+        self::addStyle(Tools::css('.std', ['.p10'], 'padding: 10px'));
+        self::addStyle(Tools::css('.std', ['.p15'], 'padding: 15px'));
     }
 }
 ?>

@@ -22,6 +22,11 @@
  * @version 1.0.0
  *
  * @view
+ * @examples
+ *     $container = ContainerHtmlView::createIt(['hor', 'vcent', 'gap10']);
+ *     $container->add(ColorHtmlView::createIt('#0000FF'))->texts('Blue');
+ *     $container->add(ColorHtmlView::createIt('#FF0000'))->texts('Red');
+ *     $container->add(ColorHtmlView::createIt('#00FF00'))->texts('Green');
  */
 class ContainerHtmlView extends HtmlView {
 
@@ -29,11 +34,18 @@ class ContainerHtmlView extends HtmlView {
      * ContainerHtmlView constructor.
      * @param string[]|string $classes
      */
-    public function __construct(array|string $classes = []) {
+    public function __construct(array|string $classes = [], string|null $color = null, string|null $fontColor = null) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct(array_merge(['container'], $classes));
 
         self::addCSS();
+
+        if (!is_null($color)) {
+            $this->localStyle('background: ' . $color);
+            if (!is_null($fontColor)) {
+                $this->localStyle('color: ' . $fontColor);
+            }
+        }
     }
 
     /**
@@ -43,23 +55,55 @@ class ContainerHtmlView extends HtmlView {
         self::addStyle(Tools::css('.container', '', 'display: flex',
             'flex-wrap: wrap', 'align-items: flex-start', 'align-content: flex-start', 'width: 100%',
             'box-sizing: border-box'));
+        self::addStyle(Tools::css('.container', '.cb', 'box-sizing: content-box'));
         self::addStyle(Tools::css('.container', '.ver', 'flex-direction: column'));
         self::addStyle(Tools::css('.container', '.hor', 'flex-direction: row'));
+        self::addStyle(Tools::css('.container', '.rev-ver', 'flex-direction: column-reverse'));
+        self::addStyle(Tools::css('.container', '.rev-hor', 'flex-direction: row-reverse'));
         self::addStyle(Tools::css('.container', '.single', 'flex-wrap: nowrap'));
         self::addStyle(Tools::css('.container', '.vcent', 'align-items: center',
             'align-content: center'));
+        self::addStyle(Tools::css('.container', '.initial', 'align-items: initial',
+            'align-content: initial'));
         self::addStyle(Tools::css('.container', '.scroll-x', 'overflow-x: auto'));
         self::addStyle(Tools::css('.container', '.scroll-y', 'overflow-y: auto'));
+
         self::addStyle(Tools::css('.container', '.gap', 'gap: 5px'));
         self::addStyle(Tools::css('.container', '.gap5', 'gap: 5px'));
         self::addStyle(Tools::css('.container', '.gap10', 'gap: 10px'));
         self::addStyle(Tools::css('.container', '.gap15', 'gap: 15px'));
         self::addStyle(Tools::css('.container', '.gap20', 'gap: 20px'));
+
         self::addStyle(Tools::css('.container', '.p', 'padding: 5px'));
+        self::addStyle(Tools::css('.container', '.p0', 'padding: 0'));
+        self::addStyle(Tools::css('.container', '.p0i', 'padding: 0 !important'));
         self::addStyle(Tools::css('.container', '.p5', 'padding: 5px'));
         self::addStyle(Tools::css('.container', '.p10', 'padding: 10px'));
         self::addStyle(Tools::css('.container', '.p15', 'padding: 15px'));
         self::addStyle(Tools::css('.container', '.p20', 'padding: 20px'));
+
+        self::addStyle(Tools::css('.container', '.pb5i', 'padding-bottom: 5px !important'));
+        self::addStyle(Tools::css('.container', '.ptb5i', 'padding-top: 5px !important',
+            'padding-bottom: 5px !important'));
+
+        self::addStyle(Tools::css('.container', '.ptb', 'padding-top: 5px',
+            'padding-bottom: 5px'));
+        self::addStyle(Tools::css('.container', '.ptb5', 'padding-top: 5px',
+            'padding-bottom: 5px'));
+        self::addStyle(Tools::css('.container', '.ptb10', 'padding-top: 10px',
+            'padding-bottom: 10px'));
+        self::addStyle(Tools::css('.container', '.ptb15', 'padding-top: 15px',
+            'padding-bottom: 15px'));
+        self::addStyle(Tools::css('.container', '.ptb20', 'padding-top: 20px',
+            'padding-bottom: 20px'));
+
+        self::addStyle(Tools::css('.container', '.m0',  'margin: 0'));
+        self::addStyle(Tools::css('.container', '.m0i',  'margin: 0 !important'));
+        self::addStyle(Tools::css('.container', '.m5',  'margin: 5px'));
+        self::addStyle(Tools::css('.container', '.m10', 'margin: 10px'));
+        self::addStyle(Tools::css('.container', '.m15', 'margin: 15px'));
+        self::addStyle(Tools::css('.container', '.m20', 'margin: 20px'));
+
         self::addStyle(Tools::css('.container', '.hcent', 'justify-content: center',
             'justify-items: center'));
         self::addStyle(Tools::css('.container', '.hend', 'justify-content: flex-end',
@@ -67,6 +111,8 @@ class ContainerHtmlView extends HtmlView {
         self::addStyle(Tools::css('.container', '.vbot', 'align-items: flex-end'));
         self::addStyle(Tools::css('.container', '.h100', 'height: 100%'));
         self::addStyle(Tools::css('.container', '.w50', 'width: 50%'));
+        self::addStyle(Tools::css('.container', '.w33', 'width: calc(100% / 3)'));
+        self::addStyle(Tools::css('.container', '.w25', 'width: 25%'));
         self::addStyle(Tools::css('.container', '.rel', 'position: relative'));
         self::addStyle(Tools::css('.container', ['.self-fit'], 'width: -moz-fit-content',
             'width: fit-content'));
@@ -83,6 +129,21 @@ class ContainerHtmlView extends HtmlView {
             'display: inherit'));
         self::addStyle(Tools::css('.container.with-default', [' > ', '.default'],
             'display: none'));
+
+        self::addStyle(Tools::css('.container.gap5', [' > ', '.container.w50'],
+            'width: calc(50% - 2.5px)'));
+        self::addStyle(Tools::css('.container.gap10', [' > ', '.container.w50'],
+            'width: calc(50% - 5px)'));
+        self::addStyle(Tools::css('.container.gap15', [' > ', '.container.w50'],
+            'width: calc(50% - 7.5px)'));
+        self::addStyle(Tools::css('.container.gap20', [' > ', '.container.w50'],
+            'width: calc(50% - 10px)'));
+
+        self::addStyle(Tools::css('.container', '.br0', 'border-radius: 0'));
+        self::addStyle(Tools::css('.container', '.br5', 'border-radius: 5px'));
+        self::addStyle(Tools::css('.container', '.br10', 'border-radius: 10px'));
+        self::addStyle(Tools::css('.container', '.br15', 'border-radius: 15px'));
+        self::addStyle(Tools::css('.container', '.br20', 'border-radius: 20px'));
     }
 
     /**

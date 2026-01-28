@@ -88,6 +88,7 @@ class HtmlEventProtocol extends EventProtocol {
                     case Event::JOB_IN_PROGRESS:
                     case Event::JOB_DONE:
                     case Event::JOB_ERROR:
+                    case Event::ON_IMPORT:
                     case Event::CLOSE_MODAL: $code .= $fn . '("' . $this->event . '", ';
                 }
                 if ($this->event === Event::CONTEXTMENU) $code .= $fn . '("contextmenu", ';
@@ -164,6 +165,7 @@ class HtmlEventProtocol extends EventProtocol {
                     case Event::JOB_IN_PROGRESS:
                     case Event::JOB_DONE:
                     case Event::JOB_ERROR:
+                    case Event::ON_IMPORT:
                     case Event::CLOSE_MODAL: $code .= ')';
                 }
                 if (in_array($this->event, [ Event::TIMED, Event::DELAYED ])) {

@@ -271,7 +271,7 @@ class LabelledInputHtmlView extends InputHtmlView {
                                                int|null $step = null,
                                                array|string $classes = []) : LabelledInputHtmlView {
         $input = new LabelledInputHtmlView($labels, $id, 'date', null, null, $step, $classes);
-        if ($value !== null) $input->texts()->text(self::getLanguage(), $value);
+        if ($value !== null) $input->texts($value);
         $input->mini = true;
         $input->inside = false;
         return $input;

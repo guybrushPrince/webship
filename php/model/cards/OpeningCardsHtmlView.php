@@ -25,7 +25,7 @@ class OpeningCardsHtmlView extends HtmlView {
             'flex-direction: row', 'padding: 0 20px', 'gap: 20px'));
         $this->style(Tools::css('.op-cards', [' ', '.invisible'], 'display: none'));
         $this->style(Tools::css('.op-cards', [' > ', '.op-card'], 'position: relative',
-            'width: calc(25%)', 'min-width: 350px', 'transition: 0.5s width'));
+            'width: calc(25%)', 'min-width: 350px', 'transition: 0.5s width', 'margin: 0'));
         $this->style(Tools::css('.op-cards', [' > ', '.op-card.wide'],'width: 100%'));
         $this->style(Tools::css('.op-cards', [' > ', '.op-card.inactive', ' > ', '.op-title'],
             'background: var(--survey-inactive)'));

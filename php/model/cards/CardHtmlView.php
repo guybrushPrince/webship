@@ -74,6 +74,7 @@ class CardHtmlView extends HtmlView {
         self::addStyle(Tools::css('.card.minimal', [' > ', '.title'], 'padding: 3px', 'font-size: 14px',
             'text-transform: uppercase'));
         self::addStyle(Tools::css('.card.minimal', [' > ', '.content'], 'font-size: 9px'));
+        self::addStyle(Tools::css('.card.pointer', [], 'cursor: pointer'));
     }
 
     /**
