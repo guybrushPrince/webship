@@ -20,7 +20,7 @@ use Tools;
  * options.</p>
  *
  * <code>
- * $select = ContentSelectHtmlView::create('select-1', 3);
+ * $select = ContentSelectHtmlView::createIt('select-1', 3);
  * $select->each(Project::getAll(), function (ContentSelectHtmlView $select, Project $project) {
  *     $select->option($project);
  * });
@@ -37,7 +37,7 @@ use Tools;
  *
  * @view
  * @examples
- *     $select = ContentSelectHtmlView::create('select-1', 3);
+ *     $select = ContentSelectHtmlView::createIt('select-1', 3);
  *     $select->each(Project::getAll(), function (ContentSelectHtmlView $select, Project $project) {
  *         $select->option($project);
  *     });
@@ -189,8 +189,8 @@ class ContentSelectHtmlView extends SelectHtmlView {
      * @param IShippable|array|string|null $default The default value if nothing is selected.
      * @return ContentSelectHtmlView
      */
-    public static function create(int|string $id, ?int $maxSelections = 1, array|string $classes = [],
-                                  IShippable|array|string|null $default = '-1') : ContentSelectHtmlView {
+    public static function createIt(int|string $id, ?int $maxSelections = 1, array|string $classes = [],
+                                    IShippable|array|string|null $default = '-1') : ContentSelectHtmlView {
         $select = new ContentSelectHtmlView($id, $id, $classes, $default);
         self::addFunctionality($select, $maxSelections, $default);
         return $select;
