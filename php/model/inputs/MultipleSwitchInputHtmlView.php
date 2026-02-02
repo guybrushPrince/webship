@@ -1,15 +1,37 @@
 <?php
 
+namespace webship\inputs;
+
+use HtmlView;
+use IShippable;
+use Tools;
+
 /**
  * View MultipleSwitchInputHtmlView.
  *
  * <p>A switch that allows multiple options (not only true/false).</p>
  *
+ * <code>
+ * $multi = MultipleSwitchInputHtmlView::create('multi');
+ * $multi->each(range(1,5), function (MultipleSwitchInputHtmlView $m, int $nr) {
+ *     $m->option($nr)->texts($nr);
+ * });
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/multiswitchinput.png" />
+ *
  * @package webship
  * @subpackge php/model/inputs
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.0.0
+ * @version 1.1.0
+ *
+ * @view
+ * @examples
+ *     $multi = MultipleSwitchInputHtmlView::create('multi');
+ *     $multi->each(range(1,5), function (MultipleSwitchInputHtmlView $m, int $nr) {
+ *         $m->option($nr)->texts($nr);
+ *     });
  */
 class MultipleSwitchInputHtmlView extends HtmlView {
 
@@ -34,8 +56,7 @@ class MultipleSwitchInputHtmlView extends HtmlView {
     }
 
     /**
-     * Generate the CSS code.
-     * @return void
+     * @inheritDoc
      */
     public static function addCSS() : void {
         self::addStyle(Tools::css('.mul-switch', [], 'display: flex', 'flex-direction: row',
@@ -83,8 +104,8 @@ class MultipleSwitchInputHtmlView extends HtmlView {
      */
     public function option(IShippable|string|int|null $value, bool $selected = false, ?HtmlView $visualize = null,
                            array|string $classes = []) : RadioOptionHtmlView {
-        $option = new RadioOptionHtmlView($this->id . '-' . count($this->subviews), $this->id, $value,
-            $classes, $selected);
+        $option = RadioOptionHtmlView::create($this->id . '-' . count($this->subviews), $this->id, $value,
+            $selected, $classes);
         if ($visualize) $option->add($visualize);
         $this->add($option);
         return $option;
@@ -100,6 +121,5 @@ class MultipleSwitchInputHtmlView extends HtmlView {
         foreach ($this->subviews as $option) $option->disabled($disabled);
         return $this;
     }
-
 }
 ?>

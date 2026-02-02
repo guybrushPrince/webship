@@ -1,21 +1,30 @@
 <?php
 
+namespace webship\inputs;
+
+use HtmlView;
+use Tools;
+use View;
+
 /**
  * View DropDownEntryHtmlView.
  *
- * <p> An entry for a DropDownHtmlView. </p>
+ * <p>An entry for a {@link DropDownHtmlView}.</p>
  *
  * <code>
- * $view = DropDownEntryHtmlView::create();
+ * DropDownEntryHtmlView::create()->texts('Entry');
  * </code>
  *
+ * @see DropDownHtmlView
  * @package webship
  * @subpackge php/model/inputs
  *
- * @version 1.0.0
+ * @version 1.1.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ *
  * @view
-
+ * @examples
+ *     DropDownEntryHtmlView::create()->texts('Entry');
  */
 class DropDownEntryHtmlView extends HtmlView {
 
@@ -23,20 +32,11 @@ class DropDownEntryHtmlView extends HtmlView {
      * Constructor.
      * @param string[]|string $classes Some classes.
      */
-    public function __construct(string|array $classes = []) {
+    private function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct(array_merge(['drop-down-entry'], $classes));
 
         self::addCSS();
-    }
-
-    /**
-     * Create a drop-down entry.
-     * @param string|string[] $classes Some classes.
-     * @return DropDownEntryHtmlView
-     */
-    public static function create(string|array $classes = []) : DropDownEntryHtmlView {
-        return new DropDownEntryHtmlView($classes);
     }
 
     /**
@@ -51,11 +51,22 @@ class DropDownEntryHtmlView extends HtmlView {
     }
 
     /**
+     * Create a drop-down entry.
+     * @param string[]|string $classes Some classes.
+     * @return DropDownEntryHtmlView
+     */
+    public static function create(array|string $classes = []) : DropDownEntryHtmlView {
+        return new DropDownEntryHtmlView($classes);
+    }
+
+    /**
      * @inheritDoc
      */
     public function generateOpeningTag() : string {
         return '<div data-drop-down-entry' .
-            ($this->notices ? ' title="' . (array_key_exists(View::getLanguage(), $this->notices) ? $this->notices[View::getLanguage()] : array_pop($this->notices)) . '"' : '') .
+            ($this->notices ? ' title="' . (array_key_exists(View::getLanguage(), $this->notices) ?
+                    $this->notices[View::getLanguage()] :
+                    array_pop($this->notices)) . '"' : '') .
             ' class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '">';
     }
 

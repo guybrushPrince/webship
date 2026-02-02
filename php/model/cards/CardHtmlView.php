@@ -1,5 +1,7 @@
 <?php
 
+use webship\inputs\EditableHtmlView;
+
 /**
  * View CardHtmlView.
  *
@@ -103,7 +105,7 @@ class CardHtmlView extends HtmlView {
         if ($this->title) return $this->title;
         $classes = is_array($classes) ? $classes : [ $classes ];
         $classes[] = 'title';
-        $titleView = (!$editable ? new HtmlView($classes) : new EditableHtmlView($classes));
+        $titleView = (!$editable ? new HtmlView($classes) : EditableHtmlView::create($classes));
         $this->add($titleView);
         $this->title = $titleView;
         return $titleView;

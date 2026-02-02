@@ -1,4 +1,7 @@
 <?php
+
+use webship\inputs\TextHtmlView;
+
 /**
  * Class CodeEditorHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
@@ -27,7 +30,7 @@ class CodeEditorHtmlView extends TextHtmlView {
         $classes = is_array($classes) ? $classes : [$classes];
         $classes[] = 'code-editor';
         $this->coreClasses = $classes;
-        parent::__construct($id, $id, 3, false, $classes, true);
+        parent::__construct($id, $id, 3, null, $classes, true);
 
         $this->ref('textarea');
 

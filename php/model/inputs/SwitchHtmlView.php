@@ -1,74 +1,112 @@
 <?php
 
+namespace webship\inputs;
+
+use Tools;
+use View;
+
 /**
- * Class SwitchHtmlView
+ * View SwitchHtmlView.
+ *
+ * <p>A checkbox in form of a switch to turn on or off things.</p>
+ *
+ * <code>
+ * SwitchHtmlView::create('switch-1');
+ * SwitchHtmlView::create('switch-2', true);
+ * SwitchHtmlView::create('switch-3', true)->mini();
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/switch.png" />
+ *
+ * @package webship
+ * @subpackge php/model/inputs
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.5.0
+ *
+ * @view
+ * @examples
+ *     SwitchHtmlView::create('switch-1');
+ *     SwitchHtmlView::create('switch-2', true);
+ *     SwitchHtmlView::create('switch-3', true)->mini();
  */
 class SwitchHtmlView extends InputHtmlView {
 
-    private array $localClasses = [];
+    /**
+     * A list of classes to add it to the surrounding view.
+     * @var string[]
+     */
+    private array $localClasses;
 
     /**
-     * SwitchHtmlView constructor.
+     * Constructor.
      * @param string $id The id.
      * @param string $name The name.
      * @param string[]|string $classes The classes.
      */
-    public function __construct(string $id, string $name, string|array $classes = []) {
+    private function __construct(string $id, string $name, array|string $classes = []) {
         parent::__construct($id, $name, 'checkbox');
-        $this->localClasses = array_merge(['switch'], is_array($classes) ? $classes : ['classes']);
+        $this->localClasses = array_merge([ 'switch' ], is_array($classes) ? $classes : [ $classes ]);
 
-        $this->style(Tools::css('.switch', '', 'position: relative',
+        self::addCSS();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.switch', '', 'position: relative',
             'display: inline-block',
             '--sw-width: 60px', '--sw-height: 34px', '--sw-gap-left: 4px', '--sw-gap-bottom: 4px',
             '--sw-ball: calc(var(--sw-height) - var(--sw-gap-bottom))',
             'width: var(--sw-width)', 'height: var(--sw-height)'));
-        $this->style(Tools::css('.switch', [' ', 'input'], 'opacity: 0', 'width: 0', 'height: 0'));
-        $this->style(Tools::css('.switch', [' ', 'input[type="checkbox"]'], 'height: 0'));
-        $this->style(Tools::css('.switch', [' ', '.slider'], 'position: absolute', 'cursor: pointer',
+        self::addStyle(Tools::css('.switch', [' ', 'input'], 'opacity: 0', 'width: 0', 'height: 0'));
+        self::addStyle(Tools::css('.switch', [' ', 'input[type="checkbox"]'], 'height: 0'));
+        self::addStyle(Tools::css('.switch', [' ', '.slider'], 'position: absolute', 'cursor: pointer',
             'top: 0', 'left: 0', 'right: 0', 'bottom: 0', 'background-color: #ccc', '-webkit-transition: .4s',
             'transition: .4s', 'border-radius: var(--sw-height)'));
-        $this->style(Tools::css('.switch', [' ', '.slider', ':before'], 'position: absolute',
+        self::addStyle(Tools::css('.switch', [' ', '.slider', ':before'], 'position: absolute',
             'content: ""',
             'height: var(--sw-ball)', 'width: var(--sw-ball)', 'left: var(--sw-gap-left)', 'bottom: var(--sw-gap-bottom)',
             'background-color: white',
             '-webkit-transition: .4s', 'transition: .4s', 'border-radius: 50%'));
-        $this->style(Tools::css('.switch', [' ', 'input:checked', ' + ', '.slider'],
+        self::addStyle(Tools::css('.switch', [' ', 'input:checked', ' + ', '.slider'],
             'background-color: var(--slider-checked)'));
-        $this->style(Tools::css('.switch', [' ', 'input:focus', ' + ', '.slider'],
+        self::addStyle(Tools::css('.switch', [' ', 'input:focus', ' + ', '.slider'],
             'box-shadow: 0 0 1px var(--slider-checked)'));
-        $this->style(Tools::css('.switch', [' ', 'input:checked', ' + ', '.slider:before'],
+        self::addStyle(Tools::css('.switch', [' ', 'input:checked', ' + ', '.slider:before'],
             '-webkit-transform: translateX(var(--sw-ball))', '-ms-transform: translateX(var(--sw-ball))',
             'transform: translateX(var(--sw-ball))'));
-        $this->style(Tools::css('.switch', [' ', 'input:disabled', ' + ', '.slider'],
+        self::addStyle(Tools::css('.switch', [' ', 'input:disabled', ' + ', '.slider'],
             'background-color: var(--system-background)', 'opacity: 0.5', 'cursor: not-allowed'));
 
-        $this->style(Tools::css('.switch.mini', '', '--sw-width: 30px',
+        self::addStyle(Tools::css('.switch.mini', '', '--sw-width: 30px',
             '--sw-height: 17px', '--sw-gap-bottom: 0', '--sw-gap-left: -2px', '--sw-ball: var(--sw-height)'));
-        $this->style(Tools::css('.switch.mini', [' > ', '.slider::before'],
+        self::addStyle(Tools::css('.switch.mini', [' > ', '.slider::before'],
             'border: 1px solid var(--slider-checked)', 'box-sizing: border-box'));
-        $this->style(Tools::css('.switch.mini', [' > ', 'input:not(:checked)', ' + ', '.slider::before'],
+        self::addStyle(Tools::css('.switch.mini', [' > ', 'input:not(:checked)', ' + ', '.slider::before'],
             'border-color: 1px solid #ccc'));
     }
 
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         return '<label class="' . implode(' ', $this->localClasses) . '"' .
-            ($this->notices ? ' title="' . (array_key_exists(View::getLanguage(), $this->notices) ? $this->notices[View::getLanguage()] : array_pop($this->notices)) . '"' : '') .
+            ($this->notices ? ' title="' . (array_key_exists(View::getLanguage(), $this->notices) ?
+                    $this->notices[View::getLanguage()] : array_pop($this->notices)) . '"' : '') .
             '>' . parent::generateOpeningTag();
     }
 
     /**
      * @inheritDoc
      */
-    public function generateClosingTag() {
+    public function generateClosingTag() : string {
         return parent::generateClosingTag() . '<span class="slider"></span></label>';
     }
 
     /**
-     * Create the switch.
+     * Create a switch.
      * @param string $id The id.
      * @param bool|null $checked The current value.
      * @param string[]|string $classes The classes.
@@ -76,7 +114,7 @@ class SwitchHtmlView extends InputHtmlView {
      */
     public static function create(string $id, ?bool $checked = false, string|array $classes = []) : SwitchHtmlView {
         $switch = new SwitchHtmlView($id, $id, $classes);
-        $switch->texts()->text(View::getLanguage(), (!$checked ? '' : 'checked'));
+        $switch->texts(!$checked ? '' : 'checked');
         return $switch;
     }
 
@@ -88,6 +126,5 @@ class SwitchHtmlView extends InputHtmlView {
         $this->localClasses[] = 'mini';
         return $this;
     }
-
 }
 ?>

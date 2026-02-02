@@ -1,13 +1,29 @@
 <?php
 
+namespace webship\inputs;
+
+use Tools;
+
 /**
- * Class LabelledTextAreaHtmlView.
+ * View LabelledTextAreaHtmlView.
+ *
+ * <p>A labelled {@link TextHtmlView} (text area).</p>
+ *
+ * <code>
+ * LabelledTextAreaHtmlView::createTextArea('Please specify:', 'text-1');
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/labelledtextarea.png" />
  *
  * @package webship
  * @subpackge php/model/inputs
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.0.0
+ * @version 1.1.0
+ *
+ * @view
+ * @examples
+ *     LabelledTextAreaHtmlView::createTextArea('Please specify:', 'text-1');
  */
 class LabelledTextAreaHtmlView extends TextHtmlView {
 
@@ -51,7 +67,7 @@ class LabelledTextAreaHtmlView extends TextHtmlView {
     private function __construct(string|array|null $labels, string $id,
                                  int $rows = 3, int|null $max = null, bool $resizable = false,
                                  array|string $classes = []) {
-        parent::__construct($id, $id, $rows, is_null($max) ? false : $max, $classes, $resizable);
+        parent::__construct($id, $id, $rows, $max, $classes, $resizable);
         if (is_null($labels)) $labels = '';
         if ($labels === '') $this->labelLess = true;
         $this->labels = is_array($labels) ? $labels : [ self::getLanguage() => $labels ];

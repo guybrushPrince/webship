@@ -1,21 +1,31 @@
 <?php
 
+namespace webship\inputs;
+
+use ContainerHtmlView;
+use Tools;
+
 /**
  * View FormRowHtmlView.
  *
- *  <p> A view to create new form rows </p>
+ * <p>Allows for placing multiple inputs in one row and vertical align at bottom. This aligned is also applied to
+ * nested {@link \KeyValueHtmlView} views.</p>
  *
- *  <code>
- *  $view = new FormRowHtmlView::create();
- *  </code>
+ * <code>
+ * FormRowHtmlView::create();
+ * </code>
+ *
+ * No figure is provided.
  *
  * @package webship
  * @subpackge php/model/inputs
  *
- *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.0.0
+ * @version 1.1.0
+ *
  * @view
+ * @examples
+ *     FormRowHtmlView::create();
  */
 class FormRowHtmlView extends ContainerHtmlView {
 
@@ -32,15 +42,6 @@ class FormRowHtmlView extends ContainerHtmlView {
     }
 
     /**
-     * Create a form row.
-     * @param string[]|string $classes Some classes.
-     * @return FormRowHtmlView
-     */
-    public static function create(array|string $classes = []) : FormRowHtmlView {
-        return new FormRowHtmlView($classes);
-    }
-
-    /**
      * @inheritDoc
      */
     public static function addCSS() : void {
@@ -53,5 +54,13 @@ class FormRowHtmlView extends ContainerHtmlView {
             'justify-content: flex-start', 'width: fit-content', 'width: -moz-fit-content'));
     }
 
+    /**
+     * Create a form row.
+     * @param string[]|string $classes Some classes.
+     * @return FormRowHtmlView
+     */
+    public static function create(array|string $classes = []) : FormRowHtmlView {
+        return new FormRowHtmlView($classes);
+    }
 }
 ?>

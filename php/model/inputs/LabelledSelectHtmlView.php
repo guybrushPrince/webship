@@ -1,21 +1,45 @@
 <?php
 
+namespace webship\inputs;
+
+use IShippable;
+use Tools;
+
 /**
  * View LabelledSelectHtmlView.
  *
- * <p> A view for labeling a selectable view</p>
+ * <p>A HTML select has no native corresponding label. This view adds a label to a select and provides different sizes
+ * of the labelled select.</p>
  *
  * <code>
- * $view = LabelledSelectHtmlView::createSelect('Language', 'quest-lang-' . $survey->getId())
+ * $select1 = LabelledSelectHtmlView::createSelect('Choose number:', 'number-1');
+ * $select1->each(range(1, 10), function (SelectHtmlView $sel, int $nr) {
+ *     $sel->option($nr)->texts($nr);
+ * });
+ * $select2 = LabelledSelectHtmlView::createMiniSelect('Choose number:', 'number-1');
+ * $select2->each(range(1, 10), function (SelectHtmlView $sel, int $nr) {
+ *     $sel->option($nr)->texts($nr);
+ * });
  * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/labelledselect.png" />
  *
  * @package webship
  * @subpackge php/model/inputs
  *
- *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.0.0
+ * @version 1.1.0
+ *
  * @view
+ * @examples
+ *     $select1 = LabelledSelectHtmlView::createSelect('Choose number:', 'number-1');
+ *     $select1->each(range(1, 10), function (SelectHtmlView $sel, int $nr) {
+ *         $sel->option($nr)->texts($nr);
+ *     });
+ *     $select2 = LabelledSelectHtmlView::createMiniSelect('Choose number:', 'number-1');
+ *     $select2->each(range(1, 10), function (SelectHtmlView $sel, int $nr) {
+ *         $sel->option($nr)->texts($nr);
+ *     });
  */
 class LabelledSelectHtmlView extends SelectHtmlView {
 
@@ -140,6 +164,5 @@ class LabelledSelectHtmlView extends SelectHtmlView {
         $input->mini = true;
         return $input;
     }
-
 }
 ?>

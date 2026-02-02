@@ -1,4 +1,9 @@
 <?php
+
+use webship\inputs\InputHtmlView;
+use webship\inputs\SelectHtmlView;
+use webship\inputs\SwitchHtmlView;
+
 /**
  * View KeyValueHtmlView.
  *

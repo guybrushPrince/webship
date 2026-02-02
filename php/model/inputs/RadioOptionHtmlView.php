@@ -1,15 +1,29 @@
 <?php
 
+namespace webship\inputs;
+
+use HtmlView;
+use IShippable;
+use ShipperRegister;
+
 /**
  * View RadioOptionHtmlView.
  *
- * <p>A view representing the option of a multiple switch input html view or a radio view.</p>
+ * <p>A view representing the option of a {@link MultipleSwitchInputHtmlView}.</p>
+ * <p><em>This view should be used only from a {@link MultipleSwitchInputHtmlView}.</em></p>
  *
+ * There is no figure available.
+ *
+ * @see MultipleSwitchInputHtmlView
  * @package webship
  * @subpackge php/model/inputs
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.0.0
+ * @version 1.1.0
+ *
+ * @view
+ * @examples
+ *     No examples.
  */
 class RadioOptionHtmlView extends HtmlView {
 
@@ -33,7 +47,7 @@ class RadioOptionHtmlView extends HtmlView {
 
     /**
      * Selected.
-     * @var boolean
+     * @var bool
      */
     private bool $selected;
 
@@ -51,8 +65,8 @@ class RadioOptionHtmlView extends HtmlView {
      * @param string[]|string $classes Some classes.
      * @param bool $selected Whether this option is selected.
      */
-    public function __construct(string $optionId, string $parentId, IShippable|string|int|null $value,
-                                array|string $classes = [], bool $selected = false) {
+    private function __construct(string $optionId, string $parentId, IShippable|string|int|null $value,
+                                 bool $selected = false, array|string $classes = []) {
         parent::__construct($classes);
         if ($value instanceof IShippable ||
             (!is_string($value) && !is_int($value) && !is_float($value) && !is_numeric($value) && !is_null($value))) {
@@ -62,6 +76,20 @@ class RadioOptionHtmlView extends HtmlView {
         $this->parentId = $parentId;
         $this->value = $value;
         $this->selected = $selected;
+    }
+
+    /**
+     * Create a radio option.
+     * @param string $optionId The id of this option.
+     * @param string $parentId The id of the parent container.
+     * @param IShippable|string|int|null $value The value.
+     * @param string[]|string $classes Some classes.
+     * @param bool $selected Whether this option is selected.
+     * @return RadioOptionHtmlView
+     */
+    public static function create(string $optionId, string $parentId, IShippable|string|int|null $value,
+                                  bool $selected = false, array|string $classes = []) : RadioOptionHtmlView {
+        return new RadioOptionHtmlView($optionId, $parentId, $value, $selected, $classes);
     }
 
     /**

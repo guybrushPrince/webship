@@ -1,27 +1,44 @@
 <?php
 
+namespace webship\inputs;
+
+use HoldFile;
+use HtmlView;
 use progression\ContextSerializer;
 use progression\ContextVariable;
 use progression\IProgressionSerializable;
 use progression\NotImplementedException;
 use progression\SimplePersistence;
 use progression\ui\Representer;
+use TextView;
+use Tools;
+use View;
 
 /**
  * View ContextValueHtmlView.
  *
- * <p> Visualizes values within arrays, objects, as well as classes. </p>
+ * <p>Visualizes values within arrays, objects, as well as classes in a user comprehensible way.</p>
  *
  * <code>
- * $view = ContextValueHtmlView::create('object', $classes);
+ * ContextValueHtmlView::buildContext('Hello World')
+ * ContextValueHtmlView::buildContext([1,2,3,4,5])
+ * ContextValueHtmlView::buildContext(Project::get(3714510425571326813))
  * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/contextvalue.png" />
  *
  * @package webship
  * @subpackge php/model/inputs
  *
- * @version 1.0.0
+ * @version 1.1.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ *
  * @view
+ *
+ * @examples
+ *     ContextValueHtmlView::buildContext('Hello World')
+ *     ContextValueHtmlView::buildContext([1,2,3,4,5])
+ *     ContextValueHtmlView::buildContext(Project::get(3714510425571326813))
  */
 class ContextValueHtmlView extends HtmlView {
 
@@ -39,61 +56,8 @@ class ContextValueHtmlView extends HtmlView {
         if (!is_array($classes)) $classes = [ $classes ];
         $classes[] = 'context-value';
         parent::__construct($classes);
+
         self::addCSS();
-    }
-
-    /**
-     * Create a context value.
-     * @param string $type The type of the context value.
-     * @param string|string[] $classes Some classes.
-     * @return ContextValueHtmlView
-     */
-    public static function create(string $type, string|array $classes = []) : ContextValueHtmlView {
-        $view = new ContextValueHtmlView($classes);
-        if ($type !== 'array' && $type !== 'jobject') {
-            $container = new HtmlView();
-            $view->add($container);
-            $view->container = $container;
-            $view->addClass('scalar');
-            $color = Tools::textToColor($type);
-            $view->localStyle('--color: ' . $color);
-            $view->localStyle('--font: ' . Tools::getFontColor($color));
-            if ($type !== 'con-variable') {
-                $view->localStyle('--type: "' . $type . '"');
-            } else {
-                $view->addClass('con-variable');
-                $view->localStyle('--type: "{{"');
-            }
-        } else if ($type === 'array') {
-            $container = new HtmlView();
-            $view->add($container);
-            $view->container = $container;
-            $view->addClass('array');
-            $view->wrap();
-        } else {
-            $view->add(new HtmlView());
-            $view->add(new HtmlView());
-            $container = new HtmlView();
-            $view->add($container);
-            $view->add(new HtmlView());
-            $view->add(new HtmlView());
-            $view->container = $container;
-            $view->addClass('jobject');
-            $view->wrap();
-        }
-        return $view;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function add(View $view) : View {
-        if (!$this->container) {
-            return parent::add($view);
-        } else {
-            $this->container->add($view);
-        }
-        return $view;
     }
 
     /**
@@ -152,6 +116,60 @@ class ContextValueHtmlView extends HtmlView {
     }
 
     /**
+     * Create a context value.
+     * @param string $type The type of the context value.
+     * @param string[]|string $classes Some classes.
+     * @return ContextValueHtmlView
+     */
+    private static function create(string $type, array|string $classes = []) : ContextValueHtmlView {
+        $view = new ContextValueHtmlView($classes);
+        if ($type !== 'array' && $type !== 'jobject') {
+            $container = new HtmlView();
+            $view->add($container);
+            $view->container = $container;
+            $view->addClass('scalar');
+            $color = Tools::textToColor($type);
+            $view->localStyle('--color: ' . $color);
+            $view->localStyle('--font: ' . Tools::getFontColor($color));
+            if ($type !== 'con-variable') {
+                $view->localStyle('--type: "' . $type . '"');
+            } else {
+                $view->addClass('con-variable');
+                $view->localStyle('--type: "{{"');
+            }
+        } else if ($type === 'array') {
+            $container = new HtmlView();
+            $view->add($container);
+            $view->container = $container;
+            $view->addClass('array');
+            $view->wrap();
+        } else {
+            $view->add(new HtmlView());
+            $view->add(new HtmlView());
+            $container = new HtmlView();
+            $view->add($container);
+            $view->add(new HtmlView());
+            $view->add(new HtmlView());
+            $view->container = $container;
+            $view->addClass('jobject');
+            $view->wrap();
+        }
+        return $view;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function add(View $view) : View {
+        if (!$this->container) {
+            return parent::add($view);
+        } else {
+            $this->container->add($view);
+        }
+        return $view;
+    }
+
+    /**
      * @inheritDoc
      */
     public function texts(array|string|null $texts = null) : HtmlView|TextView {
@@ -172,16 +190,17 @@ class ContextValueHtmlView extends HtmlView {
         $this->add($view);
     }
 
-
     /**
      * Builds a context value (or a more complex structure).
      * @param string|bool|int|float|ContextVariable|IProgressionSerializable|array|null $value The value.
+     * @param string[]|string $classes Some classes.
      * @return ContextValueHtmlView
      * @throws NotImplementedException
      */
-    public static function buildContext(string|bool|int|float|ContextVariable|IProgressionSerializable|array|null $value) : ContextValueHtmlView {
+    public static function buildContext(string|bool|int|float|ContextVariable|IProgressionSerializable|array|null $value,
+                                        array|string $classes = []) : ContextValueHtmlView {
         if ($value instanceof IProgressionSerializable) {
-            $view = ContextValueHtmlView::create('object');
+            $view = ContextValueHtmlView::create('object', $classes);
             $isVisualRepresented = Representer::hasVisualRepresentation($value->getPermanentClass());
             if ($isVisualRepresented) {
                 SimplePersistence::instance()->unsafeMode();
@@ -195,38 +214,40 @@ class ContextValueHtmlView extends HtmlView {
             }
             return $view;
         } else if ($value instanceof ContextVariable) {
-            $view = ContextValueHtmlView::create('con-variable');
+            $view = ContextValueHtmlView::create('con-variable', $classes);
             $view->texts($value->getName());
             return $view;
         } else if (is_int($value)) {
-            $view = ContextValueHtmlView::create('int');
+            $view = ContextValueHtmlView::create('int', $classes);
             $view->texts($value);
             return $view;
         } else if (is_bool($value)) {
-            $view = ContextValueHtmlView::create('bool');
+            $view = ContextValueHtmlView::create('bool', $classes);
             $view->texts($value ? 'true' : 'false');
             return $view;
         } else if (is_string($value)) {
-            $view = ContextValueHtmlView::create('string');
+            $view = ContextValueHtmlView::create('string', $classes);
             $view->texts($value);
             return $view;
         } else if (is_float($value)) {
-            $view = ContextValueHtmlView::create('float');
+            $view = ContextValueHtmlView::create('float', $classes);
             $view->texts($value);
             return $view;
         } else if (is_null($value)) {
-            $view = ContextValueHtmlView::create('null');
+            $view = ContextValueHtmlView::create('null', $classes);
             $view->texts('NULL');
             return $view;
         } else {
             // It is an array
             if (Tools::hasStringKeys($value)) {
-                return ContextValueHtmlView::create('jobject')->each($value, function (ContextValueHtmlView $v, $val, string $key) {
-                    $v->keyValue($key, self::buildContext($val));
+                return ContextValueHtmlView::create('jobject', $classes)->
+                    each($value, function (ContextValueHtmlView $v, $val, string $key) {
+                        $v->keyValue($key, self::buildContext($val));
+                    });
+            } else return ContextValueHtmlView::create('array', $classes)->
+                each($value, function (ContextValueHtmlView $v, $val) {
+                    $v->add(self::buildContext($val));
                 });
-            } else return ContextValueHtmlView::create('array')->each($value, function (ContextValueHtmlView $v, $val) {
-                $v->add(self::buildContext($val));
-            });
         }
     }
 

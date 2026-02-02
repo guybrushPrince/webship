@@ -1,20 +1,35 @@
 <?php
 
+namespace webship\inputs;
+
+use Tools;
+
 /**
  * View LabelledContentSelectHtmlView.
  *
- * <p> A view to create a labeled HtmlView with classes </p>
+ * <p>A labelled version of a {@link ContentSelectHtmlView}.</p>
  *
  * <code>
- * $view = LabelledContentSelectHtmlView::createSelect('lable', 'lableid',1, [], [(new HtmlView())->texts('text')])
+ * $select1 = LabelledContentSelectHtmlView::createSelect('Choose number:', 'number-1');
+ * $select1->each(range(1, 10), function (SelectHtmlView $sel, int $nr) {
+ *     $sel->option([ContainerHtmlView::createIt()->texts($nr . ' Number'), $nr]);
+ * });
  * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/labelledcontentselect.png" />
  *
  * @package webship
  * @subpackge php/model/inputs
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.0.0
+ * @version 1.1.0
+ *
  * @view
+ * @examples
+ *     $select1 = LabelledContentSelectHtmlView::createSelect('Choose number:', 'number-1');
+ *     $select1->each(range(1, 10), function (SelectHtmlView $sel, int $nr) {
+ *         $sel->option([ContainerHtmlView::createIt()->texts($nr . ' Number'), $nr]);
+ *     });
  */
 class LabelledContentSelectHtmlView extends ContentSelectHtmlView {
 
@@ -52,8 +67,7 @@ class LabelledContentSelectHtmlView extends ContentSelectHtmlView {
     }
 
     /**
-     * Generate the CSS code.
-     * @return void
+     * @inheritDoc
      */
     public static function addCSS() : void {
         LabelledSelectHtmlView::addCSS();
@@ -104,6 +118,5 @@ class LabelledContentSelectHtmlView extends ContentSelectHtmlView {
         self::addFunctionality($select, $maxSelections, $default);
         return $select;
     }
-
 }
 ?>

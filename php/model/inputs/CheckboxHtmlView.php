@@ -1,20 +1,33 @@
 <?php
 
+namespace webship\inputs;
+
+use View;
+
 /**
  * View CheckboxHtmlView.
  *
- * <p> A CheckboxHtmlView for checkable <em> checkboxes</em>.</p
+ * <p>A <em>check box</em> as a specialization of an {@link InputHtmlView}.</p>
  *
- *  <code>
- *  CheckboxHtmlView::create($id . 'checkbox1', true); // adds a checked checkbox with the id "checkbox1"
- *  </code>
+ * <code>
+ * CheckboxHtmlView::create('checkbox-1', false);
+ * CheckboxHtmlView::create('checkbox-2', true);
+ * </code>
  *
+ * <img src="http://localhost/coast/webship/modeldoc/checkbox.png" />
+ *
+ * @see InputHtmlView
  * @package webship
  * @subpackge php/model/inputs
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.0.0
+ * @version 1.1.0
+ *
  * @view
+ *
+ * @examples
+ *     CheckboxHtmlView::create('checkbox-1', false);
+ *     CheckboxHtmlView::create('checkbox-2', true);
  */
 class CheckboxHtmlView extends InputHtmlView {
 
@@ -41,6 +54,5 @@ class CheckboxHtmlView extends InputHtmlView {
                                   array|string $classes = []) : CheckboxHtmlView {
         return new CheckboxHtmlView($id, $checked, $classes);
     }
-
 }
 ?>

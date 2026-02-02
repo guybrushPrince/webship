@@ -1,8 +1,31 @@
 <?php
 
+namespace webship\inputs;
+
+use HtmlView;
+use IShippable;
+use ShipperRegister;
+use TextView;
+use Tools;
+
 /**
- * Class OptionHtmlView
+ * View OptionHtmlView.
+ *
+ * <p>An option of a {@link \SelectHtmlView} or more specific view.</p>
+ * <p><em>This view should only be used as an option of a {@link \SelectHtmlView}.</em></p>
+ *
+ * There is no figure to show.
+ *
+ * @see SelectHtmlView, ContentSelectHtmlView, LabelledContentSelectHtmlView
+ * @package webship
+ * @subpackge php/model/inputs
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.5.0
+ *
+ * @view
+ * @examples
+ *     There is no example as this view should only be used from other views.
  */
 class OptionHtmlView extends HtmlView {
 
@@ -14,7 +37,7 @@ class OptionHtmlView extends HtmlView {
 
     /**
      * Selected.
-     * @var boolean
+     * @var bool
      */
     private bool $selected;
 
@@ -25,13 +48,14 @@ class OptionHtmlView extends HtmlView {
     private TextView $textView;
 
     /**
-     * OptionHtmlView constructor.
-     * @param string|IShippable|null $value The value.
-     * @param array|string $classes
+     * Constructor.
+     * @param array|IShippable|string|int|float|null $value The value.
+     * @param string[]|string $classes Some classes.
      * @param bool $selected Whether this option is selected.
      */
-    public function __construct($value, array|string $classes = [], bool $selected = false) {
-        parent::__construct(array_merge(array('option'), $classes));
+    protected function __construct(array|IShippable|string|int|float|null $value, bool $selected = false,
+                                   array|string $classes = []) {
+        parent::__construct(array_merge([ 'option' ], $classes));
         if ($value instanceof IShippable ||
             (!is_string($value) && !is_int($value) && !is_float($value) && !is_numeric($value) && !is_null($value) &&
                 !is_array($value))) {
@@ -41,6 +65,18 @@ class OptionHtmlView extends HtmlView {
         } else if (is_null($value)) $value = 'null';
         $this->value = $value;
         $this->selected = $selected;
+    }
+
+    /**
+     * Create an option.
+     * @param array|IShippable|string|int|float|null $value The value.
+     * @param string[]|string $classes Some classes.
+     * @param bool $selected Whether this option is selected.
+     * @return OptionHtmlView
+     */
+    public static function create(array|IShippable|string|int|float|null $value, bool $selected = false,
+                                  array|string $classes = []) : OptionHtmlView {
+        return new OptionHtmlView($value, $selected, $classes);
     }
 
     /**

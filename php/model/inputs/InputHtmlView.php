@@ -1,10 +1,42 @@
 <?php
 
-include_once dirname(__FILE__) . '/HtmlView.php';
+namespace webship\inputs;
+
+use HtmlView;
+use IShippable;
+use ShipperRegister;
+use Tools;
+use View;
 
 /**
- * Class InputHtmlView
+ * View InputHtmlView.
+ *
+ * <p>The most basic view to represent a Ship input field.</p>
+ * <p>Usually it is more elegant to use {@link LabelledInputHtmlView} or {@link CheckboxHtmlView} instead.</p>
+ *
+ * <code>
+ * InputHtmlView::createIt('input-1', 'text');
+ * InputHtmlView::createIt('input-2', 'text')->texts('Hello World');
+ * InputHtmlView::createIt('input-3', 'number')->texts(5);
+ * InputHtmlView::createIt('input-4', 'checkbox');
+ * InputHtmlView::createIt('input-5', 'hidden');
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/input.png" />
+ *
+ * @package webship
+ * @subpackge php/model/inputs
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.6.0
+ *
+ * @view
+ * @examples
+ *     InputHtmlView::createIt('input-1', 'text');
+ *     InputHtmlView::createIt('input-2', 'text')->texts('Hello World');
+ *     InputHtmlView::createIt('input-3', 'number')->texts(5);
+ *     InputHtmlView::createIt('input-4', 'checkbox');
+ *     InputHtmlView::createIt('input-5', 'hidden');
  */
 class InputHtmlView extends HtmlView {
 
@@ -75,19 +107,20 @@ class InputHtmlView extends HtmlView {
     private array|null $legend = null;
 
     /**
-     * InputHtmlView constructor.
+     * Constructor.
      * @param string|null $id The id.
      * @param string $name The name.
      * @param string $type The type.
      * @param int|float|null|string $min The minimum (optional).
      * @param int|float|null|string $max The maximum (optional).
      * @param int|float|null $step The step size (optional).
-     * @param string[]|string $classes
+     * @param string[]|string $classes Some classes.
+     * @param string[]|null $legend An additional legend with possible values.
      */
-    public function __construct(?string $id, string $name, string $type,
-                                int|string|float|null $min = null, int|string|float|null $max = null,
-                                int|float|null $step = null,
-                                string|array $classes = [], array|null $legend = null) {
+    protected function __construct(?string $id, string $name, string $type,
+                                   int|string|float|null $min = null, int|string|float|null $max = null,
+                                   int|float|null $step = null,
+                                   string|array $classes = [], array|null $legend = null) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct(array_merge([ 'input' ], $classes));
         $this->id = $id;
@@ -98,21 +131,45 @@ class InputHtmlView extends HtmlView {
         $this->step = $step;
         $this->legend = $legend;
 
-        $coreClasses = array_diff($this->classes, $classes);
-        $coreSelector = '.' . implode('.', $coreClasses);
-
-        $this->style(Tools::css($coreSelector, '', 'box-sizing: border-box', 'padding: 5px',
-            'height: 50px', 'width: 100%', 'font-family: Roboto Condensed, Roboto, HelveticaNeue, sans-serif',
-            'font-size: 16px'));
-        $this->style(Tools::css($coreSelector, '[type="checkbox"]', 'height: 25px'));
         if ($type !== 'checkbox') $this->js('$("' . $this->idc() . '").on("paste", clearPaste);');
-        $this->style(Tools::css($coreSelector, '.fit[type="checkbox"]', 'width: 25px'));
+
+        self::addCSS();
     }
 
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.input', [], 'box-sizing: border-box', 'padding: 5px',
+            'height: 50px', 'width: 100%', 'font-family: Roboto Condensed, Roboto, HelveticaNeue, sans-serif',
+            'font-size: 16px'));
+        self::addStyle(Tools::css('.input', ['[type="checkbox"]'], 'height: 25px'));
+        self::addStyle(Tools::css('.input', ['.fit[type="checkbox"]'], 'width: 25px'));
+    }
+
+    /**
+     * Create a general input field.
+     * @param string $id The id.
+     * @param string $type The type.
+     * @param int|float|null|string $min The minimum (optional).
+     * @param int|float|null|string $max The maximum (optional).
+     * @param int|float|null $step The step size (optional).
+     * @param string[]|string $classes Some classes.
+     * @param string[]|null $legend An additional legend.
+     * @param string|null $name An optional name.
+     * @return InputHtmlView
+     */
+    public static function createIt(string $id, string $type, int|string|float|null $min = null,
+                                    int|string|float|null $max = null, int|float|null $step = null,
+                                    string|array $classes = [], array|null $legend = null,
+                                    string|null $name = null) : InputHtmlView {
+        return new InputHtmlView($id, is_null($name) ? $id : $name, $type, $min, $max, $step, $classes, $legend);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function generateOpeningTag() : string {
         return '<input class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' .
             ($this->id ? ' id="' . $this->id . '"' : '') . ' name="' . $this->name .
             '" type="' . $this->type . '"' .
@@ -126,7 +183,8 @@ class InputHtmlView extends HtmlView {
                 '') .
             ($this->disabled ? ' disabled ' : '') .
             (!$this->autoComplete ? ' autocomplete="off"' : '') .
-            ($this->notices ? ' title="' . (array_key_exists(View::getLanguage(), $this->notices) ? $this->notices[View::getLanguage()] : array_pop($this->notices)) . '"' : '') .
+            ($this->notices ? ' title="' . (array_key_exists(View::getLanguage(), $this->notices) ?
+                    $this->notices[View::getLanguage()] : array_pop($this->notices)) . '"' : '') .
             ($this->data ? ' ' . implode(' ', array_map(function($key, $val) {
                     return 'data-' . $key . ($val !== null ? '="' . $val . '"' : '');
                 }, array_keys($this->data), $this->data)) : '') .
@@ -138,7 +196,7 @@ class InputHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateClosingTag() {
+    public function generateClosingTag() : string {
         $code = ($this->type !== 'checkbox' ? '">' : '>');
         if (!is_null($this->legend)) {
             $code .= '<datalist id="' . $this->name . '-legend' . '">' . implode(array_map(function ($l) {
@@ -180,10 +238,10 @@ class InputHtmlView extends HtmlView {
 
     /**
      * Sets the value (for checkboxes) stored behind the checkbox.
-     * @param string|CliffSerializable|null|array|int|bool $value The value.
+     * @param string|IShippable|null|array|int|bool $value The value.
      * @return $this
      */
-    public function val(string|CliffSerializable|null|array|int|bool $value, bool $force = false) : InputHtmlView {
+    public function val(string|IShippable|null|array|int|bool $value, bool $force = false) : InputHtmlView {
         if ($value instanceof IShippable ||
             (!is_bool($value) && !is_string($value) && !is_int($value) && !is_float($value) && !is_numeric($value) &&
                 !is_null($value) && !is_array($value))) {
@@ -217,7 +275,7 @@ class InputHtmlView extends HtmlView {
      * @param bool $disabled The new value.
      * @return $this
      */
-    public function disabled(bool $disabled) : InputHtmlView {
+    public function disabled(bool $disabled) : static {
         $this->disabled = $disabled;
         return $this;
     }
@@ -227,7 +285,7 @@ class InputHtmlView extends HtmlView {
      * @param bool $autoComplete The autocomplete property.
      * @return $this
      */
-    public function autoComplete(bool $autoComplete) : InputHtmlView {
+    public function autoComplete(bool $autoComplete) : static {
         $this->autoComplete = $autoComplete;
         return $this;
     }

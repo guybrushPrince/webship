@@ -1,23 +1,46 @@
 <?php
 
+namespace webship\inputs;
+
+use ContainerHtmlView;
+use Event;
+use HtmlActionProtocol;
+use HtmlView;
+use IShippable;
+use Language;
+use progression\NotImplementedException;
 use progression\ui\Representer;
+use ShipperRegister;
+use Tools;
 
 /**
  * View ContentSelectHtmlView.
  *
- * <p> A select view, which overcomes the limitation of browser-own implementations not supporting HTML elements as
- * options. </p>
+ * <p>A select view, which overcomes the limitation of browser-own implementations not supporting HTML elements as
+ * options.</p>
  *
  * <code>
- * $view = ContentSelectHtmlView::create(variableName, maximalSelections, [], 'undefined');
+ * $select = ContentSelectHtmlView::create('select-1', 3);
+ * $select->each(Project::getAll(), function (ContentSelectHtmlView $select, Project $project) {
+ *     $select->option($project);
+ * });
  * </code>
  *
+ * <img src="http://localhost/coast/webship/modeldoc/contentselect.png" />
+ *
+ * @see SelectHtmlView
  * @package webship
  * @subpackge php/model/inputs
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.0.0
+ * @version 1.1.0
+ *
  * @view
+ * @examples
+ *     $select = ContentSelectHtmlView::create('select-1', 3);
+ *     $select->each(Project::getAll(), function (ContentSelectHtmlView $select, Project $project) {
+ *         $select->option($project);
+ *     });
  */
 class ContentSelectHtmlView extends SelectHtmlView {
 
@@ -71,59 +94,14 @@ class ContentSelectHtmlView extends SelectHtmlView {
         $this->contentOptions = new ContainerHtmlView(['c-list', 'ver']);
         $this->contentOptions->ref('entry-list');
         parent::__construct($id, $name, $classes, true, $default);
+
         self::addCSS();
-
-    }
-
-    /**
-     * Creates a new content-select.
-     * @param int|string $id The id of the select.
-     * @param int|null $maxSelections The number of maximal selections.
-     * @param string[]|string $classes Some classes.
-     * @param IShippable|array|string|null $default The default value if nothing is selected.
-     * @return ContentSelectHtmlView
-     */
-    public static function create(int|string $id, ?int $maxSelections = 1, array|string $classes = [],
-                                  IShippable|array|string|null $default = '-1') : ContentSelectHtmlView {
-        $select = new ContentSelectHtmlView($id, $id, $classes, $default);
-        self::addFunctionality($select, $maxSelections, $default);
-        return $select;
-    }
-
-    /**
-     * Add standard functionality.
-     * @param ContentSelectHtmlView $select The content select.
-     * @param int|null $maxSelections The maximum number of selections.
-     * @param IShippable|array|string|null $default The default value.
-     * @return ContentSelectHtmlView
-     */
-    protected static function addFunctionality(ContentSelectHtmlView $select, ?int $maxSelections = 1,
-                                               IShippable|array|string|null $default = '-1') : ContentSelectHtmlView {
-        if (is_array($default)) $default = $default[1];
-        if ($default instanceof IShippable) $default = ShipperRegister::getObjectString($default);
-        $select->maxSelections = $maxSelections;
-        if (is_null($maxSelections)) $maxSelections = 'null';
-        if (is_null($default)) $default = 'null';
-        $select->ref('con-select');
-        $select->protocol(Event::CLICK, ['sameTarget' => true])->doIt('ToggleClass', [
-            'view' => $select,
-            'class' => 'open'
-        ], 'basics');
-        $select->protocol(Event::CLICK_OUTSIDE)->doIt('RemoveClass', [
-            'view' => $select,
-            'class' => 'open'
-        ], 'basics')->scrollTop($select->contentOptions);
-        $select->js('scaleChildren($("' . $select->idc() . '").children(".c-list"));');
-        $select->js('addConSelectFunctionality($("' . $select->idc() . '"), ' . $maxSelections . ', ' . $default . ');');
-        $select->js('applySelectChanges($("select' . $select->idc() . '"));');
-        return $select;
     }
 
     /**
      * @inheritDoc
      */
     public static function addCSS() : void {
-
         self::addStyle(Tools::css('.content-select', [], 'position: relative',
             'min-width: 100px', '--closed-scale: 1', '--closed-translate: none', '--closed-width: initial',
             '--closed-height: initial', 'padding-right: 13px', '--list-height: 40px', 'padding-left: 5px',
@@ -204,9 +182,53 @@ class ContentSelectHtmlView extends SelectHtmlView {
     }
 
     /**
+     * Creates a new content-select.
+     * @param int|string $id The id of the select.
+     * @param int|null $maxSelections The number of maximal selections.
+     * @param string[]|string $classes Some classes.
+     * @param IShippable|array|string|null $default The default value if nothing is selected.
+     * @return ContentSelectHtmlView
+     */
+    public static function create(int|string $id, ?int $maxSelections = 1, array|string $classes = [],
+                                  IShippable|array|string|null $default = '-1') : ContentSelectHtmlView {
+        $select = new ContentSelectHtmlView($id, $id, $classes, $default);
+        self::addFunctionality($select, $maxSelections, $default);
+        return $select;
+    }
+
+    /**
+     * Add standard functionality.
+     * @param ContentSelectHtmlView $select The content select.
+     * @param int|null $maxSelections The maximum number of selections.
+     * @param IShippable|array|string|null $default The default value.
+     * @return ContentSelectHtmlView
+     */
+    protected static function addFunctionality(ContentSelectHtmlView $select, ?int $maxSelections = 1,
+                                               IShippable|array|string|null $default = '-1') : ContentSelectHtmlView {
+        if (is_array($default)) $default = $default[1];
+        if ($default instanceof IShippable) $default = ShipperRegister::getObjectString($default);
+        $select->maxSelections = $maxSelections;
+        if (is_null($maxSelections)) $maxSelections = 'null';
+        if (is_null($default)) $default = 'null';
+        $select->ref('con-select');
+        $select->protocol(Event::CLICK, ['sameTarget' => true])->doIt('ToggleClass', [
+            'view' => $select,
+            'class' => 'open'
+        ], 'basics');
+        $select->protocol(Event::CLICK_OUTSIDE)->doIt('RemoveClass', [
+            'view' => $select,
+            'class' => 'open'
+        ], 'basics')->scrollTop($select->contentOptions);
+        $select->js('scaleChildren($("' . $select->idc() . '").children(".c-list"));');
+        $select->js('addConSelectFunctionality($("' . $select->idc() . '"), ' . $maxSelections . ', ' . $default . ');');
+        $select->js('applySelectChanges($("select' . $select->idc() . '"));');
+        return $select;
+    }
+
+    /**
      * @inheritDoc
      */
-    public function option($value, $classes = array(), $selected = false) : OptionHtmlView {
+    public function option($value, $classes = [], $selected = false) : OptionHtmlView {
         if (!is_array($value) && !($value instanceof IShippable) && $value !== $this->default)
             throw new NotImplementedException();
         $addClass = [];
@@ -261,7 +283,7 @@ class ContentSelectHtmlView extends SelectHtmlView {
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         $hasSelected = false;
         foreach ($this->subviews as $view) {
             if ($view instanceof OptionHtmlView) {
@@ -286,7 +308,7 @@ class ContentSelectHtmlView extends SelectHtmlView {
     /**
      * @inheritDoc
      */
-    public function generateClosingTag() {
+    public function generateClosingTag() : string {
         $overlay = new HtmlView('overlay');
         $overlay->js('$("' . $overlay->idc() . '").on("click", (e) => { setOpenSelectPosition(' .
             '$("div' . $this->idc(). '")); scaleChildren($("' . $this->idc() . '").children(".c-list")); });');

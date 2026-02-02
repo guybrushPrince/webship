@@ -1,40 +1,51 @@
 <?php
 
+namespace webship\inputs;
+
+use HtmlView;
+use TextView;
+use Tools;
+
 /**
  * View DropDownHtmlView.
  *
- *  <p> A view with dropdowns. </p>
+ * <p>A drop-down menu, which allows for subviews but opens to down.</p>
  *
- *  <code>
- *  $view = DropDownHtmlView::create();
- *  </code>
+ * <code>
+ * $dropDown = DropDownHtmlView::create();
+ * $dropDown->texts('Drop me');
+ * $dropDown->entry()->texts('Entry 1');
+ * $dropDown->entry()->texts('Entry 2');
+ * $dropDown->entry()->texts('Entry 3');
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/dropdown.png" />
  *
  * @package webship
  * @subpackge php/model/inputs
  *
- * @version 1.0.0
+ * @version 1.1.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ *
  * @view
+ * @examples
+ *     $dropDown = DropDownHtmlView::create();
+ *     $dropDown->texts('Drop me');
+ *     $dropDown->entry()->texts('Entry 1');
+ *     $dropDown->entry()->texts('Entry 2');
+ *     $dropDown->entry()->texts('Entry 3');
  */
 class DropDownHtmlView extends HtmlView {
 
     /**
-     * DropDownHtmlView constructor.
+     * Constructor.
      * @param string[]|string $classes Some classes.
      */
-    private function __construct(string|array $classes = []) {
+    private function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct(array_merge(['drop-down'], $classes));
-        self::addCSS();
-    }
 
-    /**
-     * Create a drop-down menu.
-     * @param string|array $classes
-     * @return DropDownHtmlView
-     */
-    public static function create(string|array $classes = []) : DropDownHtmlView {
-        return new DropDownHtmlView($classes);
+        self::addCSS();
     }
 
     /**
@@ -46,7 +57,9 @@ class DropDownHtmlView extends HtmlView {
         self::addStyle(Tools::css('.drop-down:hover', [],
             'width: 100px'));
         self::addStyle(Tools::css('.drop-down:hover', [' > ', '[data-drop-down-content]'],
-            'position: fixed', 'z-index: 10000', 'top: 0'));
+            'position: absolute', 'z-index: 10000', 'top: 0'));
+        self::addStyle(Tools::css('.drop-down.fix:hover', [' > ', '[data-drop-down-content]'],
+            'position: fixed'));
         self::addStyle(Tools::css('.drop-down', [' > ', '[data-drop-down-content]'],
             'margin: 0', 'padding: 0'));
         self::addStyle(Tools::css('.drop-down', [' > ', '[data-drop-down-content]', ' > ', ':not(:first-child)'],
@@ -57,7 +70,17 @@ class DropDownHtmlView extends HtmlView {
             ':not(:first-child)'], 'display: block'));
         self::addStyle(Tools::css('.drop-down', [' > ', '[data-drop-down-content]', ' > ', '*'],
             'width: fit-content', 'height: 35px', 'padding: 10px 20px', 'box-sizing: border-box',
-            'position: relative', 'width: -moz-fit-content', 'background: var(--main-menu-hover)'));
+            'position: relative', 'width: -moz-fit-content', 'background: var(--main-menu-hover)',
+            'white-space: nowrap'));
+    }
+
+    /**
+     * Create a drop-down menu.
+     * @param string[]|string $classes Some classes.
+     * @return DropDownHtmlView
+     */
+    public static function create(array|string $classes = []) : DropDownHtmlView {
+        return new DropDownHtmlView($classes);
     }
 
     /**
@@ -87,21 +110,19 @@ class DropDownHtmlView extends HtmlView {
      * @param string[]|string $classes A set of classes.
      * @return DropDownEntryHtmlView
      */
-    public function entry(string|array $classes = []) : DropDownEntryHtmlView {
+    public function entry(array|string $classes = []) : DropDownEntryHtmlView {
         $entry = DropDownEntryHtmlView::create($classes);
         $this->add($entry);
         return $entry;
     }
 
     /**
-     * Create a sub drop-down entry.
-     * @param string[]|string $classes A set of classes.
-     * @return SubDropDownHtmlView
+     * Set this view static to the side.
+     * @return $this
      */
-    /*public function sub(string|array $classes = []) : SubDropDownHtmlView {
-        $entry = SubDropDownHtmlView::create($classes);
-        $this->add($entry);
-        return $entry;
-    }*/
+    public function fix() : static {
+        $this->addClass('fix');
+        return $this;
+    }
 }
 ?>

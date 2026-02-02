@@ -1,8 +1,38 @@
 <?php
 
+namespace webship\inputs;
+
+use HtmlView;
+use IShippable;
+use Language;
+use Tools;
+
 /**
- * Class SelectHtmlView
+ * View SelectHtmlView.
+ *
+ * <p>A select (drop-down) element.</p>
+ *
+ * <code>
+ * $select = SelectHtmlView::create('select');
+ * $select->each(range(1,10), function (SelectHtmlView $s, int $o) {
+ *     $s->option($o)->texts($o . '. entry');
+ * });
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/select.png" />
+ *
+ * @package webship
+ * @subpackge php/model/inputs
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.3.0
+ *
+ * @view
+ * @examples
+ *     $select = SelectHtmlView::create('select');
+ *     $select->each(range(1,10), function (SelectHtmlView $s, int $o) {
+ *         $s->option($o)->texts($o . '. entry');
+ *     });
  */
 class SelectHtmlView extends HtmlView {
 
@@ -43,13 +73,14 @@ class SelectHtmlView extends HtmlView {
     private bool $ignoreSingleton = false;
 
     /**
-     * SelectHtmlView constructor.
-     * @param string|int $id The id.
+     * Constructor.
+     * @param string $id The id.
      * @param string $name The name.
      * @param string[]|string $classes Some classes.
+     * @param bool $hidden If this field is invisible.
      * @param IShippable|array|string|null $default The default value (array is just for super classes).
      */
-    public function __construct(string|int $id, string $name, string|array $classes = [], bool $hidden = false,
+    protected function __construct(string $id, string $name, array|string $classes = [], bool $hidden = false,
                                 IShippable|array|string|null $default = '-1') {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct(array_merge([ 'select' ], $classes));
@@ -59,33 +90,56 @@ class SelectHtmlView extends HtmlView {
 
         if (is_null($default)) $default = 'null';
 
-        $this->option($default)->texts()->
-            text(Language::ENGLISH, 'Please select')->
-            text(Language::GERMAN,  'Bitte auswählen');
+        $this->option($default)->texts([
+            Language::ENGLISH => 'Please select',
+            Language::GERMAN  => 'Bitte auswählen'
+        ]);
 
-        $this->style(Tools::css('select', '', 'box-sizing: border-box', 'padding: 5px',
-            'height: 50px', 'width: 100%', 'font-family: Roboto Condensed, Roboto, HelveticaNeue, sans-serif',
-            'font-size: 16px'));
+        self::addCSS();
     }
 
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('select', [], 'box-sizing: border-box', 'padding: 5px',
+            'height: 50px', 'width: 100%', 'font-family: Roboto Condensed, Roboto, HelveticaNeue, sans-serif',
+            'font-size: 16px'));
+    }
+
+    /**
+     * Create a select.
+     * @param string $id The id.
+     * @param string[]|string $classes Some classes.
+     * @param bool $hidden If this field is invisible.
+     * @param IShippable|array|string|null $default The default value (array is just for super classes).
+     * @param string|null $name The name.
+     */
+    public static function create(string $id, array|string $classes = [], bool $hidden = false,
+                                  IShippable|array|string|null $default = '-1',
+                                  string|null $name = null) : SelectHtmlView {
+        return new SelectHtmlView($id, is_null($name) ? $id : $name, $classes, $hidden, $default);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function generateOpeningTag() : string {
         if (count($this->subviews) === 1) {
             $this->subviews = array();
             $this->texts()->
                 text(Language::ENGLISH, 'No options available')->
                 text(Language::GERMAN,  'Keine Auswahl verfügbar');
             $this->opening = 'div';
-            return '<div class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '">';
+            return '<div class="' . implode(' ', array_merge($this->classes, [ $this->id() ])) . '">';
         } else  {
             if (count($this->subviews) === 2 && !$this->ignoreSingleton) {
-                $this->subviews = array($this->subviews[1]);
+                $this->subviews = [ $this->subviews[1] ];
                 $this->classes[] = "singleton";
             }
-            return '<select class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '" id="' . $this->id .
-                '" name="' . $this->name . '"' . ($this->disabled ? ' disabled' : '') . ($this->hidden ? ' hidden' : '') .
+            return '<select class="' . implode(' ', array_merge($this->classes, [ $this->id() ])) . '" ' .
+                'id="' . $this->id . '" name="' . $this->name . '"' .
+                ($this->disabled ? ' disabled' : '') . ($this->hidden ? ' hidden' : '') .
                 ($this->data ? ' ' . implode(' ', array_map(function($key, $val) {
                         return 'data-' . $key . ($val !== null ? '="' . $val . '"' : '');
                     }, array_keys($this->data), $this->data)) : '') .
@@ -96,7 +150,7 @@ class SelectHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateClosingTag() {
+    public function generateClosingTag() : string {
         return '</' . $this->opening . '>';
     }
 
@@ -104,13 +158,14 @@ class SelectHtmlView extends HtmlView {
 
     /**
      * Add an option.
-     * @param string|IShippable|array $value The value (array only for specializations).
-     * @param array|string $classes Classes.
+     * @param array|IShippable|string|float|int|null $value The value (array only for specializations).
+     * @param string[]|string $classes Some classes.
      * @param bool $selected Whether it is selected.
      * @return OptionHtmlView
      */
-    public function option($value, $classes = array(), $selected = false) : OptionHtmlView {
-        $option = new OptionHtmlView($value, $classes, $selected);
+    public function option(array|IShippable|string|float|int|null $value, array|string $classes = [],
+                           bool $selected = false) : OptionHtmlView {
+        $option = OptionHtmlView::create($value, $selected, $classes);
         $this->add($option);
         return $option;
     }

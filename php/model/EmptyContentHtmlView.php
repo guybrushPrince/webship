@@ -1,4 +1,7 @@
 <?php
+
+use webship\alerts\InfoHtmlView;
+
 /**
  * View EmptyContentHtmlView.
  *

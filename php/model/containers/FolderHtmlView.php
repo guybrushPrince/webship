@@ -1,5 +1,7 @@
 <?php
 
+use webship\inputs\EditableHtmlView;
+
 /**
  * Class FolderHtmlView.
  *
@@ -161,9 +163,9 @@ class FolderHtmlView extends StandardHtmlView {
 
         $title = $view->add(new HtmlView('folder-title'));
         if ($folderGroup instanceof ITextBoxUser) {
-            $titleView = $title->add(new EditableHtmlView());
+            $titleView = $title->add(EditableHtmlView::create());
             $titleView->ref('text', 'value');
-            $titleView->texts()->text(self::getLanguage(), $folderGroup->getTitle(self::getLanguage()));
+            $titleView->texts($folderGroup->getTitle(self::getLanguage()));
             $titleView->protocol(Event::ONFOCUSOUT)->
                 doIt('ChangeTextField', [
                     'part' => $folderGroup,
@@ -172,7 +174,7 @@ class FolderHtmlView extends StandardHtmlView {
                 ], 'texts');
             $title->add(PencilHtmlView::_new());
         } else {
-            $title->texts()->text(self::getLanguage(), $folderGroup->getTitle(self::getLanguage()));
+            $title->texts($folderGroup->getTitle(self::getLanguage()));
         }
 
         $adder = null;

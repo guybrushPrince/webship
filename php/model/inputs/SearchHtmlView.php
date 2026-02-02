@@ -1,13 +1,34 @@
 <?php
 
+namespace webship\inputs;
+
+use ContainerHtmlView;
+use HtmlView;
+use ImageHtmlView;
+use Language;
+use SubmitHtmlView;
+use Tools;
+
 /**
- * Class SearchHtmlView.
+ * View SearchHtmlView.
+ *
+ * <p>A search bar that can be used, e.g., for searching things.</p>
+ *
+ * <code>
+ * SearchHtmlView::create('Please search something.', 'You will search for it.')
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/search.png" />
  *
  * @package webship
  * @subpackage php/model/inputs
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.0.5
+ * @version 1.1.0
+ *
+ * @view
+ * @examples
+ *     SearchHtmlView::create('Please search something.', 'You will search for it.')
  */
 class SearchHtmlView extends ContainerHtmlView {
 
@@ -35,13 +56,13 @@ class SearchHtmlView extends ContainerHtmlView {
 
         $form = $this->form('', '')->ref('search-form');
         $search = $form->add(new ContainerHtmlView(['hor', 'single', 'vcent']));
-        $searchField = new InputHtmlView('search-field', 'search-field', "text");
+        $searchField = InputHtmlView::createIt('search-field', 'text');
         $search->add($searchField);
         $searchField->ref('search', 'value');
 
         if ($instructions) {
             // It is already an array if there is any instruction.
-            $searchField->notice(self::getLanguage(), $instructions[self::getLanguage()]);
+            $searchField->notices($instructions);
         }
 
         // <div>Icons made by <a href="https://www.flaticon.com/authors/prosymbols" title="Prosymbols">Prosymbols</a>
@@ -50,16 +71,13 @@ class SearchHtmlView extends ContainerHtmlView {
         $search->add($this->searchButton);
         $this->searchButton->add(new ImageHtmlView('/vaultui/pic/loupe.png'));
         if ($notes) {
-            if (!is_array($notes)) $notes = [ self::getLanguage() => $notes ];
-            $this->searchButton->notice(self::getLanguage(), $notes[self::getLanguage()]);
+            $this->searchButton->notices($notes);
         }
 
-        $this->localStyle('--text: \'' .
-            [
+        $this->localStyle('--text: \'' . [
                 Language::ENGLISH => 'Search',
                 Language::GERMAN  => 'Suche'
-            ][self::getLanguage()] .
-            ':\'');
+            ][self::getLanguage()] . ':\'');
 
         self::addCSS();
     }
@@ -111,6 +129,5 @@ class SearchHtmlView extends ContainerHtmlView {
     public function button() : SubmitHtmlView {
         return $this->searchButton;
     }
-
 }
 ?>

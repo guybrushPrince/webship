@@ -1,21 +1,43 @@
 <?php
 
+namespace webship\inputs;
+
+use Tools;
+
 /**
  * View LabelledInputHtmlView.
  *
- * <p> A view for many different types of input labels. (e.g. alphanumerical characters, passwords, dates)</p>
+ * <p>Input fields usually have labels but being separated in HTML. This view combines an input field with a
+ * possible label.</p>
+ * <p>Different possibilities exist for arranging the labels with the corresponding input.</p>
  *
  * <code>
- * $view = LabelledInputHtmlView::createPasswordField('New Password', 'user-password')
+ * LabelledInputHtmlView::createTextField('Name', 'input-1');
+ * LabelledInputHtmlView::createMiniField('Name', 'input-1');
+ * LabelledInputHtmlView::createPasswordField('Password', 'input-3');
+ * LabelledInputHtmlView::createCheckbox('Set?', 'input-4');
+ * LabelledInputHtmlView::createMiniCheckbox('Set?', 'input-5');
+ * LabelledInputHtmlView::createNumericField('Number', 'input-6');
+ * LabelledInputHtmlView::createMiniNumericField('Number', 'input-7');
  * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/labelledinput.png" />
  *
  * @package webship
  * @subpackge php/model/inputs
  *
- *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.0.0
+ * @version 1.2.0
+ *
  * @view
+ * @examples
+ *     LabelledInputHtmlView::createTextField('Name', 'input-1');
+ *     LabelledInputHtmlView::createMiniField('Name', 'input-1');
+ *     LabelledInputHtmlView::createPasswordField('Password', 'input-3');
+ *     LabelledInputHtmlView::createCheckbox('Set?', 'input-4');
+ *     LabelledInputHtmlView::createMiniCheckbox('Set?', 'input-5');
+ *     LabelledInputHtmlView::createNumericField('Number', 'input-6');
+ *     LabelledInputHtmlView::createMiniNumericField('Number', 'input-7');
  */
 class LabelledInputHtmlView extends InputHtmlView {
 
@@ -76,6 +98,61 @@ class LabelledInputHtmlView extends InputHtmlView {
         $this->addHint(self::getLanguage(), '');
 
         self::addCSS();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.linput', [], 'position: relative', 'width: fit-content',
+            'box-sizing: border-box', 'width: -moz-fit-content', '--height: 30px', '--buffer: 10px',
+            'height: calc(var(--height) + var(--buffer))',
+            'display: flex', 'flex-direction: row', 'align-items: flex-end', 'flex-wrap: nowrap'));
+        self::addStyle(Tools::css('.linput.bl', [], '--buffer: 0'));
+        self::addStyle(Tools::css('.linput.ll', [], '--buffer: 0'));
+        self::addStyle(Tools::css('.linput.ll', [' > ', 'input + label'], 'display: none'));
+        self::addStyle(Tools::css('.linput', [' > ', 'input'], 'height: var(--height)',
+            'box-sizing: border-box'));
+        self::addStyle(Tools::css('.linput', [' > ', 'input:not([type=date]):not([type=checkbox]) + label'],
+            'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--dark-system-background)',
+            'transition: 0.5s'));
+        self::addStyle(Tools::css('.linput', [' > ', 'input:not(:focus):not([type=date]):not([type=checkbox]):placeholder-shown + label'],
+            'display: flex', 'top: var(--buffer)', 'flex-direction: row', /*'width: 100%',*/
+            'height: calc(100% - var(--buffer))', 'align-items: center', 'cursor: text', 'padding-left: 8px',
+            'font-size: 13px'));
+        self::addStyle(Tools::css('.linput', [' > ', 'input:focus:not([type=date]):not([type=checkbox]) + label'],
+            'bottom: calc(100% - var(--buffer))', 'font-size: 10px', 'top: unset'));
+        self::addStyle(Tools::css('.linput', [' > ', 'input:not([type=date]):not([type=checkbox]):not(:placeholder-shown) + label'],
+            'bottom: calc(100% - var(--buffer))', 'font-size: 10px', 'top: unset'));
+        self::addStyle(Tools::css('.linput', [' > ', 'input[type=checkbox]'], '--height: 25px',
+            '--margin: 2.5px', 'margin: var(--margin)',
+            'height: var(--height)', 'width: var(--height)', 'box-sizing: border-box'));
+        self::addStyle(Tools::css('.linput', [' > ', 'input[type=checkbox] + label'], 'cursor: pointer'));
+
+        self::addStyle(Tools::css('.linput.mini', [], '--height: 20px', '--buffer: 0'));
+        self::addStyle(Tools::css('.linput.mini', [' > ', 'input'], 'border-radius: 3px',
+            'font-size: 10px', 'border: 1px solid var(--font-info)', 'color: var(--font-info)'));
+        self::addStyle(Tools::css('.linput.mini', [' > ', 'input:focus'], 'outline: none'));
+        self::addStyle(Tools::css('.linput.mini', [' > ', 'input:not([type=date]):not([type=checkbox]):placeholder-shown + label'],
+            'height: var(--height)', 'color: var(--font-info)', 'font-size: 10px', 'padding-left: 5px'));
+        self::addStyle(Tools::css('.linput.mini', [' > ', 'input:focus:not([type=date]):not([type=checkbox]):placeholder-shown + label'],
+            'display: none'));
+        self::addStyle(Tools::css('.linput.mini', [' > ', 'input:not([type=date]):not([type=checkbox]):not(:placeholder-shown) + label'],
+            'display: none'));
+        self::addStyle(Tools::css('.linput.mini', [' > ', 'input[type=checkbox]'],'--height: 15px'));
+
+        self::addStyle(Tools::css('.linput.out', [], 'flex-direction: row-reverse'));
+        self::addStyle(Tools::css('.linput.out', [' > ', 'label'], 'display: flex', 'flex-wrap: nowrap',
+            'flex-direction: row', 'height: var(--height)', 'width: fit-content', 'width: -moz-fit-content',
+            'align-items: center'));
+        self::addStyle(Tools::css('.linput.out', [' > ', 'label:not(:empty):after'],
+            'content: ":"', 'display: block', 'margin-right: 5px'));
+        self::addStyle(Tools::css('.linput.mini.out', [' > ', 'label'], 'color: var(--font-info)',
+            'font-size: 10px'));
+        self::addStyle(Tools::css('.linput.mini.out', [' > ', 'label:empty'], 'display: none'));
+        self::addStyle(Tools::css('.linput.mini.out', [' > ', 'label:not(:empty):after'],
+            'color: var(--font-info)', 'font-size: 10px', 'content: ":"', 'display: block',
+            'margin-right: 5px'));
     }
 
     /**
@@ -288,7 +365,7 @@ class LabelledInputHtmlView extends InputHtmlView {
     public static function createCheckbox(string|array|null $labels, string $id, ?bool $checked = false,
                                           array|string $classes = []) : LabelledInputHtmlView {
         $input = new LabelledInputHtmlView($labels, $id, 'checkbox', null, null, null, $classes);
-        $input->texts()->text(View::getLanguage(), (!$checked ? '' : 'checked'));
+        $input->texts((!$checked ? '' : 'checked'));
         if ($labels) {
             if (!is_array($labels)) $labels = [ self::getLanguage() => $labels ];
             foreach ($labels as $lang => $label) $input->notice($lang, $label);
@@ -309,7 +386,7 @@ class LabelledInputHtmlView extends InputHtmlView {
     public static function createMiniCheckbox(string|array|null $labels, string $id, ?bool $checked = false,
                                               array|string $classes = []) : LabelledInputHtmlView {
         $input = new LabelledInputHtmlView($labels, $id, 'checkbox', null, null, null, $classes);
-        $input->texts()->text(View::getLanguage(), (!$checked ? '' : 'checked'));
+        $input->texts((!$checked ? '' : 'checked'));
         if (!is_null($labels)) {
             if (!is_array($labels)) $labels = [ self::getLanguage() => $labels ];
             foreach ($labels as $lang => $label) $input->notice($lang, $label);
@@ -330,68 +407,12 @@ class LabelledInputHtmlView extends InputHtmlView {
     public static function createMiniRadio(string|array|null $labels, string $id, ?bool $selected = false,
                                            array|string $classes = []) : LabelledInputHtmlView {
         $input = new LabelledInputHtmlView($labels, $id, 'radio', null, null, null, $classes);
-        $input->texts()->text(View::getLanguage(), (!$selected ? '' : 'checked'));
+        $input->texts((!$selected ? '' : 'checked'));
         if (!is_array($labels)) $labels = [ self::getLanguage() => $labels ];
         foreach ($labels as $lang => $label) $input->notice($lang, $label);
         $input->mini = true;
         $input->inside = false;
         return $input;
     }
-
-    /**
-     * @inheritDoc
-     */
-    public static function addCSS() : void {
-        self::addStyle(Tools::css('.linput', [], 'position: relative', 'width: fit-content',
-            'box-sizing: border-box', 'width: -moz-fit-content', '--height: 30px', '--buffer: 10px',
-            'height: calc(var(--height) + var(--buffer))',
-            'display: flex', 'flex-direction: row', 'align-items: flex-end', 'flex-wrap: nowrap'));
-        self::addStyle(Tools::css('.linput.bl', [], '--buffer: 0'));
-        self::addStyle(Tools::css('.linput.ll', [], '--buffer: 0'));
-        self::addStyle(Tools::css('.linput.ll', [' > ', 'input + label'], 'display: none'));
-        self::addStyle(Tools::css('.linput', [' > ', 'input'], 'height: var(--height)',
-            'box-sizing: border-box'));
-        self::addStyle(Tools::css('.linput', [' > ', 'input:not([type=date]):not([type=checkbox]) + label'],
-            'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--dark-system-background)',
-            'transition: 0.5s'));
-        self::addStyle(Tools::css('.linput', [' > ', 'input:not(:focus):not([type=date]):not([type=checkbox]):placeholder-shown + label'],
-            'display: flex', 'top: var(--buffer)', 'flex-direction: row', /*'width: 100%',*/
-            'height: calc(100% - var(--buffer))', 'align-items: center', 'cursor: text', 'padding-left: 8px',
-            'font-size: 13px'));
-        self::addStyle(Tools::css('.linput', [' > ', 'input:focus:not([type=date]):not([type=checkbox]) + label'],
-            'bottom: calc(100% - var(--buffer))', 'font-size: 10px', 'top: unset'));
-        self::addStyle(Tools::css('.linput', [' > ', 'input:not([type=date]):not([type=checkbox]):not(:placeholder-shown) + label'],
-            'bottom: calc(100% - var(--buffer))', 'font-size: 10px', 'top: unset'));
-        self::addStyle(Tools::css('.linput', [' > ', 'input[type=checkbox]'], '--height: 25px',
-            '--margin: 2.5px', 'margin: var(--margin)',
-            'height: var(--height)', 'width: var(--height)', 'box-sizing: border-box'));
-        self::addStyle(Tools::css('.linput', [' > ', 'input[type=checkbox] + label'], 'cursor: pointer'));
-
-        self::addStyle(Tools::css('.linput.mini', [], '--height: 20px', '--buffer: 0'));
-        self::addStyle(Tools::css('.linput.mini', [' > ', 'input'], 'border-radius: 3px',
-            'font-size: 10px', 'border: 1px solid var(--font-info)', 'color: var(--font-info)'));
-        self::addStyle(Tools::css('.linput.mini', [' > ', 'input:focus'], 'outline: none'));
-        self::addStyle(Tools::css('.linput.mini', [' > ', 'input:not([type=date]):not([type=checkbox]):placeholder-shown + label'],
-            'height: var(--height)', 'color: var(--font-info)', 'font-size: 10px', 'padding-left: 5px'));
-        self::addStyle(Tools::css('.linput.mini', [' > ', 'input:focus:not([type=date]):not([type=checkbox]):placeholder-shown + label'],
-            'display: none'));
-        self::addStyle(Tools::css('.linput.mini', [' > ', 'input:not([type=date]):not([type=checkbox]):not(:placeholder-shown) + label'],
-            'display: none'));
-        self::addStyle(Tools::css('.linput.mini', [' > ', 'input[type=checkbox]'],'--height: 15px'));
-
-        self::addStyle(Tools::css('.linput.out', [], 'flex-direction: row-reverse'));
-        self::addStyle(Tools::css('.linput.out', [' > ', 'label'], 'display: flex', 'flex-wrap: nowrap',
-            'flex-direction: row', 'height: var(--height)', 'width: fit-content', 'width: -moz-fit-content',
-            'align-items: center'));
-        self::addStyle(Tools::css('.linput.out', [' > ', 'label:not(:empty):after'],
-            'content: ":"', 'display: block', 'margin-right: 5px'));
-        self::addStyle(Tools::css('.linput.mini.out', [' > ', 'label'], 'color: var(--font-info)',
-            'font-size: 10px'));
-        self::addStyle(Tools::css('.linput.mini.out', [' > ', 'label:empty'], 'display: none'));
-        self::addStyle(Tools::css('.linput.mini.out', [' > ', 'label:not(:empty):after'],
-            'color: var(--font-info)', 'font-size: 10px', 'content: ":"', 'display: block',
-            'margin-right: 5px'));
-    }
-
 }
 ?>

@@ -1,17 +1,38 @@
 <?php
 
+namespace webship\inputs;
+
+use CloserHtmlView;
+use ContainerHtmlView;
+use HtmlView;
+use Tools;
+
 /**
  * View ObjectChipHtmlView.
  *
- * <p>Represents an object as a "chip" with the type and a name.</p>
+ * <p>Represents an object as a "chip" with its type and name.</p>
+ *
+ * <code>
+ * ObjectChipHtmlView::create('variable', 'Variable', 'cool_variable')->clickable();
+ * $chip = ObjectChipHtmlView::create('survey', 'Survey', 'My survey');
+ * $chip->del();
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/objectchip.png" />
  *
  * @package webship
  * @subpackge php/model/inputs
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.0.0
+ * @version 1.1.0
+ *
+ * @view
+ * @examples
+ *     ObjectChipHtmlView::create('variable', 'Variable', 'cool_variable')->clickable();
+ *     $chip = ObjectChipHtmlView::create('survey', 'Survey', 'My survey');
+ *     $chip->del();
  */
-class ObjectChipHtmlView extends HtmlView {
+class ObjectChipHtmlView extends ContainerHtmlView {
 
     /**
      * Constructor.
@@ -30,18 +51,16 @@ class ObjectChipHtmlView extends HtmlView {
                                  ?string $secondaryColor = null, ?string $secondaryFont = null,
                                  array|string $classes = []) {
         if (!is_array($classes)) $classes = [ $classes ];
-        $classes[] = 'obj-chip';
+        $classes = array_merge($classes, ['hor', 'single', 'vcent', 'obj-chip', 'self-fit']);
         parent::__construct($classes);
 
         if (!is_null($type)) $this->data($type);
 
-        $prefixView = new HtmlView();
-        $this->add($prefixView);
+        $prefixView = $this->container(['hor', 'single', 'vcent', 'h100', 'fit']);
         $prefixView->texts($prefix);
 
         if (!is_null($content)) {
-            $contentView = new HtmlView();
-            $this->add($contentView);
+            $contentView = $this->container(['hor', 'single', 'vcent', 'h100', 'fit']);;
             if ($content instanceof HtmlView) {
                 $contentView->add($content);
             } else $contentView->texts($content);
@@ -73,22 +92,19 @@ class ObjectChipHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.obj-chip', [], 'display: flex', 'flex-direction: row',
-            'flex-wrap: nowrap', 'align-items: center', 'border-radius: 5px', 'padding: 0',
+        self::addStyle(Tools::css('.obj-chip', [], 'border-radius: 5px', 'padding: 0',
             'transition: 0.5s background', 'width: -moz-fit-content', 'width: fit-content',
             'background: var(--premier-color)', 'color: var(--premier-font)', 'gap: 10px'));
         self::addStyle(Tools::css('.obj-chip.clickable', [], 'cursor: pointer',
             'transition: 0.5s opacity'));
         self::addStyle(Tools::css('.obj-chip.clickable:hover', [], 'opacity: 0.8'));
 
-        self::addStyle(Tools::css('.obj-chip', [' > ', 'div:first-child'], 'display: flex',
-            'flex-direction: row', 'flex-wrap: nowrap', 'align-items: center', 'background: var(--secondary-color)',
+        self::addStyle(Tools::css('.obj-chip', [' > ', 'div:first-child'],
+            'background: var(--secondary-color)',
             'color: var(--secondary-font)', 'border-right: 2px solid var(--premier-color)', 'font-weight: bold',
-            'font-size: 12px', 'padding: 5px 10px', 'box-sizing: border-box', 'height: 100%',
-            'border-radius: 5px 0 0 5px', 'white-space: nowrap'));
+            'font-size: 12px', 'padding: 6px 10px', 'border-radius: 5px 0 0 5px', 'white-space: nowrap'));
 
         self::addStyle(Tools::css('.obj-chip', [' > ', 'div:nth-child(2):not(:first-child):not(.del)'],
-            'display: flex', 'flex-direction: row', 'flex-wrap: nowrap', 'align-items: center',
             'padding: 5px 10px 5px 0', 'white-space: nowrap'));
 
         self::addStyle(Tools::css('.obj-chip', [' ', 'span.acronym'], 'font-weight: bold'));
@@ -138,6 +154,5 @@ class ObjectChipHtmlView extends HtmlView {
         $this->addClass('clickable');
         return $this;
     }
-
 }
 ?>

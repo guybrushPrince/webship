@@ -1,36 +1,46 @@
 <?php
+
+namespace webship\alerts;
+
+use Tools;
+
 /**
  * View SuccessHtmlView.
  *
- * <p> An AlertHtmlView for <em> success</em>.</p
+ * <p>A specialization of {@link AlertHtmlView} for <em>success information</em>.</p>
  *
  * <code>
- * SuccessHtmlView::create([
- * Language::ENGLISH => '<h2>Successfully created user</h2>' .
- * '<p>Coast has successfully created the new user.</p>',
- * Language::GERMAN  => '<h2>Erfolgreich Nutzer angelegt</h2>' .
- * '<p>Coast hat deinen neuen Nutzer erfolgreich angelegt.</p>'
- * ], true);
+ * SuccessHtmlView::create('You have success.');
+ * SuccessHtmlView::create('You have success.', true);
+ * SuccessHtmlView::create('You have success.', true, true);
  * </code>
  *
- * <img src="http://localhost/coast/webship/pic/alert-success.svg" />
+ * <img src="http://localhost/coast/webship/modeldoc/success_1.png" /><br>
+ * <img src="http://localhost/coast/webship/modeldoc/success_2.png" /><br>
+ * <img src="http://localhost/coast/webship/modeldoc/success_3.png" />
  *
+ * @see AlertHtmlView
  * @package webship
  * @subpackge php/model/alerts
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.0.0
+ * @author Mihailo Jovic
+ * @version 1.2.0
  *
  * @view
+ * @examples
+ *     SuccessHtmlView::create('You have success.');
+ *     SuccessHtmlView::create('You have success.', true);
+ *     SuccessHtmlView::create('You have success.', true, true);
  */
 class SuccessHtmlView extends AlertHtmlView {
 
     /**
-     * SuccessHtmlView constructor.
-     * @param string|string[] $classes The classes.
+     * Constructor.
+     * @param string[]|string $classes Some classes.
      */
-    public function __construct(string|array $classes = []) {
-        parent::__construct(array_merge(['success'], $classes));
+    public function __construct(array|string $classes = []) {
+        parent::__construct(array_merge([ 'success' ], is_array($classes) ? $classes : [ $classes ]));
 
         self::addCSS();
     }
@@ -38,31 +48,23 @@ class SuccessHtmlView extends AlertHtmlView {
     /**
      * @inheritDoc
      */
-    public static function create(array|string $message = [], bool $screen = false, bool $fullView = false,
-                                  ?AlertHtmlView $v = null, ?string $property = null,
-                                  ?string $image = null) : AlertHtmlView {
-        return parent::create($message, $screen, $fullView, $v ?: new SuccessHtmlView(), $property,
-            $image);
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.alert.success', [], '--alert-border: var(--border-success)',
+            '--alert-font: var(--font-success)', '--alert-background: var(--background-success)',
+            '--alert-img-filter: brightness(0) saturate(100%) invert(54%) sepia(4%) saturate(4282%) hue-rotate(72deg) brightness(74%) contrast(107%)',
+            '--alert-img-filter-hover: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(241deg) brightness(110%) contrast(106%)',
+            '--alert-c-border: var(--font-success)'));
     }
 
     /**
      * @inheritDoc
      */
-    public static function addCSS() : void {
-        self::addStyle(Tools::css('.alert:not(.cover)', '.success',
-            'border-color: var(--border-success)', 'color: var(--font-success)',
-            'background-color: var(--background-success)'));
-
-        self::addStyle(Tools::css('.alert.cover.success', [' > ', '.a-message'],
-            'border-color: var(--border-success)', 'color: var(--font-success)',
-            'background-color: var(--background-success)'));
-
-        self::addStyle(Tools::css('.alert.success', [' ', '.ctr', ' > ', 'button.std-button.closer', ' > ', 'img'],
-            'filter: brightness(0) saturate(100%) invert(54%) sepia(4%) saturate(4282%) hue-rotate(72deg) brightness(74%) contrast(107%)'));
-        self::addStyle(Tools::css('.alert.success', [' ', '.ctr', ' > ', 'button.std-button.closer:hover'],
-            'background: var(--font-success)'));
-        self::addStyle(Tools::css('.alert.success', [' ', '.ctr', ' > ', 'button.std-button.closer:hover', ' > ', 'img'],
-            'filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(241deg) brightness(110%) contrast(106%)'));
+    public static function create(array|string $message = [], bool $screen = false, bool $fullView = false,
+                                  ?AlertHtmlView $v = null, ?string $property = null,
+                                  ?string $image = '/webship/pic/alert-success.svg',
+                                  array|string $classes = []) : AlertHtmlView {
+        return parent::create($message, $screen, $fullView, $v ?: new SuccessHtmlView($classes), $property,
+            $image, $classes);
     }
 }
 ?>

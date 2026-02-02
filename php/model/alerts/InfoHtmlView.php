@@ -1,34 +1,46 @@
 <?php
+
+namespace webship\alerts;
+
+use Tools;
+
 /**
  * View InfoHtmlView.
  *
- * <p> An AlertHtmlView for <em> infos</em>.</p
+ * <p>A specialization of {@link AlertHtmlView} for presenting <em>information</em> to users.</p
  *
- *  <code>
- * InfoHtmlView::create([
- * Language::ENGLISH => 'Informational text.',
- * Language::GERMAN  => 'Informations-text.'],
- * true, false, null, null);
- *  </code>
+ * <code>
+ * InfoHtmlView::create('For your information.');
+ * InfoHtmlView::create('For your information.', true);
+ * InfoHtmlView::create('For your information.', true, true);
+ * </code>
  *
- * <img src="http://localhost/coast/webship/pic/alert-info.svg" />
+ * <img src="http://localhost/coast/webship/modeldoc/info_1.png" /><br>
+ * <img src="http://localhost/coast/webship/modeldoc/info_2.png" /><br>
+ * <img src="http://localhost/coast/webship/modeldoc/info_3.png" />
  *
+ * @see AlertHtmlView
  * @package webship
  * @subpackge php/model/alerts
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.0.0
+ * @author Mihailo Jovic
+ * @version 1.2.0
  *
  * @view
+ * @examples
+ *     InfoHtmlView::create('For your information.');
+ *     InfoHtmlView::create('For your information.', true);
+ *     InfoHtmlView::create('For your information.', true, true);
  */
 class InfoHtmlView extends AlertHtmlView {
 
     /**
-     * InfoHtmlView constructor.
-     * @param string[]|string $classes The classes.
+     * Constructor.
+     * @param string[]|string $classes Some classes.
      */
-    public function __construct(string|array $classes = []) {
-        parent::__construct(array_merge(['info'], $classes));
+    private function __construct(array|string $classes = []) {
+        parent::__construct(array_merge([ 'info' ], is_array($classes) ? $classes : [ $classes ]));
 
         self::addCSS();
     }
@@ -36,24 +48,20 @@ class InfoHtmlView extends AlertHtmlView {
     /**
      * @inheritDoc
      */
-    public static function create(array|string $message = [], bool $screen = false, bool $fullView = false,
-                                  ?AlertHtmlView $v = null, ?string $property = null,
-                                  ?string $image = null) : AlertHtmlView {
-        return parent::create($message, $screen, $fullView, $v ?: new InfoHtmlView(), $property,
-            $image ? $image : '/webship/pic/alert-info.svg');
+    public static function addCSS() : void {
+        self::addStyle(Tools::css('.alert.info', [], '--alert-border: var(--border-info)',
+            '--alert-font: var(--font-info)', '--alert-background: var(--background-info)',
+            '--alert-c-border: var(--font-info)'));
     }
 
     /**
      * @inheritDoc
      */
-    public static function addCSS() : void {
-        self::addStyle(Tools::css('.alert:not(.cover)', '.info',
-            'border-color: var(--border-info)', 'color: var(--font-info)',
-            'background-color: var(--background-info)'));
-
-        self::addStyle(Tools::css('.alert.cover.info', [' > ', '.a-message'],
-            'border-color: var(--border-info)', 'color: var(--font-info)',
-            'background-color: var(--background-info)'));
+    public static function create(array|string $message = [], bool $screen = false, bool $fullView = false,
+                                  ?AlertHtmlView $v = null, ?string $property = null, ?string $image = null,
+                                  array|string $classes = []) : AlertHtmlView {
+        return parent::create($message, $screen, $fullView, $v ?: new InfoHtmlView($classes), $property,
+            $image ? $image : '/webship/pic/alert-info.svg', $classes);
     }
 }
 ?>
