@@ -1,28 +1,34 @@
 <?php
 
+namespace webship\buttons;
+
+use Exception;
+use FormHtmlView;
 use progression\CPTools;
+use Tools;
+use View;
 
 /**
  * View SubmitHtmlView.
  *
  * <p>Displays a submit button which is green by default.</p>
+ * <p>It allows to be linked to a form that is submitted (or gets an event) on pressing the enter button.</p>
  *
  * <code>
- * $submitButton = SubmitHtmlView::create();
- * $submitButton->texts('ok');
+ * SubmitHtmlView::create()->texts('Submit');
  * </code>
  *
- * <img src="http://localhost/coast/webship/modeldoc/submitbutton.png" />
+ * <img src="http://localhost/coast/webship/modeldoc/submit.png" />
  *
  * @package webship
  * @subpackge php/model/buttons
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.2.0
+ * @version 1.5.0
  *
+ * @version
  * @example
- * $submitButton = SubmitHtmlView::create();
- * $submitButton->texts('ok');
+ *     SubmitHtmlView::create()->texts('Submit');
  */
 class SubmitHtmlView extends StandardButtonHtmlView {
 
@@ -38,7 +44,7 @@ class SubmitHtmlView extends StandardButtonHtmlView {
      * @param string|FormHtmlView|null $form The form or form reference.
      * @param string[]|string $classes Some classes.
      */
-    public function __construct(string $id, FormHtmlView|string|null $form, array|string $classes = []) {
+    private function __construct(string $id, FormHtmlView|string|null $form, array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct($id, array_merge(['submit'], $classes));
         $this->form = $form;

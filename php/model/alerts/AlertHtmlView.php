@@ -3,7 +3,7 @@
 namespace webship\alerts;
 
 use BreakwaterUtil;
-use CloserHtmlView;
+use webship\buttons\CloserHtmlView;
 use ControlPanelHtmlView;
 use DatabaseError;
 use Event;

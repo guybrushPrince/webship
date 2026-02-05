@@ -1,5 +1,9 @@
 <?php
 
+namespace webship\buttons;
+
+use Tools;
+
 /**
  * View CloserHtmlView.
  *
@@ -7,7 +11,7 @@
  *
  * <img src="http://localhost/coast/webship/modeldoc/closer.png" />
  * <code>
- * $container = ContainerHtmlViewIt(['hor', 'gap20', 'vcent']);
+ * $container = ContainerHtmlView::createIt(['hor', 'gap20', 'vcent']);
  * $container->add(CloserHtmlView::create('hello-world-1'));
  * $container->add(CloserHtmlView::create('hello-world-2'))->mini();
  * $container->add(CloserHtmlView::create('hello-world-3'))->plain();
@@ -21,7 +25,7 @@
  *
  * @view
  * @examples
- *     $container = ContainerHtmlViewIt(['hor', 'gap20', 'vcent']);
+ *     $container = ContainerHtmlView::createIt(['hor', 'gap20', 'vcent']);
  *     $container->add(CloserHtmlView::create('hello-world-1'));
  *     $container->add(CloserHtmlView::create('hello-world-2'))->mini();
  *     $container->add(CloserHtmlView::create('hello-world-3'))->plain();
@@ -34,7 +38,7 @@ class CloserHtmlView extends StandardButtonHtmlView {
      * @param string|null $img The closer image.
      * @param string|null $id An optional button id.
      */
-    public function __construct(string|array $classes = [], string|null $img = '/tardis/pic/cancel.svg',
+    private function __construct(string|array $classes = [], string|null $img = '/tardis/pic/cancel.svg',
                                 ?string $id = null) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct(is_null($id) ? 'closer' : $id, array_merge([ 'closer' ], $classes));

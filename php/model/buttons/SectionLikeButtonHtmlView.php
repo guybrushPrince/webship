@@ -1,5 +1,11 @@
 <?php
 
+namespace webship\buttons;
+
+use ButtonHtmlView;
+use HtmlActionProtocol;
+use Tools;
+
 /**
  * View SectionLikeButtonHtmlView.
  *

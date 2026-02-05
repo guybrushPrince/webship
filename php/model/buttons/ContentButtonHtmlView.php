@@ -1,5 +1,8 @@
 <?php
 
+use webship\buttons\CloserHtmlView;
+use webship\buttons\StandardButtonHtmlView;
+
 /**
  * View ContentButtonHtmlView.
  *
@@ -62,7 +65,7 @@ class ContentButtonHtmlView extends HtmlView {
         $this->add($this->content);
         $control = ControlPanelHtmlView::create(1, 1, false)->fix();
         $this->content->add($control);
-        $closer = $control->addMini((new CloserHtmlView('close-' . $id))->mini());
+        $closer = $control->addMini((CloserHtmlView::create('close-' . $id))->mini());
         $closer->protocol(Event::CLICK)->removeClass($this, 'active');
 
         $overlay->protocol(Event::CLICK)->toggleClass($this, 'active');

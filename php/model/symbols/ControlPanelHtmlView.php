@@ -1,5 +1,7 @@
 <?php
 
+use webship\buttons\StandardButtonHtmlView;
+
 /**
  * Class ControlPanelHtmlView.
  *

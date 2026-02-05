@@ -1,5 +1,10 @@
 <?php
 
+use webship\buttons\AbortHtmlView;
+use webship\buttons\CloserHtmlView;
+use webship\buttons\StandardButtonHtmlView;
+use webship\buttons\SubmitHtmlView;
+
 /**
  * View ModalHtmlView.
  *
@@ -166,10 +171,11 @@ class ModalHtmlView extends HtmlView {
      * @param string|HtmlView|null $formId The id of the form.
      * @param string[]|string $classes Some additional classes.
      * @return SubmitHtmlView
+     * @throws Exception
      */
     public function submit(string|int $id, string|HtmlView|null $formId = null,
                            string|array $classes = []) : ButtonHtmlView {
-        if ($formId) $submitter = new SubmitHtmlView($id, $formId, $classes);
+        if ($formId) $submitter = SubmitHtmlView::create($id, $classes, $formId);
         else $submitter = StandardButtonHtmlView::create($id, $classes);
         if (!$this->control) {
             $this->control = new ContainerHtmlView(['hor', 'single', 'vcent', 'hcent', 'gap10']);
@@ -185,11 +191,11 @@ class ModalHtmlView extends HtmlView {
      * @param string[]|string $classes Some additional classes.
      * @return AbortHtmlView
      */
-    public function abort(string|int $id, string|array $classes = []) : AbortHtmlView {
-        $classes = is_array($classes) ? $classes : array($classes);
-        $abort = new AbortHtmlView($id, $classes);
+    public function abort(string|int $id, array|string $classes = []) : AbortHtmlView {
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        $abort = AbortHtmlView::create($id, $classes);
         if (!$this->control) {
-            $this->control = new ContainerHtmlView(['hor', 'single', 'vcent', 'hcent', 'gap10']);
+            $this->control = ContainerHtmlView::createIt(['hor', 'single', 'vcent', 'hcent', 'gap10']);
             $this->subviews[0]->subviews[0]->add($this->control);
         }
         $this->control->add($abort);
@@ -211,11 +217,11 @@ class ModalHtmlView extends HtmlView {
 
     /**
      * Return a new container html view.
-     * @param array|string $classes Classes.
+     * @param string[]|string $classes Classes.
      * @return ModalHtmlView
      */
-    public static function _new(string|array $classes = []) : ModalHtmlView {
-        $classes = is_array($classes) ? $classes : array($classes);
+    public static function _new(array|string $classes = []) : ModalHtmlView {
+        $classes = is_array($classes) ? $classes : [ $classes ];
         return new ModalHtmlView($classes);
     }
 

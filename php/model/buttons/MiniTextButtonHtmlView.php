@@ -1,5 +1,10 @@
 <?php
 
+namespace webship\buttons;
+
+use ButtonHtmlView;
+use Tools;
+
 /**
  * View MiniTextButtonHtmlView.
  *
@@ -60,8 +65,7 @@ class MiniTextButtonHtmlView extends ButtonHtmlView {
     public static function create(string|null $id, string|array $texts = [],
                                   array|string $classes = []) : MiniTextButtonHtmlView {
         $view = new MiniTextButtonHtmlView($id, $classes);
-        if (!is_array($texts)) $texts = [ self::getLanguage() => $texts ];
-        foreach ($texts as $l => $text) $view->texts()->text($l, $text);
+        $view->texts($texts);
         return $view;
     }
 

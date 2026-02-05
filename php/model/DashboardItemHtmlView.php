@@ -1,5 +1,7 @@
 <?php
 
+use webship\buttons\CloserHtmlView;
+
 /**
  * Class DashboardItemHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
@@ -78,7 +80,7 @@ class DashboardItemHtmlView extends HtmlView {
             $this->controlPanel->fix()->plain();
             $this->add($this->controlPanel);
         }
-        $closer = new CloserHtmlView($classes);
+        $closer = CloserHtmlView::create(null, $classes);
         $this->controlPanel->addMini($closer);
         $closer->notice(Language::ENGLISH, 'Remove this element from your dashboard');
         $closer->notice(Language::GERMAN,  'Dieses Element von deinem Dashboard löschen');

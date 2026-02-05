@@ -3,10 +3,11 @@
 namespace webship\inputs;
 
 use ContainerHtmlView;
+use Exception;
 use HtmlView;
 use ImageHtmlView;
 use Language;
-use SubmitHtmlView;
+use webship\buttons\SubmitHtmlView;
 use Tools;
 
 /**
@@ -43,6 +44,7 @@ class SearchHtmlView extends ContainerHtmlView {
      * @param string[]|string|null $instructions Instructions that are presented before the search.
      * @param string[]|string|null $notes Notes that are presented over the button.
      * @param string[]|string $classes Some classes.
+     * @throws Exception
      */
     private function __construct(array|string|null $instructions, array|string|null $notes = null,
                                  array|string $classes = []) {
@@ -67,7 +69,7 @@ class SearchHtmlView extends ContainerHtmlView {
 
         // <div>Icons made by <a href="https://www.flaticon.com/authors/prosymbols" title="Prosymbols">Prosymbols</a>
         // from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-        $this->searchButton = new SubmitHtmlView('search-button', $form);
+        $this->searchButton = SubmitHtmlView::create('search-button', [], $form);
         $search->add($this->searchButton);
         $this->searchButton->add(new ImageHtmlView('/vaultui/pic/loupe.png'));
         if ($notes) {
@@ -116,6 +118,7 @@ class SearchHtmlView extends ContainerHtmlView {
      * @param string[]|string|null $instructions Instructions that are presented before the search.
      * @param string[]|string|null $notes Notes that are presented over the button.
      * @param string[]|string $classes Some classes.
+     * @throws Exception
      */
     public static function create(array|string|null $instructions, array|string|null $notes = null,
                                   array|string $classes = []) : SearchHtmlView {

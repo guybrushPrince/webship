@@ -1,5 +1,7 @@
 <?php
 
+use webship\buttons\CloserHtmlView;
+
 /**
  * Class TabContainerItemHtmlView.
  *
@@ -147,7 +149,7 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
      * @return CloserHtmlView
      */
     public function closer(string|array $classes = []) : CloserHtmlView {
-        $closer = new CloserHtmlView($classes);
+        $closer = CloserHtmlView::_new($classes);
         $closer->mini()->plain();
         $closer->notice(Language::ENGLISH, 'Close this tab');
         $closer->notice(Language::GERMAN,  'Tab schließen');

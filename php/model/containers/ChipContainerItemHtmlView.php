@@ -1,5 +1,7 @@
 <?php
 
+use webship\buttons\CloserHtmlView;
+
 /**
  * Class ChipContainerItemHtmlView.
  *
@@ -65,7 +67,7 @@ class ChipContainerItemHtmlView extends ContainerHtmlView {
      * @return CloserHtmlView
      */
     public function closer(string|array $classes = []) : CloserHtmlView {
-        $closer = new CloserHtmlView($classes);
+        $closer = CloserHtmlView::_new($classes);
         $closer->plain()->mini();
         $this->add($closer);
         return $closer;

@@ -1,5 +1,7 @@
 <?php
 
+use webship\buttons\CloserHtmlView;
+
 /**
  * Class WizardMagicHtmlView.
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
@@ -32,7 +34,7 @@ class WizardMagicHtmlView extends HtmlView {
         $view->ref('magic');
         $control = ControlPanelHtmlView::createUnbounded(false)->fix()->reverse();
         $view->add($control);
-        $abortButton = $control->addMini(CloserHtmlView::_new());
+        $abortButton = $control->addMini(CloserHtmlView::create());
         $abortButton->protocol(Event::CLICK)->
             doIt('Delete', ['view' => $view], 'basics')->
             append($finishProtocol);

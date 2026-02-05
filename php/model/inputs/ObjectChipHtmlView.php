@@ -2,7 +2,7 @@
 
 namespace webship\inputs;
 
-use CloserHtmlView;
+use webship\buttons\CloserHtmlView;
 use ContainerHtmlView;
 use HtmlView;
 use Tools;
@@ -141,7 +141,7 @@ class ObjectChipHtmlView extends ContainerHtmlView {
      */
     public function del(?string $id = null, string $img = '/tardis/pic/cancel.svg') : HtmlView {
         $delView = new ContainerHtmlView(['del', 'hor', 'vcent', 'hcent']);
-        $delView->add(CloserHtmlView::_new([], $img, $id)->plain()->mini());
+        $delView->add(CloserHtmlView::create($id, $img)->plain()->mini());
         $this->add($delView);
         return $delView;
     }

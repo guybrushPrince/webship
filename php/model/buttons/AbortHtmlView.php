@@ -1,26 +1,30 @@
 <?php
 
+namespace webship\buttons;
+
+use Tools;
+
 /**
  * View AbortHtmlView.
  *
  * <p>Displays an abort button which is red by default.</p>
  *
  * <code>
- * $abortButton = new AbortHtmlView();
- * $abortButton->texts('abort');
+ * AbortHtmlView::create('abort-1')->texts('Abort')
  * </code>
  *
- * <img src="http://localhost/coast/webship/modeldoc/abortbutton.png" />
+ * <img src="http://localhost/coast/webship/modeldoc/abort.png" />
  *
  * @package webship
  * @subpackge php/model/buttons
  *
- * @author Dr. Dipl.-Inf. Thomas M. Prinz, Franziska Lüder
- * @version 1.2.0
+ * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @author Franziska Lüder
+ * @version 1.5.0
  *
+ * @view
  * @example
- * $abortButton = new AbortHtmlView();
- * $abortButton->texts('abort');
+ *     AbortHtmlView::create('abort-1')->texts('Abort')
  */
 class AbortHtmlView extends StandardButtonHtmlView {
 
@@ -29,7 +33,7 @@ class AbortHtmlView extends StandardButtonHtmlView {
      * @param string|int $id The id.
      * @param string[]|string $classes Some classes.
      */
-    public function __construct(string|int $id, string|array $classes = []) {
+    private function __construct(string|int $id, array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct($id, array_merge(['reset'], $classes), 'reset');
         self::addCSS();
@@ -48,11 +52,9 @@ class AbortHtmlView extends StandardButtonHtmlView {
     /**
      * Create a new abort button.
      * @inheritDoc
-     * @param string|null $id The id of the button.
-     * @param string|array $classes Some classes.
      * @return AbortHtmlView
      */
-    public static function create(?string $id = null, string|array $classes = []): AbortHtmlView {
+    public static function create(?string $id = null, array|string $classes = []) : AbortHtmlView {
         return new AbortHtmlView($id, $classes);
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use webship\buttons\SubmitHtmlView;
+
 include_once dirname(__FILE__) . '/../../../ship/php/EventProtocol.php';
 
 /**

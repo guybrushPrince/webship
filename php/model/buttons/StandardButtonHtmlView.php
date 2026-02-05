@@ -1,5 +1,11 @@
 <?php
 
+namespace webship\buttons;
+
+use ButtonHtmlView;
+use ImageHtmlView;
+use Tools;
+
 /**
  * View StandardButtonHtmlView.
  *
