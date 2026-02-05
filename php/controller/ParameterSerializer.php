@@ -1,6 +1,7 @@
 <?php
 
 use webship\inputs\ContentSelectHtmlView;
+use webship\inputs\InputHtmlView;
 use webship\inputs\MultipleSwitchInputHtmlView;
 
 include_once __DIR__ . '/../../../ship/php/interoperability/ShipperRegister.php';
