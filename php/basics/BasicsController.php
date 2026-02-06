@@ -1,5 +1,7 @@
 <?php
 
+use webship\help\HelpPageHtmlView;
+
 /**
  * Controller BasicsController.
  *

@@ -1,5 +1,14 @@
 <?php
 
+namespace webship\help;
+
+use Event;
+use HtmlActionProtocol;
+use Language;
+use MarkdownHtmlView;
+use ModalHtmlView;
+use Tools;
+use View;
 use webship\buttons\StandardButtonHtmlView;
 
 /**

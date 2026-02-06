@@ -1,5 +1,7 @@
 <?php
 
+use webship\tabs\TabContainerHtmlView;
+
 /**
  * View EditorSplitHtmlView.
  *
@@ -40,11 +42,11 @@ class EditorSplitHtmlView extends HtmlView {
         $this->localStyle('--editor-size: calc(' . $editorSize . '% - var(--separator-size))');
         $this->localStyle('--tools-size: ' . $toolsSize . '%');
 
-        $this->tools = new TabContainerHtmlView('tools');
+        $this->tools = TabContainerHtmlView::create([ 'tools' ]);
         $this->add($this->tools);
         $separator = new HtmlView('separator');
         $this->add($separator);
-        $this->editor = new TabContainerHtmlView('editor');
+        $this->editor = TabContainerHtmlView::create([ 'editor' ]);
         $this->add($this->editor);
 
         $separator->protocol(Event::CLICK)->
