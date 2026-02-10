@@ -39,7 +39,7 @@ class FieldSetHtmlView extends HtmlView {
      * A legend.
      * @var string[]|null
      */
-    private array|string $legend;
+    private array|null $legend;
 
     /**
      * FieldSetHtmlView constructor.
