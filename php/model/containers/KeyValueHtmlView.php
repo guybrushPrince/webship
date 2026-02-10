@@ -1,5 +1,6 @@
 <?php
 
+use webship\forms\FormLabelHtmlView;
 use webship\inputs\InputHtmlView;
 use webship\inputs\SelectHtmlView;
 use webship\inputs\SwitchHtmlView;
@@ -61,7 +62,7 @@ class KeyValueHtmlView extends HtmlView {
         if ($afterText) $valueRatio -= 5;
 
         if (!$for) $keyView = $this->add(new HtmlView(['k']));
-        else $keyView = $this->add(new FormLabelHtmlView($for, ['k']));
+        else $keyView = $this->add(FormLabelHtmlView::create($for, ['k']));
         if ($key instanceof View) $keyView->add($key);
         else {
             if (!is_array($key)) $key = [self::getLanguage() => $key];

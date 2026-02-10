@@ -1,6 +1,7 @@
 <?php
 
 use webship\buttons\CloserHtmlView;
+use webship\symbols\ImageHtmlView;
 
 /**
  * Class WizardMagicHtmlView.

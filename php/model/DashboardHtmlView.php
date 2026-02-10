@@ -1,5 +1,8 @@
 <?php
 
+use webship\dialogs\LoadingHtmlView;
+use webship\symbols\ImageHtmlView;
+
 /**
  * Class DashboardHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz

@@ -1,5 +1,6 @@
 <?php
 
+use webship\containers\StandardHtmlView;
 use webship\inputs\EditableHtmlView;
 
 /**

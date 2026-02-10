@@ -1,5 +1,7 @@
 <?php
 
+use webship\symbols\ImageHtmlView;
+
 /**
  * Class WizardHtmlView.
  * @author Dr. Dipl.-Inf. Thomas M. Prinz

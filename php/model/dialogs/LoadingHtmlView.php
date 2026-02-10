@@ -1,4 +1,9 @@
 <?php
+
+namespace webship\dialogs;
+use HtmlView;
+use Tools;
+
 /**
  * View LoadingHtmlView.
  *
@@ -12,7 +17,7 @@
  * <img src="http://localhost/coast/webship/modeldoc/loading.png" />
  *
  * @package webship
- * @subpackage php/model
+ * @subpackage php/model/dialogs
  *
  * @version 1.1.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
@@ -29,7 +34,7 @@ class LoadingHtmlView extends HtmlView {
      * @param string[]|string $classes Some additional classes.
      */
     public function __construct(array|string $classes = []) {
-        parent::__construct(array_merge(['loading'], is_array($classes) ? $classes : [ $classes ]));
+        parent::__construct(array_merge(['loading'], is_array($classes) ? $classes : [$classes]));
 
         self::addCSS();
     }
@@ -37,7 +42,7 @@ class LoadingHtmlView extends HtmlView {
     /**
      * @inheritdoc
      */
-    public static function addCSS() : void{
+    public static function addCSS() : void {
         self::addStyle(Tools::css('.loading', [], 'width: 100%', 'height: 100%',
             'background: var(--dark-system-background)', 'animation: pulse 2s infinite', 'border-radius: 6px',
             'display: flex', 'flex-direction: row', 'justify-content: center', 'align-items: center'));
@@ -49,7 +54,6 @@ class LoadingHtmlView extends HtmlView {
             '0% { background: var(--loading-dark); } ' .
             '70% { background: var(--loading-light); } ' .
             '100% { background: var(--loading-dark); }'));
-
     }
 
     /**
@@ -61,4 +65,5 @@ class LoadingHtmlView extends HtmlView {
         return new LoadingHtmlView($classes);
     }
 }
+
 ?>

@@ -1,5 +1,6 @@
 <?php
 
+use webship\forms\FormLabelHtmlView;
 use webship\inputs\SelectHtmlView;
 
 /**
@@ -95,7 +96,7 @@ abstract class DashboardItem extends CObject {
 
         $dashGrid = DashGridContainerHtmlView::create($item, $cols, $rows, true);
 
-        $view->add(new FormLabelHtmlView('xDimension', 'hidden'))->texts()->
+        $view->add(FormLabelHtmlView::create('xDimension', 'hidden'))->texts()->
             text(Language::ENGLISH, 'Width')->
             text(Language::GERMAN,  'Breite');
         $selXDim = $view->add(SelectHtmlView::create('xDimension', [], true))->ref('xDimension', 'value');
@@ -104,7 +105,7 @@ abstract class DashboardItem extends CObject {
                 texts()->text(View::getLanguage(), $col);
         });
 
-        $view->add(new FormLabelHtmlView('yDimension', 'hidden'))->texts()->
+        $view->add(FormLabelHtmlView::create('yDimension', 'hidden'))->texts()->
             text(Language::ENGLISH, 'Height')->
             text(Language::GERMAN,  'Höhe');
         $selYDim = $view->add(SelectHtmlView::create('yDimension', [], true))->ref('yDimension', 'value');
@@ -113,7 +114,7 @@ abstract class DashboardItem extends CObject {
                 texts()->text(View::getLanguage(), $row);
         });
 
-        $view->add(new FormLabelHtmlView('xPosition', 'hidden'))->texts()->
+        $view->add(FormLabelHtmlView::create('xPosition', 'hidden'))->texts()->
             text(Language::ENGLISH, 'Position X')->
             text(Language::GERMAN,  'X-Position');
         $selXPos = $view->add(SelectHtmlView::create('xPosition', [], true))->ref('xPosition', 'value');
@@ -122,7 +123,7 @@ abstract class DashboardItem extends CObject {
                 texts()->text(View::getLanguage(), $col);
         });
 
-        $view->add(new FormLabelHtmlView('yPosition', 'hidden'))->texts()->
+        $view->add(FormLabelHtmlView::create('yPosition', 'hidden'))->texts()->
             text(Language::ENGLISH, 'Position Y')->
             text(Language::GERMAN,  'Y-Position');
         $selYPos = $view->add(SelectHtmlView::create('yPosition', [], true))->ref('yPosition', 'value');

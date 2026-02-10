@@ -1,6 +1,7 @@
 <?php
 
 use webship\alerts\InfoHtmlView;
+use webship\symbols\ImageHtmlView;
 
 /**
  * View EmptyContentHtmlView.

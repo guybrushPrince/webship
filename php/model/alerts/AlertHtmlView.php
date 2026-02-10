@@ -3,18 +3,18 @@
 namespace webship\alerts;
 
 use BreakwaterUtil;
-use webship\buttons\CloserHtmlView;
 use ControlPanelHtmlView;
 use DatabaseError;
 use Event;
 use HtmlView;
-use ImageHtmlView;
 use Language;
 use ParsedownExtra;
 use progression\CPTools;
 use Tools;
 use Type;
 use View;
+use webship\buttons\CloserHtmlView;
+use webship\symbols\ImageHtmlView;
 
 /**
  * View AlertHtmlView.

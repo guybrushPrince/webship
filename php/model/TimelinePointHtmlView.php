@@ -1,5 +1,7 @@
 <?php
 
+use webship\symbols\ImageHtmlView;
+
 class TimelinePointHtmlView extends HtmlView {
 
     private HtmlView $left;

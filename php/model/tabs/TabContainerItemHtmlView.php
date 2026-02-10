@@ -6,11 +6,11 @@ use ContainerItemHtmlView;
 use DatabaseError;
 use Event;
 use HtmlView;
-use ImageHtmlView;
 use Language;
 use TextView;
 use Tools;
 use webship\buttons\CloserHtmlView;
+use webship\symbols\ImageHtmlView;
 
 /**
  * View TabContainerItemHtmlView.

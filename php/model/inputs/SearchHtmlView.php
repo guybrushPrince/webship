@@ -5,10 +5,10 @@ namespace webship\inputs;
 use ContainerHtmlView;
 use Exception;
 use HtmlView;
-use ImageHtmlView;
 use Language;
-use webship\buttons\SubmitHtmlView;
 use Tools;
+use webship\buttons\SubmitHtmlView;
+use webship\symbols\ImageHtmlView;
 
 /**
  * View SearchHtmlView.

@@ -1,6 +1,7 @@
 <?php
 
 use webship\inputs\ContentSelectHtmlView;
+use webship\inputs\FieldSetHtmlView;
 use webship\inputs\InputHtmlView;
 use webship\inputs\MultipleSwitchInputHtmlView;
 

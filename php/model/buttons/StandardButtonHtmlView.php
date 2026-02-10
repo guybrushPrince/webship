@@ -3,8 +3,8 @@
 namespace webship\buttons;
 
 use ButtonHtmlView;
-use ImageHtmlView;
 use Tools;
+use webship\symbols\ImageHtmlView;
 
 /**
  * View StandardButtonHtmlView.

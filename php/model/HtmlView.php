@@ -1,5 +1,7 @@
 <?php
 
+use webship\forms\FormHtmlView;
+
 include_once dirname(__FILE__) . '/../../../ship/php/model/View.php';
 
 /**
@@ -366,12 +368,12 @@ class HtmlView extends View {
      * Add a form.
      * @param string $action The action to perform.
      * @param string $method The method.
-     * @param array|string $classes Classes.
+     * @param string[]|string $classes Classes.
      * @return FormHtmlView
      */
-    public function form(string $action = '', string $method = '', $classes = []) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        $formView = new FormHtmlView($action, $method, $classes);
+    public function form(string $action = '', string $method = '', array|string $classes = []) : FormHtmlView {
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        $formView = FormHtmlView::create($classes, $action, $method);
         $this->add($formView);
         return $formView;
     }

@@ -1,5 +1,10 @@
 <?php
 
+namespace webship\containers;
+
+use HtmlView;
+use Tools;
+
 /**
  * View StandardHtmlView.
  *
@@ -9,23 +14,30 @@
  *
  * <p><em>Note:</em> Although this part can be used alone, it is usually used in a specialized class.</p>
  *
+ * <code>
+ * StandardHtmlView::createStandard();
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/standard.png" />
+ *
  * @package webship
  * @subpackge php/model/containers
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.0.0
+ * @version 1.2.0
  *
  * @view
  * @examples
+ *     StandardHtmlView::createStandard();
  */
 class StandardHtmlView extends HtmlView {
 
     /**
      * Constructor.
-     * @param string|string[] $classes Some classes.
+     * @param string[]|string $classes Some classes.
      */
-    public function __construct(string|array $classes = []) {
-        $classes = is_array($classes) ? $classes : [ $classes ];
+    public function __construct(array|string $classes = []) {
+        $classes = is_array($classes) ? $classes : [$classes];
         $classes[] = 'std';
         parent::__construct($classes);
 
@@ -43,6 +55,15 @@ class StandardHtmlView extends HtmlView {
         self::addStyle(Tools::css('.std', ['.p5'], 'padding: 5px'));
         self::addStyle(Tools::css('.std', ['.p10'], 'padding: 10px'));
         self::addStyle(Tools::css('.std', ['.p15'], 'padding: 15px'));
+    }
+
+    /**
+     * Create a standard html view.
+     * @param string[]|string $classes Some classes.
+     * @return StandardHtmlView
+     */
+    public static function createStandard(array|string $classes = []) : StandardHtmlView {
+        return new StandardHtmlView($classes);
     }
 }
 ?>
