@@ -1,5 +1,6 @@
 <?php
 
+use ship\interoperability\ShipperRegister;
 use webship\symbols\ImageHtmlView;
 
 /**

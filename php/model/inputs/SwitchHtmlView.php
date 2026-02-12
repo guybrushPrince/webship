@@ -2,8 +2,8 @@
 
 namespace webship\inputs;
 
+use ship\views\View;
 use Tools;
-use View;
 
 /**
  * View SwitchHtmlView.

@@ -1,6 +1,8 @@
 <?php
 
-include_once __DIR__ . '/../../../ship/php/ActionProtocol.php';
+use ship\protocols\ActionProtocol;
+use ship\protocols\ModifyProtocol;
+use ship\views\View;
 
 /**
  * Class HtmlActionProtocol.
@@ -17,28 +19,14 @@ include_once __DIR__ . '/../../../ship/php/ActionProtocol.php';
  */
 class HtmlActionProtocol extends ActionProtocol {
 
-    /**
-     * The url to the server.
-     * @var bool|string
-     */
-    public static bool|string $serverURL = false;
 
     /**
      * @inheritDoc
      */
     public function __construct(ModifyProtocol $parent, string $controller, string $method,
-                                array $parameters = [], array $title = [], bool|int $seaStar = false) {
+                                array $parameters = [], array $title = [], string|int|null $seaStar = null) {
         parent::__construct($parent, $controller, $method, "HtmlModifyProtocol",
             $parameters, $title, $seaStar);
-        if (!HtmlActionProtocol::$serverURL) {
-            $ini = parse_ini_file(dirname(__FILE__) . "/../../../cfg.ini", TRUE);
-            $urls = $ini["urls"];
-
-            HtmlActionProtocol::$serverURL = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ?
-                    "https://" : "http://") . $_SERVER['SERVER_NAME'] . '/' . $urls['baseUrl'];
-
-            if (!HtmlActionProtocol::$serverURL) HtmlActionProtocol::$serverURL = $urls['fallback'];
-        }
     }
 
     /**
@@ -46,14 +34,14 @@ class HtmlActionProtocol extends ActionProtocol {
      * @throws ReflectionException
      */
     public function generate() : string {
-        if ($this->seaStar !== SeaStarMethod::EVENT) {
+        if (!is_null($this->action) && !array_key_exists($this->action, self::$prohibitedActions)) {
             $reflection = new ReflectionClass($this->controller);
             $reflection = $reflection->getMethod($this->method);
             $parameters = $reflection->getParameters();
             $data = ParameterSerializer::serialize($this, $parameters, $this->parameters);
         }
 
-        if (!$this->seaStar) { // AJAX Call
+        if (is_null($this->action) || !array_key_exists($this->action, self::$prohibitedActions)) { // AJAX Call
             $isGet = (preg_match('/@get(.*)/', $reflection->getDocComment(), $matches) >= 1);
             $without = (preg_match('/@without(.*)/', $reflection->getDocComment(), $matches) >= 1);
             $isCSV = (preg_match('/@CSV(.*)/', $reflection->getDocComment(), $matches) >= 1);
@@ -125,7 +113,7 @@ class HtmlActionProtocol extends ActionProtocol {
         } else { // WebSocket Call
             $code = 'seastar.';
             // Add the method
-            switch ($this->seaStar) {
+            switch ($this->action) {
                 case SeaStarMethod::CALL: { $code .= 'call'; break; }
                 case SeaStarMethod::START: { $code .= 'atStart'; break; }
                 case SeaStarMethod::EVENT: { $code .= 'regListener'; break; }
@@ -133,7 +121,7 @@ class HtmlActionProtocol extends ActionProtocol {
             }
             // Add controller, method and context, event respectively.
             $code .= '("' . $this->controller . '","' . $this->method . '"' . ',';
-            if ($this->seaStar === SeaStarMethod::CALL || $this->seaStar === SeaStarMethod::START) {
+            if (($this->action === SeaStarMethod::CALL || $this->action === SeaStarMethod::START) && isset($data)) {
                 $code .= '{' . implode(',', $data) . '},';
             }
             // Add callbacks.

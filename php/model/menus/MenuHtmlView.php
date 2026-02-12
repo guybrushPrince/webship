@@ -56,7 +56,7 @@ class MenuHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         $tag = parent::generateOpeningTag();
         return '<nav ' . substr($tag, 4) . '<ul>';
     }
@@ -64,7 +64,7 @@ class MenuHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateClosingTag() {
+    public function generateClosingTag() : string {
         return '</ul></nav>';
     }
 

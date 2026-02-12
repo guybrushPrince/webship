@@ -1,5 +1,7 @@
 <?php
 
+use ship\protocols\Protocol;
+
 /**
  * View MovePanelHtmlView.
  *

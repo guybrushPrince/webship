@@ -1,5 +1,8 @@
 <?php
 
+use ship\views\TextView;
+use ship\views\View;
+
 include_once dirname(__FILE__) . '/HtmlView.php';
 
 /**
@@ -46,7 +49,7 @@ class DescribedHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         return '<div class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '">' .
             '<div class="' . implode(' ', array('described-description', $this->descriptionView->id())) . '">' .
             ($this->labelFor ? '<label for="' . $this->labelFor . '">' : '') .
@@ -57,7 +60,7 @@ class DescribedHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateClosingTag() {
+    public function generateClosingTag() : string {
         return '</div>' . '</div>';
     }
 

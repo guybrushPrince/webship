@@ -3,9 +3,9 @@
 namespace webship\inputs;
 
 use HtmlView;
-use IShippable;
-use ShipperRegister;
-use TextView;
+use ship\interoperability\IShippable;
+use ship\interoperability\ShipperRegister;
+use ship\views\TextView;
 use Tools;
 
 /**

@@ -1,5 +1,7 @@
 <?php
 
+use ship\views\View;
+
 /**
  * Class TreeLeafHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz

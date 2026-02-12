@@ -3,8 +3,8 @@
 namespace webship\inputs;
 
 use HtmlView;
+use ship\views\View;
 use Tools;
-use View;
 
 /**
  * View DropDownEntryHtmlView.

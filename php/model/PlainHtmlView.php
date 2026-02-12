@@ -43,14 +43,14 @@ class PlainHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         return $this->content;
     }
 
     /**
      * @inheritDoc
      */
-    public function generateClosingTag() {
+    public function generateClosingTag() : string {
         return '';
     }
 

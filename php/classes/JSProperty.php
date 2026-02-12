@@ -1,14 +1,17 @@
 <?php
+
+use ship\template\Property;
+
 /**
  * Class JSProperty.
  *
  * @package webship
  * @subpackage php/classes
  *
- * @version 1.0
+ * @version 1.2.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  */
-class JSProperty {
+class JSProperty extends Property {
 
     /**
      * The name of the property.

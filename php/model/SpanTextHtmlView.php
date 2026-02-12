@@ -1,4 +1,9 @@
 <?php
+
+use ship\interoperability\ShippingTools;
+use ship\views\TextView;
+use ship\views\View;
+
 /**
  * Class SpanTextHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
@@ -34,12 +39,12 @@ class SpanTextHtmlView extends HtmlView {
 
     /**
      * @see SpanTextHtmlView->addText
-     * @param integer $language The language.
+     * @param int $language The language.
      * @param string $text The text.
      * @return SpanTextHtmlView
      */
-    public function text($language, $text) {
-        $this->addText($language, Tools::maskTypical($text));
+    public function text(int $language, string $text) : static {
+        $this->addText($language, ShippingTools::maskTypical($text));
         return $this;
     }
 
@@ -54,7 +59,7 @@ class SpanTextHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         $code = '<span class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' .
             ($this->data ? ' ' . implode(' ', array_map(function($key, $val) {
                     return 'data-' . $key . ($val !== null ? '="' . $val . '"' : '');
@@ -69,7 +74,7 @@ class SpanTextHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateClosingTag() {
+    public function generateClosingTag() : string {
         return '</span>';
     }
 }

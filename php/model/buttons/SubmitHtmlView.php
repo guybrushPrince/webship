@@ -4,8 +4,8 @@ namespace webship\buttons;
 
 use Exception;
 use progression\CPTools;
+use ship\views\View;
 use Tools;
-use View;
 use webship\forms\FormHtmlView;
 
 /**

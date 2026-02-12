@@ -1,5 +1,7 @@
 <?php
 
+use ship\views\View;
+
 /**
  * View SubMenuHtmlView.
  *
@@ -68,7 +70,7 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         $menuEntries = array_filter($this->subviews, function(View $view) {
             return ($view instanceof MenuEntryHtmlView);
         });
@@ -86,7 +88,7 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
     /**
      * @inheritDoc
      */
-    public function generateClosingTag() {
+    public function generateClosingTag() : string {
         return '</ul></li>';
     }
 

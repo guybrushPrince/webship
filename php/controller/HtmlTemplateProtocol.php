@@ -1,6 +1,9 @@
 <?php
 
-include_once dirname(__FILE__) . '/../../../ship/php/TemplateProtocol.php';
+use ship\protocols\ModifyProtocol;
+use ship\protocols\Protocol;
+use ship\protocols\TemplateProtocol;
+use ship\views\DirectView;
 
 /**
  * Class HtmlTemplateProtocol

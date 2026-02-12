@@ -98,7 +98,7 @@ class LinkHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         $opening = parent::generateOpeningTag();
         if ($this->url instanceof AnchorHtmlView) $url = '#' . $this->url->getName();
         else $url = $this->url;
@@ -110,7 +110,7 @@ class LinkHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateClosingTag() {
+    public function generateClosingTag() : string {
         return '</a>';
     }
 

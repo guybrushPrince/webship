@@ -1,8 +1,9 @@
 <?php
 
+use ship\protocols\EventProtocol;
+use ship\protocols\Protocol;
+use ship\views\DirectView;
 use webship\buttons\SubmitHtmlView;
-
-include_once dirname(__FILE__) . '/../../../ship/php/EventProtocol.php';
 
 /**
  * Class HtmlEventProtocol

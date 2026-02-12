@@ -3,7 +3,7 @@
 namespace webship\inputs;
 
 use HtmlView;
-use TextView;
+use ship\views\TextView;
 use Tools;
 
 /**

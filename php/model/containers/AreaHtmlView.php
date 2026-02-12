@@ -1,5 +1,7 @@
 <?php
 
+use ship\views\TextView;
+
 /**
  * View AreaHtmlView.
  *

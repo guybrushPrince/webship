@@ -4,8 +4,8 @@ namespace webship\inputs;
 
 use Event;
 use HtmlView;
+use ship\views\View;
 use Tools;
-use View;
 
 /**
  * View TextHtmlView.

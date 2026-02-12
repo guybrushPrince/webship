@@ -145,7 +145,7 @@ class OpeningCardHtmlView extends CardHtmlView {
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         if ($this->object) {
             if (!$this->opened) {
                 $this->titleView->protocol(Event::CLICK)->
@@ -159,7 +159,5 @@ class OpeningCardHtmlView extends CardHtmlView {
         }
         return parent::generateOpeningTag();
     }
-
-
 }
 ?>

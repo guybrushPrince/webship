@@ -26,7 +26,7 @@ class ListHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         return '<' . ($this->numbered ? 'ol' : 'ul') . ' class="' .
             implode(' ', array_merge($this->classes, array($this->id()))) . '">';
     }
@@ -34,7 +34,7 @@ class ListHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateClosingTag() {
+    public function generateClosingTag() : string {
         return '</' . ($this->numbered ? 'ol' : 'ul') . '>';
     }
 

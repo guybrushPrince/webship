@@ -1,8 +1,12 @@
 <?php
 
+use ship\interoperability\IShippable;
+use ship\protocols\ModifyProtocol;
+use ship\protocols\TemplateProtocol;
+use ship\views\DirectView;
+use ship\views\TextView;
+use ship\views\View;
 use webship\forms\FormHtmlView;
-
-include_once dirname(__FILE__) . '/../../../ship/php/model/View.php';
 
 /**
  * Class HtmlView
@@ -64,8 +68,8 @@ class HtmlView extends View {
      * @param string[]|string $classes (optional) Possible classes
      */
     public function __construct(string|array $classes = []) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct();
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        parent::__construct(__CLASS__);
         $this->classes = $classes;
     }
 
@@ -73,9 +77,9 @@ class HtmlView extends View {
      * Generates the opening tag.
      * @return string
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         $id = $this->id();
-        return '<div class="' . implode(' ', array_merge($this->classes, array($id))) . '"' .
+        return '<div class="' . implode(' ', array_merge($this->classes, [ $id ])) . '"' .
             ($this->notices ? ' title="' . (array_key_exists(View::getLanguage(), $this->notices) ? $this->notices[View::getLanguage()] : array_pop($this->notices)) . '"' : '') .
             ($id ? ' data-id="' . $id . '"' : '') .
             ($this->data ? ' ' . implode(' ', array_map(function($key, $val) {
@@ -89,14 +93,14 @@ class HtmlView extends View {
      * Generates the closing tag.
      * @return string
      */
-    public function generateClosingTag() {
+    public function generateClosingTag() : string{
         return '</div>';
     }
 
     /**
      * @inheritDoc
      */
-    public function generate($complete = false, $templates = false, $force = false) : string {
+    public function generate(bool $complete = false, bool $templates = false, bool $force = false) : string {
         if (!Tools::isEmpty($this->hints) && !Tools::isEmpty($this->hint(View::getLanguage()))) {
             $this->js('addHintListener("' . $this->idc() . '" , "<ul>' . implode(array_map(function ($str) {
                 return '<li>' . str_replace('"', "'", $str) . '</li>';

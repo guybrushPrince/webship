@@ -1,5 +1,7 @@
 <?php
 
+use ship\views\View;
+
 /**
  * View ButtonHtmlView.
  *
@@ -67,7 +69,7 @@ class ButtonHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         return '<button class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' .
             ($this->id ? ' id="' . $this->id . '"' : '') . ' type="' . $this->type . '"' .
             ($this->notices ? ' title="' . (array_key_exists(View::getLanguage(), $this->notices) ?
@@ -82,7 +84,7 @@ class ButtonHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateClosingTag() {
+    public function generateClosingTag() : string {
         return '</button>';
     }
 

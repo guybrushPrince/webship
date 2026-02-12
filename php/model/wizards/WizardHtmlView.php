@@ -1,5 +1,6 @@
 <?php
 
+use ship\protocols\ModifyProtocol;
 use webship\symbols\ImageHtmlView;
 
 /**

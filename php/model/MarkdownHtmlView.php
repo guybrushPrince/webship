@@ -67,7 +67,7 @@ class MarkdownHtmlView extends ContainerHtmlView {
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         $parsedown = new ParsedownExtra();
         $text = ($this->isFile ? $parsedown->text(file_get_contents($this->fileOrContent)) :
                 $parsedown->text($this->fileOrContent));

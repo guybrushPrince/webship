@@ -2,7 +2,7 @@
 
 namespace webship\inputs;
 
-use IShippable;
+use ship\interoperability\IShippable;
 use Tools;
 
 /**

@@ -1,4 +1,8 @@
 <?php
+
+use ship\controllers\EventAdder;
+use ship\template\TemplateObject;
+
 /**
  * Class BasicEvents.
  *

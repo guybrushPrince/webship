@@ -69,7 +69,7 @@ class CSSColorGradientHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         $tag = parent::generateOpeningTag();
         $tag .= '<div style="left: ' . $this->state . '%" title="' . $this->state . '%"></div>';
         return $tag;

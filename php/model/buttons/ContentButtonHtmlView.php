@@ -1,5 +1,6 @@
 <?php
 
+use ship\views\View;
 use webship\buttons\CloserHtmlView;
 use webship\buttons\StandardButtonHtmlView;
 

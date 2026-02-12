@@ -1,5 +1,7 @@
 <?php
 
+use ship\template\TemplateObject;
+
 class JSFunction {
     private string|TemplateObject $code;
 

@@ -5,8 +5,8 @@ namespace webship\symbols;
 use ContainerHtmlView;
 use HtmlActionProtocol;
 use HtmlView;
+use ship\views\View;
 use Tools;
-use View;
 
 /**
  * View ImageHtmlView.

@@ -3,10 +3,10 @@
 namespace webship\inputs;
 
 use HtmlView;
-use IShippable;
-use ShipperRegister;
+use ship\interoperability\IShippable;
+use ship\interoperability\ShipperRegister;
+use ship\views\View;
 use Tools;
-use View;
 
 /**
  * View InputHtmlView.
@@ -209,7 +209,7 @@ class InputHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generate($complete = false, $templates = false, $force = false) : string {
+    public function generate(bool $complete = false, bool $templates = false, bool $force = false) : string {
         $code = $this->generateOpeningTag();
         $code .= implode(array_map(function(View $view) { return $view->generateSafe(); }, $this->subviews));
         $code .= $this->generateClosingTag();

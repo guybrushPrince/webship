@@ -3,8 +3,8 @@
 namespace webship\forms;
 
 use HtmlView;
-use IShippable;
-use ShipperRegister;
+use ship\interoperability\IShippable;
+use ship\interoperability\ShipperRegister;
 use Tools;
 use webship\inputs\InputHtmlView;
 use webship\inputs\SelectHtmlView;

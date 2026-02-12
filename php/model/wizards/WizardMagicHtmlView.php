@@ -1,5 +1,6 @@
 <?php
 
+use ship\protocols\Protocol;
 use webship\buttons\CloserHtmlView;
 use webship\symbols\ImageHtmlView;
 

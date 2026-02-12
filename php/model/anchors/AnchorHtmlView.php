@@ -55,7 +55,7 @@ class AnchorHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         $opening = parent::generateOpeningTag();
         return '<a name="' . $this->name . '"' . substr($opening, 4);
     }
@@ -63,7 +63,7 @@ class AnchorHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateClosingTag() {
+    public function generateClosingTag() : string {
         return '</a>';
     }
 

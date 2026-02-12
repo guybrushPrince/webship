@@ -1,5 +1,7 @@
 <?php
 
+use ship\interoperability\IShippable;
+use ship\interoperability\ShipperRegister;
 use webship\containers\StandardHtmlView;
 use webship\inputs\EditableHtmlView;
 

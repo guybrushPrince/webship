@@ -1,5 +1,7 @@
 <?php
 
+use ship\protocols\DialogProtocol;
+
 /**
  * Class HtmlDialogProtocol
  * @author Dr. Dipl.-Inf. Thomas M. Prinz

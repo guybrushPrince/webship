@@ -2,7 +2,7 @@
 
 namespace webship\inputs;
 
-use View;
+use ship\views\View;
 
 /**
  * View CheckboxHtmlView.

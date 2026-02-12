@@ -1,5 +1,8 @@
 <?php
 
+use ship\interoperability\IShippable;
+use ship\interoperability\ShipperRegister;
+
 /**
  * View MovePanelItemHtmlView.
  *
@@ -162,7 +165,7 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         if ($this->isDraggable) $this->showMoves = false;
         $key = null;
         if ($this->relatedObject) {
@@ -200,7 +203,7 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
     /**
      * @inheritDoc
      */
-    public function generateClosingTag() {
+    public function generateClosingTag() : string {
         $closing = '';
         if ($this->showMoves) {
             $closing .= '<div class="' . implode(' ', ['move', 'down', $this->id() . '-down']) . '" ' .

@@ -122,14 +122,14 @@ class RibbonHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         return parent::generateOpeningTag() . '<span>';
     }
 
     /**
      * @inheritDoc
      */
-    public function generateClosingTag() {
+    public function generateClosingTag() : string {
         return '</span>' . parent::generateClosingTag();
     }
 

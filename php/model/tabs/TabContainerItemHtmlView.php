@@ -7,7 +7,7 @@ use DatabaseError;
 use Event;
 use HtmlView;
 use Language;
-use TextView;
+use ship\views\TextView;
 use Tools;
 use webship\buttons\CloserHtmlView;
 use webship\symbols\ImageHtmlView;

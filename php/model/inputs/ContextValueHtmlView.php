@@ -10,9 +10,9 @@ use progression\IProgressionSerializable;
 use progression\NotImplementedException;
 use progression\SimplePersistence;
 use progression\ui\Representer;
-use TextView;
+use ship\views\TextView;
+use ship\views\View;
 use Tools;
-use View;
 
 /**
  * View ContextValueHtmlView.

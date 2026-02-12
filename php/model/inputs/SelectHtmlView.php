@@ -3,8 +3,8 @@
 namespace webship\inputs;
 
 use HtmlView;
-use IShippable;
 use Language;
+use ship\interoperability\IShippable;
 use Tools;
 
 /**

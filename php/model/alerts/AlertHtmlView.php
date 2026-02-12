@@ -10,9 +10,9 @@ use HtmlView;
 use Language;
 use ParsedownExtra;
 use progression\CPTools;
+use ship\views\View;
 use Tools;
 use Type;
-use View;
 use webship\buttons\CloserHtmlView;
 use webship\symbols\ImageHtmlView;
 

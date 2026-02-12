@@ -1,5 +1,13 @@
 <?php
 
+use ship\interoperability\Context;
+use ship\interoperability\IShippable;
+use ship\interoperability\ShipperRegister;
+use ship\outputs\Script;
+use ship\protocols\Protocol;
+use ship\template\TemplateObject;
+use ship\views\DirectView;
+use ship\views\View;
 use webship\inputs\ContentSelectHtmlView;
 use webship\inputs\FieldSetHtmlView;
 use webship\inputs\InputHtmlView;

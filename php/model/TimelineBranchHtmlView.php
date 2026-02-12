@@ -84,7 +84,7 @@ class TimelineBranchHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         $open = parent::generateOpeningTag();
         return substr($open, 0, -1) . ' style="--branches: ' . (count($this->box->subviews)) . '">';
     }

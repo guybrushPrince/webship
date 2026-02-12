@@ -7,8 +7,8 @@ use HtmlActionProtocol;
 use Language;
 use MarkdownHtmlView;
 use ModalHtmlView;
+use ship\views\View;
 use Tools;
-use View;
 use webship\buttons\StandardButtonHtmlView;
 
 /**

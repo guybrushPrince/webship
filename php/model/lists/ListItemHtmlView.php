@@ -18,7 +18,7 @@ class ListItemHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         return '<li class="' .
             implode(' ', array_merge($this->classes, array($this->id()))) . '">';
     }
@@ -26,7 +26,7 @@ class ListItemHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateClosingTag() {
+    public function generateClosingTag() : string {
         return '</li>';
     }
 

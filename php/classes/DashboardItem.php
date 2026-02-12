@@ -1,5 +1,6 @@
 <?php
 
+use ship\views\View;
 use webship\forms\FormLabelHtmlView;
 use webship\inputs\SelectHtmlView;
 

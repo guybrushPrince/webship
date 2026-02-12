@@ -6,11 +6,11 @@ use ContainerHtmlView;
 use Event;
 use HtmlActionProtocol;
 use HtmlView;
-use IShippable;
 use Language;
 use progression\NotImplementedException;
 use progression\ui\Representer;
-use ShipperRegister;
+use ship\interoperability\IShippable;
+use ship\interoperability\ShipperRegister;
 use Tools;
 
 /**

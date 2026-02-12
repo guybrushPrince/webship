@@ -54,7 +54,7 @@ class ChipContainerItemHtmlView extends ContainerHtmlView {
      * @deprecated
      * @inheritDoc
      */
-    public function generateOpeningTag() {
+    public function generateOpeningTag() : string {
         if ($this->subviews[0] instanceof CloserHtmlView) {
             $this->subviews[] = array_shift($this->subviews);
         }

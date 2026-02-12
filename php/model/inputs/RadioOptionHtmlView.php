@@ -3,8 +3,8 @@
 namespace webship\inputs;
 
 use HtmlView;
-use IShippable;
-use ShipperRegister;
+use ship\interoperability\IShippable;
+use ship\interoperability\ShipperRegister;
 
 /**
  * View RadioOptionHtmlView.

@@ -71,7 +71,7 @@ It would also be possible to define some actions directly in the *Protocol*, how
 For example, the *EventAdder.php* extension with the *Protocol Template* for ```LoadListOfBeautifulThings``` could look like this:
 
 ```php
-class BeautifulEvents extends EventAdder {
+use ship\controllers\ActionRegister;use ship\controllers\EventAdder;use ship\template\TemplateObject;class BeautifulEvents extends EventAdder {
 
     public const SCOPE = 'beautifulThings';
 

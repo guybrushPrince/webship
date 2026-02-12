@@ -1,6 +1,13 @@
 <?php
 
-include_once __DIR__ . '/../../../ship/php/ModifyProtocol.php';
+use ship\interoperability\IShippable;
+use ship\interoperability\ShipperRegister;
+use ship\protocols\ModifyProtocol;
+use ship\protocols\Protocol;
+use ship\protocols\TemplateProtocol;
+use ship\template\TemplateObject;
+use ship\views\DirectView;
+use ship\views\View;
 
 /**
  * Class HtmlModifyProtocol.
