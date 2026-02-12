@@ -1,6 +1,6 @@
 let createNewTab = function (event, id, hD = 1, tc = '.tab', tcc = '.tab-content',
                              thc = '.tab-header', ac = 'active') {
-    if ($(event.target).parent(id).length) {
+    if ($(event.target).parent('.' + $(id).data('id')).length > 0) {
         let max = Math.max.apply(Math, $(id).children(tc).map((i, c) => {
             return parseInt($(c).css("z-index"))
         }));
@@ -24,7 +24,7 @@ let createNewTab = function (event, id, hD = 1, tc = '.tab', tcc = '.tab-content
 };
 let closeTab = function (event, id, dE, hD = 1, tc = '.tab', tcc = '.tab-content',
                          thc = '.tab-header', ac = 'active') {
-    if ($(event.target).parent(id).length) {
+    if ($(event.target).parent('.' + $(id).data('id')).length > 0) {
         let missing = parseFloat($(event.target).children(".tab-header").css("width")) + hD;
         let next = $(event.target).nextAll();
         $(event.target).trigger(dE).remove();
