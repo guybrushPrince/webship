@@ -199,10 +199,12 @@ class DashboardHtmlView extends HtmlView {
                 $it = $view->item();
                 $it->notice(Language::ENGLISH, 'Click to add your own content');
                 $it->notice(Language::GERMAN, 'Klicken, um deinen eigenen Inhalt auf das Dasbhoard zu legen');
-                if ($user) $it->access('survey-menu')->
-                protocol(Event::CLICK)->
-                mousePosition('dashboard-menu')->
-                addClass('dashboard-menu', 'active');;
+                if ($user) {
+                    $it->access('survey-menu')->
+                        protocol(Event::CLICK)->
+                        mousePosition('dashboard-menu')->
+                        addClass('dashboard-menu', 'active');
+                }
             }
         } else {
             $view->item([], 1, $cols, 1, $rows)->add(new LoadingHtmlView());

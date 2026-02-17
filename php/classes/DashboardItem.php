@@ -3,7 +3,7 @@
 namespace webship;
 
 use CObject;
-use DashboardItemPersistentTrait;
+use webship\DashboardItemPersistentTrait;
 use DatabaseError;
 use Language;
 use ship\views\View;
