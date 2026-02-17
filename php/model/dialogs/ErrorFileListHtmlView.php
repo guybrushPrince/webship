@@ -1,6 +1,13 @@
 <?php
 
+namespace webship\dialogs;
+
+use Event;
+use Tools;
 use webship\buttons\StandardButtonHtmlView;
+use webship\containers\ContainerHtmlView;
+use webship\contents\PlainHtmlView;
+use webship\WebshipTools;
 
 /**
  * View ErrorFileListHtmlView.
@@ -33,7 +40,7 @@ class ErrorFileListHtmlView extends StandardButtonHtmlView {
      * @param string[]|string $classes Some classes.
      */
     private function __construct(string $id, array|string $classes = []) {
-        if (!is_array($classes)) $classes = [ $classes ];
+        if (!is_array($classes)) $classes = [$classes];
         $classes[] = 'gen-error';
         parent::__construct($id, $classes);
 
@@ -44,30 +51,30 @@ class ErrorFileListHtmlView extends StandardButtonHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.gen-error', [], 'position: relative'));
-        self::addStyle(Tools::css('.gen-error', [' > ', 'div.container'],
+        self::addStyle(WebshipTools::css('.gen-error', [], 'position: relative'));
+        self::addStyle(WebshipTools::css('.gen-error', [' > ', 'div.container'],
             'position: fixed', 'top: 0', 'left: 0', 'width: 100%', 'height: 100%',
             'background: var(--window-overlay)', 'z-index: 100001', 'overflow-y: auto'));
-        self::addStyle(Tools::css('.gen-error', [' > ', 'div.container', ' > ', '.container'],
+        self::addStyle(WebshipTools::css('.gen-error', [' > ', 'div.container', ' > ', '.container'],
             'position: absolute', 'left: 12.5%', 'top: 10%', 'width: 75%', 'padding: 20px',
             'box-sizing: border-box', 'overflow-y: initial', 'background: var(--neutral)'));
-        self::addStyle(Tools::css('.gen-error', [' > ', 'div.invisible'],
+        self::addStyle(WebshipTools::css('.gen-error', [' > ', 'div.invisible'],
             'display: none'));
-        self::addStyle(Tools::css('.gen-error', [' ', 'pre'],
+        self::addStyle(WebshipTools::css('.gen-error', [' ', 'pre'],
             'padding: 10px', 'background: var(--ultra-light-system-background)', 'margin-top: 0',
             'border: 1px solid var(--border-6)', 'box-sizing: border-box', 'font-size: 10px',
             'font-family: monospace', 'text-align: left', 'width: 100%'));
-        self::addStyle(Tools::css('.gen-error', [' ', 'pre:before'],
+        self::addStyle(WebshipTools::css('.gen-error', [' ', 'pre:before'],
             'content: \'[... last 100 lines ...]\'', 'display: block', 'margin-bottom: 20px'));
-        self::addStyle(Tools::css('.gen-error', [' ', '.phase'],
+        self::addStyle(WebshipTools::css('.gen-error', [' ', '.phase'],
             'font-size: 14px', 'font-weight: bold', 'letter-spacing: 2px'));
-        self::addStyle(Tools::css('.gen-error', [' ', '.phase-file'],
+        self::addStyle(WebshipTools::css('.gen-error', [' ', '.phase-file'],
             'font-family: monospace', 'font-size: 11px', 'font-weight: bold', 'background: var(--border-6)',
             'padding: 5px'));
-        self::addStyle(Tools::css('.gen-error', [' ', '.error'],
+        self::addStyle(WebshipTools::css('.gen-error', [' ', '.error'],
             'position: relative'));
-        self::addStyle(Tools::css('.gen-error', [' ', '.error:after'],
-    'content: \'\'', 'display: block', 'position: absolute', 'top: 0', 'left: 0', 'width: 100%',
+        self::addStyle(WebshipTools::css('.gen-error', [' ', '.error:after'],
+            'content: \'\'', 'display: block', 'position: absolute', 'top: 0', 'left: 0', 'width: 100%',
             'height: 100%', 'background: var(--error-background-contrast)', 'opacity: 0.4'));
     }
 
@@ -95,12 +102,12 @@ class ErrorFileListHtmlView extends StandardButtonHtmlView {
         $subViews = [];
         $k = 1;
         foreach ($information as $info) {
-            $info = is_array($info) ? $info : [ $info ];
+            $info = is_array($info) ? $info : [$info];
             foreach ($info as $value) {
                 $key = $k;
                 $lPV = ContainerHtmlView::createIt(['ver']);
                 $content = '';
-                if (Tools::endsWith('.log', $value)) {
+                if (WebshipTools::endsWith('.log', $value)) {
                     $tex = strpos($value, '-tex') > 0;
                     $sweave = strpos($value, '-sweave') > 0;
                     $lPV->container('phase-file')->texts(basename($value));
@@ -115,7 +122,7 @@ class ErrorFileListHtmlView extends StandardButtonHtmlView {
                     } else {
                         $key = 'y-' . $key;
                     }
-                } else if (Tools::endsWith('.ini', $value)) {
+                } else if (WebshipTools::endsWith('.ini', $value)) {
                     $content = Tools::getLastLinesOfFile($value, 100);
                 } else {
                     $content = $value . PHP_EOL . PHP_EOL;

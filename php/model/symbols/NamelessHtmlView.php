@@ -1,7 +1,18 @@
 <?php
 
+namespace webship\symbols;
+
+use AccessCreationHelper;
+use DatabaseError;
+use DescribableObject;
+use ITextBoxUser;
+use Language;
+use Persistence;
 use ship\interoperability\ShipperRegister;
-use webship\symbols\ImageHtmlView;
+use TextController;
+use webship\contents\PlainHtmlView;
+use webship\core\HtmlView;
+use webship\WebshipTools;
 
 /**
  * Class NamelessHtmlView.
@@ -26,16 +37,16 @@ class NamelessHtmlView extends HtmlView {
      * @throws DatabaseError
      */
     private function __construct(ITextBoxUser|DescribableObject $target,
-                                string|array|null $fields = null, int $language = Language::GERMAN,
-                                bool $textBox = true, ?string $defaultText = null,
-                                ?string $img = '/webship/pic/unknown.svg', array|string $classes = []) {
-        if (!is_array($classes)) $classes = [ $classes ];
+                                 string|array|null $fields = null, int $language = Language::GERMAN,
+                                 bool $textBox = true, ?string $defaultText = null,
+                                 ?string $img = '/webship/pic/unknown.svg', array|string $classes = []) {
+        if (!is_array($classes)) $classes = [$classes];
         $classes[] = 'unknown';
         $classes[] = 'really';
         parent::__construct($classes);
 
-        if (!$fields) $fields = [ 'header '];
-        else if (!is_array($fields)) $fields = [ $fields ];
+        if (!$fields) $fields = ['header '];
+        else if (!is_array($fields)) $fields = [$fields];
 
         $code = '';
         foreach ($fields as $field) {
@@ -46,7 +57,7 @@ class NamelessHtmlView extends HtmlView {
             $imageView = new ImageHtmlView($img);
             $this->add($imageView);
             $imageView->notice(Language::ENGLISH, 'You do not have specified any text yet');
-            $imageView->notice(Language::GERMAN,  'Du hast noch keinen Text spezifiziert');
+            $imageView->notice(Language::GERMAN, 'Du hast noch keinen Text spezifiziert');
         }
 
         self::addCSS();
@@ -57,14 +68,14 @@ class NamelessHtmlView extends HtmlView {
      * @return void
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.unknown', [], 'width: -moz-fit-content', 'width: fit-content',
+        self::addStyle(WebshipTools::css('.unknown', [], 'width: -moz-fit-content', 'width: fit-content',
             'display: flex', 'flex-direction: row'));
-        self::addStyle(Tools::css('.unknown', [' > ', 'span:empty'], 'display: none'));
-        self::addStyle(Tools::css('.unknown', [' > ', 'img'], 'height: 10px'));
-        self::addStyle(Tools::css('.unknown.hidden', [' > ', 'img'], 'display: none'));
-        self::addStyle(Tools::css('.unknown', [' > ', 'span:not(:empty)', ' ~ ', 'img'],
+        self::addStyle(WebshipTools::css('.unknown', [' > ', 'span:empty'], 'display: none'));
+        self::addStyle(WebshipTools::css('.unknown', [' > ', 'img'], 'height: 10px'));
+        self::addStyle(WebshipTools::css('.unknown.hidden', [' > ', 'img'], 'display: none'));
+        self::addStyle(WebshipTools::css('.unknown', [' > ', 'span:not(:empty)', ' ~ ', 'img'],
             'display: none'));
-        self::addStyle(Tools::css('.unknown', [' > ', 'span:not(:empty)', ' ~ ', 'span'],
+        self::addStyle(WebshipTools::css('.unknown', [' > ', 'span:not(:empty)', ' ~ ', 'span'],
             'display: none'));
     }
 
@@ -88,7 +99,7 @@ class NamelessHtmlView extends HtmlView {
                                   ?bool $invisible = false,
                                   array|string $classes = []) : string {
         if ($invisible) {
-            if (!is_array($classes)) $classes = [ $classes ];
+            if (!is_array($classes)) $classes = [$classes];
             $classes[] = 'hidden';
         }
         return (new NamelessHtmlView($target, $fields, $language, $textBox, $defaultText, $img, $classes))->stringify();
@@ -107,7 +118,7 @@ class NamelessHtmlView extends HtmlView {
         else $alternative = strtoupper($alternative);
         return [
             Language::ENGLISH => '<span class="intext intext-without">WITHOUT ' . $alternative . '</span>',
-            Language::GERMAN  => '<span class="intext intext-without">OHNE ' . $alternative . '</span>'
+            Language::GERMAN => '<span class="intext intext-without">OHNE ' . $alternative . '</span>'
         ][$language];
     }
 
@@ -178,6 +189,5 @@ class NamelessHtmlView extends HtmlView {
         return '<span data-' . $entry . '="' . ShipperRegister::convertKey($obj->getKey()) . '" ' .
             'data-field="' . $field . '" ' . 'data-lang="' . $language . '">' . $text . '</span>';
     }
-
 }
 ?>

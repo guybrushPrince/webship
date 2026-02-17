@@ -1,4 +1,7 @@
 <?php
+
+namespace webship;
+
 /**
  * Class JSObject.
  *
@@ -48,7 +51,7 @@ class JSObject {
      * @param array $properties A named array with additional properties.
      */
     public function __construct(string $name, string $idProp = 'id', string $classProp = 'class',
-                                array $properties = []) {
+                                array  $properties = []) {
         $this->name = $name;
         $this->idProp = $idProp;
         $this->classProp = $classProp;

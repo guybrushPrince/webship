@@ -2,16 +2,16 @@
 
 namespace webship\inputs;
 
-use ContainerHtmlView;
 use Event;
-use HtmlActionProtocol;
-use HtmlView;
-use Language;
 use progression\NotImplementedException;
 use progression\ui\Representer;
 use ship\interoperability\IShippable;
 use ship\interoperability\ShipperRegister;
-use Tools;
+use ship\interoperability\SLanguage as Language;
+use webship\containers\ContainerHtmlView;
+use webship\core\HtmlView;
+use webship\protocols\HtmlActionProtocol;
+use webship\WebshipTools;
 
 /**
  * View ContentSelectHtmlView.
@@ -102,15 +102,15 @@ class ContentSelectHtmlView extends SelectHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.content-select', [], 'position: relative',
+        self::addStyle(WebshipTools::css('.content-select', [], 'position: relative',
             'min-width: 100px', '--closed-scale: 1', '--closed-translate: none', '--closed-width: initial',
             '--closed-height: initial', 'padding-right: 13px', '--list-height: 40px', 'padding-left: 5px',
             'height: 40px', 'min-height: 40px'));
 
-        self::addStyle(Tools::css('.content-select.mini', [], 'min-height: 20px', 'height: 20px',
+        self::addStyle(WebshipTools::css('.content-select.mini', [], 'min-height: 20px', 'height: 20px',
             'max-height: 20px', '--list-height: 20px'));
 
-        self::addStyle(Tools::css('.content-select', [' > ', '.c-list'], 'z-index: 10',
+        self::addStyle(WebshipTools::css('.content-select', [' > ', '.c-list'], 'z-index: 10',
             'position: fixed',
             'min-width: 150px', 'max-height: 400px', 'flex-wrap: nowrap', 'overflow-y: auto',
             'width: -moz-fit-content',
@@ -118,7 +118,7 @@ class ContentSelectHtmlView extends SelectHtmlView {
             'border: 2px solid var(--light-system-background)', 'box-sizing: content-box',
             'overflow-x: hidden'));
 
-        self::addStyle(Tools::css('.content-select:not(.' . self::_OPEN . ')', [' > ', '.c-list'],
+        self::addStyle(WebshipTools::css('.content-select:not(.' . self::_OPEN . ')', [' > ', '.c-list'],
             'min-width: auto', 'z-index: initial',
             'width: fit-content', 'height: var(--list-height)', 'min-height: var(--list-height)',
             'max-height: var(--list-height)', 'padding: 0',
@@ -126,58 +126,58 @@ class ContentSelectHtmlView extends SelectHtmlView {
             'border: none', 'align-items: center', 'justify-content: flex-start', 'overflow-y: hidden',
             'flex-wrap: nowrap', 'flex-direction: row'));
 
-        self::addStyle(Tools::css('.content-select', [' > ', '.c-list', ' > ', 'div'],
+        self::addStyle(WebshipTools::css('.content-select', [' > ', '.c-list', ' > ', 'div'],
             'position: relative', 'cursor: pointer', 'padding: 4px', /*'min-height: 40px',*/
             'border-bottom: 1px solid var(--light-system-background)', 'box-sizing: content-box', 'margin: 0'));
-        self::addStyle(Tools::css('.content-select', [' > ', '.c-list', ' > ', 'div:last-child'],
+        self::addStyle(WebshipTools::css('.content-select', [' > ', '.c-list', ' > ', 'div:last-child'],
             'border-bottom: none'));
 
-        self::addStyle(Tools::css('.content-select', [' > ', '.c-list', ' > ', 'div.' . self::_SELECTED],
+        self::addStyle(WebshipTools::css('.content-select', [' > ', '.c-list', ' > ', 'div.' . self::_SELECTED],
             'background: var(--login-panel)'));
 
-        self::addStyle(Tools::css('.content-select', [' > ', '.c-list', ' > ', 'div:after'],
+        self::addStyle(WebshipTools::css('.content-select', [' > ', '.c-list', ' > ', 'div:after'],
             'content: ""', 'position: absolute', 'width: 100%', 'height: 100%', 'left: 0', 'top: 0'));
-        self::addStyle(Tools::css('.content-select', [' > ', '.c-list', ' > ', 'div:hover'],
+        self::addStyle(WebshipTools::css('.content-select', [' > ', '.c-list', ' > ', 'div:hover'],
             'background: var(--light-system-background)'));
-        self::addStyle(Tools::css('.content-select', [' > ', '.c-list', ' > ', 'div.def', ' > ', '*'],
+        self::addStyle(WebshipTools::css('.content-select', [' > ', '.c-list', ' > ', 'div.def', ' > ', '*'],
             'min-height: 32px'));
-        self::addStyle(Tools::css('.content-select:not(.' . self::_OPEN . ')',
+        self::addStyle(WebshipTools::css('.content-select:not(.' . self::_OPEN . ')',
             [' > ', '.c-list', ' > ', 'div.def', ' > ', '*'], 'min-height: initial',
             'height: 100%', 'padding: 0 5px'));
-        self::addStyle(Tools::css('.content-select.' . self::_OPEN, [' > ', '.c-list', ' > ',
+        self::addStyle(WebshipTools::css('.content-select.' . self::_OPEN, [' > ', '.c-list', ' > ',
             'div:before'],
             'content: ""', 'position: absolute', 'width: 5px', 'height: 100%', 'left: 0', 'top: 0'));
-        self::addStyle(Tools::css('.content-select.' . self::_OPEN, [' > ', '.c-list', ' > ',
+        self::addStyle(WebshipTools::css('.content-select.' . self::_OPEN, [' > ', '.c-list', ' > ',
             'div.' . self::_SELECTED . ':before'],'background: var(--login-border)'));
 
-        self::addStyle(Tools::css('.content-select:not(.' . self::_OPEN . ')', [' > ', '.c-list', ' > ',
+        self::addStyle(WebshipTools::css('.content-select:not(.' . self::_OPEN . ')', [' > ', '.c-list', ' > ',
             'div:not(.' . self::_SELECTED . ')'],
             'display: none'));
-        self::addStyle(Tools::css('.content-select:not(.' . self::_OPEN . ')', [' > ', '.c-list', ' > ',
+        self::addStyle(WebshipTools::css('.content-select:not(.' . self::_OPEN . ')', [' > ', '.c-list', ' > ',
             'div.' . self::_SELECTED],
             'background-color: inherit', 'border: none', 'padding: 0', 'flex-wrap: nowrap'));
-        self::addStyle(Tools::css('.content-select:not(.' . self::_OPEN . ')', [' > ', '.c-list', ' > ',
+        self::addStyle(WebshipTools::css('.content-select:not(.' . self::_OPEN . ')', [' > ', '.c-list', ' > ',
             'div.' . self::_SELECTED, ' > ', '*'],'scale: var(--closed-scale)',
             'margin: var(--closed-translate)'
         ));
-        self::addStyle(Tools::css('.content-select:not(.' . self::_OPEN . ')',
+        self::addStyle(WebshipTools::css('.content-select:not(.' . self::_OPEN . ')',
             [' > ', '.c-list', ' > ', 'div.def.' . self::_SELECTED], 'width: 100%', 'height: 100%',
             'translate: none', 'scale: none', 'min-height: initial'));
 
-        self::addStyle(Tools::css('.content-select', [' > ', '.overlay'],
+        self::addStyle(WebshipTools::css('.content-select', [' > ', '.overlay'],
             'position: absolute', 'width: 100%', 'height: 100%', 'left: 0', 'top: 0',
             'cursor: pointer', 'display: none',
             'box-sizing: border-box', 'border: 1px solid var(--border-3)', 'border-radius: 2px'));
-        self::addStyle(Tools::css('.content-select.mini', [' > ', '.overlay'],
+        self::addStyle(WebshipTools::css('.content-select.mini', [' > ', '.overlay'],
             'border-color: var(--font-info)', 'border-radius: 5px'));
-        self::addStyle(Tools::css('.content-select:not(' . self::_OPEN . ')', [' > ', '.overlay'],
+        self::addStyle(WebshipTools::css('.content-select:not(' . self::_OPEN . ')', [' > ', '.overlay'],
             'display: initial'));
-        self::addStyle(Tools::css('.content-select', [' > ', '.overlay:after'], 'position: absolute',
+        self::addStyle(WebshipTools::css('.content-select', [' > ', '.overlay:after'], 'position: absolute',
             'right: 0', 'top: 0', 'height: 100%', 'width: 7px', 'margin-right: 3px', 'content: ""',
             'background-image: url("' .
             HtmlActionProtocol::$serverURL . '/webship/pic/arrow-down-sign-to-navigate.svg")',
             'background-repeat: no-repeat', 'background-size: 7px 7px', 'background-position-y: center'));
-        self::addStyle(Tools::css('.content-select.mini', [' > ', '.overlay:after'],
+        self::addStyle(WebshipTools::css('.content-select.mini', [' > ', '.overlay:after'],
             'filter: brightness(0) saturate(100%) invert(39%) sepia(18%) saturate(1267%) hue-rotate(155deg) brightness(97%) contrast(98%)'));
     }
 
@@ -293,7 +293,7 @@ class ContentSelectHtmlView extends SelectHtmlView {
                 }
             }
         }
-        if (!$hasSelected && !Tools::isEmpty($this->contentOptions->subviews)) {
+        if (!$hasSelected && !WebshipTools::isEmpty($this->contentOptions->subviews)) {
             $this->contentOptions->subviews[0]->addClass(self::_SELECTED);
         }
         $code = parent::generateOpeningTag();

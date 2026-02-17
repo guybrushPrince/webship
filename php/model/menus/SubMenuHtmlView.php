@@ -1,6 +1,10 @@
 <?php
 
+namespace webship\menus;
+
 use ship\views\View;
+use webship\protocols\HtmlActionProtocol;
+use webship\WebshipTools;
 
 /**
  * View SubMenuHtmlView.
@@ -20,8 +24,8 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
      * @param string[]|string $classes Some classes.
      */
     public function __construct(array|string $classes = []) {
-        $classes = is_array($classes) ? $classes : [ $classes ];
-        parent::__construct(array_merge([ 'sub-menu-entry' ], $classes));
+        $classes = is_array($classes) ? $classes : [$classes];
+        parent::__construct(array_merge(['sub-menu-entry'], $classes));
 
         self::addCSS();
     }
@@ -32,29 +36,29 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
     public static function addCSS() : void {
         // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from
         // <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
-        self::addStyle(Tools::css('nav.menu', [' ', 'li.sub-menu-entry', ':after'],
+        self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.sub-menu-entry', ':after'],
             'content: ""', 'margin-left: 5px', 'background-image: url("' .
             HtmlActionProtocol::$serverURL . '/webship/pic/arrow-down-sign-to-navigate.svg")',
             'background-repeat: no-repeat', 'width: 10px', 'height: 10px', 'background-size: cover',
             'box-sizing: border-box'));
 
-        self::addStyle(Tools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul'],
+        self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul'],
             'display: none', 'list-style-type: none', 'margin: 0', 'background: var(--main-menu-hover)',
             'padding: 0',
             '-webkit-box-shadow: var(--shadow-flow-4)', '-moz-box-shadow: var(--shadow-flow-4)',
             'box-shadow: var(--shadow-flow-4)', 'border-radius: 0 6px 6px 6px'));
 
-        self::addStyle(Tools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li'],
+        self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li'],
             'width: fit-content',
             'height: 50px', 'padding: 10px 20px', 'box-sizing: border-box', 'position: relative', 'flex-basis: 100%',
             'width: -moz-fit-content'));
 
-        self::addStyle(Tools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li', ':hover'],
+        self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li', ':hover'],
             'background: var(--main-menu)'));
 
-        self::addStyle(Tools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li:first-child'],
+        self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li:first-child'],
             'border-radius: 0 6px 0 0'));
-        self::addStyle(Tools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li:last-child'],
+        self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li:last-child'],
             'border-radius: 0 0 6px 6px'));
     }
 
@@ -71,10 +75,10 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
      * @inheritDoc
      */
     public function generateOpeningTag() : string {
-        $menuEntries = array_filter($this->subviews, function(View $view) {
+        $menuEntries = array_filter($this->subviews, function (View $view) {
             return ($view instanceof MenuEntryHtmlView);
         });
-        $nonMenuEntries = array_filter($this->subviews, function(View $view) {
+        $nonMenuEntries = array_filter($this->subviews, function (View $view) {
             return !($view instanceof MenuEntryHtmlView);
         });
         $this->subviews = $menuEntries;

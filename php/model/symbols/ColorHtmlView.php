@@ -1,5 +1,11 @@
 <?php
 
+namespace webship\symbols;
+
+use Tools;
+use webship\core\HtmlView;
+use webship\WebshipTools;
+
 /**
  * View ColorHtmlView.
  *
@@ -37,7 +43,7 @@ class ColorHtmlView extends HtmlView {
      * @param string[]|string|null $title An optional title (or in different languages).
      */
     protected function __construct(string $color, array|string $classes = [], array|string|null $title = null) {
-        if (!is_array($classes)) $classes = [ $classes ];
+        if (!is_array($classes)) $classes = [$classes];
         $classes[] = 'color-v';
         parent::__construct($classes);
 
@@ -61,7 +67,7 @@ class ColorHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.color-v', [], 'background: var(--bg) !important',
+        self::addStyle(WebshipTools::css('.color-v', [], 'background: var(--bg) !important',
             'color: var(--fc)', '--dev-color: var(--dc)'));
     }
 
@@ -72,7 +78,7 @@ class ColorHtmlView extends HtmlView {
      * @param string[]|string $classes Some classes.
      * @return ColorHtmlView
      */
-    public static function createIt(string $color, array|string|null $title = null,
+    public static function createIt(string       $color, array|string|null $title = null,
                                     array|string $classes = []) : ColorHtmlView {
         return new ColorHtmlView($color, $classes, $title);
     }

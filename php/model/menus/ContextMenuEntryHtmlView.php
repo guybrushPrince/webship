@@ -1,5 +1,9 @@
 <?php
 
+namespace webship\menus;
+
+use webship\WebshipTools;
+
 /**
  * View ContextMenuEntryHtmlView.
  *
@@ -18,8 +22,8 @@ class ContextMenuEntryHtmlView extends MenuEntryHtmlView {
      * @param string[]|string $classes Some classes.
      */
     public function __construct(array|string $classes = []) {
-        $classes = is_array($classes) ? $classes : [ $classes ];
-        parent::__construct(array_merge([ 'context' ], $classes));
+        $classes = is_array($classes) ? $classes : [$classes];
+        parent::__construct(array_merge(['context'], $classes));
 
         self::addCSS();
     }
@@ -28,12 +32,12 @@ class ContextMenuEntryHtmlView extends MenuEntryHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('nav.menu.context', [' ', 'li'], '', 'display: flex', 'flex-wrap: wrap',
+        self::addStyle(WebshipTools::css('nav.menu.context', [' ', 'li'], '', 'display: flex', 'flex-wrap: wrap',
             'cursor: pointer', 'font-size: 15px', 'text-transform: none', 'font-weight: normal',
             'align-items: center'));
-        self::addStyle(Tools::css('nav.menu.context', [' ', 'li', ':hover'],
+        self::addStyle(WebshipTools::css('nav.menu.context', [' ', 'li', ':hover'],
             'background: var(--system-background)'));
-        self::addStyle(Tools::css('nav.menu.context', [' ', 'li', ':hover', ' > ', ' ul'],
+        self::addStyle(WebshipTools::css('nav.menu.context', [' ', 'li', ':hover', ' > ', ' ul'],
             'display: flex', 'flex-wrap: wrap', 'position: absolute', 'left: 100%', 'top: 0px'));
     }
 
@@ -41,7 +45,7 @@ class ContextMenuEntryHtmlView extends MenuEntryHtmlView {
      * @inheritDoc
      */
     public static function create(array|string|null $texts = null,
-                                  array|string $classes = []): ContextMenuEntryHtmlView {
+                                  array|string      $classes = []) : ContextMenuEntryHtmlView {
         $entry = self::_new($classes);
         if (!is_null($texts)) $entry->texts($texts);
         return $entry;

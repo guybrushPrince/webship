@@ -1,5 +1,9 @@
 <?php
 
+namespace webship\panels;
+
+use webship\titles\TitleHtmlView;
+
 /**
  * View PanelHeaderHtmlView.
  *
@@ -28,8 +32,8 @@ class PanelHeaderHtmlView extends TitleHtmlView {
      * @param string|string[] $classes Some classes.
      */
     private function __construct(?string $dataType = null, ?string $img = null,
-                                array|string $classes = []) {
-        $classes = is_array($classes) ? $classes : [ $classes ];
+                                 array|string $classes = []) {
+        $classes = is_array($classes) ? $classes : [$classes];
         $classes[] = 'panel-header';
         parent::__construct($dataType, $img, $classes);
 
@@ -39,7 +43,8 @@ class PanelHeaderHtmlView extends TitleHtmlView {
     /**
      * @inheritDoc
      */
-    public static function addCSS() : void {}
+    public static function addCSS() : void {
+    }
 
     /**
      * @inheritDoc

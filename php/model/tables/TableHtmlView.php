@@ -2,9 +2,8 @@
 
 namespace webship\tables;
 
-use ContainerHtmlView;
-use HtmlView;
-use Tools;
+use webship\containers\ContainerHtmlView;
+use webship\WebshipTools;
 
 /**
  * View TableHtmlView.
@@ -68,7 +67,7 @@ class TableHtmlView extends ContainerHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.table.fixed', [' > ', '.tr'], 'display: grid',
+        self::addStyle(WebshipTools::css('.table.fixed', [' > ', '.tr'], 'display: grid',
             'grid-template-columns: var(--table)'));
     }
 

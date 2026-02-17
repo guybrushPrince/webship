@@ -1,5 +1,11 @@
 <?php
 
+namespace webship\dialogs;
+
+use Language;
+use ParsedownExtra;
+use webship\core\HtmlView;
+
 /**
  * Class DialogHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
@@ -23,15 +29,15 @@ class DialogHtmlView extends HtmlView {
      * @param string[] $texts The texts.
      * @param string[]|string $classes Some classes.
      */
-    public function __construct(array $texts, $classes = []) {
+    public function __construct(array $texts, array|string $classes = []) {
         parent::__construct(array_merge(['dialog'], is_array($classes) ? $classes : []));
 
 
         $message = $this->add(new HtmlView('dialog-message'));
         $title = $message->add(new HtmlView('d-title'));
         $title->texts()->
-            text(Language::ENGLISH, 'Note')->
-            text(Language::GERMAN,  'Hinweis');
+        text(Language::ENGLISH, 'Note')->
+        text(Language::GERMAN, 'Hinweis');
         $textView = $message->add(new HtmlView('text'));
         $parseDown = new ParsedownExtra();
         $textView->texts()->text(self::getLanguage(), $parseDown->text($texts[self::getLanguage()]));

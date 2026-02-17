@@ -1,5 +1,10 @@
 <?php
 
+namespace webship;
+
+use CliffSerializable;
+use webship\core\HtmlView;
+
 /**
  * Interface IFolderGroup.
  *

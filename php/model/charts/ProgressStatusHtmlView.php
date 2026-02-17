@@ -1,5 +1,10 @@
 <?php
 
+namespace webship\charts;
+
+use webship\core\HtmlView;
+use webship\WebshipTools;
+
 /**
  * View ProgressStatusHtmlView.
  *
@@ -42,20 +47,21 @@ class ProgressStatusHtmlView extends HtmlView {
         $this->localStyle('--state-size: 10px');
         $this->localStyle('--border-size: 1px');
     }
+
     /**
      * @inheritDoc
      */
-    public static function addCSS() : void {
-        self::addStyle(Tools::css('.state-bar', [], 'display: grid', 'width: calc(var(--nr-states) * var(--state-size) + 2 * var(--border-size))',
+    public static function addCSS(): void {
+        self::addStyle(WebshipTools::css('.state-bar', [], 'display: grid', 'width: calc(var(--nr-states) * var(--state-size) + 2 * var(--border-size))',
             'height: calc(var(--state-size)+2*var(--border-size))',
             '--cell-gap: 1px', 'grid-template-columns: repeat(var(--nr-states), 1fr)', 'grid-template-rows: 1fr',
             'column-gap: var(--cell-gap)', 'row-gap: var(--cell-gap)',
             '--background: var(--neutral)',
             'background: var(--system-background)',
             'border: var(--border-size) solid var(--system-background)'));
-        self::addStyle(Tools::css('.state-bar', [' > ', 'div'], 'background: var(--background)',
+        self::addStyle(WebshipTools::css('.state-bar', [' > ', 'div'], 'background: var(--background)',
             'aspect-ratio: 1'));
-        self::addStyle(Tools::css('.state-bar', [' > ', 'div.undone'],
+        self::addStyle(WebshipTools::css('.state-bar', [' > ', 'div.undone'],
             'background: var(--system-background)'));
     }
 
@@ -69,7 +75,7 @@ class ProgressStatusHtmlView extends HtmlView {
      * @return ProgressStatusHtmlView
      */
     public static function create(array $states, int|string $state, ?array $stateInfos = null, ?string $backgroundColor = null,
-                                  string|array $classes = []) : ProgressStatusHtmlView {
+                                  string|array $classes = []): ProgressStatusHtmlView {
         $view = new ProgressStatusHtmlView($states, $classes);
 
         $undone = false;

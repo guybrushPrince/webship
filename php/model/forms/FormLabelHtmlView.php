@@ -2,12 +2,12 @@
 
 namespace webship\forms;
 
-use HtmlView;
 use ship\interoperability\IShippable;
 use ship\interoperability\ShipperRegister;
-use Tools;
+use webship\core\HtmlView;
 use webship\inputs\InputHtmlView;
 use webship\inputs\SelectHtmlView;
+use webship\WebshipTools;
 
 /**
  * View FormLabelHtmlView.
@@ -58,7 +58,7 @@ class FormLabelHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('label.form-label', [], 'display: block', 'width: 100%',
+        self::addStyle(WebshipTools::css('label.form-label', [], 'display: block', 'width: 100%',
             'margin-top: 10px'));
     }
 

@@ -1,5 +1,9 @@
 <?php
 
+namespace webship\containers;
+
+use webship\WebshipTools;
+
 /**
  * View TileHtmlView.
  *
@@ -49,7 +53,7 @@ class TileHtmlView extends ContainerHtmlView {
      * @param string[]|string $classes Some additional classes.
      */
     private function __construct(int $tileWidth = 108, string|array $classes = []) {
-        $classes = is_array($classes) ? $classes : [ $classes ];
+        $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['tiles'], $classes));
         $this->gap(10);
 
@@ -63,18 +67,18 @@ class TileHtmlView extends ContainerHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.tiles', [], 'border: 1px solid var(--light-system-background)'));
-        self::addStyle(Tools::css('.tiles', [' > ', '.tile'], 'align-items: center',
+        self::addStyle(WebshipTools::css('.tiles', [], 'border: 1px solid var(--light-system-background)'));
+        self::addStyle(WebshipTools::css('.tiles', [' > ', '.tile'], 'align-items: center',
             'justify-content: flex-start', 'border: 1px solid var(--system-background-hover)',
             'cursor: pointer', 'transition: background 0.5s',
             'text-align: center', 'background: var(--ultra-light-system-background)',
             'width: var(--tw)', 'max-width: var(--tw)', 'height: var(--tw)', 'font-size: var(--fs)'));
-        self::addStyle(Tools::css('.tiles', [' > ', '.tile', ' > ', 'span.small'], 'display: none'));
-        self::addStyle(Tools::css('.tiles', [' > ', '.tile', ' > ', 'img'], 'height: 50%',
+        self::addStyle(WebshipTools::css('.tiles', [' > ', '.tile', ' > ', 'span.small'], 'display: none'));
+        self::addStyle(WebshipTools::css('.tiles', [' > ', '.tile', ' > ', 'img'], 'height: 50%',
             'padding: 10px'));
-        self::addStyle(Tools::css('.tiles', [' > ', '.tile', ':hover'],
+        self::addStyle(WebshipTools::css('.tiles', [' > ', '.tile', ':hover'],
             'background: var(--system-background)'));
-        self::addStyle(Tools::css('.tiles', [' > ', '.tile', '.active'],
+        self::addStyle(WebshipTools::css('.tiles', [' > ', '.tile', '.active'],
             'background: var(--system-background-hover)', 'border-color: var(--dark-system-background)'));
     }
 

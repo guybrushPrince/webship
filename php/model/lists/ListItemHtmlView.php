@@ -1,5 +1,9 @@
 <?php
 
+namespace webship\lists;
+
+use webship\core\HtmlView;
+
 /**
  * Class ListItemHtmlView
  * @author Dr. Dipl.-Inf. Thomas M. Prinz

@@ -1,5 +1,12 @@
 <?php
 
+namespace webship\containers;
+
+use Event;
+use webship\core\HtmlView;
+use webship\protocols\HtmlActionProtocol;
+use webship\WebshipTools;
+
 /**
  * View SectionHtmlView.
  *
@@ -43,7 +50,7 @@ class SectionHtmlView extends HtmlView {
      */
     private function __construct(array|string $section, bool $open = false, bool $openable = true,
                                  array|string $classes = []) {
-        $classes = is_array($classes) ? $classes : [ $classes ];
+        $classes = is_array($classes) ? $classes : [$classes];
         $classes[] = 'sect';
         if (!$openable) {
             $open = true;
@@ -53,7 +60,7 @@ class SectionHtmlView extends HtmlView {
 
         $this->section = new HtmlView('section');
         $this->add($this->section);
-        if (!is_array($section)) $section = [ self::getLanguage() => $section ];
+        if (!is_array($section)) $section = [self::getLanguage() => $section];
         $this->section->texts($section);
 
         $this->box = new HtmlView();
@@ -77,32 +84,32 @@ class SectionHtmlView extends HtmlView {
      * @return void
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.sect', [],'width: 100%', 'display: flex',
+        self::addStyle(WebshipTools::css('.sect', [], 'width: 100%', 'display: flex',
             'flex-direction: column', 'padding: 0 0 16px 0'));
-        self::addStyle(Tools::css('.sect.compatible', [],'padding: 16px 0 0 0'));
-        self::addStyle(Tools::css('.sect.single', [],'padding: 0'));
+        self::addStyle(WebshipTools::css('.sect.compatible', [], 'padding: 16px 0 0 0'));
+        self::addStyle(WebshipTools::css('.sect.single', [], 'padding: 0'));
 
-        self::addStyle(Tools::css('.sect.fit', [],'width: -moz-fit-content', 'width: fit-content',
+        self::addStyle(WebshipTools::css('.sect.fit', [], 'width: -moz-fit-content', 'width: fit-content',
             'padding-right: 20px'));
-        self::addStyle(Tools::css('.sect:not(.not-last):last-child', [],'padding: 0'));
-        self::addStyle(Tools::css('.sect.fit:last-child', [],'padding: 0'));
-        self::addStyle(Tools::css('.sect.closed', [' > ', 'div:not(.section)'],'display: none !important'));
-        self::addStyle(Tools::css('.sect.fit:not(.closed)', [],'width: 100%'));
-        self::addStyle(Tools::css('.sect', [' > ', '.section'], 'font-family: Roboto, sans-serif',
+        self::addStyle(WebshipTools::css('.sect:not(.not-last):last-child', [], 'padding: 0'));
+        self::addStyle(WebshipTools::css('.sect.fit:last-child', [], 'padding: 0'));
+        self::addStyle(WebshipTools::css('.sect.closed', [' > ', 'div:not(.section)'], 'display: none !important'));
+        self::addStyle(WebshipTools::css('.sect.fit:not(.closed)', [], 'width: 100%'));
+        self::addStyle(WebshipTools::css('.sect', [' > ', '.section'], 'font-family: Roboto, sans-serif',
             'text-transform: none', 'font-size: 1.25em', 'font-weight: lighter', 'width: 100%',
             'cursor: pointer'));
-        self::addStyle(Tools::css('.sect.ao', [' > ', '.section'], 'cursor: auto'));
-        self::addStyle(Tools::css('.sect.small', [' > ', '.section'], 'font-size: 1.0em',
+        self::addStyle(WebshipTools::css('.sect.ao', [' > ', '.section'], 'cursor: auto'));
+        self::addStyle(WebshipTools::css('.sect.small', [' > ', '.section'], 'font-size: 1.0em',
             'font-style: italic'));
-        self::addStyle(Tools::css('.sect:not(.ao)', [' > ', '.section', ':after'], 'content: ""',
+        self::addStyle(WebshipTools::css('.sect:not(.ao)', [' > ', '.section', ':after'], 'content: ""',
             'margin-left: 5px', 'background-repeat: no-repeat', 'width: 10px', 'height: 10px', 'background-size: cover',
             'background-image: url(' . HtmlActionProtocol::$serverURL . '/webship/pic/arrow-down-sign-to-navigate.svg)',
             'box-sizing: border-box', 'display: inline-block', 'opacity: 0.25', 'transition: opacity 0.5s'));
-        self::addStyle(Tools::css('.sect', [' > ', '.section', ':hover', ':after'],
+        self::addStyle(WebshipTools::css('.sect', [' > ', '.section', ':hover', ':after'],
             'opacity: 1'));
-        self::addStyle(Tools::css('.sect', [' > ', 'div:nth-child(2)'],'width: 100%',
+        self::addStyle(WebshipTools::css('.sect', [' > ', 'div:nth-child(2)'], 'width: 100%',
             'padding: 10px 20px', 'box-sizing: border-box'));
-        self::addStyle(Tools::css('.sect.small', [' > ', 'div:nth-child(2)'], 'padding: 5px 10px'));
+        self::addStyle(WebshipTools::css('.sect.small', [' > ', 'div:nth-child(2)'], 'padding: 5px 10px'));
     }
 
     /**
@@ -124,7 +131,7 @@ class SectionHtmlView extends HtmlView {
      * @return HtmlView
      */
     public function box(string|array $classes = []) : HtmlView {
-        if (is_array($classes) && !Tools::isEmpty($classes) || is_string($classes)) $this->box->addClass($classes);
+        if (is_array($classes) && !WebshipTools::isEmpty($classes) || is_string($classes)) $this->box->addClass($classes);
         return $this->box;
     }
 

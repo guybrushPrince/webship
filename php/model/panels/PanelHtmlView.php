@@ -1,5 +1,11 @@
 <?php
 
+namespace webship\panels;
+
+use webship\containers\ContainerHtmlView;
+use webship\core\HtmlView;
+use webship\WebshipTools;
+
 /**
  * View PanelHtmlView.
  *
@@ -39,7 +45,7 @@ class PanelHtmlView extends HtmlView {
      * @param string[]|string $classes Some classes.
      */
     protected function __construct(array|string $classes = []) {
-        $classes = is_array($classes) ? $classes : [ $classes ];
+        $classes = is_array($classes) ? $classes : [$classes];
         $classes[] = 'panel';
         parent::__construct($classes);
 
@@ -50,41 +56,41 @@ class PanelHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.panel', [], 'display: flex', 'width: 100%',
+        self::addStyle(WebshipTools::css('.panel', [], 'display: flex', 'width: 100%',
             'box-sizing: border-box', 'flex-direction: column'));
 
-        self::addStyle(Tools::css('.panel', ['.border'],
+        self::addStyle(WebshipTools::css('.panel', ['.border'],
             'border: solid 1px var(--system-background)'));
-        self::addStyle(Tools::css('.panel', ['.border'],
+        self::addStyle(WebshipTools::css('.panel', ['.border'],
             'border: solid 1px var(--system-background)'));
-        self::addStyle(Tools::css('.panel', ['.sep-children'],
+        self::addStyle(WebshipTools::css('.panel', ['.sep-children'],
             'gap: 1px', 'background: var(--system-background)'));
-        self::addStyle(Tools::css('.panel', ['.sep-children.light'],
+        self::addStyle(WebshipTools::css('.panel', ['.sep-children.light'],
             'background: var(--ultra-light-system-background)'));
-        self::addStyle(Tools::css('.panel', ['.sep-children', ' > ', '.panel-item'],
+        self::addStyle(WebshipTools::css('.panel', ['.sep-children', ' > ', '.panel-item'],
             'background: var(--neutral)'));
 
-        self::addStyle(Tools::css('.panel', ['.gap'], 'gap: 5px'));
-        self::addStyle(Tools::css('.panel', ['.gap5'], 'gap: 5px'));
-        self::addStyle(Tools::css('.panel', ['.gap10'], 'gap: 10px'));
-        self::addStyle(Tools::css('.panel', ['.gap15'], 'gap: 15px'));
-        self::addStyle(Tools::css('.panel', ['.gap20'], 'gap: 20px'));
-        self::addStyle(Tools::css('.panel', ['.p'], 'padding: 5px'));
-        self::addStyle(Tools::css('.panel', ['.p5'], 'padding: 5px'));
-        self::addStyle(Tools::css('.panel', ['.p10'], 'padding: 10px'));
-        self::addStyle(Tools::css('.panel', ['.p15'], 'padding: 15px'));
-        self::addStyle(Tools::css('.panel', ['.p20'], 'padding: 20px'));
+        self::addStyle(WebshipTools::css('.panel', ['.gap'], 'gap: 5px'));
+        self::addStyle(WebshipTools::css('.panel', ['.gap5'], 'gap: 5px'));
+        self::addStyle(WebshipTools::css('.panel', ['.gap10'], 'gap: 10px'));
+        self::addStyle(WebshipTools::css('.panel', ['.gap15'], 'gap: 15px'));
+        self::addStyle(WebshipTools::css('.panel', ['.gap20'], 'gap: 20px'));
+        self::addStyle(WebshipTools::css('.panel', ['.p'], 'padding: 5px'));
+        self::addStyle(WebshipTools::css('.panel', ['.p5'], 'padding: 5px'));
+        self::addStyle(WebshipTools::css('.panel', ['.p10'], 'padding: 10px'));
+        self::addStyle(WebshipTools::css('.panel', ['.p15'], 'padding: 15px'));
+        self::addStyle(WebshipTools::css('.panel', ['.p20'], 'padding: 20px'));
 
-        self::addStyle(Tools::css('.panel', ['.rounded'], '--radius: 5px',
+        self::addStyle(WebshipTools::css('.panel', ['.rounded'], '--radius: 5px',
             'border-radius: var(--radius)'));
-        self::addStyle(Tools::css('.panel', ['.rounded', ' > ', '*:first-child'],
+        self::addStyle(WebshipTools::css('.panel', ['.rounded', ' > ', '*:first-child'],
             'border-radius: var(--radius) var(--radius) 0 0'));
-        self::addStyle(Tools::css('.panel', ['.rounded', ' > ', '*:last-child'],
+        self::addStyle(WebshipTools::css('.panel', ['.rounded', ' > ', '*:last-child'],
             'border-radius: 0 0 var(--radius) var(--radius)'));
 
-        self::addStyle(Tools::css('.panel.ac', [' > ', '.panel-item:nth-child(even)'],
+        self::addStyle(WebshipTools::css('.panel.ac', [' > ', '.panel-item:nth-child(even)'],
             'background: var(--fine-system-background)'));
-        self::addStyle(Tools::css('.panel.ac', [' > ', '.panel-item:nth-child(odd)'],
+        self::addStyle(WebshipTools::css('.panel.ac', [' > ', '.panel-item:nth-child(odd)'],
             'background: var(--neutral)'));
     }
 

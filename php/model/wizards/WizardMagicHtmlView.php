@@ -1,8 +1,16 @@
 <?php
 
+namespace webship\wizards;
+
+use Event;
+use Language;
 use ship\protocols\Protocol;
+use webship\buttons\ButtonHtmlView;
 use webship\buttons\CloserHtmlView;
+use webship\core\HtmlView;
+use webship\menus\ControlPanelHtmlView;
 use webship\symbols\ImageHtmlView;
+use webship\WebshipTools;
 
 /**
  * Class WizardMagicHtmlView.
@@ -15,11 +23,11 @@ class WizardMagicHtmlView extends HtmlView {
      * @param string|string[] $classes Additional classes.
      */
     public function __construct(array|string $classes = []) {
-        parent::__construct(array_merge(['magic'], is_array($classes) ? $classes : [ $classes ]));
+        parent::__construct(array_merge(['magic'], is_array($classes) ? $classes : [$classes]));
 
-        $this->style(Tools::css('.magic', [], 'width: 100%', 'position: relative'));
-        $this->style(Tools::css('.magic', [' ', '.invisible'], 'display: none'));
-        $this->style(Tools::css('.magic', [' > ', '.ctr'], 'background: var(--neutral)',
+        $this->style(WebshipTools::css('.magic', [], 'width: 100%', 'position: relative'));
+        $this->style(WebshipTools::css('.magic', [' ', '.invisible'], 'display: none'));
+        $this->style(WebshipTools::css('.magic', [' > ', '.ctr'], 'background: var(--neutral)',
             'border-radius: 0 0 0 5px'));
     }
 
@@ -29,7 +37,7 @@ class WizardMagicHtmlView extends HtmlView {
      * @param Protocol|null $finishProtocol What happens if the final wizard is closed.
      * @return WizardMagicHtmlView
      */
-    public static function create(array $wizards = [], ?Protocol $finishProtocol = null) : WizardMagicHtmlView {
+    public static function create(array $wizards = [], ?Protocol $finishProtocol = null): WizardMagicHtmlView {
         $wizards = array_values($wizards);
 
         $view = new WizardMagicHtmlView();
@@ -38,8 +46,8 @@ class WizardMagicHtmlView extends HtmlView {
         $view->add($control);
         $abortButton = $control->addMini(CloserHtmlView::create());
         $abortButton->protocol(Event::CLICK)->
-            doIt('Delete', ['view' => $view], 'basics')->
-            append($finishProtocol);
+        doIt('Delete', ['view' => $view], 'basics')->
+        append($finishProtocol);
 
         $view->each($wizards, function (WizardMagicHtmlView $view, WizardHtmlView $wizard, int $key) use ($wizards, $finishProtocol) {
             $view->add($wizard);
@@ -48,31 +56,31 @@ class WizardMagicHtmlView extends HtmlView {
             if ($key !== array_key_first($wizards)) {
                 $wizard->addClass('invisible');
                 $controller->add(new ButtonHtmlView('back-' . $wizard->id(), 'back-' . $wizard->id()))->
-                    add(new ImageHtmlView('/sunstone/pic/back.svg'))->parent()->
-                    texts()->
-                        text(Language::ENGLISH, 'Back')->
-                        text(Language::GERMAN,  'Zurück')->
-                    parent()->
-                    protocol(Event::CLICK)->
-                        doIt('ToggleClass', ['view' => $wizard, 'class' => 'invisible'], 'basics')->
-                        doIt('ToggleClass', ['view' => 'wizard-' . ($key - 1), 'class' => 'invisible'], 'basics')->
-                        append($wizards[$key - 1]->getUpdateProtocol())->
-                    parent();
+                add(new ImageHtmlView('/sunstone/pic/back.svg'))->parent()->
+                texts()->
+                text(Language::ENGLISH, 'Back')->
+                text(Language::GERMAN, 'Zurück')->
+                parent()->
+                protocol(Event::CLICK)->
+                doIt('ToggleClass', ['view' => $wizard, 'class' => 'invisible'], 'basics')->
+                doIt('ToggleClass', ['view' => 'wizard-' . ($key - 1), 'class' => 'invisible'], 'basics')->
+                append($wizards[$key - 1]->getUpdateProtocol())->
+                parent();
             }
             $nextButton = $controller->add(new ButtonHtmlView('next-' . $wizard->id(), 'next-' . $wizard->id()));
             $nextButton->texts()->
-                text(Language::ENGLISH, $key !== array_key_last($wizards) ? 'Next' : 'Finish')->
-                text(Language::GERMAN,  $key !== array_key_last($wizards) ? 'Weiter' : 'Abschließen');
+            text(Language::ENGLISH, $key !== array_key_last($wizards) ? 'Next' : 'Finish')->
+            text(Language::GERMAN, $key !== array_key_last($wizards) ? 'Weiter' : 'Abschließen');
             $nextButton->add(new ImageHtmlView('/sunstone/pic/next.svg'));
             if ($key !== array_key_last($wizards)) {
                 $nextButton->protocol(Event::CLICK)->
-                    doIt('ToggleClass', ['view' => $wizard, 'class' => 'invisible'], 'basics')->
-                    doIt('ToggleClass', ['view' => 'wizard-' . ($key + 1), 'class' => 'invisible'], 'basics')->
-                    append($wizards[$key + 1]->getUpdateProtocol());
+                doIt('ToggleClass', ['view' => $wizard, 'class' => 'invisible'], 'basics')->
+                doIt('ToggleClass', ['view' => 'wizard-' . ($key + 1), 'class' => 'invisible'], 'basics')->
+                append($wizards[$key + 1]->getUpdateProtocol());
             } else {
                 $nextButton->protocol(Event::CLICK)->
-                    doIt('Delete', ['view' => $view], 'basics')->
-                    append($finishProtocol);
+                doIt('Delete', ['view' => $view], 'basics')->
+                append($finishProtocol);
             }
 
         });

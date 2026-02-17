@@ -2,9 +2,9 @@
 
 namespace webship\inputs;
 
-use HtmlView;
 use ship\views\View;
-use Tools;
+use webship\core\HtmlView;
+use webship\WebshipTools;
 
 
 /**
@@ -57,22 +57,22 @@ class FieldSetHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('fieldset', [], 'display: flex', 'flex-wrap: wrap',
+        self::addStyle(WebshipTools::css('fieldset', [], 'display: flex', 'flex-wrap: wrap',
             'flex-direction: row', 'align-items: center', 'justify-items: center', 'width: fit-content',
             'width: -moz-fit-content', 'border: none', 'padding: 0', 'margin: 0', 'box-sizing: border-box'));
-        self::addStyle(Tools::css('fieldset:not(.plain)', [], '--side-margin: 2px',
+        self::addStyle(WebshipTools::css('fieldset:not(.plain)', [], '--side-margin: 2px',
             'border: 1px solid var(--border-13)', 'border-radius: 5px', 'padding: 8px 10px',
             'width: calc(100% - 2* var(--side-margin))', 'margin: 0 var(--side-margin)'));
-        self::addStyle(Tools::css('fieldset.gap5', [], 'gap:  5px'));
-        self::addStyle(Tools::css('fieldset.gap10', [], 'gap: 10px'));
-        self::addStyle(Tools::css('fieldset.gap15', [], 'gap: 15px'));
-        self::addStyle(Tools::css('fieldset.gap20', [], 'gap: 20px'));
-        self::addStyle(Tools::css('fieldset.gap25', [], 'gap: 25px'));
-        self::addStyle(Tools::css('fieldset', [' > ', '.entry'], 'display: flex', 'flex-wrap: nowrap',
+        self::addStyle(WebshipTools::css('fieldset.gap5', [], 'gap:  5px'));
+        self::addStyle(WebshipTools::css('fieldset.gap10', [], 'gap: 10px'));
+        self::addStyle(WebshipTools::css('fieldset.gap15', [], 'gap: 15px'));
+        self::addStyle(WebshipTools::css('fieldset.gap20', [], 'gap: 20px'));
+        self::addStyle(WebshipTools::css('fieldset.gap25', [], 'gap: 25px'));
+        self::addStyle(WebshipTools::css('fieldset', [' > ', '.entry'], 'display: flex', 'flex-wrap: nowrap',
             'flex-direction: row', 'align-items: center', 'justify-content: flex-start', 'margin: 5px', 'flex: 1 1 0px'));
-        self::addStyle(Tools::css('fieldset', [' > ', '.entry', ' ', '[type="checkbox"]'],
+        self::addStyle(WebshipTools::css('fieldset', [' > ', '.entry', ' ', '[type="checkbox"]'],
             'min-width: 25px', 'max-width: 25px'));
-        self::addStyle(Tools::css('fieldset', [' > ', '.entry', ' ', 'label'], 'margin: 0', 'margin-left: 10px'));
+        self::addStyle(WebshipTools::css('fieldset', [' > ', '.entry', ' ', 'label'], 'margin: 0', 'margin-left: 10px'));
     }
 
     /**

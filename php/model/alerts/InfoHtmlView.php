@@ -2,7 +2,7 @@
 
 namespace webship\alerts;
 
-use Tools;
+use webship\WebshipTools;
 
 /**
  * View InfoHtmlView.
@@ -49,7 +49,7 @@ class InfoHtmlView extends AlertHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.alert.info', [], '--alert-border: var(--border-info)',
+        self::addStyle(WebshipTools::css('.alert.info', [], '--alert-border: var(--border-info)',
             '--alert-font: var(--font-info)', '--alert-background: var(--background-info)',
             '--alert-c-border: var(--font-info)'));
     }

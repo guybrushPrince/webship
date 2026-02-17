@@ -1,9 +1,22 @@
 <?php
 
+namespace webship\containers;
+
+use CliffSerializable;
+use Closure;
+use Event;
+use ITextBoxUser;
+use Language;
 use ship\interoperability\IShippable;
 use ship\interoperability\ShipperRegister;
-use webship\containers\StandardHtmlView;
+use Tools;
+use webship\core\HtmlView;
+use webship\IFolderGroup;
 use webship\inputs\EditableHtmlView;
+use webship\menus\ContextMenuHtmlView;
+use webship\menus\ControlPanelHtmlView;
+use webship\symbols\PencilHtmlView;
+use webship\WebshipTools;
 
 /**
  * Class FolderHtmlView.
@@ -21,49 +34,49 @@ class FolderHtmlView extends StandardHtmlView {
      * @param string[]|string $classes Some classes.
      */
     private function __construct(array|string $classes = []) {
-        if (!is_array($classes)) $classes = [ $classes ];
+        if (!is_array($classes)) $classes = [$classes];
         $classes[] = 'folders';
         parent::__construct($classes);
 
-        $this->style(Tools::css('.folders', [' ', '.f-group'], 'padding: 0 5px', 'position: relative',
+        $this->style(WebshipTools::css('.folders', [' ', '.f-group'], 'padding: 0 5px', 'position: relative',
             'width: 100%', 'border: 1px solid var(--border-2)', 'margin-bottom: 20px', 'min-height: 30px',
             'margin-top: 10px', 'border-radius: 5px', '-webkit-box-shadow: var(--shadow-flow-1)',
             'box-shadow: var(--shadow-flow-1)'));
-        $this->style(Tools::css('.folders', [' ', '.f-group', ' > ', '.folder-title'], 'position: absolute',
+        $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.folder-title'], 'position: absolute',
             'top: 5px', 'left: 10px', 'width: 90%',
             'padding-right: 10px', 'display: flex', 'flex-direction: row', 'flex-wrap: nowrap', 'height: 20px',
             'align-items: center', 'cursor: pointer'));
-        $this->style(Tools::css('.folders', [' ', '.f-group', ' > ', '.folder-title', ' ',
+        $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.folder-title', ' ',
             'span[data-field]:first-child'], 'font-weight: bold', 'display: flex', 'flex-direction: row'));
-        $this->style(Tools::css('.folders', [' ', '.f-group', ' > ', '.folder-title', ' ',
+        $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.folder-title', ' ',
             'span[data-field]:first-child:after'], 'content: \':\'', 'display: block', 'margin-right: 5px'));
-        $this->style(Tools::css('.folders', [' ', '.f-group', ' > ', '.folder-title', ' > textarea'],
+        $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.folder-title', ' > textarea'],
             'width: 100%'));
-        $this->style(Tools::css('.folders', [' ', '.f-group', ' > ', '.folder-title', ' > .pencil'],
+        $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.folder-title', ' > .pencil'],
             'display: none', 'margin-left: 10px'));
-        $this->style(Tools::css('.folders', [' ', '.f-group', ' > ', '.folder-title:hover', ' > .pencil'],
+        $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.folder-title:hover', ' > .pencil'],
             'display: inherit'));
-        $this->style(Tools::css('.folders', [' ', '.f-group', ' > ', '.box'], 'left: 0', 'top: 0',
+        $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.box'], 'left: 0', 'top: 0',
             'position: absolute', 'width: 100%', 'height: 30px', 'background: var(--system-background)',
             'border-radius: 5px 5px 0 0'));
-        $this->style(Tools::css('.folders', [' ', '.f-group', ' > ', '.content'],
+        $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.content'],
             'margin: 40px 0 10px 0'));
 
-        /*$this->style(Tools::css('.surveys', [' ', '.survey-group', ' > ', '.menu'],
+        /*$this->style(WebshipTools::css('.surveys', [' ', '.survey-group', ' > ', '.menu'],
             'height: 300px', 'overflow-y: auto'));
-        $this->style(Tools::css('.surveys', [' ', '.survey-group', ' > ', '.menu', ' ', 'li.menu-entry'],
+        $this->style(WebshipTools::css('.surveys', [' ', '.survey-group', ' > ', '.menu', ' ', 'li.menu-entry'],
             'min-height: 15px', 'font-size: 12px'));
-        $this->style(Tools::css('.surveys', [' ', '.survey-group', ' > ', '.menu', ' ', 'li.menu-entry', ' > ',
+        $this->style(WebshipTools::css('.surveys', [' ', '.survey-group', ' > ', '.menu', ' ', 'li.menu-entry', ' > ',
             'span:not(:empty):first-child:after'], 'content: \':\'', 'margin-right: 5px', 'font-weight: bold'));*/
 
-        $this->style(Tools::css('.folders', [' ', '.f-group.folded', ' > ', '.content'], 'display: none'));
-        $this->style(Tools::css('.folders', [' ', '.f-group:not(.folded)', ' ', '#toggle-group-min'],
+        $this->style(WebshipTools::css('.folders', [' ', '.f-group.folded', ' > ', '.content'], 'display: none'));
+        $this->style(WebshipTools::css('.folders', [' ', '.f-group:not(.folded)', ' ', '#toggle-group-min'],
             'display: inherit'));
-        $this->style(Tools::css('.folders', [' ', '.f-group.folded', ' ', '#toggle-group-min'],
+        $this->style(WebshipTools::css('.folders', [' ', '.f-group.folded', ' ', '#toggle-group-min'],
             'display: none'));
-        $this->style(Tools::css('.folders', [' ', '.f-group.folded', ' ', '#toggle-group-max'],
+        $this->style(WebshipTools::css('.folders', [' ', '.f-group.folded', ' ', '#toggle-group-max'],
             'display: inherit'));
-        $this->style(Tools::css('.folders', [' ', '.f-group:not(.folded)', ' ', '#toggle-group-max'],
+        $this->style(WebshipTools::css('.folders', [' ', '.f-group:not(.folded)', ' ', '#toggle-group-max'],
             'display: none'));
     }
 
@@ -93,7 +106,7 @@ class FolderHtmlView extends StandardHtmlView {
             $refreshFunction($folder);
         }
 
-        if (!Tools::isEmpty($folders) && $folders[array_key_first($folders)] instanceof CliffSerializable &&
+        if (!WebshipTools::isEmpty($folders) && $folders[array_key_first($folders)] instanceof CliffSerializable &&
             $addFolderFunction) {
             $control = ControlPanelHtmlView::create(1, 1, false);
             $control->fix();
@@ -101,12 +114,12 @@ class FolderHtmlView extends StandardHtmlView {
 
             $groupAdder = $control->button('add-folder', '/sunstone/pic/add-folder.svg');
             $groupAdder->notice(Language::ENGLISH, 'Create new folder');
-            $groupAdder->notice(Language::GERMAN,  'Neuen Ordner erstellen');
+            $groupAdder->notice(Language::GERMAN, 'Neuen Ordner erstellen');
             $addFolderFunction($folder, $groupAdder);
         }
 
         // Determine the priority order
-        usort($folders, function(IFolderGroup $a, IFolderGroup $b) {
+        usort($folders, function (IFolderGroup $a, IFolderGroup $b) {
             $v1 = $a->getPriority();
             $v2 = $b->getPriority();
             if ($v1 == $v2) {
@@ -117,8 +130,10 @@ class FolderHtmlView extends StandardHtmlView {
 
         // Print the folder groups
         $list = $folder->add(new HtmlView());
-        $list->each($folders, function(HtmlView $v, IFolderGroup $folderGroup) use ($folders, $allItems, $addFunction,
-            $deleteFunction, $toggleFunction, $downFunction, $upFunction) {
+        $list->each($folders, function (HtmlView $v, IFolderGroup $folderGroup) use (
+            $folders, $allItems, $addFunction,
+            $deleteFunction, $toggleFunction, $downFunction, $upFunction
+        ) {
             $v->add(self::createFolder($folderGroup, $folders, $allItems, $addFunction, $deleteFunction,
                 $toggleFunction, $downFunction, $upFunction));
         });
@@ -128,7 +143,7 @@ class FolderHtmlView extends StandardHtmlView {
         if ($allItems && $unlistedFunction) {
             // Determine ungrouped items
             $nonReferred = array_filter($allItems, function (CliffSerializable $item) use ($folders) {
-                return Tools::isEmpty(array_filter($folders, function (IFolderGroup $group) use ($item) {
+                return WebshipTools::isEmpty(array_filter($folders, function (IFolderGroup $group) use ($item) {
                     return Tools::inArray($group->getItems(), $item);
                 }));
             });
@@ -170,11 +185,11 @@ class FolderHtmlView extends StandardHtmlView {
             $titleView->ref('text', 'value');
             $titleView->texts($folderGroup->getTitle(self::getLanguage()));
             $titleView->protocol(Event::ONFOCUSOUT)->
-                doIt('ChangeTextField', [
-                    'part' => $folderGroup,
-                    'language' => self::getLanguage(),
-                    'fieldName' => 'header'
-                ], 'texts');
+            doIt('ChangeTextField', [
+                'part' => $folderGroup,
+                'language' => self::getLanguage(),
+                'fieldName' => 'header'
+            ], 'texts');
             $title->add(PencilHtmlView::_new());
         } else {
             $title->texts($folderGroup->getTitle(self::getLanguage()));
@@ -188,7 +203,7 @@ class FolderHtmlView extends StandardHtmlView {
 
             if ($addFunction) $adder = $control->button('add-to-folder', '/sunstone/pic/add.svg');
 
-            if (Tools::isEmpty($folderGroup->getItems()) && $deleteFunction) {
+            if (WebshipTools::isEmpty($folderGroup->getItems()) && $deleteFunction) {
                 $deleteButton = $control->delete('delete-group');
                 $deleteFunction($deleteButton, $view);
             }
@@ -219,7 +234,7 @@ class FolderHtmlView extends StandardHtmlView {
                 return !Tools::inArray($folderGroup->getItems(), $item);
             });
 
-            if (!$folderGroup->isFolded() && !Tools::isEmpty($posItems)) {
+            if (!$folderGroup->isFolded() && !WebshipTools::isEmpty($posItems)) {
                 $menu = new ContextMenuHtmlView();
                 $menu->ref('add-to-folder-group-menu');
                 $menu->each($posItems, function (ContextMenuHtmlView $menu, CliffSerializable $item) use ($folderGroup, $addFunction, $view) {
@@ -230,10 +245,10 @@ class FolderHtmlView extends StandardHtmlView {
                 $view->add($menu);
                 $view->addClass('has-context-menu');
                 $adder->protocol(Event::CLICK)->
-                    mousePosition($menu)->
-                    addClass($menu, 'active');
+                mousePosition($menu)->
+                addClass($menu, 'active');
                 $view->protocol(Event::CLICK_OUTSIDE)->
-                    removeClass($menu, 'active');
+                removeClass($menu, 'active');
             }
         }
         return $view;

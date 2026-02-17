@@ -1,5 +1,10 @@
 <?php
 
+namespace webship\containers;
+
+use webship\core\HtmlView;
+use webship\WebshipTools;
+
 /**
  * View ContainerItemHtmlView.
  *
@@ -20,9 +25,9 @@ class ContainerItemHtmlView extends HtmlView {
      * Constructor.
      * @param string[]|string $classes Some classes.
      */
-    public function __construct($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct(array_merge(array('container-item'), $classes));
+    public function __construct(array|string $classes = []) {
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        parent::__construct(array_merge(['container-item'], $classes));
 
         self::addCSS();
     }
@@ -31,19 +36,19 @@ class ContainerItemHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.container-item',[], 'display: flex',
+        self::addStyle(WebshipTools::css('.container-item', [], 'display: flex',
             'flex-wrap: wrap', 'padding: 5px', 'box-sizing: border-box'));
-        self::addStyle(Tools::css('.container-item', ['.long'], 'flex-wrap: wrap',
+        self::addStyle(WebshipTools::css('.container-item', ['.long'], 'flex-wrap: wrap',
             'flex-direction: row'));
-        self::addStyle(Tools::css('.container-item', ['.w100'], 'width: 100%'));
-        self::addStyle(Tools::css('.container-item', ['.h100'], 'height: 100%'));
-        self::addStyle(Tools::css('.container-item', ['.scroll'], 'overflow-y: auto'));
-        self::addStyle(Tools::css('.container-item', ['.p-0'], 'padding: 0'));
-        self::addStyle(Tools::css('.container-item', ['.h-l'],
+        self::addStyle(WebshipTools::css('.container-item', ['.w100'], 'width: 100%'));
+        self::addStyle(WebshipTools::css('.container-item', ['.h100'], 'height: 100%'));
+        self::addStyle(WebshipTools::css('.container-item', ['.scroll'], 'overflow-y: auto'));
+        self::addStyle(WebshipTools::css('.container-item', ['.p-0'], 'padding: 0'));
+        self::addStyle(WebshipTools::css('.container-item', ['.h-l'],
             'justify-content: flex-start', 'align-items: center'));
-        self::addStyle(Tools::css('.container-item', ['.h-c'],
+        self::addStyle(WebshipTools::css('.container-item', ['.h-c'],
             'justify-content: center', 'align-items: center'));
-        self::addStyle(Tools::css('.container-item', ['.h-r'],
+        self::addStyle(WebshipTools::css('.container-item', ['.h-r'],
             'justify-content: flex-end', 'align-items: center'));
     }
 

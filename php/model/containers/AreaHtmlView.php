@@ -1,6 +1,11 @@
 <?php
 
+namespace webship\containers;
+
 use ship\views\TextView;
+use webship\core\HtmlView;
+use webship\titles\SubTitleHtmlView;
+use webship\WebshipTools;
 
 /**
  * View AreaHtmlView.
@@ -27,7 +32,7 @@ class AreaHtmlView extends ContainerHtmlView {
      * @param string[]|string $classes Some classes.
      */
     private function __construct(array|string $classes = []) {
-        if (!is_array($classes)) $classes = [ $classes ];
+        if (!is_array($classes)) $classes = [$classes];
         $classes = array_merge(['c-area', 'ver', 'p20'], $classes);
         parent::__construct($classes);
 
@@ -38,19 +43,19 @@ class AreaHtmlView extends ContainerHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.c-area', [], 'background: var(--ultra-light-system-background)',
+        self::addStyle(WebshipTools::css('.c-area', [], 'background: var(--ultra-light-system-background)',
             'border-radius: 10px', 'margin-top: 10px', 'box-sizing: border-box',
             'border: solid 1px var(--system-background)'));
-        self::addStyle(Tools::css('.c-area', [' > ', '.sub-title'], 'padding: 0',
+        self::addStyle(WebshipTools::css('.c-area', [' > ', '.sub-title'], 'padding: 0',
             'margin-bottom: 10px'));
-        self::addStyle(Tools::css('.c-area.fit', [], 'height: fit-content'));
-        self::addStyle(Tools::css('.c-area.invisible', [], 'display: none'));
+        self::addStyle(WebshipTools::css('.c-area.fit', [], 'height: fit-content'));
+        self::addStyle(WebshipTools::css('.c-area.invisible', [], 'display: none'));
 
-        self::addStyle(Tools::css('.c-area.small', [], 'background: none',
+        self::addStyle(WebshipTools::css('.c-area.small', [], 'background: none',
             'border-radius: inherit', 'border: inherit'));
-        self::addStyle(Tools::css('.c-area.small', [' > ', ':not(.sub-title)'],
+        self::addStyle(WebshipTools::css('.c-area.small', [' > ', ':not(.sub-title)'],
             'border-radius: 10px', 'border: solid 1px var(--system-background)'));
-        self::addStyle(Tools::css('.c-area.small', [' > ', '.sub-title'], 'margin-bottom: 0',
+        self::addStyle(WebshipTools::css('.c-area.small', [' > ', '.sub-title'], 'margin-bottom: 0',
             'font-size: 12px', 'color: var(--font-light)'));
     }
 
@@ -111,7 +116,7 @@ class AreaHtmlView extends ContainerHtmlView {
      * Produces a finer area.
      * @return $this
      */
-    public function small(): static {
+    public function small() : static {
         $this->classes[] = 'small';
         return $this;
     }

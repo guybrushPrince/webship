@@ -2,8 +2,8 @@
 
 namespace webship\forms;
 
-use HtmlView;
-use Tools;
+use webship\core\HtmlView;
+use webship\WebshipTools;
 
 /**
  * View FormHtmlView.
@@ -61,7 +61,7 @@ class FormHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('form', [], 'display: inherit',
+        self::addStyle(WebshipTools::css('form', [], 'display: inherit',
             'flex-wrap: inherit', 'margin: inherit', 'width: inherit', 'align-items: inherit',
             'flex-direction: inherit'));
     }

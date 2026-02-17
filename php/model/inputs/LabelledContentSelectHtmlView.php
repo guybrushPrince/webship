@@ -2,7 +2,7 @@
 
 namespace webship\inputs;
 
-use Tools;
+use webship\WebshipTools;
 
 /**
  * View LabelledContentSelectHtmlView.
@@ -71,14 +71,14 @@ class LabelledContentSelectHtmlView extends ContentSelectHtmlView {
      */
     public static function addCSS() : void {
         LabelledSelectHtmlView::addCSS();
-        self::addStyle(Tools::css('.clselect', [], 'position: relative', 'width: fit-content',
+        self::addStyle(WebshipTools::css('.clselect', [], 'position: relative', 'width: fit-content',
             'box-sizing: border-box', 'width: -moz-fit-content', '--height: 40px', '--buffer: 10px',
             'height: calc(var(--height) + var(--buffer))',
             'display: flex', 'flex-direction: row-reverse', 'align-items: flex-end', 'flex-wrap: nowrap'));
-        self::addStyle(Tools::css('.clselect.ll', [], '--buffer: 0'));
-        self::addStyle(Tools::css('.clselect.ll', [' > ', '.content-select + label'], 'display: none'));
+        self::addStyle(WebshipTools::css('.clselect.ll', [], '--buffer: 0'));
+        self::addStyle(WebshipTools::css('.clselect.ll', [' > ', '.content-select + label'], 'display: none'));
 
-        self::addStyle(Tools::css('.clselect', [' > ', '.content-select + label'],
+        self::addStyle(WebshipTools::css('.clselect', [' > ', '.content-select + label'],
             'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--dark-system-background)',
             'bottom: calc(100% - var(--buffer))', 'font-size: 10px'));
     }

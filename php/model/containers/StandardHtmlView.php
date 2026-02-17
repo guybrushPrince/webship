@@ -2,8 +2,9 @@
 
 namespace webship\containers;
 
-use HtmlView;
-use Tools;
+use webship\core\HtmlView;
+use webship\menus\ControlPanelHtmlView;
+use webship\WebshipTools;
 
 /**
  * View StandardHtmlView.
@@ -49,12 +50,12 @@ class StandardHtmlView extends HtmlView {
      * @return void
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.std', [], 'width: 100%', 'padding: 20px 20px',
+        self::addStyle(WebshipTools::css('.std', [], 'width: 100%', 'padding: 20px 20px',
             'box-sizing: border-box', 'position: relative'));
-        self::addStyle(Tools::css('.std', ['.p0'], 'padding: 0'));
-        self::addStyle(Tools::css('.std', ['.p5'], 'padding: 5px'));
-        self::addStyle(Tools::css('.std', ['.p10'], 'padding: 10px'));
-        self::addStyle(Tools::css('.std', ['.p15'], 'padding: 15px'));
+        self::addStyle(WebshipTools::css('.std', ['.p0'], 'padding: 0'));
+        self::addStyle(WebshipTools::css('.std', ['.p5'], 'padding: 5px'));
+        self::addStyle(WebshipTools::css('.std', ['.p10'], 'padding: 10px'));
+        self::addStyle(WebshipTools::css('.std', ['.p15'], 'padding: 15px'));
     }
 
     /**

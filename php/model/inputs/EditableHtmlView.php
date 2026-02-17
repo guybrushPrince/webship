@@ -2,8 +2,8 @@
 
 namespace webship\inputs;
 
-use HtmlView;
-use Tools;
+use webship\core\HtmlView;
+use webship\WebshipTools;
 
 /**
  * View EditableHtmlView.
@@ -53,7 +53,7 @@ class EditableHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('textarea.editable', [], 'border: none', 'overflow: auto',
+        self::addStyle(WebshipTools::css('textarea.editable', [], 'border: none', 'overflow: auto',
             'outline: none', '-webkit-box-shadow: none', '-moz-box-shadow: none', 'box-shadow: none', 'resize: none',
             'font-size: 12px', 'font-family: sans-serif', 'padding: 0', 'background: none', 'overflow-y: hidden'));
     }

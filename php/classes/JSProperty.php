@@ -1,5 +1,7 @@
 <?php
 
+namespace webship;
+
 use ship\template\Property;
 
 /**

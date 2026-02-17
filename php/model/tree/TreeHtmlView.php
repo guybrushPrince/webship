@@ -1,5 +1,11 @@
 <?php
 
+namespace webship\trees;
+
+use Event;
+use webship\core\HtmlView;
+use webship\WebshipTools;
+
 /**
  * View TreeHtmlView
  * <p>Displays a tree with entries and subtrees.</p>
@@ -19,41 +25,42 @@ class TreeHtmlView extends HtmlView {
         self::addCss();
 
     }
+
     /**
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('ul.tree', '', 'padding-top: 0', 'padding-bottom: 0'));
-        self::addStyle(Tools::css('ul.tree', [' > ', 'li', ' ', 'a'], 'text-align: left',
+        self::addStyle(WebshipTools::css('ul.tree', '', 'padding-top: 0', 'padding-bottom: 0'));
+        self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li', ' ', 'a'], 'text-align: left',
             'justify-content: flex-start'));
-        self::addStyle(Tools::css('ul.tree', [' > ', 'li'], 'min-height: 20px', 'list-style-type: none', '--indent: -40px'));
-        self::addStyle(Tools::css('ul.tree', [' > ', 'li:not(:last-child)'],
+        self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li'], 'min-height: 20px', 'list-style-type: none', '--indent: -40px'));
+        self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li:not(:last-child)'],
             'border-bottom: 1px solid var(--system-background-hover)'));
-        self::addStyle(Tools::css('ul.tree', [' > ', 'li.entry'], 'margin-left: var(--indent)'));
-        self::addStyle(Tools::css('ul.tree', [' > ', 'li.sub'], 'margin-left: var(--indent)', 'cursor: pointer'));
-        self::addStyle(Tools::css('ul.tree:not(.open)', [' > ', 'li.sub'],
+        self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li.entry'], 'margin-left: var(--indent)'));
+        self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li.sub'], 'margin-left: var(--indent)', 'cursor: pointer'));
+        self::addStyle(WebshipTools::css('ul.tree:not(.open)', [' > ', 'li.sub'],
             'list-style-type: disclosure-closed', 'border-bottom: none'));
-        self::addStyle(Tools::css('ul.tree:not(.open)', [' > ', 'li.sub',  ' ~ ', 'li'],
+        self::addStyle(WebshipTools::css('ul.tree:not(.open)', [' > ', 'li.sub', ' ~ ', 'li'],
             'display: none'));
-        self::addStyle(Tools::css('ul.tree.open', [' > ', 'li.sub'],
+        self::addStyle(WebshipTools::css('ul.tree.open', [' > ', 'li.sub'],
             'list-style-type: disclosure-open'));
-        self::addStyle(Tools::css('ul.tree.open', [' > ', 'li.sub',  ' ~ ', 'li'], 'display: inherit'));
-        self::addStyle(Tools::css('ul.tree', [' > ', 'li', ' ', 'span.default'], 'padding-left: 0',
+        self::addStyle(WebshipTools::css('ul.tree.open', [' > ', 'li.sub', ' ~ ', 'li'], 'display: inherit'));
+        self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li', ' ', 'span.default'], 'padding-left: 0',
             'display: flex', 'flex-direction: row', 'align-items: center', 'min-height: 20px', 'font-style: italic'));
-        self::addStyle(Tools::css('ul.tree', [' > ', 'li.selectable'], 'transition: 0.5s',
+        self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li.selectable'], 'transition: 0.5s',
             'cursor: pointer'));
-        self::addStyle(Tools::css('ul.tree', [' > ', 'li.selectable:hover'],
+        self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li.selectable:hover'],
             'background: var(--system-background-hover)'));
 
-        self::addStyle(Tools::css('ul.tree', [' ', '.leaf-info'], 'display: flex', 'flex-direction: row',
+        self::addStyle(WebshipTools::css('ul.tree', [' ', '.leaf-info'], 'display: flex', 'flex-direction: row',
             'flex-wrap: nowrap', 'min-height: 20px', 'align-items: center'));
-        self::addStyle(Tools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow'],'display: flex',
+        self::addStyle(WebshipTools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow'], 'display: flex',
             'flex-direction: row', 'width: 15px', 'min-width: 15px', 'height: 15px', 'border-radius: 50%',
             'background: var(--system-background)', 'justify-content: center', 'align-items: center',
             'margin-left: 10px', 'transition: 0.5s', 'cursor: pointer'));
-        self::addStyle(Tools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow:hover'],
+        self::addStyle(WebshipTools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow:hover'],
             'background: var(--dark-system-background)'));
-        self::addStyle(Tools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow', ' > ', 'img'],
+        self::addStyle(WebshipTools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow', ' > ', 'img'],
             'width: 10px', 'height: 10px'));
     }
 
@@ -70,9 +77,9 @@ class TreeHtmlView extends HtmlView {
     public function generateClosingTag() : string {
         return '<script>' .
             '$("' . $this->idc() . '").children("li.sub").click((e) => { ' .
-                'let p = $(e.currentTarget).parent();' .
-                'if (p.children().length <= 1) p.trigger((p.hasClass("open") ? "' . Event::CLOSE_LIST . '" : "' . Event::OPEN_LIST . '"));' .
-                'p.toggleClass("open");' .
+            'let p = $(e.currentTarget).parent();' .
+            'if (p.children().length <= 1) p.trigger((p.hasClass("open") ? "' . Event::CLOSE_LIST . '" : "' . Event::OPEN_LIST . '"));' .
+            'p.toggleClass("open");' .
             '});' .
             '$("' . $this->idc() . '").children("script").remove();' .
             '</script></ul>';
@@ -115,6 +122,5 @@ class TreeHtmlView extends HtmlView {
     public function subtree(array|string $classes = []) : TreeLeafHtmlView {
         return $this->leaf(array_merge(['sub'], (is_array($classes) ? $classes : [$classes])));
     }
-
 }
 ?>

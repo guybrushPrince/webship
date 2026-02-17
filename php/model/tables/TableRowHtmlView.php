@@ -2,9 +2,9 @@
 
 namespace webship\tables;
 
-use ContainerHtmlView;
-use HtmlView;
-use Tools;
+use webship\containers\ContainerHtmlView;
+use webship\core\HtmlView;
+use webship\WebshipTools;
 
 /**
  * View TableRowHtmlView.
@@ -48,20 +48,20 @@ class TableRowHtmlView extends ContainerHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.table > .tr', [' > ', '.cell'] ,
+        self::addStyle(WebshipTools::css('.table > .tr', [' > ', '.cell'] ,
             'width: -moz-fit-content', 'width: fit-content'));
-        self::addStyle(Tools::css('.table > .tr.stretch', [' > ', '.cell'] ,'width: inherit'));
-        self::addStyle(Tools::css('.table.stretch > .tr', [' > ', '.cell'] ,'width: inherit'));
-        self::addStyle(Tools::css('.table > .tr.stretch', [' > ', '.cell.full'] ,'grid-column: 1/-1'));
-        self::addStyle(Tools::css('.table > .tr.header', [], 'font-weight: bold'));
-        self::addStyle(Tools::css('.table > .tr.header.border', [], 'align-items: flex-end',
+        self::addStyle(WebshipTools::css('.table > .tr.stretch', [' > ', '.cell'] ,'width: inherit'));
+        self::addStyle(WebshipTools::css('.table.stretch > .tr', [' > ', '.cell'] ,'width: inherit'));
+        self::addStyle(WebshipTools::css('.table > .tr.stretch', [' > ', '.cell.full'] ,'grid-column: 1/-1'));
+        self::addStyle(WebshipTools::css('.table > .tr.header', [], 'font-weight: bold'));
+        self::addStyle(WebshipTools::css('.table > .tr.header.border', [], 'align-items: flex-end',
             'border-bottom: 1px solid var(--system-background)', 'padding-bottom: 4px'));
-        self::addStyle(Tools::css('.table > .tr.header.border', [' > ', '.cell'], 'align-items: flex-end',
+        self::addStyle(WebshipTools::css('.table > .tr.header.border', [' > ', '.cell'], 'align-items: flex-end',
             'align-content: flex-end'));
-        self::addStyle(Tools::css('.table > .tr.hoverable', [], 'transition: 0.5s background'));
-        self::addStyle(Tools::css('.table > .tr.hoverable', [':hover'],
+        self::addStyle(WebshipTools::css('.table > .tr.hoverable', [], 'transition: 0.5s background'));
+        self::addStyle(WebshipTools::css('.table > .tr.hoverable', [':hover'],
             'background: var(--light-system-background)'));
-        self::addStyle(Tools::css('.table > .tr.h40px', [' > ', '.cell'],'min-height: 40px'));
+        self::addStyle(WebshipTools::css('.table > .tr.h40px', [' > ', '.cell'],'min-height: 40px'));
     }
     /**
      * Create a row for a table.

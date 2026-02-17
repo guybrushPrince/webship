@@ -2,15 +2,15 @@
 
 namespace webship\tabs;
 
-use ContainerItemHtmlView;
 use DatabaseError;
 use Event;
-use HtmlView;
-use Language;
+use ship\interoperability\SLanguage as Language;
 use ship\views\TextView;
-use Tools;
 use webship\buttons\CloserHtmlView;
+use webship\containers\ContainerItemHtmlView;
+use webship\core\HtmlView;
 use webship\symbols\ImageHtmlView;
+use webship\WebshipTools;
 
 /**
  * View TabContainerItemHtmlView.
@@ -54,46 +54,46 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.tab', [], 'z-index: 0'));
+        self::addStyle(WebshipTools::css('.tab', [], 'z-index: 0'));
 
-        self::addStyle(Tools::css('.tab', [' > ', '.tab-header'],
+        self::addStyle(WebshipTools::css('.tab', [' > ', '.tab-header'],
             'position: absolute', 'top: -25px', 'height: 25px', 'z-index: 2',
             'background: var(--neutral)', 'border: solid 2px var(--login-border)',
             'border-bottom: none', 'display: flex', 'align-items: center', 'padding: 0 5px',
             'box-sizing: border-box', 'cursor: pointer', 'border-radius: 6px 6px 0 0'));
-        self::addStyle(Tools::css('.tabbed:not(.lo)', [' > ', '.tab:first-child', ' > ', '.tab-header'],
+        self::addStyle(WebshipTools::css('.tabbed:not(.lo)', [' > ', '.tab:first-child', ' > ', '.tab-header'],
             'border-left: solid 2px var(--login-border)'));
-        self::addStyle(Tools::css('.tab', [' > ', '.tab-header', ' > ', 'div:first-child'],
+        self::addStyle(WebshipTools::css('.tab', [' > ', '.tab-header', ' > ', 'div:first-child'],
             'display: flex', 'flex-direction: row', 'flex-wrap: nowrap'));
-        self::addStyle(Tools::css('.tab', [' > ', '.tab-header', ' ', '.icon:empty'],
+        self::addStyle(WebshipTools::css('.tab', [' > ', '.tab-header', ' ', '.icon:empty'],
             'display: none'));
-        self::addStyle(Tools::css('.tab', [' > ', '.tab-header', ' ', '.icon:not(:empty)'],
+        self::addStyle(WebshipTools::css('.tab', [' > ', '.tab-header', ' ', '.icon:not(:empty)'],
             'margin-right: 5px', 'width: 15px', 'height: 15px', 'display: flex',
             'align-items: center', 'justify-content: center', 'border-radius: 50%'));
-        self::addStyle(Tools::css('.tab', [' > ', '.tab-header', ' ', '.icon', ' > ', 'img'],
+        self::addStyle(WebshipTools::css('.tab', [' > ', '.tab-header', ' ', '.icon', ' > ', 'img'],
             'height: 11px'));
-        self::addStyle(Tools::css('.tab', [' > ', '.tab-header', ' > ', '.closer'],
+        self::addStyle(WebshipTools::css('.tab', [' > ', '.tab-header', ' > ', '.closer'],
             'width: 20px', 'height: 25px', 'padding-right: 0'));
-        self::addStyle(Tools::css('.tab', [':not(.active)', ' > ', '.tab-header'],
+        self::addStyle(WebshipTools::css('.tab', [':not(.active)', ' > ', '.tab-header'],
             'background: var(--system-background-other)'));
-        self::addStyle(Tools::css('.tab', [':not(.active)', ' > ', '.tab-header:hover'],
+        self::addStyle(WebshipTools::css('.tab', [':not(.active)', ' > ', '.tab-header:hover'],
             'background: var(--dark-system-background)'));
-        self::addStyle(Tools::css('.tab', ['.active', ' > ', '.tab-header', ' ', '.closer'],
+        self::addStyle(WebshipTools::css('.tab', ['.active', ' > ', '.tab-header', ' ', '.closer'],
             'text-shadow: none'));
-        self::addStyle(Tools::css('.tab', [':first-child', ' > ', '.tab-header', ' > ', ':first-child'],
+        self::addStyle(WebshipTools::css('.tab', [':first-child', ' > ', '.tab-header', ' > ', ':first-child'],
             'padding-right: 4px'));
-        self::addStyle(Tools::css('.tab', [':first-child', ' > ', '.tab-header', ' ', '.closer'],
+        self::addStyle(WebshipTools::css('.tab', [':first-child', ' > ', '.tab-header', ' ', '.closer'],
             'display: none'));
 
-        self::addStyle(Tools::css('.tab', [' > ', '.tab-separator'],
+        self::addStyle(WebshipTools::css('.tab', [' > ', '.tab-separator'],
             'position: absolute', 'left: 0', 'top: -2px', 'width: 100%', 'box-sizing: border-box',
             'border-bottom: solid 2px var(--login-border)', 'z-index: 1'));
 
-        self::addStyle(Tools::css('.tab', [' > ', '.tab-content'], 'box-sizing: border-box',
+        self::addStyle(WebshipTools::css('.tab', [' > ', '.tab-content'], 'box-sizing: border-box',
             'position: absolute', 'width: 100%', 'top: 0', 'background: var(--neutral)',
             'height: calc(100% - 27px)', 'overflow-y: auto'));
 
-        self::addStyle(Tools::css('.tab', [' > ', '.tab-content', ' > ', '.panel'],
+        self::addStyle(WebshipTools::css('.tab', [' > ', '.tab-content', ' > ', '.panel'],
             'border: none'));
     }
 

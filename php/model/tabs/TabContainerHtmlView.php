@@ -2,9 +2,9 @@
 
 namespace webship\tabs;
 
-use ContainerHtmlView;
 use Event;
-use Tools;
+use webship\containers\ContainerHtmlView;
+use webship\WebshipTools;
 
 /**
  * View TabContainerHtmlView.
@@ -64,9 +64,9 @@ class TabContainerHtmlView extends ContainerHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.tabbed', [], 'position: relative',
+        self::addStyle(WebshipTools::css('.tabbed', [], 'position: relative',
             'width: 100%', 'height: 100%', 'overflow-y: clip'));
-        self::addStyle(Tools::css('.tabbed', [' > ', '.tab'], 'position: absolute', 'left: 0', 'top: 27px',
+        self::addStyle(WebshipTools::css('.tabbed', [' > ', '.tab'], 'position: absolute', 'left: 0', 'top: 27px',
             'width: 100%', 'box-sizing: border-box', 'overflow-y: visible', 'height: 100%', 'padding: 0'));
     }
 

@@ -1,7 +1,13 @@
 <?php
 
+namespace webship\panels;
+
+use Event;
+use Language;
 use ship\interoperability\IShippable;
 use ship\interoperability\ShipperRegister;
+use webship\protocols\HtmlActionProtocol;
+use webship\WebshipTools;
 
 /**
  * View MovePanelItemHtmlView.
@@ -65,7 +71,7 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
      * @param string[]|string $classes Some classes.
      */
     private function __construct(bool $hasDelete = false, bool $autoDelete = false, array|string $classes = []) {
-        $classes = is_array($classes) ? $classes : [ $classes ];
+        $classes = is_array($classes) ? $classes : [$classes];
         $classes[] = 'movable';
         $classes[] = 'rel';
         parent::__construct($classes);
@@ -96,70 +102,70 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
      */
     public static function addCSS() : void {
         // Move buttons
-        self::addStyle(Tools::css('.panel-item.movable', [' > ', '.move'], 'cursor: pointer',
+        self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move'], 'cursor: pointer',
             'text-align: center', 'font-size: 25px', 'color: var(--font-trans)', 'position: absolute',
             'right: 0', 'width: 50px', 'box-sizing: border-box', 'height: 30px',
             'transition: background 0.5s', 'display: flex', 'flex-direction: row', 'align-items: center',
             'justify-content: center', 'border-radius: 3px'));
-        self::addStyle(Tools::css('.panel-item.movable', [' > ', '.move', ':hover'],
+        self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move', ':hover'],
             'background: var(--drag-background-hover)', 'color: var(--drag-color-hover)'));
-        self::addStyle(Tools::css('.panel-item.movable', [' > ', '.move', ':after'],
+        self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move', ':after'],
             'display: flex', 'flex-direction: row', 'align-items: center', 'justify-content: center',
             'width: 100%'));
 
-        self::addStyle(Tools::css('.panel-item.movable', [' > ', '.move.up'],
+        self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move.up'],
             'top: 0'));
-        self::addStyle(Tools::css('.panel-item.movable', [' > ', '.move.up', ':after'],
+        self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move.up', ':after'],
             'content: "\0025B2"'));
-        self::addStyle(Tools::css('.panel-item.movable', ' > .move.down',
+        self::addStyle(WebshipTools::css('.panel-item.movable', ' > .move.down',
             'top: calc(100% - 30px)'));
-        self::addStyle(Tools::css('.panel-item.movable', [' > ', '.move.down', ':after'],
+        self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move.down', ':after'],
             'content: "\0025BC"'));
-        self::addStyle(Tools::css('.panel-item.movable', ['.first', ' > ', '.move.up'],
+        self::addStyle(WebshipTools::css('.panel-item.movable', ['.first', ' > ', '.move.up'],
             'display: none !important'));
-        self::addStyle(Tools::css('.panel-item.movable', ['.last', ' > ', '.move.down'],
+        self::addStyle(WebshipTools::css('.panel-item.movable', ['.last', ' > ', '.move.down'],
             'display: none !important'));
 
-        self::addStyle(Tools::css('.panel-item.movable', [' > ', '.move.delete'],
+        self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move.delete'],
             'top: calc(50% - 15px)'));
-        self::addStyle(Tools::css('.panel-item.movable', [' > ', '.move.delete', ':after'],
+        self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move.delete', ':after'],
             'display: flex', 'content: ""',
             'width: 18px', 'background-image: url(\'' . HtmlActionProtocol::$serverURL . '/sunstone/pic/delete.svg\')',
             'background-repeat: no-repeat', 'background-origin: padding-box', 'height: 60%'));
-        self::addStyle(Tools::css('.panel-item.movable', [' > ', '.move.delete:hover'],
+        self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move.delete:hover'],
             'background: var(--delete-2-hover-2)'));
 
         // Drag button
-        self::addStyle(Tools::css('.panel-item.movable', [' > ', '.drag'], 'cursor: grab',
+        self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.drag'], 'cursor: grab',
             'position: absolute', 'left: 0', 'width: 25px', 'box-sizing: border-box', 'height: 100%',
             'transition: background 0.5s', 'display: flex', 'align-items: center', 'justify-content: center',
             'border-radius: 5px', 'top: 0px'));
-        self::addStyle(Tools::css('.panel-item.movable', [' > ', '.drag', ':hover'],
+        self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.drag', ':hover'],
             'background: var(--drag-background-hover)'));
-        self::addStyle(Tools::css('.panel-item.movable', [' > ', '.drag', ' > ', 'img'],
+        self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.drag', ' > ', 'img'],
             'opacity: 0.25', 'width: 100%'));
 
         // Move targets
-        self::addStyle(Tools::css('.panel-item.movable', [' > ', '.move-position'], 'width: 100%',
+        self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move-position'], 'width: 100%',
             'height: 0', 'background: linear-gradient(-45deg, var(--neutral), var(--move-position-background))',
             'background-size: 400% 400%',
             'border-radius: 5px', 'align-items: center', 'justify-content: center', 'transition: 0.5s',
             'display: flex'));
-        self::addStyle(Tools::css('.panel-item.movable', [' > ', '.move-position', ' > ', 'img'],
+        self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move-position', ' > ', 'img'],
             'height: 0', 'opacity: 0.5', 'transition: 0.5s'));
-        self::addStyle(Tools::css('.panel-item.movable', ['.over.not-bottom', ' > ', '.move-position.bottom'],
+        self::addStyle(WebshipTools::css('.panel-item.movable', ['.over.not-bottom', ' > ', '.move-position.bottom'],
             'display: none'));
-        self::addStyle(Tools::css('.panel-item.movable', ['.over.not-top', ' > ', '.move-position.top'],
+        self::addStyle(WebshipTools::css('.panel-item.movable', ['.over.not-top', ' > ', '.move-position.top'],
             'display: none'));
-        self::addStyle(Tools::css('.panel-item.movable', ['.over:not(.in-move)', ' > ', '.move-position.hover'],
+        self::addStyle(WebshipTools::css('.panel-item.movable', ['.over:not(.in-move)', ' > ', '.move-position.hover'],
             'border: 1px solid var(--border-1)', 'opacity: 1.0', 'height: 50px',
             'animation: gradient 15s ease infinite'));
-        self::addStyle(Tools::css('.panel-item.movable', ['.over:not(.in-move)', ' > ', '.move-position.hover',
+        self::addStyle(WebshipTools::css('.panel-item.movable', ['.over:not(.in-move)', ' > ', '.move-position.hover',
             ' > ', 'img'], 'opacity: 1.0', 'height: 30px'));
-        self::addStyle(Tools::css('.panel-item.movable', ['.over:not(.in-move)', ' > ', '.move-position'],
+        self::addStyle(WebshipTools::css('.panel-item.movable', ['.over:not(.in-move)', ' > ', '.move-position'],
             'height: 20px'));
-        self::addStyle(Tools::css('.panel-item.movable', ['.over:not(.in-move)', ' > ', '.move-position', ' > ',
-            'img'],'height: 20px'));
+        self::addStyle(WebshipTools::css('.panel-item.movable', ['.over:not(.in-move)', ' > ', '.move-position', ' > ',
+            'img'], 'height: 20px'));
     }
 
     /**
@@ -187,13 +193,13 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
         if ($this->showMoves) {
             $open .= '<div class="' . implode(' ', ['move', 'up', $this->id() . '-up']) . '" title="' . [
                     Language::ENGLISH => 'Move this element up by one',
-                    Language::GERMAN  => 'Dieses Element um eins nach oben schieben.'
+                    Language::GERMAN => 'Dieses Element um eins nach oben schieben.'
                 ][self::getLanguage()] . '"></div>';
         }
         if ($this->hasDelete) {
             $open .= '<div class="' . implode(' ', ['move', 'delete', $this->id() . '-delete']) . '" title="' . [
                     Language::ENGLISH => 'Delete this element',
-                    Language::GERMAN  => 'Dieses Element löschen'
+                    Language::GERMAN => 'Dieses Element löschen'
                 ][self::getLanguage()] . '"></div>';
         }
 
@@ -209,13 +215,13 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
             $closing .= '<div class="' . implode(' ', ['move', 'down', $this->id() . '-down']) . '" ' .
                 'title="' . [
                     Language::ENGLISH => 'Move this element down by one',
-                    Language::GERMAN  => 'Dieses Element um eins nach unten schieben.'
+                    Language::GERMAN => 'Dieses Element um eins nach unten schieben.'
                 ][self::getLanguage()] . '"></div>';
         }
         if ($this->isDraggable) {
             $closing .= '<div class="drag" title="' . [
                     Language::ENGLISH => 'Move this element to another place',
-                    Language::GERMAN  => 'Verschiebe dieses Element an eine andere Stelle'
+                    Language::GERMAN => 'Verschiebe dieses Element an eine andere Stelle'
                 ][self::getLanguage()] . '">' .
                 '<img src="' . HtmlActionProtocol::$serverURL . '/webship/pic/drag-handle.svg" alt="move-cursor">' .
                 '</div>';

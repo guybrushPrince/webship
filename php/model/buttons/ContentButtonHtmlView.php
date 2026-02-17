@@ -1,8 +1,13 @@
 <?php
 
+namespace webship\buttons;
+
+use Event;
 use ship\views\View;
-use webship\buttons\CloserHtmlView;
-use webship\buttons\StandardButtonHtmlView;
+use webship\containers\ContainerHtmlView;
+use webship\core\HtmlView;
+use webship\menus\ControlPanelHtmlView;
+use webship\WebshipTools;
 
 /**
  * View ContentButtonHtmlView.
@@ -78,23 +83,23 @@ class ContentButtonHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.content-button', '', 'position: relative',
+        self::addStyle(WebshipTools::css('.content-button', '', 'position: relative',
             '--hover: var(--dark-system-background)', '--bottom-distance: 1rem'));
-        self::addStyle(Tools::css('.content-button', [' > ', 'form'], 'padding: 0', 'margin: 0',
+        self::addStyle(WebshipTools::css('.content-button', [' > ', 'form'], 'padding: 0', 'margin: 0',
             'display: inherit', 'width: inherit', 'height: inherit', 'box-sizing: border-box'));
-        self::addStyle(Tools::css('.content-button', [' > ', 'form', ' > ', '.overlay'],
+        self::addStyle(WebshipTools::css('.content-button', [' > ', 'form', ' > ', '.overlay'],
             'width: 100%', 'height: 100%', 'position: absolute', 'top: 0', 'left: 0', 'cursor: pointer',
             'z-index: 1'));
-        self::addStyle(Tools::css('.content-button', [' > ', 'form', ' > ', '.overlay:hover', ' + ', 'button'],
+        self::addStyle(WebshipTools::css('.content-button', [' > ', 'form', ' > ', '.overlay:hover', ' + ', 'button'],
             'background: var(--hover)'));
-        self::addStyle(Tools::css('.content-button.active', [' > ', 'form', ' > ', '.overlay'],
+        self::addStyle(WebshipTools::css('.content-button.active', [' > ', 'form', ' > ', '.overlay'],
             'display: none'));
-        self::addStyle(Tools::css('.content-button', [' > ', 'form', ' > ', '.content'], 'display: none',
+        self::addStyle(WebshipTools::css('.content-button', [' > ', 'form', ' > ', '.content'], 'display: none',
             'width: 100%', 'position: absolute', 'background: var(--light-system-background)',
             'border: 1px solid var(--dark-system-background)', 'border-radius: 3px', 'padding: 5px 25px 5px 5px;',
             '-webkit-box-shadow: var(--shadow-flow-1)', 'box-shadow: var(--shadow-flow-1)',
             'min-width: 170px', 'z-index: 100'));
-        self::addStyle(Tools::css('.content-button.active', [' > ', 'form', ' > ', '.content'],
+        self::addStyle(WebshipTools::css('.content-button.active', [' > ', 'form', ' > ', '.content'],
             'display: flex'));
     }
 
@@ -105,7 +110,7 @@ class ContentButtonHtmlView extends HtmlView {
      * @param string[]|string $contentClasses Additional classes for the content.
      * @return ContentButtonHtmlView
      */
-    public static function create(string $id, array|string $classes = [],
+    public static function create(string       $id, array|string $classes = [],
                                   array|string $contentClasses = []) : ContentButtonHtmlView {
         return new ContentButtonHtmlView($id, $classes, $contentClasses);
     }
@@ -161,4 +166,5 @@ class ContentButtonHtmlView extends HtmlView {
         return $this;
     }
 }
+
 ?>

@@ -2,9 +2,8 @@
 
 namespace webship\buttons;
 
-use ButtonHtmlView;
-use Tools;
 use webship\symbols\ImageHtmlView;
+use webship\WebshipTools;
 
 /**
  * View StandardButtonHtmlView.
@@ -57,7 +56,7 @@ class StandardButtonHtmlView extends ButtonHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('button.std-button', [], 'display: flex', 'flex-direction: row',
+        self::addStyle(WebshipTools::css('button.std-button', [], 'display: flex', 'flex-direction: row',
             '--common-width: 175px', '--common-height: 50px', '--bottom-distance: 1rem',
             '--common-margin: .5rem 0 var(--bottom-distance) 0',
             'align-items: center', 'justify-content: center',
@@ -70,40 +69,40 @@ class StandardButtonHtmlView extends ButtonHtmlView {
             '-webkit-box-shadow: var(--shadow-flow-1)', 'box-shadow: var(--shadow-flow-1)',
             'transition: background 0.5s', 'border-radius: 5px', 'box-sizing: border-box', 'gap: 10px',
             '--hover: var(--dark-system-background)'));
-        self::addStyle(Tools::css('button.std-button', [':hover'],
+        self::addStyle(WebshipTools::css('button.std-button', [':hover'],
             'background: var(--hover)'));
-        self::addStyle(Tools::css('button.std-button', [' > ', 'img'], 'height: 100%'));
+        self::addStyle(WebshipTools::css('button.std-button', [' > ', 'img'], 'height: 100%'));
 
-        self::addStyle(Tools::css('button.std-button.plain', [], 'background: none',
+        self::addStyle(WebshipTools::css('button.std-button.plain', [], 'background: none',
             '-webkit-box-shadow: none', 'box-shadow: none'));
 
-        self::addStyle(Tools::css('button.std-button.small', [], 'margin: 0', 'height: 30px',
+        self::addStyle(WebshipTools::css('button.std-button.small', [], 'margin: 0', 'height: 30px',
             'max-height: 30px', 'width: auto', 'min-height: auto'));
-        self::addStyle(Tools::css('button.std-button.small', [' > ', 'img'], 'height: 50%'));
-        self::addStyle(Tools::css('button.std-button.sm-img', [' > ', 'img'], 'height: 50%',
+        self::addStyle(WebshipTools::css('button.std-button.small', [' > ', 'img'], 'height: 50%'));
+        self::addStyle(WebshipTools::css('button.std-button.sm-img', [' > ', 'img'], 'height: 50%',
             'margin: 5px'));
 
-        self::addStyle(Tools::css('button.std-button.w25', [], 'width: 25%'));
-        self::addStyle(Tools::css('button.std-button.w50', [], 'width: 50%'));
-        self::addStyle(Tools::css('button.std-button.w75', [], 'width: 75%'));
-        self::addStyle(Tools::css('button.std-button.w100', [], 'width: 100%'));
+        self::addStyle(WebshipTools::css('button.std-button.w25', [], 'width: 25%'));
+        self::addStyle(WebshipTools::css('button.std-button.w50', [], 'width: 50%'));
+        self::addStyle(WebshipTools::css('button.std-button.w75', [], 'width: 75%'));
+        self::addStyle(WebshipTools::css('button.std-button.w100', [], 'width: 100%'));
 
-        self::addStyle(Tools::css('button.std-button.long', [], 'width: 250px'));
-        self::addStyle(Tools::css('button.std-button.sl', [], 'margin: 0'));
+        self::addStyle(WebshipTools::css('button.std-button.long', [], 'width: 250px'));
+        self::addStyle(WebshipTools::css('button.std-button.sl', [], 'margin: 0'));
 
-        self::addStyle(Tools::css('button.std-button.only-img', [], 'width: 30px', 'height: 30px',
+        self::addStyle(WebshipTools::css('button.std-button.only-img', [], 'width: 30px', 'height: 30px',
             'padding: 5px', 'margin: 0', 'min-height: 30px', 'max-height: 30px', 'min-width: 30px', 'max-width: 30px'));
-        self::addStyle(Tools::css('button.std-button.long.only-img', [], 'width: var(--common-height)',
+        self::addStyle(WebshipTools::css('button.std-button.long.only-img', [], 'width: var(--common-height)',
             'height: var(--common-height)', 'padding: 5px', 'margin: var(--common-margin)',
             'min-height: var(--common-height)', 'max-height: var(--common-height)', 'min-width: var(--common-height)',
             'max-width: var(--common-height)'));
-        self::addStyle(Tools::css('button.std-button:disabled', [], 'opacity: 0.25', 'cursor: not-allowed'));
+        self::addStyle(WebshipTools::css('button.std-button:disabled', [], 'opacity: 0.25', 'cursor: not-allowed'));
 
-        self::addStyle(Tools::css('button.std-button.list-b', [], 'margin: 0',
+        self::addStyle(WebshipTools::css('button.std-button.list-b', [], 'margin: 0',
             'justify-content: flex-start', 'text-align: left', 'min-height: 40px', 'height: 40px', 'font-size: 14px',
             'border-radius: 0', 'width: 100%'));
-        self::addStyle(Tools::css('button.std-button.list-b', [' > ', 'img'], 'height: 50%'));
-        self::addStyle(Tools::css('button.std-button.list-b', [' > ', 'img.invisible'],
+        self::addStyle(WebshipTools::css('button.std-button.list-b', [' > ', 'img'], 'height: 50%'));
+        self::addStyle(WebshipTools::css('button.std-button.list-b', [' > ', 'img.invisible'],
             'visibility: hidden'));
     }
 

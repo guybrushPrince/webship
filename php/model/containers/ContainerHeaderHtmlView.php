@@ -1,5 +1,10 @@
 <?php
 
+namespace webship\containers;
+
+use webship\core\HtmlView;
+use webship\WebshipTools;
+
 /**
  * View ContainerHeaderHtmlView.
  *
@@ -21,8 +26,8 @@ class ContainerHeaderHtmlView extends HtmlView {
      * @param string[]|string $classes Some classes.
      */
     public function __construct(array|string $classes = []) {
-        $classes = is_array($classes) ? $classes : [ $classes ];
-        parent::__construct(array_merge([ 'container-header' ], $classes));
+        $classes = is_array($classes) ? $classes : [$classes];
+        parent::__construct(array_merge(['container-header'], $classes));
 
         self::addCSS();
     }
@@ -31,7 +36,7 @@ class ContainerHeaderHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.container-header', [], 'font-size: 20px',
+        self::addStyle(WebshipTools::css('.container-header', [], 'font-size: 20px',
             'text-transform: none', 'font-weight: lighter', 'font-family: Roboto, sans-serif', 'width: 100%',
             'box-sizing: border-box'));
     }

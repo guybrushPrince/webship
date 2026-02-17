@@ -2,7 +2,7 @@
 
 namespace webship\alerts;
 
-use Tools;
+use webship\WebshipTools;
 
 /**
  * View ErrorHtmlView.
@@ -49,7 +49,7 @@ class ErrorHtmlView extends AlertHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.alert.error', [], '--alert-border: var(--error-border)',
+        self::addStyle(WebshipTools::css('.alert.error', [], '--alert-border: var(--error-border)',
             '--alert-font: var(--error-font)', '--alert-background: var(--error-background)',
             '--alert-img-filter: brightness(0) saturate(100%) invert(36%) sepia(6%) saturate(4774%) hue-rotate(314deg) brightness(98%) contrast(99%)',
             '--alert-img-filter-hover: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(241deg) brightness(110%) contrast(106%)',

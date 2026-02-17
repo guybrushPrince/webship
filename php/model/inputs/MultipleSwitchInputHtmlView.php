@@ -2,9 +2,9 @@
 
 namespace webship\inputs;
 
-use HtmlView;
 use ship\interoperability\IShippable;
-use Tools;
+use webship\core\HtmlView;
+use webship\WebshipTools;
 
 /**
  * View MultipleSwitchInputHtmlView.
@@ -59,29 +59,29 @@ class MultipleSwitchInputHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.mul-switch', [], 'display: flex', 'flex-direction: row',
+        self::addStyle(WebshipTools::css('.mul-switch', [], 'display: flex', 'flex-direction: row',
             'flex-wrap: nowrap', 'flex: 1 1 0px', 'gap: 0', '--unselected: var(--dark-system-background)',
             '--unselected-font: var(--neutral)', '--selected: var(--discussion-response-button)',
             '--selected-font: var(--neutral)', '--hover: var(--discussion-response-button-hover)',
             '--hover-font: var(--neutral)'));
 
-        self::addStyle(Tools::css('.mul-switch', [' > ', 'input'], 'display: none', 'height: 0',
+        self::addStyle(WebshipTools::css('.mul-switch', [' > ', 'input'], 'display: none', 'height: 0',
             'opacity: 0', 'width: 0'));
-        self::addStyle(Tools::css('.mul-switch', [' > ', 'input', ' + ', 'label'],'display: flex',
+        self::addStyle(WebshipTools::css('.mul-switch', [' > ', 'input', ' + ', 'label'],'display: flex',
             'flex-direction: row', 'align-items: center', 'justify-content: center', 'flex-basis: 0', 'padding: 0 8px',
             'height: 25px', 'min-width: 30px', 'background: var(--unselected)', 'color: var(--unselected-font)',
             'font-weight: bolder', 'cursor: pointer', 'transition: 0.5s background'));
-        self::addStyle(Tools::css('.mul-switch', [' > ', 'label:first-of-type'],
+        self::addStyle(WebshipTools::css('.mul-switch', [' > ', 'label:first-of-type'],
             'border-radius: 3px 0 0 3px'));
-        self::addStyle(Tools::css('.mul-switch', [' > ', 'label:last-of-type'],
+        self::addStyle(WebshipTools::css('.mul-switch', [' > ', 'label:last-of-type'],
             'border-radius: 0 3px 3px 0'));
-        self::addStyle(Tools::css('.mul-switch', [' > ', 'input:checked', ' + ', 'label'],
+        self::addStyle(WebshipTools::css('.mul-switch', [' > ', 'input:checked', ' + ', 'label'],
             'background: var(--selected)', 'color: var(--selected-font)'));
-        self::addStyle(Tools::css('.mul-switch', [' > ', 'input:focus', ' + ', 'label'],
+        self::addStyle(WebshipTools::css('.mul-switch', [' > ', 'input:focus', ' + ', 'label'],
             'box-shadow: 0 0 1px var(--selected)'));
-        self::addStyle(Tools::css('.mul-switch', [' > ', 'input:not(:checked)', ' + ', 'label:hover'],
+        self::addStyle(WebshipTools::css('.mul-switch', [' > ', 'input:not(:checked)', ' + ', 'label:hover'],
             'background: var(--hover)', 'color: var(--hover-font)'));
-        self::addStyle(Tools::css('.mul-switch', [' > ', 'input:disabled', ' + ', 'label'],
+        self::addStyle(WebshipTools::css('.mul-switch', [' > ', 'input:disabled', ' + ', 'label'],
             'opacity: 0.7', 'background: var(--unselected)', 'color: var(--unselected-font)'));
     }
 

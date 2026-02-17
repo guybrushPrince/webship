@@ -2,7 +2,7 @@
 
 namespace webship\alerts;
 
-use Tools;
+use webship\WebshipTools;
 
 /**
  * View SuccessHtmlView.
@@ -49,7 +49,7 @@ class SuccessHtmlView extends AlertHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.alert.success', [], '--alert-border: var(--border-success)',
+        self::addStyle(WebshipTools::css('.alert.success', [], '--alert-border: var(--border-success)',
             '--alert-font: var(--font-success)', '--alert-background: var(--background-success)',
             '--alert-img-filter: brightness(0) saturate(100%) invert(54%) sepia(4%) saturate(4282%) hue-rotate(72deg) brightness(74%) contrast(107%)',
             '--alert-img-filter-hover: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(241deg) brightness(110%) contrast(106%)',

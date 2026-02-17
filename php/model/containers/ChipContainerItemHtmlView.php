@@ -1,6 +1,9 @@
 <?php
 
+namespace webship\containers;
+
 use webship\buttons\CloserHtmlView;
+use webship\WebshipTools;
 
 /**
  * Class ChipContainerItemHtmlView.
@@ -24,17 +27,17 @@ class ChipContainerItemHtmlView extends ContainerHtmlView {
      * @param string[]|string $classes Some classes.
      */
     public function __construct(string|array $classes = []) {
-        $classes = is_array($classes) ? $classes : [ $classes ];
-        parent::__construct(array_merge([ 'chip' ], $classes));
+        $classes = is_array($classes) ? $classes : [$classes];
+        parent::__construct(array_merge(['chip'], $classes));
 
-        $this->style(Tools::css('.chip', [' > ', 'button.std-button.closer.mini'],
+        $this->style(WebshipTools::css('.chip', [' > ', 'button.std-button.closer.mini'],
             'min-height: 20px', 'height: 20px', 'padding: 2.5px', 'min-width: 20px', 'width: 20px',
             'background: none'));
-        $this->style(Tools::css('.chip', [' ', '.container'], 'height: auto', 'padding-top: 0',
+        $this->style(WebshipTools::css('.chip', [' ', '.container'], 'height: auto', 'padding-top: 0',
             'padding-bottom: 0'));
-        $this->style(Tools::css('.chip', [' ', '.container-item'], 'height: auto', 'padding-top: 0',
+        $this->style(WebshipTools::css('.chip', [' ', '.container-item'], 'height: auto', 'padding-top: 0',
             'padding-bottom: 0'));
-        $this->style(Tools::css('.chip', [' ', 'select'], 'height: auto'));
+        $this->style(WebshipTools::css('.chip', [' ', 'select'], 'height: auto'));
 
         $this->box = ContainerHtmlView::createIt();
         $this->add($this->box);

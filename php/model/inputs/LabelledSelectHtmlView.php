@@ -3,7 +3,7 @@
 namespace webship\inputs;
 
 use ship\interoperability\IShippable;
-use Tools;
+use webship\WebshipTools;
 
 /**
  * View LabelledSelectHtmlView.
@@ -87,32 +87,32 @@ class LabelledSelectHtmlView extends SelectHtmlView {
      * @return void
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.lselect', [], 'position: relative', 'width: fit-content',
+        self::addStyle(WebshipTools::css('.lselect', [], 'position: relative', 'width: fit-content',
             'box-sizing: border-box', 'width: -moz-fit-content', '--height: 30px', '--buffer: 10px',
             'height: calc(var(--height) + var(--buffer))',
             'display: flex', 'flex-direction: row-reverse', 'align-items: flex-end', 'flex-wrap: nowrap'));
-        self::addStyle(Tools::css('.lselect', [' > ', 'select', ', ',
+        self::addStyle(WebshipTools::css('.lselect', [' > ', 'select', ', ',
             '.lselect', ' > ', 'div.select'], 'height: var(--height)',
             'box-sizing: border-box', 'font-size: 13px'));
-        self::addStyle(Tools::css('.lselect.ll', [], '--buffer: 0'));
-        self::addStyle(Tools::css('.lselect.ll', [' > ', 'select + label', ', ',
+        self::addStyle(WebshipTools::css('.lselect.ll', [], '--buffer: 0'));
+        self::addStyle(WebshipTools::css('.lselect.ll', [' > ', 'select + label', ', ',
             '.lselect.ll', ' > ', 'div.select + label'], 'display: none'));
 
-        self::addStyle(Tools::css('.lselect:not(.mini)', [' > ', 'select + label', ', ',
+        self::addStyle(WebshipTools::css('.lselect:not(.mini)', [' > ', 'select + label', ', ',
             '.lselect:not(.mini)', ' > ', 'div.select + label'],
             'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--dark-system-background)',
             'bottom: calc(100% - var(--buffer))', 'font-size: 10px'));
 
-        self::addStyle(Tools::css('.lselect.mini', [], '--height: 20px', '--buffer: 0'));
-        self::addStyle(Tools::css('.lselect.mini', [' > ', 'select', ', ',
+        self::addStyle(WebshipTools::css('.lselect.mini', [], '--height: 20px', '--buffer: 0'));
+        self::addStyle(WebshipTools::css('.lselect.mini', [' > ', 'select', ', ',
             '.lselect.mini', ' > ', 'select'], 'border-radius: 3px',
             'font-size: 10px', 'border: 1px solid var(--font-info)', 'color: var(--font-info)', 'padding: 0'));
-        self::addStyle(Tools::css('.lselect.mini', [' > ', 'select:focus',
+        self::addStyle(WebshipTools::css('.lselect.mini', [' > ', 'select:focus',
             '.lselect.mini', ' > ', 'select:focus'], 'outline: none'));
-        self::addStyle(Tools::css('.lselect.mini', [' > ', 'label'], 'color: var(--font-info)',
+        self::addStyle(WebshipTools::css('.lselect.mini', [' > ', 'label'], 'color: var(--font-info)',
             'font-size: 10px', 'display: flex', 'flex-wrap: nowrap', 'flex-direction: row', 'height: var(--height)',
             'width: fit-content', 'width: -moz-fit-content', 'align-items: center'));
-        self::addStyle(Tools::css('.lselect.mini', [' > ', 'label:after'], 'color: var(--font-info)',
+        self::addStyle(WebshipTools::css('.lselect.mini', [' > ', 'label:after'], 'color: var(--font-info)',
             'font-size: 10px', 'content: ":"', 'display: block', 'margin-right: 5px'));
     }
 

@@ -1,5 +1,10 @@
 <?php
 
+namespace webship\menus;
+
+use webship\core\HtmlView;
+use webship\WebshipTools;
+
 /**
  * View MenuHtmlView.
  *
@@ -28,29 +33,29 @@ class MenuHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('nav.menu', '', 'position: fixed', 'left: 0',
+        self::addStyle(WebshipTools::css('nav.menu', '', 'position: fixed', 'left: 0',
             'top: 0', 'width: 100%', 'display: flex', 'flex-direction: column', 'background: var(--main-menu)',
             'z-index: 100'));
-        self::addStyle(Tools::css('nav.menu', [' ', 'ul'], '', 'list-style-type: none',
+        self::addStyle(WebshipTools::css('nav.menu', [' ', 'ul'], '', 'list-style-type: none',
             'display: flex', 'margin: 0', 'flex-wrap: nowrap', 'padding: 0'));
-        self::addStyle(Tools::css('nav.menu', [' ', 'ul', ' > ', 'li'], 'width: fit-content',
+        self::addStyle(WebshipTools::css('nav.menu', [' ', 'ul', ' > ', 'li'], 'width: fit-content',
             'height: 35px', 'padding: 10px 20px', 'box-sizing: border-box', 'position: relative',
             'width: -moz-fit-content'));
-        self::addStyle(Tools::css('nav.menu', [' ', 'ul', ' > ', 'li:hover'],
+        self::addStyle(WebshipTools::css('nav.menu', [' ', 'ul', ' > ', 'li:hover'],
             '-webkit-box-shadow: var(--shadow-flow-1)', '-moz-box-shadow: var(--shadow-flow-1)',
             'box-shadow: var(--shadow-flow-1)'));
 
-        self::addStyle(Tools::css('nav.menu', [' ', '.signals-1', ' > ', '.signal:first-of-type'],
+        self::addStyle(WebshipTools::css('nav.menu', [' ', '.signals-1', ' > ', '.signal:first-of-type'],
             'top: 5px', 'right: 5px'));
-        self::addStyle(Tools::css('nav.menu', [' ', '.signals-2', ' > ', '.signal:first-of-type'],
+        self::addStyle(WebshipTools::css('nav.menu', [' ', '.signals-2', ' > ', '.signal:first-of-type'],
             'top: 5px', 'right: 5px'));
-        self::addStyle(Tools::css('nav.menu', [' ', '.signals-2', ' > ', '.signal', ' + ', '.signal'],
+        self::addStyle(WebshipTools::css('nav.menu', [' ', '.signals-2', ' > ', '.signal', ' + ', '.signal'],
             'top: 5px', 'left: 5px'));
-        self::addStyle(Tools::css('nav.menu', [' ', '.signal'], 'position: absolute',
+        self::addStyle(WebshipTools::css('nav.menu', [' ', '.signal'], 'position: absolute',
             'width: 20px', 'height: 20px', 'font-size: 10px', 'background: var(--signal)',
             'border-radius: 10px', 'opacity: 0.6'));
-        self::addStyle(Tools::css('nav.menu', [' ', '.signal.blue'], 'background: var(--background-info)'));
-        self::addStyle(Tools::css('nav.menu', [' ', '.signal.yellow'], 'background: var(--background-warning)'));
+        self::addStyle(WebshipTools::css('nav.menu', [' ', '.signal.blue'], 'background: var(--background-info)'));
+        self::addStyle(WebshipTools::css('nav.menu', [' ', '.signal.yellow'], 'background: var(--background-warning)'));
     }
 
     /**

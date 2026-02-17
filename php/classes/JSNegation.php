@@ -1,4 +1,7 @@
 <?php
+
+namespace webship;
+
 /**
  * Class JSNegation.
  *

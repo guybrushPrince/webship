@@ -1,5 +1,10 @@
 <?php
 
+namespace webship\containers;
+
+use webship\core\HtmlView;
+use webship\WebshipTools;
+
 /**
  * Class SplitHtmlView.
  *
@@ -39,7 +44,7 @@ class SplitHtmlView extends HtmlView {
      */
     public function __construct(int $leftSize = 50, ?int $rightSize = null, int $leftGap = 0, ?int $rightGap = null,
                                 array|string $classes = []) {
-        $classes = is_array($classes) ? $classes : [ $classes ];
+        $classes = is_array($classes) ? $classes : [$classes];
         $classes[] = 'std-split';
         parent::__construct($classes);
 
@@ -72,23 +77,23 @@ class SplitHtmlView extends HtmlView {
      * @return void
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.std-split', [], 'width: 100%', 'padding: 0',
+        self::addStyle(WebshipTools::css('.std-split', [], 'width: 100%', 'padding: 0',
             'box-sizing: border-box', 'position: relative', 'display: flex', 'flex-direction: row',
             'flex-wrap: nowrap', '--separator-width: 5px', '--separator-color: var(--light-system-background)',
         ));
-        self::addStyle(Tools::css('.std-split.scroll', [], 'height: 100%'));
-        self::addStyle(Tools::css('.std-split', [' > ', 'div:nth-child(1)'],
+        self::addStyle(WebshipTools::css('.std-split.scroll', [], 'height: 100%'));
+        self::addStyle(WebshipTools::css('.std-split', [' > ', 'div:nth-child(1)'],
             'width: calc(var(--separator-left-ratio) - var(--separator-width))',
             'padding-right: var(--separator-distance-left)', 'box-sizing: border-box'));
-        self::addStyle(Tools::css('.std-split.scroll', [' > ', 'div:nth-child(1)'],
+        self::addStyle(WebshipTools::css('.std-split.scroll', [' > ', 'div:nth-child(1)'],
             'height: 100%', 'overflow-y: auto'));
-        self::addStyle(Tools::css('.std-split', [' > ', 'div:nth-child(2)'],
+        self::addStyle(WebshipTools::css('.std-split', [' > ', 'div:nth-child(2)'],
             'width: var(--separator-width)',
             'box-sizing: border-box', 'border-left: var(--separator-width) solid var(--separator-color)'));
-        self::addStyle(Tools::css('.std-split', [' > ', 'div:nth-child(3)'],
+        self::addStyle(WebshipTools::css('.std-split', [' > ', 'div:nth-child(3)'],
             'width: var(--separator-right-ratio)',
             'padding-left: var(--separator-distance-right)', 'box-sizing: border-box'));
-        self::addStyle(Tools::css('.std-split.scroll', [' > ', 'div:nth-child(3)'],
+        self::addStyle(WebshipTools::css('.std-split.scroll', [' > ', 'div:nth-child(3)'],
             'height: 100%', 'overflow-y: auto'));
     }
 

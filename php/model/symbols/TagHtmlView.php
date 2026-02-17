@@ -1,5 +1,11 @@
 <?php
 
+namespace webship\symbols;
+
+use Tools;
+use webship\core\HtmlView;
+use webship\WebshipTools;
+
 /**
  * View TagHtmlView.
  *
@@ -31,7 +37,7 @@ class TagHtmlView extends ColorHtmlView {
      */
     private function __construct(string $tag, ?HtmlView $content = null, ?string $color = null,
                                  array|string $classes = []) {
-        if (!is_array($classes)) $classes = [ $classes ];
+        if (!is_array($classes)) $classes = [$classes];
         $classes[] = 'ctag';
         if (is_null($color)) $color = Tools::textToColor($tag);
         parent::__construct($color, $classes, $tag);
@@ -47,11 +53,11 @@ class TagHtmlView extends ColorHtmlView {
      * @return void
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.ctag', [], 'padding: 0 5px', 'border-radius: 5px',
+        self::addStyle(WebshipTools::css('.ctag', [], 'padding: 0 5px', 'border-radius: 5px',
             'width: fit-content', 'width: -moz-fit-content', 'font-weight: bold', 'letter-spacing: 2px',
             'box-sizing: border-box', 'height: 30px', 'display: flex', 'flex-direction: row',
             'align-items: center'));
-        self::addStyle(Tools::css('.ctag.small', [], 'border-radius: 3px',
+        self::addStyle(WebshipTools::css('.ctag.small', [], 'border-radius: 3px',
             'width: fit-content', 'width: -moz-fit-content', 'font-weight: normal', 'letter-spacing: normal',
             'height: 20px'));
     }
@@ -78,6 +84,5 @@ class TagHtmlView extends ColorHtmlView {
         $this->addClass('small');
         return $this;
     }
-
 }
 ?>

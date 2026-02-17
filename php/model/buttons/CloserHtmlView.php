@@ -2,7 +2,7 @@
 
 namespace webship\buttons;
 
-use Tools;
+use webship\WebshipTools;
 
 /**
  * View CloserHtmlView.
@@ -55,14 +55,14 @@ class CloserHtmlView extends StandardButtonHtmlView {
      * @return void
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('button.std-button.closer', [], 'box-sizing: border-box'));
+        self::addStyle(WebshipTools::css('button.std-button.closer', [], 'box-sizing: border-box'));
 
-        self::addStyle(Tools::css('button.std-button.closer.mini', [], 'min-height: 25px',
+        self::addStyle(WebshipTools::css('button.std-button.closer.mini', [], 'min-height: 25px',
             'min-width: 25px', 'height: 25px', 'width: 25px', 'border: none', 'margin: 0', 'background: initial'));
 
-        self::addStyle(Tools::css('button.std-button.closer.plain', [' > ','img'], 'border-radius: 50%',
+        self::addStyle(WebshipTools::css('button.std-button.closer.plain', [' > ','img'], 'border-radius: 50%',
             'transition: background 0.25s'));
-        self::addStyle(Tools::css('button.std-button.closer.plain:hover', [' > ','img'],
+        self::addStyle(WebshipTools::css('button.std-button.closer.plain:hover', [' > ','img'],
             'background: var(--dark-system-background)'));
     }
 

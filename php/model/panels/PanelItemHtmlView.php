@@ -1,5 +1,9 @@
 <?php
 
+namespace webship\panels;
+
+use webship\containers\ContainerHtmlView;
+
 /**
  * View PanelItemHtmlView.
  *
@@ -31,7 +35,7 @@ class PanelItemHtmlView extends ContainerHtmlView {
      * @param string[]|string $classes Some classes.
      */
     public function __construct(array|string $classes = []) {
-        $classes = is_array($classes) ? $classes : [ $classes ];
+        $classes = is_array($classes) ? $classes : [$classes];
         $classes[] = 'panel-item';
         parent::__construct($classes);
 
@@ -41,7 +45,7 @@ class PanelItemHtmlView extends ContainerHtmlView {
     /**
      * @inheritDoc
      */
-    public static function addCSS() : void {}
+    public static function addCSS() : void { }
 
     //
     // Shortcuts

@@ -2,10 +2,10 @@
 
 namespace webship\inputs;
 
-use HtmlView;
-use Language;
 use ship\interoperability\IShippable;
-use Tools;
+use ship\interoperability\SLanguage as Language;
+use webship\core\HtmlView;
+use webship\WebshipTools;
 
 /**
  * View SelectHtmlView.
@@ -102,7 +102,7 @@ class SelectHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('select', [], 'box-sizing: border-box', 'padding: 5px',
+        self::addStyle(WebshipTools::css('select', [], 'box-sizing: border-box', 'padding: 5px',
             'height: 50px', 'width: 100%', 'font-family: Roboto Condensed, Roboto, HelveticaNeue, sans-serif',
             'font-size: 16px'));
     }

@@ -1,5 +1,10 @@
 <?php
 
+namespace webship\menus;
+
+use webship\core\HtmlView;
+use webship\WebshipTools;
+
 /**
  * View MenuEntryHtmlView.
  *
@@ -18,8 +23,8 @@ class MenuEntryHtmlView extends HtmlView {
      * @param string[]|string $classes Some classes.
      */
     public function __construct(array|string $classes = []) {
-        $classes = is_array($classes) ? $classes : [ $classes ];
-        parent::__construct(array_merge([ 'menu-entry' ], $classes));
+        $classes = is_array($classes) ? $classes : [$classes];
+        parent::__construct(array_merge(['menu-entry'], $classes));
 
         self::addCSS();
     }
@@ -28,12 +33,12 @@ class MenuEntryHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('nav.menu', [' ', 'li.menu-entry'], 'display: flex', 'flex-wrap: wrap',
+        self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.menu-entry'], 'display: flex', 'flex-wrap: wrap',
             'cursor: pointer', 'font-size: 15px', 'font-weight: normal',
             'align-items: center'));
-        self::addStyle(Tools::css('nav.menu', [' ', 'li.menu-entry', ':hover'],
+        self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.menu-entry', ':hover'],
             'background: var(--main-menu-hover)'));
-        self::addStyle(Tools::css('nav.menu', [' ', 'li.menu-entry', ':hover', ' > ', ' ul'],
+        self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.menu-entry', ':hover', ' > ', ' ul'],
             'display: flex', 'flex-wrap: wrap', 'position: absolute', 'left: 0', 'top: 35px'));
     }
 

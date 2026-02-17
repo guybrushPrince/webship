@@ -1,5 +1,14 @@
 <?php
 
+namespace webship\cards;
+
+use Event;
+use PersistentTrait;
+use webship\controller\WebshipScopes;
+use webship\core\HtmlView;
+use webship\menus\ControlPanelHtmlView;
+use webship\protocols\HtmlModifyProtocol;
+
 /**
  * Class OpeningCardHtmlView.
  *
@@ -72,8 +81,8 @@ class OpeningCardHtmlView extends CardHtmlView {
         $this->control();
 
         $titleView->protocol(Event::CLICK)->
-            doIt('ToggleClass', ['view' => $this, 'class' => 'wide'], 'basics')->
-            doIt('ToggleClass', ['view' => $contentView, 'class' => 'invisible'], 'basics');
+        doIt('ToggleClass', ['view' => $this, 'class' => 'wide'], 'basics')->
+        doIt('ToggleClass', ['view' => $contentView, 'class' => 'invisible'], 'basics');
 
         $this->opened = $opened;
         $this->titleView = $titleView;
@@ -149,12 +158,12 @@ class OpeningCardHtmlView extends CardHtmlView {
         if ($this->object) {
             if (!$this->opened) {
                 $this->titleView->protocol(Event::CLICK)->
-                    doIt('ThrowEventToObject', ['object' => $this->object, 'event' => Event::CONTENTMODIFY, 'scope' => WebshipScopes::OPENING_CARD_OPENS], 'basics')->
-                    doIt('UnbindEventFromObject', ['view' => $this, 'object' => $this->object, 'event' => Event::CONTENTMODIFY, 'scope' => WebshipScopes::OPENING_CARD_OPENS], 'basics');
+                doIt('ThrowEventToObject', ['object' => $this->object, 'event' => Event::CONTENTMODIFY, 'scope' => WebshipScopes::OPENING_CARD_OPENS], 'basics')->
+                doIt('UnbindEventFromObject', ['view' => $this, 'object' => $this->object, 'event' => Event::CONTENTMODIFY, 'scope' => WebshipScopes::OPENING_CARD_OPENS], 'basics');
             } else {
                 $this->titleView->protocol(Event::CLICK)->
-                    doIt('ThrowEventToObject', ['object' => $this->object, 'event' => Event::CONTENTMODIFY, 'scope' => WebshipScopes::OPENING_CARD_CLOSES], 'basics')->
-                    doIt('UnbindEventFromObject', ['view' => $this, 'object' => $this->object, 'event' => Event::CONTENTMODIFY, 'scope' => WebshipScopes::OPENING_CARD_OPENS], 'basics');
+                doIt('ThrowEventToObject', ['object' => $this->object, 'event' => Event::CONTENTMODIFY, 'scope' => WebshipScopes::OPENING_CARD_CLOSES], 'basics')->
+                doIt('UnbindEventFromObject', ['view' => $this, 'object' => $this->object, 'event' => Event::CONTENTMODIFY, 'scope' => WebshipScopes::OPENING_CARD_OPENS], 'basics');
             }
         }
         return parent::generateOpeningTag();

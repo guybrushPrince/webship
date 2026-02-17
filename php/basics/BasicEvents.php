@@ -1,7 +1,12 @@
 <?php
 
+namespace webship\controller;
+
+use Event;
+use Language;
 use ship\controllers\EventAdder;
 use ship\template\TemplateObject;
+use webship\protocols\HtmlTemplateProtocol;
 
 /**
  * Class BasicEvents.
@@ -15,10 +20,11 @@ use ship\template\TemplateObject;
  * @version 1.0.0
  */
 class BasicEvents implements EventAdder {
+
     /**
      * @inheritDoc
      */
-    public static function add(): bool {
+    public static function add() : bool {
         HtmlTemplateProtocol::_new('AddClass', 'basics')->
             addClass(TemplateObject::_new('view'), TemplateObject::_new('class'));
 
@@ -58,21 +64,21 @@ class BasicEvents implements EventAdder {
 
         HtmlTemplateProtocol::_new('OpenHelp', 'basics')->
             action(BasicsController::class, 'openHelp', [
-                    'package' => TemplateObject::_new('package'),
-                    'subpackage' => TemplateObject::_new('subpackage'),
-                    'doc' => TemplateObject::_new('doc'),
-                    'language' => TemplateObject::_new('language')
-                ], [
-                    Language::ENGLISH => 'Open help ...',
-                    Language::GERMAN =>  'Öffne Hilfe ...'
-                ])->
-                success()->
-                    replace(TemplateObject::_new('replace'))->
-                    add(TemplateObject::_new('add'))->
-                parent()->
-                error()->
-                    add(TemplateObject::_new('error'))->
-                parent();
+                'package' => TemplateObject::_new('package'),
+                'subpackage' => TemplateObject::_new('subpackage'),
+                'doc' => TemplateObject::_new('doc'),
+                'language' => TemplateObject::_new('language')
+            ], [
+                Language::ENGLISH => 'Open help ...',
+                Language::GERMAN => 'Öffne Hilfe ...'
+            ])->
+            success()->
+                replace(TemplateObject::_new('replace'))->
+                add(TemplateObject::_new('add'))->
+            parent()->
+            error()->
+                add(TemplateObject::_new('error'))->
+            parent();
 
         return true;
     }

@@ -2,9 +2,9 @@
 
 namespace webship\inputs;
 
-use HtmlView;
 use ship\views\TextView;
-use Tools;
+use webship\core\HtmlView;
+use webship\WebshipTools;
 
 /**
  * View DropDownHtmlView.
@@ -52,23 +52,23 @@ class DropDownHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.drop-down', [], 'position: relative', 'display: inline-flex',
+        self::addStyle(WebshipTools::css('.drop-down', [], 'position: relative', 'display: inline-flex',
             'flex-direction: column', 'width: fit-content', 'transition: width 0.5s'));
-        self::addStyle(Tools::css('.drop-down:hover', [],
+        self::addStyle(WebshipTools::css('.drop-down:hover', [],
             'width: 100px'));
-        self::addStyle(Tools::css('.drop-down:hover', [' > ', '[data-drop-down-content]'],
+        self::addStyle(WebshipTools::css('.drop-down:hover', [' > ', '[data-drop-down-content]'],
             'position: absolute', 'z-index: 10000', 'top: 0'));
-        self::addStyle(Tools::css('.drop-down.fix:hover', [' > ', '[data-drop-down-content]'],
+        self::addStyle(WebshipTools::css('.drop-down.fix:hover', [' > ', '[data-drop-down-content]'],
             'position: fixed'));
-        self::addStyle(Tools::css('.drop-down', [' > ', '[data-drop-down-content]'],
+        self::addStyle(WebshipTools::css('.drop-down', [' > ', '[data-drop-down-content]'],
             'margin: 0', 'padding: 0'));
-        self::addStyle(Tools::css('.drop-down', [' > ', '[data-drop-down-content]', ' > ', ':not(:first-child)'],
+        self::addStyle(WebshipTools::css('.drop-down', [' > ', '[data-drop-down-content]', ' > ', ':not(:first-child)'],
             'display: none'));
-        self::addStyle(Tools::css('.drop-down', [' > ', '[data-drop-down-content]', ' > ', '*:first-child'],
+        self::addStyle(WebshipTools::css('.drop-down', [' > ', '[data-drop-down-content]', ' > ', '*:first-child'],
             'font-weight: bold'));
-        self::addStyle(Tools::css('.drop-down:hover', [' > ', '[data-drop-down-content]', ' > ',
+        self::addStyle(WebshipTools::css('.drop-down:hover', [' > ', '[data-drop-down-content]', ' > ',
             ':not(:first-child)'], 'display: block'));
-        self::addStyle(Tools::css('.drop-down', [' > ', '[data-drop-down-content]', ' > ', '*'],
+        self::addStyle(WebshipTools::css('.drop-down', [' > ', '[data-drop-down-content]', ' > ', '*'],
             'width: fit-content', 'height: 35px', 'padding: 10px 20px', 'box-sizing: border-box',
             'position: relative', 'width: -moz-fit-content', 'background: var(--main-menu-hover)',
             'white-space: nowrap'));
@@ -87,7 +87,7 @@ class DropDownHtmlView extends HtmlView {
      * @inheritDoc
      */
     public function generateOpeningTag() : string {
-        if (!Tools::isEmpty($this->subviews) && $this->subviews[0] instanceof TextView) {
+        if (!WebshipTools::isEmpty($this->subviews) && $this->subviews[0] instanceof TextView) {
             $header = array_shift($this->subviews);
             $entry = DropDownEntryHtmlView::create();
             $entry->add($header);

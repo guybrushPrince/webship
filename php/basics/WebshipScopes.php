@@ -1,5 +1,9 @@
 <?php
 
+namespace webship\controller;
+
+use Enumeration;
+
 /**
  * Enumeration WebshipScopes.
  *
@@ -21,7 +25,7 @@ class WebshipScopes extends Enumeration {
      */
     public static function getValues() : array {
         return [
-            self::OPENING_CARD_OPENS  => 'opening-cards-open',
+            self::OPENING_CARD_OPENS => 'opening-cards-open',
             self::OPENING_CARD_CLOSES => 'opening-cards-closes'
         ];
     }
@@ -31,7 +35,7 @@ class WebshipScopes extends Enumeration {
      */
     public static function getNames() : array {
         return [
-            'opening-cards-open'   => 'OPENING_CARD_OPENS',
+            'opening-cards-open' => 'OPENING_CARD_OPENS',
             'opening-cards-closes' => 'OPENING_CARD_CLOSES'
         ];
     }

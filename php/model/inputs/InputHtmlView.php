@@ -2,11 +2,11 @@
 
 namespace webship\inputs;
 
-use HtmlView;
 use ship\interoperability\IShippable;
 use ship\interoperability\ShipperRegister;
 use ship\views\View;
-use Tools;
+use webship\core\HtmlView;
+use webship\WebshipTools;
 
 /**
  * View InputHtmlView.
@@ -140,11 +140,11 @@ class InputHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.input', [], 'box-sizing: border-box', 'padding: 5px',
+        self::addStyle(WebshipTools::css('.input', [], 'box-sizing: border-box', 'padding: 5px',
             'height: 50px', 'width: 100%', 'font-family: Roboto Condensed, Roboto, HelveticaNeue, sans-serif',
             'font-size: 16px'));
-        self::addStyle(Tools::css('.input', ['[type="checkbox"]'], 'height: 25px'));
-        self::addStyle(Tools::css('.input', ['.fit[type="checkbox"]'], 'width: 25px'));
+        self::addStyle(WebshipTools::css('.input', ['[type="checkbox"]'], 'height: 25px'));
+        self::addStyle(WebshipTools::css('.input', ['.fit[type="checkbox"]'], 'width: 25px'));
     }
 
     /**
@@ -247,7 +247,7 @@ class InputHtmlView extends HtmlView {
                 !is_null($value) && !is_array($value))) {
             $this->value = ShipperRegister::getObjectString($value);
         } else {
-            if (is_array($value)) $value = Tools::jsonEncode($value);
+            if (is_array($value)) $value = WebshipTools::jsonEncode($value);
             $this->value = $value;
         }
         $this->force = $force;

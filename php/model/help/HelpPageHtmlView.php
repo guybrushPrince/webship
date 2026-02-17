@@ -3,13 +3,13 @@
 namespace webship\help;
 
 use Event;
-use HtmlActionProtocol;
-use Language;
-use MarkdownHtmlView;
-use ModalHtmlView;
+use ship\interoperability\SLanguage as Language;
 use ship\views\View;
-use Tools;
 use webship\buttons\StandardButtonHtmlView;
+use webship\contents\MarkdownHtmlView;
+use webship\dialogs\ModalHtmlView;
+use webship\protocols\HtmlActionProtocol;
+use webship\WebshipTools;
 
 /**
  * View HelpPageHtmlView.
@@ -62,7 +62,7 @@ class HelpPageHtmlView extends StandardButtonHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.help-page', [' ', 'img'], 'position: relative', 'max-width: 500px',
+        self::addStyle(WebshipTools::css('.help-page', [' ', 'img'], 'position: relative', 'max-width: 500px',
             'width: 100%', 'display: block', 'margin-left: auto', 'margin-right: auto'));
     }
 

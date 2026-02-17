@@ -1,5 +1,10 @@
 <?php
 
+namespace webship\charts;
+
+use webship\core\HtmlView;
+use webship\WebshipTools;
+
 /**
  * View CSSColorGradientHtmlView.
  *
@@ -46,7 +51,7 @@ class CSSColorGradientHtmlView extends HtmlView {
      */
     protected function __construct(string $fromColor, string $toColor, float|string|int $state, ?string $width = null,
                                    string|array $classes = []) {
-        $classes = is_array($classes) ? $classes : [ $classes ];
+        $classes = is_array($classes) ? $classes : [$classes];
         $classes[] = 'css-gradient';
         parent::__construct($classes);
         self::addCSS();
@@ -58,10 +63,10 @@ class CSSColorGradientHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public static function addCSS() : void {
-        self::addStyle(Tools::css('.css-gradient', [], 'height: 20px', 'box-sizing: border-box',
+    public static function addCSS(): void {
+        self::addStyle(WebshipTools::css('.css-gradient', [], 'height: 20px', 'box-sizing: border-box',
             'border-radius: 3px', 'border: 1px solid var(--dark-system-background)', 'position: relative'));
-        self::addStyle(Tools::css('.css-gradient', [' > ', 'div'], 'height: 20px',
+        self::addStyle(WebshipTools::css('.css-gradient', [' > ', 'div'], 'height: 20px',
             'box-sizing: border-box', 'width: 2px', 'background: var(--main-font)',
             'position: absolute', 'top: -1px'));
     }
@@ -69,7 +74,7 @@ class CSSColorGradientHtmlView extends HtmlView {
     /**
      * @inheritDoc
      */
-    public function generateOpeningTag() : string {
+    public function generateOpeningTag(): string {
         $tag = parent::generateOpeningTag();
         $tag .= '<div style="left: ' . $this->state . '%" title="' . $this->state . '%"></div>';
         return $tag;
@@ -85,7 +90,7 @@ class CSSColorGradientHtmlView extends HtmlView {
      * @return CSSColorGradientHtmlView
      */
     public static function create(string $fromColor, string $toColor, float|string|int $state, string $width = null,
-                                  string|array $classes = []) : CSSColorGradientHtmlView {
+                                  string|array $classes = []): CSSColorGradientHtmlView {
         return new CSSColorGradientHtmlView($fromColor, $toColor, $state, $width, $classes);
     }
 

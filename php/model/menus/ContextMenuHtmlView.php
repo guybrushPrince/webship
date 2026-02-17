@@ -1,5 +1,9 @@
 <?php
 
+namespace webship\menus;
+
+use webship\WebshipTools;
+
 /**
  * View ContextMenuHtmlView.
  *
@@ -18,8 +22,8 @@ class ContextMenuHtmlView extends MenuHtmlView {
      * @param string[]|string $classes Some classes.
      */
     public function __construct($classes = array()) {
-        $classes = is_array($classes) ? $classes : [ $classes ];
-        parent::__construct(array_merge([ 'context' ], $classes));
+        $classes = is_array($classes) ? $classes : [$classes];
+        parent::__construct(array_merge(['context'], $classes));
 
         self::addCSS();
     }
@@ -28,17 +32,17 @@ class ContextMenuHtmlView extends MenuHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('nav.menu.context', '', 'position: fixed', 'left: 0',
+        self::addStyle(WebshipTools::css('nav.menu.context', '', 'position: fixed', 'left: 0',
             'top: 0', 'width: fit-content', 'display: none', 'flex-direction: column',
             'background: var(--fine-system-background)',
             'z-index: 100', 'border: 1px solid var(--system-background)', 'width: -moz-fit-content'));
-        self::addStyle(Tools::css('nav.menu.context', '.active', 'display: flex'));
-        self::addStyle(Tools::css('nav.menu.context', [' ', 'ul'], 'list-style-type: none',
+        self::addStyle(WebshipTools::css('nav.menu.context', '.active', 'display: flex'));
+        self::addStyle(WebshipTools::css('nav.menu.context', [' ', 'ul'], 'list-style-type: none',
             'display: flex', 'margin: 0', 'flex-wrap: nowrap', 'padding: 0', 'flex-direction: column'));
-        self::addStyle(Tools::css('nav.menu.context', [' ', 'ul', ' > ', 'li'], 'width: inherit',
+        self::addStyle(WebshipTools::css('nav.menu.context', [' ', 'ul', ' > ', 'li'], 'width: inherit',
             'min-height: 30px', 'height: auto', 'padding: 5px 20px', 'box-sizing: border-box', 'position: relative',
             'width: -moz-fit-content'));
-        self::addStyle(Tools::css('nav.menu.context', [' ', '.disabled'], 'opacity: 0.5'));
+        self::addStyle(WebshipTools::css('nav.menu.context', [' ', '.disabled'], 'opacity: 0.5'));
     }
 
     /**

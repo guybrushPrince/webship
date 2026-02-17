@@ -2,14 +2,14 @@
 
 namespace webship\inputs;
 
-use ContainerHtmlView;
-use Tools;
+use webship\containers\ContainerHtmlView;
+use webship\WebshipTools;
 
 /**
  * View FormRowHtmlView.
  *
  * <p>Allows for placing multiple inputs in one row and vertical align at bottom. This aligned is also applied to
- * nested {@link \KeyValueHtmlView} views.</p>
+ * nested {@link \webship\containers\KeyValueHtmlView} views.</p>
  *
  * <code>
  * FormRowHtmlView::create();
@@ -45,12 +45,12 @@ class FormRowHtmlView extends ContainerHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.form-row', [], 'height: 40px', 'box-sizing: border-box'));
-        self::addStyle(Tools::css('.form-row', [' > ', '.kv'], 'padding: 0', 'height: 30px',
+        self::addStyle(WebshipTools::css('.form-row', [], 'height: 40px', 'box-sizing: border-box'));
+        self::addStyle(WebshipTools::css('.form-row', [' > ', '.kv'], 'padding: 0', 'height: 30px',
             'min-height: 30px', 'margin-top: 10px', 'width: fit-content', 'width: -moz-fit-content'));
-        self::addStyle(Tools::css('.form-row', [' > ', '.kv', ' > ', '.k'],
+        self::addStyle(WebshipTools::css('.form-row', [' > ', '.kv', ' > ', '.k'],
             'justify-content: flex-end', 'width: fit-content', 'width: -moz-fit-content'));
-        self::addStyle(Tools::css('.form-row', [' > ', '.kv', ' > ', '.v'],
+        self::addStyle(WebshipTools::css('.form-row', [' > ', '.kv', ' > ', '.v'],
             'justify-content: flex-start', 'width: fit-content', 'width: -moz-fit-content'));
     }
 

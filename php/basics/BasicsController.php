@@ -1,5 +1,10 @@
 <?php
 
+namespace webship\controller;
+
+use Language;
+use ship\controllers\ShipController;
+use webship\dialogs\ModalHtmlView;
 use webship\help\HelpPageHtmlView;
 
 /**
@@ -13,7 +18,7 @@ use webship\help\HelpPageHtmlView;
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
  */
-class BasicsController {
+class BasicsController extends ShipController {
 
     /**
      * Opens the help center as modal.

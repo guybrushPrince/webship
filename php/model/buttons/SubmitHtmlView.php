@@ -5,7 +5,7 @@ namespace webship\buttons;
 use Exception;
 use progression\CPTools;
 use ship\views\View;
-use Tools;
+use webship\WebshipTools;
 use webship\forms\FormHtmlView;
 
 /**
@@ -56,8 +56,8 @@ class SubmitHtmlView extends StandardButtonHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('button.std-button.submit', [], 'background: var(--button-submit)'));
-        self::addStyle(Tools::css('button.std-button.submit', [':hover'],
+        self::addStyle(WebshipTools::css('button.std-button.submit', [], 'background: var(--button-submit)'));
+        self::addStyle(WebshipTools::css('button.std-button.submit', [':hover'],
             'background: var(--dark-system-background)'));
     }
 

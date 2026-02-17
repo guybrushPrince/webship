@@ -2,11 +2,11 @@
 
 namespace webship\inputs;
 
-use HtmlView;
 use ship\interoperability\IShippable;
 use ship\interoperability\ShipperRegister;
 use ship\views\TextView;
-use Tools;
+use webship\core\HtmlView;
+use webship\WebshipTools;
 
 /**
  * View OptionHtmlView.
@@ -61,7 +61,7 @@ class OptionHtmlView extends HtmlView {
                 !is_array($value))) {
             $value = ShipperRegister::getObjectString($value);
         } else if (is_array($value)) {
-            $value = Tools::jsonEncode($value);
+            $value = WebshipTools::jsonEncode($value);
         } else if (is_null($value)) $value = 'null';
         $this->value = $value;
         $this->selected = $selected;

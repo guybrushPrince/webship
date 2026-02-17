@@ -1,6 +1,10 @@
 <?php
 
+namespace webship\buttons;
+
 use ship\views\View;
+use webship\core\HtmlView;
+use webship\WebshipTools;
 
 /**
  * View ButtonHtmlView.
@@ -61,7 +65,7 @@ class ButtonHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('button', '', 'box-sizing: border-box', 'padding: 5px',
+        self::addStyle(WebshipTools::css('button', '', 'box-sizing: border-box', 'padding: 5px',
             'height: 50px', 'width: 100%', 'font-family: Roboto Condensed, Roboto, HelveticaNeue, sans-serif',
             'font-size: 16px'));
     }
@@ -93,7 +97,7 @@ class ButtonHtmlView extends HtmlView {
      * @param bool $disabled The new value.
      * @return $this
      */
-    public function disabled(bool $disabled): ButtonHtmlView {
+    public function disabled(bool $disabled) : ButtonHtmlView {
         $this->disabled = $disabled;
         return $this;
     }

@@ -1,10 +1,14 @@
 <?php
 
+namespace webship\containers;
+
 use ship\views\View;
+use webship\core\HtmlView;
 use webship\forms\FormLabelHtmlView;
 use webship\inputs\InputHtmlView;
 use webship\inputs\SelectHtmlView;
 use webship\inputs\SwitchHtmlView;
+use webship\WebshipTools;
 
 /**
  * View KeyValueHtmlView.
@@ -51,7 +55,7 @@ class KeyValueHtmlView extends HtmlView {
                                    ?int $valueSize = null,
                                    array|string $classes = [], ?string $for = null, bool $forceKeySize = true,
                                    string|array|null $afterText = null) {
-        $classes = is_array($classes) ? $classes : [ $classes ];
+        $classes = is_array($classes) ? $classes : [$classes];
         $classes[] = 'kv';
         if ($frame) $classes[] = 'frame';
         parent::__construct($classes);
@@ -74,7 +78,7 @@ class KeyValueHtmlView extends HtmlView {
         $this->add($this->valueView);
 
         if ($afterText) {
-            if (!is_array($afterText)) $afterText = [ self::getLanguage() => $afterText ];
+            if (!is_array($afterText)) $afterText = [self::getLanguage() => $afterText];
             $afterView = $this->add(new HtmlView('ka'));
             $afterView->texts($afterText);
         }
@@ -84,27 +88,28 @@ class KeyValueHtmlView extends HtmlView {
 
         self::addCSS();
     }
+
     /**
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.kv', [], 'display: flex', 'flex-direction: row', 'flex-wrap: nowrap',
+        self::addStyle(WebshipTools::css('.kv', [], 'display: flex', 'flex-direction: row', 'flex-wrap: nowrap',
             'width: 100%', 'align-items: center', 'padding: 10px', 'box-sizing: border-box', 'gap: 0 10px',
             'box-sizing: border-box'));
-        self::addStyle(Tools::css('.kv.frame', [], 'border: 1px solid var(--ultra-light-system-background)'));
-        self::addStyle(Tools::css('.kv', [' > ', '.k'], 'display: flex', 'flex-direction: row',
+        self::addStyle(WebshipTools::css('.kv.frame', [], 'border: 1px solid var(--ultra-light-system-background)'));
+        self::addStyle(WebshipTools::css('.kv', [' > ', '.k'], 'display: flex', 'flex-direction: row',
             'align-items: center', 'justify-content: flex-start', 'margin: 0', 'width: var(--kr)'));
-        self::addStyle(Tools::css('.kv', [' > ', '.v'], 'display: flex', 'flex-direction: row',
+        self::addStyle(WebshipTools::css('.kv', [' > ', '.v'], 'display: flex', 'flex-direction: row',
             'align-items: center', 'justify-content: flex-start', 'margin: 0', 'width: var(--vr)'));
-        self::addStyle(Tools::css('.kv', [' > ', '.v', ' > ', 'input[type="checkbox"]'], 'width: 25px'));
-        self::addStyle(Tools::css('.kv', [' > ', '.ka'], 'width: 5%'));
-        self::addStyle(Tools::css('.kv.frame', [' + ', '.kv.frame'], 'border-top: none'));
-        self::addStyle(Tools::css('.kv.ver', [], 'flex-direction: column'));
-        self::addStyle(Tools::css('.kv.ver', [' > ', '*'], 'width: 100%'));
-        self::addStyle(Tools::css('.kv.np', [], 'padding: 0'));
+        self::addStyle(WebshipTools::css('.kv', [' > ', '.v', ' > ', 'input[type="checkbox"]'], 'width: 25px'));
+        self::addStyle(WebshipTools::css('.kv', [' > ', '.ka'], 'width: 5%'));
+        self::addStyle(WebshipTools::css('.kv.frame', [' + ', '.kv.frame'], 'border-top: none'));
+        self::addStyle(WebshipTools::css('.kv.ver', [], 'flex-direction: column'));
+        self::addStyle(WebshipTools::css('.kv.ver', [' > ', '*'], 'width: 100%'));
+        self::addStyle(WebshipTools::css('.kv.np', [], 'padding: 0'));
 
-        self::addStyle(Tools::css('.kv.disabled', [], 'position: relative', 'cursor: not-allowed'));
-        self::addStyle(Tools::css('.kv.disabled', [':after'], 'content: ""', 'display: block',
+        self::addStyle(WebshipTools::css('.kv.disabled', [], 'position: relative', 'cursor: not-allowed'));
+        self::addStyle(WebshipTools::css('.kv.disabled', [':after'], 'content: ""', 'display: block',
             'position: absolute', 'width: 100%', 'height: 100%', 'top: 0', 'left: 0', 'background: var(--thing-overlay)',
             'border-radius: 5px'));
     }
@@ -129,7 +134,7 @@ class KeyValueHtmlView extends HtmlView {
             $keySize = $tmp;
             $view = new KeyValueHtmlView($key, $frame, $valueSize, $keySize, $classes);
             $view->valueView->texts($value);
-            $view->subviews = [ $view->subviews[1], $view->subviews[0] ];
+            $view->subviews = [$view->subviews[1], $view->subviews[0]];
         } else {
             $view = new KeyValueHtmlView($key, $frame, $keySize, $valueSize, $classes);
             $view->valueView->texts($value);
@@ -197,7 +202,7 @@ class KeyValueHtmlView extends HtmlView {
             $keySize = $tmp;
             $view = new KeyValueHtmlView($key, $frame, $valueSize, $keySize, $classes, $value->getId());
             $view->valueView->add($value);
-            $view->subviews = [ $view->subviews[1], $view->subviews[0] ];
+            $view->subviews = [$view->subviews[1], $view->subviews[0]];
         } else {
             $view = new KeyValueHtmlView($key, $frame, $keySize, $valueSize, $classes, $value->getId());
             $view->valueView->add($value);
@@ -240,7 +245,7 @@ class KeyValueHtmlView extends HtmlView {
         if ($swap) {
             $view = new KeyValueHtmlView($key, $frame, $valueSize, $keySize, $classes, $value->getId());
             $view->valueView->add($value);
-            $view->subviews = [ $view->subviews[1], $view->subviews[0] ];
+            $view->subviews = [$view->subviews[1], $view->subviews[0]];
         } else {
             $view = new KeyValueHtmlView($key, $frame, $keySize, $valueSize, $classes, $value->getId());
             $view->valueView->add($value);

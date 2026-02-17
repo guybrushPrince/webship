@@ -1,6 +1,10 @@
 <?php
 
+namespace webship\containers;
+
 use ship\views\TextView;
+use webship\core\HtmlView;
+use webship\WebshipTools;
 
 /**
  * View ContainerHtmlView.
@@ -33,11 +37,11 @@ use ship\views\TextView;
 class ContainerHtmlView extends HtmlView {
 
     /**
-     * ContainerHtmlView constructor.
+     * Constructor.
      * @param string[]|string $classes
      */
     public function __construct(array|string $classes = [], string|null $color = null, string|null $fontColor = null) {
-        $classes = is_array($classes) ? $classes : [ $classes ];
+        $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['container'], $classes));
 
         self::addCSS();
@@ -54,99 +58,99 @@ class ContainerHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.container', '', 'display: flex',
+        self::addStyle(WebshipTools::css('.container', '', 'display: flex',
             'flex-wrap: wrap', 'align-items: flex-start', 'align-content: flex-start', 'width: 100%',
             'box-sizing: border-box'));
-        self::addStyle(Tools::css('.container', '.cb', 'box-sizing: content-box'));
-        self::addStyle(Tools::css('.container', '.ver', 'flex-direction: column'));
-        self::addStyle(Tools::css('.container', '.hor', 'flex-direction: row'));
-        self::addStyle(Tools::css('.container', '.rev-ver', 'flex-direction: column-reverse'));
-        self::addStyle(Tools::css('.container', '.rev-hor', 'flex-direction: row-reverse'));
-        self::addStyle(Tools::css('.container', '.single', 'flex-wrap: nowrap'));
-        self::addStyle(Tools::css('.container', '.vcent', 'align-items: center',
+        self::addStyle(WebshipTools::css('.container', '.cb', 'box-sizing: content-box'));
+        self::addStyle(WebshipTools::css('.container', '.ver', 'flex-direction: column'));
+        self::addStyle(WebshipTools::css('.container', '.hor', 'flex-direction: row'));
+        self::addStyle(WebshipTools::css('.container', '.rev-ver', 'flex-direction: column-reverse'));
+        self::addStyle(WebshipTools::css('.container', '.rev-hor', 'flex-direction: row-reverse'));
+        self::addStyle(WebshipTools::css('.container', '.single', 'flex-wrap: nowrap'));
+        self::addStyle(WebshipTools::css('.container', '.vcent', 'align-items: center',
             'align-content: center'));
-        self::addStyle(Tools::css('.container', '.vbot', 'align-items: flex-end',
+        self::addStyle(WebshipTools::css('.container', '.vbot', 'align-items: flex-end',
             'align-content: flex-end'));
-        self::addStyle(Tools::css('.container', '.initial', 'align-items: initial',
+        self::addStyle(WebshipTools::css('.container', '.initial', 'align-items: initial',
             'align-content: initial'));
-        self::addStyle(Tools::css('.container', '.scroll-x', 'overflow-x: auto'));
-        self::addStyle(Tools::css('.container', '.scroll-y', 'overflow-y: auto'));
+        self::addStyle(WebshipTools::css('.container', '.scroll-x', 'overflow-x: auto'));
+        self::addStyle(WebshipTools::css('.container', '.scroll-y', 'overflow-y: auto'));
 
-        self::addStyle(Tools::css('.container', '.gap', 'gap: 5px'));
-        self::addStyle(Tools::css('.container', '.gap5', 'gap: 5px'));
-        self::addStyle(Tools::css('.container', '.gap10', 'gap: 10px'));
-        self::addStyle(Tools::css('.container', '.gap15', 'gap: 15px'));
-        self::addStyle(Tools::css('.container', '.gap20', 'gap: 20px'));
+        self::addStyle(WebshipTools::css('.container', '.gap', 'gap: 5px'));
+        self::addStyle(WebshipTools::css('.container', '.gap5', 'gap: 5px'));
+        self::addStyle(WebshipTools::css('.container', '.gap10', 'gap: 10px'));
+        self::addStyle(WebshipTools::css('.container', '.gap15', 'gap: 15px'));
+        self::addStyle(WebshipTools::css('.container', '.gap20', 'gap: 20px'));
 
-        self::addStyle(Tools::css('.container', '.p', 'padding: 5px'));
-        self::addStyle(Tools::css('.container', '.p0', 'padding: 0'));
-        self::addStyle(Tools::css('.container', '.p0i', 'padding: 0 !important'));
-        self::addStyle(Tools::css('.container', '.p5', 'padding: 5px'));
-        self::addStyle(Tools::css('.container', '.p10', 'padding: 10px'));
-        self::addStyle(Tools::css('.container', '.p15', 'padding: 15px'));
-        self::addStyle(Tools::css('.container', '.p20', 'padding: 20px'));
+        self::addStyle(WebshipTools::css('.container', '.p', 'padding: 5px'));
+        self::addStyle(WebshipTools::css('.container', '.p0', 'padding: 0'));
+        self::addStyle(WebshipTools::css('.container', '.p0i', 'padding: 0 !important'));
+        self::addStyle(WebshipTools::css('.container', '.p5', 'padding: 5px'));
+        self::addStyle(WebshipTools::css('.container', '.p10', 'padding: 10px'));
+        self::addStyle(WebshipTools::css('.container', '.p15', 'padding: 15px'));
+        self::addStyle(WebshipTools::css('.container', '.p20', 'padding: 20px'));
 
-        self::addStyle(Tools::css('.container', '.pb5i', 'padding-bottom: 5px !important'));
-        self::addStyle(Tools::css('.container', '.ptb5i', 'padding-top: 5px !important',
+        self::addStyle(WebshipTools::css('.container', '.pb5i', 'padding-bottom: 5px !important'));
+        self::addStyle(WebshipTools::css('.container', '.ptb5i', 'padding-top: 5px !important',
             'padding-bottom: 5px !important'));
 
-        self::addStyle(Tools::css('.container', '.ptb', 'padding-top: 5px',
+        self::addStyle(WebshipTools::css('.container', '.ptb', 'padding-top: 5px',
             'padding-bottom: 5px'));
-        self::addStyle(Tools::css('.container', '.ptb5', 'padding-top: 5px',
+        self::addStyle(WebshipTools::css('.container', '.ptb5', 'padding-top: 5px',
             'padding-bottom: 5px'));
-        self::addStyle(Tools::css('.container', '.ptb10', 'padding-top: 10px',
+        self::addStyle(WebshipTools::css('.container', '.ptb10', 'padding-top: 10px',
             'padding-bottom: 10px'));
-        self::addStyle(Tools::css('.container', '.ptb15', 'padding-top: 15px',
+        self::addStyle(WebshipTools::css('.container', '.ptb15', 'padding-top: 15px',
             'padding-bottom: 15px'));
-        self::addStyle(Tools::css('.container', '.ptb20', 'padding-top: 20px',
+        self::addStyle(WebshipTools::css('.container', '.ptb20', 'padding-top: 20px',
             'padding-bottom: 20px'));
 
-        self::addStyle(Tools::css('.container', '.m0',  'margin: 0'));
-        self::addStyle(Tools::css('.container', '.m0i',  'margin: 0 !important'));
-        self::addStyle(Tools::css('.container', '.m5',  'margin: 5px'));
-        self::addStyle(Tools::css('.container', '.m10', 'margin: 10px'));
-        self::addStyle(Tools::css('.container', '.m15', 'margin: 15px'));
-        self::addStyle(Tools::css('.container', '.m20', 'margin: 20px'));
+        self::addStyle(WebshipTools::css('.container', '.m0', 'margin: 0'));
+        self::addStyle(WebshipTools::css('.container', '.m0i', 'margin: 0 !important'));
+        self::addStyle(WebshipTools::css('.container', '.m5', 'margin: 5px'));
+        self::addStyle(WebshipTools::css('.container', '.m10', 'margin: 10px'));
+        self::addStyle(WebshipTools::css('.container', '.m15', 'margin: 15px'));
+        self::addStyle(WebshipTools::css('.container', '.m20', 'margin: 20px'));
 
-        self::addStyle(Tools::css('.container', '.hcent', 'justify-content: center',
+        self::addStyle(WebshipTools::css('.container', '.hcent', 'justify-content: center',
             'justify-items: center'));
-        self::addStyle(Tools::css('.container', '.hend', 'justify-content: flex-end',
+        self::addStyle(WebshipTools::css('.container', '.hend', 'justify-content: flex-end',
             'justify-items: flex-end'));
-        self::addStyle(Tools::css('.container', '.h100', 'height: 100%'));
-        self::addStyle(Tools::css('.container', '.w50', 'width: 50%'));
-        self::addStyle(Tools::css('.container', '.w33', 'width: calc(100% / 3)'));
-        self::addStyle(Tools::css('.container', '.w25', 'width: 25%'));
-        self::addStyle(Tools::css('.container', '.rel', 'position: relative'));
-        self::addStyle(Tools::css('.container', ['.self-fit'], 'width: -moz-fit-content',
+        self::addStyle(WebshipTools::css('.container', '.h100', 'height: 100%'));
+        self::addStyle(WebshipTools::css('.container', '.w50', 'width: 50%'));
+        self::addStyle(WebshipTools::css('.container', '.w33', 'width: calc(100% / 3)'));
+        self::addStyle(WebshipTools::css('.container', '.w25', 'width: 25%'));
+        self::addStyle(WebshipTools::css('.container', '.rel', 'position: relative'));
+        self::addStyle(WebshipTools::css('.container', ['.self-fit'], 'width: -moz-fit-content',
             'width: fit-content'));
-        self::addStyle(Tools::css('.container', ['.fit', ' > ', '*'], 'width: -moz-fit-content',
+        self::addStyle(WebshipTools::css('.container', ['.fit', ' > ', '*'], 'width: -moz-fit-content',
             'width: fit-content'));
-        self::addStyle(Tools::css('.container', [' > ', '.container-item', '.ver'], 'flex-direction: column'));
-        self::addStyle(Tools::css('.container', [' > ', '.container-item', '.hor'], 'flex-direction: row'));
-        self::addStyle(Tools::css('.container.c100', [' > ', '.container-item'], 'width: 100%'));
+        self::addStyle(WebshipTools::css('.container', [' > ', '.container-item', '.ver'], 'flex-direction: column'));
+        self::addStyle(WebshipTools::css('.container', [' > ', '.container-item', '.hor'], 'flex-direction: row'));
+        self::addStyle(WebshipTools::css('.container.c100', [' > ', '.container-item'], 'width: 100%'));
 
-        self::addStyle(Tools::css('.container.short-hint', [], 'display: inline',
+        self::addStyle(WebshipTools::css('.container.short-hint', [], 'display: inline',
             'opacity: 0.6', 'font-size: 10px'));
 
-        self::addStyle(Tools::css('.container.with-default', [' > ', '.default:first-child:last-child'],
+        self::addStyle(WebshipTools::css('.container.with-default', [' > ', '.default:first-child:last-child'],
             'display: inherit'));
-        self::addStyle(Tools::css('.container.with-default', [' > ', '.default'],
+        self::addStyle(WebshipTools::css('.container.with-default', [' > ', '.default'],
             'display: none'));
 
-        self::addStyle(Tools::css('.container.gap5', [' > ', '.container.w50'],
+        self::addStyle(WebshipTools::css('.container.gap5', [' > ', '.container.w50'],
             'width: calc(50% - 2.5px)'));
-        self::addStyle(Tools::css('.container.gap10', [' > ', '.container.w50'],
+        self::addStyle(WebshipTools::css('.container.gap10', [' > ', '.container.w50'],
             'width: calc(50% - 5px)'));
-        self::addStyle(Tools::css('.container.gap15', [' > ', '.container.w50'],
+        self::addStyle(WebshipTools::css('.container.gap15', [' > ', '.container.w50'],
             'width: calc(50% - 7.5px)'));
-        self::addStyle(Tools::css('.container.gap20', [' > ', '.container.w50'],
+        self::addStyle(WebshipTools::css('.container.gap20', [' > ', '.container.w50'],
             'width: calc(50% - 10px)'));
 
-        self::addStyle(Tools::css('.container', '.br0', 'border-radius: 0'));
-        self::addStyle(Tools::css('.container', '.br5', 'border-radius: 5px'));
-        self::addStyle(Tools::css('.container', '.br10', 'border-radius: 10px'));
-        self::addStyle(Tools::css('.container', '.br15', 'border-radius: 15px'));
-        self::addStyle(Tools::css('.container', '.br20', 'border-radius: 20px'));
+        self::addStyle(WebshipTools::css('.container', '.br0', 'border-radius: 0'));
+        self::addStyle(WebshipTools::css('.container', '.br5', 'border-radius: 5px'));
+        self::addStyle(WebshipTools::css('.container', '.br10', 'border-radius: 10px'));
+        self::addStyle(WebshipTools::css('.container', '.br15', 'border-radius: 15px'));
+        self::addStyle(WebshipTools::css('.container', '.br20', 'border-radius: 20px'));
     }
 
     /**

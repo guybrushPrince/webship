@@ -3,9 +3,9 @@
 namespace webship\inputs;
 
 use Event;
-use HtmlView;
 use ship\views\View;
-use Tools;
+use webship\core\HtmlView;
+use webship\WebshipTools;
 
 /**
  * View TextHtmlView.
@@ -93,12 +93,12 @@ class TextHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('textarea', '', 'box-sizing: border-box', 'padding: 5px',
+        self::addStyle(WebshipTools::css('textarea', '', 'box-sizing: border-box', 'padding: 5px',
             'height: calc(var(--rows) * 50px)', 'width: 100%',
             'font-family: Roboto Condensed, Roboto, HelveticaNeue, sans-serif',
             'font-size: 16px'));
 
-        self::addStyle(Tools::css('textarea', '.resizable', 'height: 31px',
+        self::addStyle(WebshipTools::css('textarea', '.resizable', 'height: 31px',
             'overflow: hidden'));
     }
 

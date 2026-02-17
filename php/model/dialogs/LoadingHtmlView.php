@@ -1,8 +1,9 @@
 <?php
 
 namespace webship\dialogs;
-use HtmlView;
-use Tools;
+
+use webship\core\HtmlView;
+use webship\WebshipTools;
 
 /**
  * View LoadingHtmlView.
@@ -43,14 +44,14 @@ class LoadingHtmlView extends HtmlView {
      * @inheritdoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.loading', [], 'width: 100%', 'height: 100%',
+        self::addStyle(WebshipTools::css('.loading', [], 'width: 100%', 'height: 100%',
             'background: var(--dark-system-background)', 'animation: pulse 2s infinite', 'border-radius: 6px',
             'display: flex', 'flex-direction: row', 'justify-content: center', 'align-items: center'));
-        self::addStyle(Tools::css('@-webkit-keyframes pulse', [],
+        self::addStyle(WebshipTools::css('@-webkit-keyframes pulse', [],
             '0% { background: var(--loading-dark); } ' .
             '70% { background: var(--loading-light); } ' .
             '100% { background: var(--loading-dark); }'));
-        self::addStyle(Tools::css('@keyframes pulse', [],
+        self::addStyle(WebshipTools::css('@keyframes pulse', [],
             '0% { background: var(--loading-dark); } ' .
             '70% { background: var(--loading-light); } ' .
             '100% { background: var(--loading-dark); }'));

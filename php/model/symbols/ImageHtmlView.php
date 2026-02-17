@@ -2,11 +2,11 @@
 
 namespace webship\symbols;
 
-use ContainerHtmlView;
-use HtmlActionProtocol;
-use HtmlView;
 use ship\views\View;
-use Tools;
+use webship\containers\ContainerHtmlView;
+use webship\core\HtmlView;
+use webship\protocols\HtmlActionProtocol;
+use webship\WebshipTools;
 
 /**
  * View ImageHtmlView.
@@ -67,9 +67,9 @@ class ImageHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.container.min-img', [], 'width: 20px', 'height: 20px'));
-        self::addStyle(Tools::css('.min-img', [' > ', 'img'], 'width: 100%'));
-        self::addStyle(Tools::css('img.image.cover', [], 'object-fit: cover'));
+        self::addStyle(WebshipTools::css('.container.min-img', [], 'width: 20px', 'height: 20px'));
+        self::addStyle(WebshipTools::css('.min-img', [' > ', 'img'], 'width: 100%'));
+        self::addStyle(WebshipTools::css('img.image.cover', [], 'object-fit: cover'));
     }
 
     /**

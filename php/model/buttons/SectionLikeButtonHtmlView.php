@@ -2,9 +2,9 @@
 
 namespace webship\buttons;
 
-use ButtonHtmlView;
-use HtmlActionProtocol;
-use Tools;
+use webship\containers\SectionHtmlView;
+use webship\protocols\HtmlActionProtocol;
+use webship\WebshipTools;
 
 /**
  * View SectionLikeButtonHtmlView.
@@ -54,16 +54,16 @@ class SectionLikeButtonHtmlView extends ButtonHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('button.sect-but', [],'width: 100%', 'display: flex',
+        self::addStyle(WebshipTools::css('button.sect-but', [],'width: 100%', 'display: flex',
             'flex-direction: row', 'padding: 0 0 16px 0', 'border: none', 'background: none', 'height: auto',
             'font-family: Roboto, sans-serif', 'text-transform: none', 'font-size: 1.25em', 'font-weight: lighter',
             'cursor: pointer'));
-        self::addStyle(Tools::css('button.sect-but:last-child', [],'padding: 0'));
-        self::addStyle(Tools::css('button.sect-but', [':after'], 'content: ""',
+        self::addStyle(WebshipTools::css('button.sect-but:last-child', [],'padding: 0'));
+        self::addStyle(WebshipTools::css('button.sect-but', [':after'], 'content: ""',
             'margin-left: 5px', 'background-repeat: no-repeat', 'width: 15px', 'height: 15px', 'background-size: cover',
             'background-image: var(--after-image)',
             'box-sizing: border-box', 'display: inline-block', 'opacity: 0.25', 'transition: opacity 0.5s'));
-        self::addStyle(Tools::css('button.sect-but', [':hover', ':after'], 'opacity: 1'));
+        self::addStyle(WebshipTools::css('button.sect-but', [':hover', ':after'], 'opacity: 1'));
     }
 
     /**

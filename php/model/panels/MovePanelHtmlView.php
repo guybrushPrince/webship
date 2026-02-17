@@ -1,6 +1,9 @@
 <?php
 
+namespace webship\panels;
+
 use ship\protocols\Protocol;
+use webship\WebshipTools;
 
 /**
  * View MovePanelHtmlView.
@@ -53,7 +56,7 @@ class MovePanelHtmlView extends PanelHtmlView {
      * @param string[]|string $classes Some classes.
      */
     protected function __construct(array|string $classes = []) {
-        $classes = is_array($classes) ? $classes : [ $classes ];
+        $classes = is_array($classes) ? $classes : [$classes];
         $classes[] = 'movable';
         parent::__construct($classes);
 
@@ -64,32 +67,32 @@ class MovePanelHtmlView extends PanelHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.panel.movable', [],
+        self::addStyle(WebshipTools::css('.panel.movable', [],
             '--drag-background-hover: rgba(0, 0, 0, 0.25)', '--drag-color-hover: var(--main-font)'));
 
-        self::addStyle(Tools::css('.panel.movable.outside', [], 'position: relative'));
-        self::addStyle(Tools::css('.panel.movable:not(.outside)', [' > ', '*'],
+        self::addStyle(WebshipTools::css('.panel.movable.outside', [], 'position: relative'));
+        self::addStyle(WebshipTools::css('.panel.movable:not(.outside)', [' > ', '*'],
             'padding-left: 25px !important', 'padding-right: 50px !important'));
-        self::addStyle(Tools::css('.panel.movable.outside', [' > ', '.movable', ' > ', '.drag'],
+        self::addStyle(WebshipTools::css('.panel.movable.outside', [' > ', '.movable', ' > ', '.drag'],
             'left: -20px', 'width: 20px'));
-        self::addStyle(Tools::css('.panel.movable.outside', [' > ', '.movable', ' > ', '.move'],
+        self::addStyle(WebshipTools::css('.panel.movable.outside', [' > ', '.movable', ' > ', '.move'],
             'display: none', 'width: 20px', 'height: 20px', 'right: -20px', 'left: initial',
             'background: var(--dark-system-background)', 'font-size: 20px', 'z-index: 100000'));
-        self::addStyle(Tools::css('.panel.movable.outside', [' > ', '.movable', ':hover', ' > ', '.move'],
+        self::addStyle(WebshipTools::css('.panel.movable.outside', [' > ', '.movable', ':hover', ' > ', '.move'],
             'display: flex'));
-        self::addStyle(Tools::css('.panel.movable.outside', [' > ', '.movable', ' > ', '.move.up'],
+        self::addStyle(WebshipTools::css('.panel.movable.outside', [' > ', '.movable', ' > ', '.move.up'],
             'top: calc(50% - 30px)'));
-        self::addStyle(Tools::css('.panel.movable.outside', [' > ', '.movable', ' > ', '.move.down'],
+        self::addStyle(WebshipTools::css('.panel.movable.outside', [' > ', '.movable', ' > ', '.move.down'],
             'top: calc(50% + 10px)'));
-        self::addStyle(Tools::css('.panel.movable.outside', [' > ', '.movable', ' > ', '.move.delete'],
+        self::addStyle(WebshipTools::css('.panel.movable.outside', [' > ', '.movable', ' > ', '.move.delete'],
             'top: calc(50% - 10px)'));
-        self::addStyle(Tools::css('.panel.movable.outside', [' > ', '.movable', ' > ', '.move.delete:after'],
+        self::addStyle(WebshipTools::css('.panel.movable.outside', [' > ', '.movable', ' > ', '.move.delete:after'],
             'width: 50%', 'height: 50%'));
 
-        self::addStyle(Tools::css('.panel.movable.not-draggable', [' > ', '*'],
+        self::addStyle(WebshipTools::css('.panel.movable.not-draggable', [' > ', '*'],
             'padding-left: 0 !important'));
 
-        self::addStyle(Tools::css('.panel.movable.mH', [' > ', '.movable'],
+        self::addStyle(WebshipTools::css('.panel.movable.mH', [' > ', '.movable'],
             'min-height: var(--mov-min-height)'));
     }
 
@@ -98,7 +101,7 @@ class MovePanelHtmlView extends PanelHtmlView {
      */
     public function generateOpeningTag() : string {
         $firstSubview = null;
-        foreach($this->subviews as $subview) {
+        foreach ($this->subviews as $subview) {
             if ($subview instanceof MovePanelItemHtmlView) {
                 $firstSubview = $subview;
                 break;

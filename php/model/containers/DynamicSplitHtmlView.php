@@ -1,5 +1,10 @@
 <?php
 
+namespace webship\containers;
+
+use webship\core\HtmlView;
+use webship\WebshipTools;
+
 class DynamicSplitHtmlView extends ContainerHtmlView {
 
     private HtmlView $leftColumn;
@@ -7,33 +12,36 @@ class DynamicSplitHtmlView extends ContainerHtmlView {
     private HtmlView $rightColumn;
 
     private function __construct(array|string $classes = []) {
-        if (!is_array($classes)) $classes = [ $classes ];
+        if (!is_array($classes)) $classes = [$classes];
         $classes = array_merge($classes, ['splitting', 'hor']);
         parent::__construct($classes);
 
         self::addCSS();
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.splitting', [], '--left-w: 50%', '--right-w: 50%',
+        self::addStyle(WebshipTools::css('.splitting', [], '--left-w: 50%', '--right-w: 50%',
             '--right-w-h: var(--right-w)', 'position: relative'));
-        self::addStyle(Tools::css('.splitting', [' > ', '.left'], 'width: var(--left-w)',
+        self::addStyle(WebshipTools::css('.splitting', [' > ', '.left'], 'width: var(--left-w)',
             'transition: width 0.5s'));
-        self::addStyle(Tools::css('.splitting.dynamic', [' > ', '.right'],
+        self::addStyle(WebshipTools::css('.splitting.dynamic', [' > ', '.right'],
             'position: absolute', 'right: 0', 'background: var(--neutral)'));
-        self::addStyle(Tools::css('.splitting.dynamic', [' > ', '.right:hover'],
+        self::addStyle(WebshipTools::css('.splitting.dynamic', [' > ', '.right:hover'],
             'position: absolute', 'width: var(--right-w-h)'));
-        self::addStyle(Tools::css('.splitting', [' > ', '.left.extended'], 'width: 100%'));
-        self::addStyle(Tools::css('.splitting', [' > ', '.left', ' > ', '*'], 'width: 100%'));
-        self::addStyle(Tools::css('.splitting', [' > ', '.right'], 'height: 100%',
+        self::addStyle(WebshipTools::css('.splitting', [' > ', '.left.extended'], 'width: 100%'));
+        self::addStyle(WebshipTools::css('.splitting', [' > ', '.left', ' > ', '*'], 'width: 100%'));
+        self::addStyle(WebshipTools::css('.splitting', [' > ', '.right'], 'height: 100%',
             'width: var(--right-w)', 'transition: width 0.5s'));
-        self::addStyle(Tools::css('.splitting', [' > ', '.right', ' > ', '*'],'height: 100%',
+        self::addStyle(WebshipTools::css('.splitting', [' > ', '.right', ' > ', '*'], 'height: 100%',
             'width: 100%'));
-        self::addStyle(Tools::css('.splitting', [' > ', '.right', ' > ', '*', ' > ', '*'],
+        self::addStyle(WebshipTools::css('.splitting', [' > ', '.right', ' > ', '*', ' > ', '*'],
             'height: 100%'));
-        self::addStyle(Tools::css('.container-item.select-view', '', 'width: 100%'));
-        self::addStyle(Tools::css('.panel-item.select-view', '', 'width: 100%'));
-        self::addStyle(Tools::css('.select-view.invisible', [], 'display: none !important'));
+        self::addStyle(WebshipTools::css('.container-item.select-view', '', 'width: 100%'));
+        self::addStyle(WebshipTools::css('.panel-item.select-view', '', 'width: 100%'));
+        self::addStyle(WebshipTools::css('.select-view.invisible', [], 'display: none !important'));
     }
 
     public static function create(?int $leftSize = null, ?int $hoverRightSize = null,

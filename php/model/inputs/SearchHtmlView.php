@@ -2,13 +2,13 @@
 
 namespace webship\inputs;
 
-use ContainerHtmlView;
 use Exception;
-use HtmlView;
-use Language;
-use Tools;
+use ship\interoperability\SLanguage as Language;
 use webship\buttons\SubmitHtmlView;
+use webship\containers\ContainerHtmlView;
+use webship\core\HtmlView;
 use webship\symbols\ImageHtmlView;
+use webship\WebshipTools;
 
 /**
  * View SearchHtmlView.
@@ -88,28 +88,28 @@ class SearchHtmlView extends ContainerHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.search', [' > ', 'form', ' > ', '.container'], 'padding-bottom: 30px',
+        self::addStyle(WebshipTools::css('.search', [' > ', 'form', ' > ', '.container'], 'padding-bottom: 30px',
             'padding-top: 10px'));
-        self::addStyle(Tools::css('.search', [' > ', 'form', ' > ', '.container:before'],
+        self::addStyle(WebshipTools::css('.search', [' > ', 'form', ' > ', '.container:before'],
             'content: var(--text)', 'padding-right: 20px', 'text-transform: uppercase', 'letter-spacing: 3px',
             'color: var(--font-light)'));
 
-        self::addStyle(Tools::css('.search', [' ', 'input'], 'width: 75%',
+        self::addStyle(WebshipTools::css('.search', [' ', 'input'], 'width: 75%',
             'border-radius: 5px 0 0 5px', 'border: 1px solid var(--system-background)', 'transition: 0.5s background'));
-        self::addStyle(Tools::css('.search', [' ', 'input:hover'],
+        self::addStyle(WebshipTools::css('.search', [' ', 'input:hover'],
             'border: 1px solid var(--border-5)'));
-        self::addStyle(Tools::css('.search', [' ', 'input:focus'],
+        self::addStyle(WebshipTools::css('.search', [' ', 'input:focus'],
             'border: 1px solid var(--border-5)', 'border-radius: 5px 0 0 5px', 'outline: none'));
-        self::addStyle(Tools::css('.search', [' ', 'input:hover', ' + ', 'button'],
+        self::addStyle(WebshipTools::css('.search', [' ', 'input:hover', ' + ', 'button'],
             'background: var(--dark-system-background)'));
 
-        self::addStyle(Tools::css('.search', [' ', 'button.std-button.submit'],'width: 50px',
+        self::addStyle(WebshipTools::css('.search', [' ', 'button.std-button.submit'],'width: 50px',
             'height: 50px', 'background: var(--system-background)', 'border-radius: 0 5px 5px 0',
             'transition: 0.5s background', 'border: none', 'cursor: pointer', 'margin: 0', 'box-shadow: none',
             '-webkit-box-shadow: none'));
-        self::addStyle(Tools::css('.search', [' ', 'button.std-button.submit', ' ', 'img'],
+        self::addStyle(WebshipTools::css('.search', [' ', 'button.std-button.submit', ' ', 'img'],
             'box-sizing: border-box', 'width: 100%', 'padding: 5px'));
-        self::addStyle(Tools::css('.search', [' ', 'button.std-button.submit:hover'],
+        self::addStyle(WebshipTools::css('.search', [' ', 'button.std-button.submit:hover'],
             'background: var(--dark-system-background)'));
     }
 

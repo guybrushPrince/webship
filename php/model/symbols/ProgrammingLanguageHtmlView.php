@@ -1,5 +1,11 @@
 <?php
 
+namespace webship\symbols;
+
+use ProgrammingLanguage;
+use Tools;
+use webship\WebshipTools;
+
 /**
  * View ProgrammingLanguageHtmlView.
  *
@@ -32,7 +38,7 @@ class ProgrammingLanguageHtmlView extends ColorHtmlView {
      * @param string[]|string|null $title An optional title to replace the name of the programming language.
      */
     private function __construct(int $progLang, array|string $classes = [], array|string|null $title = null) {
-        if (!is_array($classes)) $classes = [ $classes ];
+        if (!is_array($classes)) $classes = [$classes];
         $classes[] = 'prog-lang';
         $text = $title ?: ProgrammingLanguage::$TITLES[$progLang];
         parent::__construct(Tools::textToColor($text), $classes, $text);
@@ -42,7 +48,7 @@ class ProgrammingLanguageHtmlView extends ColorHtmlView {
     }
 
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.prog-lang', [], 'padding: 5px', 'border-radius: 5px',
+        self::addStyle(WebshipTools::css('.prog-lang', [], 'padding: 5px', 'border-radius: 5px',
             'font-weight: bold', 'border: 1px solid var(--border-3)'));
     }
 
@@ -54,7 +60,7 @@ class ProgrammingLanguageHtmlView extends ColorHtmlView {
      * @return ProgrammingLanguageHtmlView
      */
     public static function create(int $progLang, array|string|null $title = null,
-                                  array|string $classes = []): ProgrammingLanguageHtmlView {
+                                  array|string $classes = []) : ProgrammingLanguageHtmlView {
         return new ProgrammingLanguageHtmlView($progLang, $classes, $title);
     }
 }

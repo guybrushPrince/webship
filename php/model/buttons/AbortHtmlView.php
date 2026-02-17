@@ -2,7 +2,7 @@
 
 namespace webship\buttons;
 
-use Tools;
+use webship\WebshipTools;
 
 /**
  * View AbortHtmlView.
@@ -43,9 +43,9 @@ class AbortHtmlView extends StandardButtonHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('button.std-button.reset', '',
+        self::addStyle(WebshipTools::css('button.std-button.reset', '',
             'background: var(--button-abort)'));
-        self::addStyle(Tools::css('button.std-button.reset', ':hover',
+        self::addStyle(WebshipTools::css('button.std-button.reset', ':hover',
             'background: var(--dark-system-background)'));
     }
 

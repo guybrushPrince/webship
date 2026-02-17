@@ -3,9 +3,9 @@
 namespace webship\inputs;
 
 use webship\buttons\CloserHtmlView;
-use ContainerHtmlView;
-use HtmlView;
-use Tools;
+use webship\containers\ContainerHtmlView;
+use webship\core\HtmlView;
+use webship\WebshipTools;
 
 /**
  * View ObjectChipHtmlView.
@@ -92,24 +92,24 @@ class ObjectChipHtmlView extends ContainerHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('.obj-chip', [], 'border-radius: 5px', 'padding: 0',
+        self::addStyle(WebshipTools::css('.obj-chip', [], 'border-radius: 5px', 'padding: 0',
             'transition: 0.5s background', 'width: -moz-fit-content', 'width: fit-content',
             'background: var(--premier-color)', 'color: var(--premier-font)', 'gap: 10px'));
-        self::addStyle(Tools::css('.obj-chip.clickable', [], 'cursor: pointer',
+        self::addStyle(WebshipTools::css('.obj-chip.clickable', [], 'cursor: pointer',
             'transition: 0.5s opacity'));
-        self::addStyle(Tools::css('.obj-chip.clickable:hover', [], 'opacity: 0.8'));
+        self::addStyle(WebshipTools::css('.obj-chip.clickable:hover', [], 'opacity: 0.8'));
 
-        self::addStyle(Tools::css('.obj-chip', [' > ', 'div:first-child'],
+        self::addStyle(WebshipTools::css('.obj-chip', [' > ', 'div:first-child'],
             'background: var(--secondary-color)',
             'color: var(--secondary-font)', 'border-right: 2px solid var(--premier-color)', 'font-weight: bold',
             'font-size: 12px', 'padding: 6px 10px', 'border-radius: 5px 0 0 5px', 'white-space: nowrap'));
 
-        self::addStyle(Tools::css('.obj-chip', [' > ', 'div:nth-child(2):not(:first-child):not(.del)'],
+        self::addStyle(WebshipTools::css('.obj-chip', [' > ', 'div:nth-child(2):not(:first-child):not(.del)'],
             'padding: 5px 10px 5px 0', 'white-space: nowrap'));
 
-        self::addStyle(Tools::css('.obj-chip', [' ', 'span.acronym'], 'font-weight: bold'));
+        self::addStyle(WebshipTools::css('.obj-chip', [' ', 'span.acronym'], 'font-weight: bold'));
 
-        self::addStyle(Tools::css('.obj-chip', [' > ', 'div.del'], 'height: 20px'));
+        self::addStyle(WebshipTools::css('.obj-chip', [' > ', 'div.del'], 'height: 20px'));
     }
 
     /**

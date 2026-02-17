@@ -1,6 +1,9 @@
 <?php
 
+namespace webship\trees;
+
 use ship\views\View;
+use webship\core\HtmlView;
 
 /**
  * Class TreeLeafHtmlView
@@ -43,6 +46,5 @@ class TreeLeafHtmlView extends HtmlView {
     public function content(array|string $classes = []) : View {
         return $this->add(new HtmlView(array_merge(['leaf-info'], (is_array($classes) ? $classes : [$classes]))));
     }
-
 }
 ?>

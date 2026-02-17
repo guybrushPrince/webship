@@ -17,13 +17,13 @@ Sometimes, especially for older views, the *constructor* of the view must be use
 However, we are confident to replace those views soon.
 
 ```php
-$controlPanel = ControlPanelHtmlView::create(3, 2);
+use webship\menus\ControlPanelHtmlView;$controlPanel = ControlPanelHtmlView::create(3, 2);
 ```
 
 Once the view is created, you can invoke other view-specific methods ...
 
 ```php
-$controlPanel = ControlPanelHtmlView::create(3, 2);
+use webship\menus\ControlPanelHtmlView;$controlPanel = ControlPanelHtmlView::create(3, 2);
 $controlPanel->fix();
 $elementsArea = $controlPanel->area(2, 1);
 ```
@@ -32,7 +32,7 @@ $elementsArea = $controlPanel->area(2, 1);
 There are some methods provided by *HtmlView.php*, e.g., to add a view:
 
 ```php
-$controlPanel = ControlPanelHtmlView::create(3, 2);
+use webship\core\HtmlView;use webship\menus\ControlPanelHtmlView;$controlPanel = ControlPanelHtmlView::create(3, 2);
 $view = new HtmlView();
 // Add the control panel to the html view.
 $view->add($controlPanel);
@@ -46,7 +46,7 @@ In *(Web)Ship*, the entire concept is called *Protocol*.
 With a *Protocol*, you start to describe what to do if some event occurs:
 
 ```php
-$view = new HtmlView();
+use webship\core\HtmlView;$view = new HtmlView();
 $view->ref('list');
 
 $button = StandardButtonHtmlView::create('my-beautiful-button');
@@ -71,7 +71,7 @@ It would also be possible to define some actions directly in the *Protocol*, how
 For example, the *EventAdder.php* extension with the *Protocol Template* for ```LoadListOfBeautifulThings``` could look like this:
 
 ```php
-use ship\controllers\ActionRegister;use ship\controllers\EventAdder;use ship\template\TemplateObject;class BeautifulEvents extends EventAdder {
+use ship\controllers\ActionRegister;use ship\controllers\EventAdder;use ship\template\TemplateObject;use webship\containers\ContainerHtmlView;use webship\core\HtmlView;use webship\protocols\HtmlTemplateProtocol;class BeautifulEvents extends EventAdder {
 
     public const SCOPE = 'beautifulThings';
 

@@ -1,5 +1,9 @@
 <?php
 
+namespace webship\menus;
+
+use webship\WebshipTools;
+
 /**
  * View ContextSubMenuHtmlView.
  *
@@ -18,8 +22,8 @@ class ContextSubMenuHtmlView extends SubMenuHtmlView {
      * @param string[]|string $classes Some classes.
      */
     public function __construct(array|string $classes = []) {
-        $classes = is_array($classes) ? $classes : [ $classes ];
-        parent::__construct(array_merge([ 'context' ], $classes));
+        $classes = is_array($classes) ? $classes : [$classes];
+        parent::__construct(array_merge(['context'], $classes));
 
         self::addCSS();
     }
@@ -28,16 +32,16 @@ class ContextSubMenuHtmlView extends SubMenuHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(Tools::css('nav.menu.context', [' ', 'li.sub-menu-entry',':after'],
+        self::addStyle(WebshipTools::css('nav.menu.context', [' ', 'li.sub-menu-entry', ':after'],
             'content: ""', 'padding-left: 5px'));
-        self::addStyle(Tools::css('nav.menu.context', [' ', 'li.sub-menu-entry', ' > ', 'ul'],
+        self::addStyle(WebshipTools::css('nav.menu.context', [' ', 'li.sub-menu-entry', ' > ', 'ul'],
             'display: none', 'list-style-type: none', 'margin: 0', 'background: var(--fine-system-background)',
             'border: 1px solid var(--system-background)', 'padding: 0'));
-        self::addStyle(Tools::css('nav.menu.context', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li'],
+        self::addStyle(WebshipTools::css('nav.menu.context', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li'],
             'width: fit-content',
             'min-height: 30px', 'height: auto', 'padding: 5px 20px', 'box-sizing: border-box', 'position: relative',
             'flex-basis: 100%', 'width: -moz-fit-content'));
-        self::addStyle(Tools::css('nav.menu.context', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li',
+        self::addStyle(WebshipTools::css('nav.menu.context', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li',
             ':hover'],
             'background: var(--system-background)'));
     }
@@ -45,7 +49,7 @@ class ContextSubMenuHtmlView extends SubMenuHtmlView {
     /**
      * @inheritDoc
      */
-    public static function create(array|string|null $texts = null, array|string $classes = []): ContextSubMenuHtmlView {
+    public static function create(array|string|null $texts = null, array|string $classes = []) : ContextSubMenuHtmlView {
         $entry = self::_new($classes);
         if (!is_null($texts)) $entry->texts($texts);
         return $entry;
