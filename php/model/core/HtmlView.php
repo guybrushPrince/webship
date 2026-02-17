@@ -116,6 +116,7 @@ class HtmlView extends View {
 
     /**
      * @inheritDoc
+     * @throws Exception
      */
     public function generate(bool $complete = false, bool $templates = false, bool $force = false) : string {
         if (!WebshipTools::isEmpty($this->hints) && !WebshipTools::isEmpty($this->hint(View::getLanguage()))) {

@@ -108,8 +108,8 @@ abstract class DashboardItem extends CObject {
         $dashGrid = DashGridContainerHtmlView::create($item, $cols, $rows, true);
 
         $view->add(FormLabelHtmlView::create('xDimension', 'hidden'))->texts()->
-        text(Language::ENGLISH, 'Width')->
-        text(Language::GERMAN, 'Breite');
+            text(Language::ENGLISH, 'Width')->
+            text(Language::GERMAN, 'Breite');
         $selXDim = $view->add(SelectHtmlView::create('xDimension', [], true))->ref('xDimension', 'value');
         $selXDim->each(range(1, $cols), function (SelectHtmlView $select, int $col) use ($dashGrid) {
             $select->option($col, [], $dashGrid->getInitXDim() === $col)->
@@ -117,30 +117,27 @@ abstract class DashboardItem extends CObject {
         });
 
         $view->add(FormLabelHtmlView::create('yDimension', 'hidden'))->texts()->
-        text(Language::ENGLISH, 'Height')->
-        text(Language::GERMAN, 'Höhe');
+            text(Language::ENGLISH, 'Height')->
+            text(Language::GERMAN, 'Höhe');
         $selYDim = $view->add(SelectHtmlView::create('yDimension', [], true))->ref('yDimension', 'value');
         $selYDim->each(range(1, $rows), function (SelectHtmlView $select, int $row) use ($dashGrid) {
-            $select->option($row, [], $dashGrid->getInitYDim() === $row)->
-            texts()->text(View::getLanguage(), $row);
+            $select->option($row, [], $dashGrid->getInitYDim() === $row)->texts($row);
         });
 
         $view->add(FormLabelHtmlView::create('xPosition', 'hidden'))->texts()->
-        text(Language::ENGLISH, 'Position X')->
-        text(Language::GERMAN, 'X-Position');
+            text(Language::ENGLISH, 'Position X')->
+            text(Language::GERMAN, 'X-Position');
         $selXPos = $view->add(SelectHtmlView::create('xPosition', [], true))->ref('xPosition', 'value');
         $selXPos->each(range(1, $cols), function (SelectHtmlView $select, int $col) use ($dashGrid) {
-            $select->option($col, [], $dashGrid->getInitXPos() === $col)->
-            texts()->text(View::getLanguage(), $col);
+            $select->option($col, [], $dashGrid->getInitXPos() === $col)->texts($col);
         });
 
         $view->add(FormLabelHtmlView::create('yPosition', 'hidden'))->texts()->
-        text(Language::ENGLISH, 'Position Y')->
-        text(Language::GERMAN, 'Y-Position');
+            text(Language::ENGLISH, 'Position Y')->
+            text(Language::GERMAN, 'Y-Position');
         $selYPos = $view->add(SelectHtmlView::create('yPosition', [], true))->ref('yPosition', 'value');
         $selYPos->each(range(1, $rows), function (SelectHtmlView $select, int $row) use ($dashGrid) {
-            $select->option($row, [], $dashGrid->getInitYPos() === $row)->
-            texts()->text(View::getLanguage(), $row);
+            $select->option($row, [], $dashGrid->getInitYPos() === $row)->texts($row);
         });
 
         $view->add($dashGrid);

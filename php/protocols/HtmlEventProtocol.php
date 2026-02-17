@@ -140,7 +140,7 @@ class HtmlEventProtocol extends EventProtocol {
                     $code .= 'if (' . ($this->forceObject ?: '$("[data-id=' . $this->parent->id() . '").length === 0') . ') {' .
                         'clearTimeout(i);' .
                         'delete context.timers[i];' .
-                        '}';;
+                        '}';
                 }
                 $code .= '})';
                 if ($this->event === Event::ONLOAD) $code .= '(' . ($this->forceObject ?: '$("' . $this->parent->idc() . '")') . ')';

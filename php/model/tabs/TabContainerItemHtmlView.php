@@ -4,6 +4,7 @@ namespace webship\tabs;
 
 use DatabaseError;
 use Event;
+use Exception;
 use ship\interoperability\SLanguage as Language;
 use ship\views\TextView;
 use webship\buttons\CloserHtmlView;
@@ -115,6 +116,7 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
     /**
      * @inheritDoc
      * @throws DatabaseError
+     * @throws Exception
      */
     public function generateOpeningTag() : string {
         $code = parent::generateOpeningTag();

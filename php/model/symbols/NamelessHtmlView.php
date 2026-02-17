@@ -5,6 +5,7 @@ namespace webship\symbols;
 use AccessCreationHelper;
 use DatabaseError;
 use DescribableObject;
+use Exception;
 use ITextBoxUser;
 use Language;
 use Persistence;
@@ -91,6 +92,7 @@ class NamelessHtmlView extends HtmlView {
      * @param string[]|string $classes Some classes.
      * @return string
      * @throws DatabaseError
+     * @throws Exception
      */
     public static function create(ITextBoxUser|DescribableObject $target,
                                   string|array|null $fields = null, int $language = Language::GERMAN,
@@ -125,6 +127,7 @@ class NamelessHtmlView extends HtmlView {
     /**
      * Get the view as string.
      * @return string
+     * @throws Exception
      */
     public function stringify() : string {
         return $this->generate();

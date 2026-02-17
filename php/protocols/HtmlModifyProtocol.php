@@ -2,8 +2,10 @@
 
 namespace webship\protocols;
 
+use CliffSerializable;
 use DatabaseError;
 use Event;
+use Exception;
 use ship\interoperability\IShippable;
 use ship\interoperability\ShipperRegister;
 use ship\protocols\ModifyProtocol;
@@ -63,6 +65,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
 
     /**
      * @inheritDoc
+     * @throws Exception
      */
     public function generate() : string {
         return implode(array_map(function (array $modify) {

@@ -4,6 +4,7 @@ namespace webship\cards;
 
 use Event;
 use PersistentTrait;
+use ship\interoperability\IShippable;
 use webship\controller\WebshipScopes;
 use webship\core\HtmlView;
 use webship\menus\ControlPanelHtmlView;
@@ -90,22 +91,22 @@ class OpeningCardHtmlView extends CardHtmlView {
 
     /**
      * Binds an object for opening the card.
-     * @param PersistentTrait $object The object.
+     * @param IShippable $object The object.
      * @param HtmlModifyProtocol|string|null $protocol The function to execute.
      * @return void
      */
-    public function bindOpening($object, HtmlModifyProtocol|string|null $protocol = null) : void {
+    public function bindOpening(IShippable $object, HtmlModifyProtocol|string|null $protocol = null) : void {
         $this->bind($object, Event::CONTENTMODIFY, $protocol, WebshipScopes::OPENING_CARD_OPENS);
         $this->object = $object;
     }
 
     /**
      * Binds an object for opening the card.
-     * @param PersistentTrait $object The object.
+     * @param IShippable $object The object.
      * @param HtmlModifyProtocol|string|null $protocol The function to execute.
      * @return void
      */
-    public function bindClosing($object, HtmlModifyProtocol|string|null $protocol = null) : void {
+    public function bindClosing(IShippable $object, HtmlModifyProtocol|string|null $protocol = null) : void {
         $this->bind($object, Event::CONTENTMODIFY, $protocol, WebshipScopes::OPENING_CARD_CLOSES);
         $this->object = $object;
     }

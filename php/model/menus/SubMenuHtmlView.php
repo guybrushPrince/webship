@@ -2,6 +2,7 @@
 
 namespace webship\menus;
 
+use Exception;
 use ship\views\View;
 use webship\protocols\HtmlActionProtocol;
 use webship\WebshipTools;
@@ -73,6 +74,7 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
 
     /**
      * @inheritDoc
+     * @throws Exception
      */
     public function generateOpeningTag() : string {
         $menuEntries = array_filter($this->subviews, function (View $view) {

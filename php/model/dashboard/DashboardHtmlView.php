@@ -3,6 +3,7 @@
 namespace webship\dashboards;
 
 use DatabaseError;
+use Error;
 use Event;
 use Language;
 use Persistence;

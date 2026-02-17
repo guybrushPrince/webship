@@ -3,6 +3,7 @@
 namespace webship\inputs;
 
 use Event;
+use Exception;
 use progression\NotImplementedException;
 use progression\ui\Representer;
 use ship\interoperability\IShippable;
@@ -227,6 +228,7 @@ class ContentSelectHtmlView extends SelectHtmlView {
 
     /**
      * @inheritDoc
+     * @throws NotImplementedException
      */
     public function option($value, $classes = [], $selected = false) : OptionHtmlView {
         if (!is_array($value) && !($value instanceof IShippable) && $value !== $this->default)
@@ -307,6 +309,7 @@ class ContentSelectHtmlView extends SelectHtmlView {
 
     /**
      * @inheritDoc
+     * @throws Exception
      */
     public function generateClosingTag() : string {
         $overlay = new HtmlView('overlay');

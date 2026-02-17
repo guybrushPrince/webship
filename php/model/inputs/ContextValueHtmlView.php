@@ -2,6 +2,7 @@
 
 namespace webship\inputs;
 
+use Exception;
 use HoldFile;
 use progression\ContextSerializer;
 use progression\ContextVariable;
@@ -197,6 +198,7 @@ class ContextValueHtmlView extends HtmlView {
      * @param string[]|string $classes Some classes.
      * @return ContextValueHtmlView
      * @throws NotImplementedException
+     * @throws Exception
      */
     public static function buildContext(string|bool|int|float|ContextVariable|IProgressionSerializable|array|null $value,
                                         array|string $classes = []) : ContextValueHtmlView {

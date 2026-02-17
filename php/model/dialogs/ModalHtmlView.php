@@ -3,6 +3,7 @@
 namespace webship\dialogs;
 
 use Event;
+use Exception;
 use webship\buttons\AbortHtmlView;
 use webship\buttons\ButtonHtmlView;
 use webship\buttons\CloserHtmlView;

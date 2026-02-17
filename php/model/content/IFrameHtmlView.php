@@ -3,6 +3,7 @@
 namespace webship\contents;
 
 use DatabaseError;
+use Exception;
 use ship\views\View;
 use webship\core\HtmlView;
 use webship\WebshipTools;
@@ -44,7 +45,7 @@ class IFrameHtmlView extends HtmlView {
 
     /**
      * @inheritDoc
-     * @throws DatabaseError
+     * @throws DatabaseError|Exception
      */
     public function generateOpeningTag() : string {
         return '<iframe class="' . implode(' ', array_merge($this->classes, array($this->id()))) . '"' .

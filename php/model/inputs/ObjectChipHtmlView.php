@@ -60,7 +60,7 @@ class ObjectChipHtmlView extends ContainerHtmlView {
         $prefixView->texts($prefix);
 
         if (!is_null($content)) {
-            $contentView = $this->container(['hor', 'single', 'vcent', 'h100', 'fit']);;
+            $contentView = $this->container(['hor', 'single', 'vcent', 'h100', 'fit']);
             if ($content instanceof HtmlView) {
                 $contentView->add($content);
             } else $contentView->texts($content);

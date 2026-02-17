@@ -55,7 +55,7 @@ class HintHtmlView extends HtmlView {
      */
     public static function createHint(HintHtmlView $view = null) : HtmlView {
         $item = new HtmlView('hint');
-        if ($view !== null) $view->addHint('hint');
+        if ($view !== null) $view->add(new HtmlView('hint'));
 
         return $item;
     }
