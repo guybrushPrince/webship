@@ -68,31 +68,26 @@ class HtmlModifyProtocol extends ModifyProtocol {
         return implode(array_map(function (array $modify) {
             switch ($modify["operation"]) {
                 case 'alert':
-                case 'action':
-                {
+                case 'action': {
                     return $modify["protocol"]->generate();
                 }
-                case 'doIt':
-                {
+                case 'doIt': {
                     if ($modify['protocol'] === null) {
                         $modify['protocol'] = TemplateProtocol::get($modify['name'], $modify['environment']);
                     }
                     return $modify["protocol"]->generate($modify['context'], $this->innerView());
                 }
-                case 'virtualDoIt':
-                {
+                case 'virtualDoIt': {
                     // Idea: The appended protocol is wrapped in an anonymous function that is called.
                     $anonymousProtocol = $modify["protocol"]; // It is a template object
                     if ($anonymousProtocol instanceof TemplateObject) {
                         return 'callFunc(' . $this->asContext($anonymousProtocol) . ', result);';
                     } else return '';
                 }
-                case 'setCookie':
-                {
+                case 'setCookie': {
                     return 'setCookie(' . ($modify["value"] !== '' ? 'true' : 'false') . ', ' . ($modify["value"] ? '"' . $modify["value"] . '"' : 'undefined') . ', result);';
                 }
-                case 'set':
-                {
+                case 'set': {
                     $val = $modify["value"];
                     if ($val === false) {
                         $val = 'result';
@@ -114,48 +109,40 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     } else {
                         $val = (is_string($val) ? '"' . $val . '"' : $val);
                     }
-                    return 'context.' . $modify["key"] . ' = ' . $val . ';';
+                    return 'setContext("' . $modify["key"] . '", ' . $val . ');';
                 }
-                case 'reload':
-                {
+                case 'reload': {
                     return 'location.reload();';
                 }
-                case 'get':
-                {
+                case 'get': {
                     return 'context.' . $modify["key"] . ';';
                 }
-                case 'delete':
-                {
+                case 'delete': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) return 'delElem(' . $this->createViewSelector($view) . ', ' . Event::DELETE . ');';
                     else return '';
                 }
-                case 'resize':
-                {
+                case 'resize': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) return 'resize(' . $this->createViewSelector($view) . ');';
                     else return '';
                 }
-                case 'reheight':
-                {
+                case 'reheight': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) return 'reheight(' . $this->createViewSelector($view) . ');';
                     else return '';
                 }
-                case 'reset':
-                {
+                case 'reset': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) return 'reset(' . $this->createViewSelector($view) . ');';
                     else return '';
                 }
-                case 'focus':
-                {
+                case 'focus': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) return 'focus(' . $this->createViewSelector($view) . ');';
                     else return '';
                 }
-                case 'value':
-                {
+                case 'value': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
                         $value = $modify["value"];
@@ -168,15 +155,13 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     } else return '';
                 }
                 case 'enable':
-                case 'disable':
-                {
+                case 'disable': {
                     $disabled = ($modify["operation"] === 'disable') ? '' : ', false';
                     $view = $this->reduceView($modify["view"]);
                     if ($view) return 'disEnable(' . $this->createViewSelector($view) . $disabled . ');';
                     else return '';
                 }
-                case 'scrollTop':
-                {
+                case 'scrollTop': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) return $this->createViewSelector($view) . '.scrollTop(0);';
                     else return '';
@@ -187,13 +172,11 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 case 'replace':
                 case 'before':
                 case 'after':
-                case 'text':
-                {
+                case 'text': {
                     return $this->generateDomAction($modify);
                 }
                 case 'event':
-                case 'throw':
-                {
+                case 'throw': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
                         $data = $this->generateData($modify["data"]);
@@ -203,8 +186,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         return '';
                     }
                 }
-                case 'throwObjectEvent':
-                {
+                case 'throwObjectEvent': {
                     $obj = $modify["object"];
                     if ($obj instanceof IShippable || $obj instanceof TemplateObject || (is_array($obj) && !WebshipTools::isEmpty($obj))) {
                         $event = $this->handleEventType($modify["event"]);
@@ -217,8 +199,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         return '';
                     }
                 }
-                case 'unbindObjectEvent':
-                {
+                case 'unbindObjectEvent': {
                     $obj = $modify["object"];
                     if ($obj instanceof IShippable || $obj instanceof TemplateObject || (is_array($obj) && !WebshipTools::isEmpty($obj))) {
                         $event = $this->handleEventType($modify["event"]);
@@ -231,44 +212,38 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         return '';
                     }
                 }
-                case 'clear':
-                {
+                case 'clear': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) return 'clear(' . $this->createViewSelector($view) . ');';
                     else return '';
                 }
-                case 'addClasses':
-                {
+                case 'addClasses': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
                         return $this->createViewSelector($view) .
                             '.addClass(' . $this->generateClasses($modify['classes']) . ');';
                     } else return '';
                 }
-                case 'removeClasses':
-                {
+                case 'removeClasses': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) {
                         return $this->createViewSelector($view) .
                             '.removeClass(' . $this->generateClasses($modify['classes']) . ');';
                     } else return '';
                 }
-                case 'empty':
-                {
+                case 'empty': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) return $this->createViewSelector($view) . '.empty();';
                     else return '';
                 }
-                case 'removeClassesSiblings':
-                {
+                case 'removeClassesSiblings': {
                     $view = $this->reduceView($modify["view"]);
                     $onlyChildren = $this->asContext($modify["children"]);
                     if ($view) return 'remClassSib(' . $this->createViewSelector($view) . ',' .
                         $this->generateClasses($modify["classes"], null) . ($onlyChildren ? ', true' : '') . ');';
                     else return '';
                 }
-                case 'toggleClasses':
-                {
+                case 'toggleClasses': {
                     $classes = $this->generateClasses($modify['classes']);
                     if ($modify["view"]) {
                         $view = $this->reduceView($modify["view"]);
@@ -279,14 +254,12 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         return $c . 'res.toggleClass(' . $classes . ');';
                     }
                 }
-                case 'mousePosition':
-                {
+                case 'mousePosition': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) return '(function() {' . 'ms(' . $this->createViewSelector($view) . ', e);' . '})();';
                     else return '';
                 }
-                case 'openWindow':
-                {
+                case 'openWindow': {
                     $protocol = $modify["protocol"]; // It is a template object
                     $view = $modify["view"];
                     if ($protocol instanceof TemplateObject) {
@@ -304,14 +277,12 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         ($handler ? 'function() {' . $handler . '}' : '() => {}') . ', ' .
                         ($view ? $view . '.html()' : 'null') . ');';
                 }
-                case 'function':
-                {
+                case 'function': {
                     $code = $modify["code"];
                     if ($code instanceof TemplateObject) return 'callAnFunc(con, "' . $code->getName() . '", result);';
                     else return $code;
                 }
-                case 'retain':
-                {
+                case 'retain': {
                     $view = $modify["view"];
                     if ($view instanceof TemplateObject) {
                         $template = $view;
@@ -321,8 +292,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     if (!$template) return $view;
                     else return $this->asContext($template) . ' = ' . $view . ';';
                 }
-                case 'gc':
-                {
+                case 'gc': {
                     return 'gc();';
                 }
             }

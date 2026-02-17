@@ -52,6 +52,7 @@ class HtmlActionProtocol extends ActionProtocol {
             $isGet = (preg_match('/@get(.*)/', $reflection->getDocComment(), $matches) >= 1);
             $without = (preg_match('/@without(.*)/', $reflection->getDocComment(), $matches) >= 1);
             $isCSV = (preg_match('/@CSV(.*)/', $reflection->getDocComment(), $matches) >= 1);
+            $isJSON = (preg_match('/@JSON(.*)/', $reflection->getDocComment(), $matches) >= 1);
             $name = null;
             if (preg_match('/@CSV(.*)/', $reflection->getDocComment(), $matches) >= 1) {
                 $name = trim($matches[1], " ,:\n\r" . PHP_EOL);
@@ -80,7 +81,7 @@ class HtmlActionProtocol extends ActionProtocol {
             $code .= 'sysTask,';
             $code .= '{taskId: taskId, title: "' . $this->title[View::getLanguage()] . '"})';
 
-            $code .= implode(array_map(function (array $p) use ($isCSV, $isPDF, $isZIP, $isJS, $name) {
+            $code .= implode(array_map(function (array $p) use ($isCSV, $isPDF, $isZIP, $isJS, $isJSON, $name) {
                     if ($p["operation"] === "success" || $p["operation"] === "fail") {
                         $func = '.done(function(result) {';
                         $hasFail = !WebshipTools::isEmpty(
@@ -95,9 +96,9 @@ class HtmlActionProtocol extends ActionProtocol {
                             $func .= 'if (!(isObject(result) && "__intern_fail" in result)) return;';
                             $func .= 'result = result["content"];';
                         }
-                        $func .= 'result = extractStyle(result);';
+                        if (!$isJSON) $func .= 'result = extractStyle(result);';
                         if (!$isJS || $hasFail && $p["operation"] === "fail") $func .= '(function(result) {' . $p["protocol"]->generate() . '})(result);';
-                        else /*if ($hasFail && $p["operation"] !== "fail)) */ $func .= '(function(result) {' . 'result="";' . $p["protocol"]->generate() . '})(result);';
+                        else /*if ($hasFail && $p["operation"] !== "fail)) */ $func .= '(function(result) {' . ($hasFail ? 'result="";' : '') . $p["protocol"]->generate() . '})(result);';
                         if (($isCSV || $isPDF || $isZIP) && $p["operation"] === "success") {
                             $d = '(new Date()).toISOString().split(/[-T:,.]/).slice(0,3).join("_")';
                             $func .= 'downloadFile(result, ' . ($isPDF || $isZIP ? '"' . ($name ? $name : 'download') . '_" + ' . $d . ' + "' . ($isPDF ? '.pdf"' : '.zip"') :

@@ -79,6 +79,9 @@ let context = {
     }); }
 };
 
+let setContext = function(k, v) { context[k] = v; };
+let getContext = function(k) { return context[k]; };
+
 let lastDelay = [];
 let delay = (function () {
     let timer = 0;
