@@ -21,48 +21,57 @@ use webship\protocols\HtmlTemplateProtocol;
  */
 class BasicEvents implements EventAdder {
 
+    public const ENVIRONMENT = 'basics';
+
+    /**
+     * @inheritDoc
+     */
+    public static function environment(): string {
+        return self::ENVIRONMENT;
+    }
+    
     /**
      * @inheritDoc
      */
     public static function add() : bool {
-        HtmlTemplateProtocol::_new('AddClass', 'basics')->
+        HtmlTemplateProtocol::_new('AddClass', self::ENVIRONMENT)->
             addClass(TemplateObject::_new('view'), TemplateObject::_new('class'));
 
-        HtmlTemplateProtocol::_new('RemoveClass', 'basics')->
+        HtmlTemplateProtocol::_new('RemoveClass', self::ENVIRONMENT)->
             removeClass(TemplateObject::_new('view'), TemplateObject::_new('class'));
 
-        HtmlTemplateProtocol::_new('RemoveClassesFromSiblings', 'basics')->
+        HtmlTemplateProtocol::_new('RemoveClassesFromSiblings', self::ENVIRONMENT)->
             removeClassSiblings(TemplateObject::_new('view'), TemplateObject::_new('class'),
                 TemplateObject::_new('onlyChildren'));
 
-        HtmlTemplateProtocol::_new('ToggleClass', 'basics')->
+        HtmlTemplateProtocol::_new('ToggleClass', self::ENVIRONMENT)->
             toggleClass(TemplateObject::_new('view'), TemplateObject::_new('class'));
 
-        HtmlTemplateProtocol::_new('Reset', 'basics')->
+        HtmlTemplateProtocol::_new('Reset', self::ENVIRONMENT)->
             reset(TemplateObject::_new('view'));
 
-        HtmlTemplateProtocol::_new('ThrowEvent', 'basics')->
+        HtmlTemplateProtocol::_new('ThrowEvent', self::ENVIRONMENT)->
             throwevent(TemplateObject::_new('event'), TemplateObject::_new('view'), TemplateObject::_new('data'));
 
-        HtmlTemplateProtocol::_new('ThrowEventToObjectBinding', 'basics')->
+        HtmlTemplateProtocol::_new('ThrowEventToObjectBinding', self::ENVIRONMENT)->
             throwevent(Event::OBJECTMODIFY, TemplateObject::_new('object'), TemplateObject::_new('data'));
 
-        HtmlTemplateProtocol::_new('ThrowEventToObject', 'basics')->
+        HtmlTemplateProtocol::_new('ThrowEventToObject', self::ENVIRONMENT)->
             throwObjectEvent(TemplateObject::_new('event'), TemplateObject::_new('object'), TemplateObject::_new('scope'), TemplateObject::_new('data'));
 
-        HtmlTemplateProtocol::_new('UnbindEventFromObject', 'basics')->
+        HtmlTemplateProtocol::_new('UnbindEventFromObject', self::ENVIRONMENT)->
             unbindObjectEvent(TemplateObject::_new('view'), TemplateObject::_new('event'), TemplateObject::_new('object'), TemplateObject::_new('scope'));
 
-        HtmlTemplateProtocol::_new('AddView', 'basics')->
+        HtmlTemplateProtocol::_new('AddView', self::ENVIRONMENT)->
             add(TemplateObject::_new('view'), TemplateObject::_new('add'));
 
-        HtmlTemplateProtocol::_new('Delete', 'basics')->
+        HtmlTemplateProtocol::_new('Delete', self::ENVIRONMENT)->
             delete(TemplateObject::_new('view'));
 
-        HtmlTemplateProtocol::_new('SetValue', 'basics')->
+        HtmlTemplateProtocol::_new('SetValue', self::ENVIRONMENT)->
             value(TemplateObject::_new('view'), TemplateObject::_new('value'));
 
-        HtmlTemplateProtocol::_new('OpenHelp', 'basics')->
+        HtmlTemplateProtocol::_new('OpenHelp', self::ENVIRONMENT)->
             action(BasicsController::class, 'openHelp', [
                 'package' => TemplateObject::_new('package'),
                 'subpackage' => TemplateObject::_new('subpackage'),
