@@ -2,7 +2,7 @@
 
 namespace webship\timeline;
 
-use Event;
+use webship\interoperability\WEvent;
 use webship\core\HtmlView;
 use webship\WebshipTools;
 
@@ -39,13 +39,13 @@ class TimelineHtmlView extends HtmlView {
             'console.log(this.next);' .
             '};' .
             'this.getNext();' .
-            '$(tl).on("' . Event::NEXT_STEP . '", () => { if (this.next !== null) { ' .
+            '$(tl).on("' . WEvent::NEXT_STEP . '", () => { if (this.next !== null) { ' .
             '$(this.next).removeClass("waiting"); ' .
-            '$(this.next).trigger("' . Event::NEXT_STEP . '"); ' .
+            '$(this.next).trigger("' . WEvent::NEXT_STEP . '"); ' .
             'this.getNext(); ' .
             '}});' .
-            '$(tl).on("' . Event::NEXT_DEAD . '", () => { if (this.next !== null) { ' .
-            '$(this.next).add($(this.next).siblings(".waiting")).trigger("' . Event::NEXT_DEAD . '"); ' .
+            '$(tl).on("' . WEvent::NEXT_DEAD . '", () => { if (this.next !== null) { ' .
+            '$(this.next).add($(this.next).siblings(".waiting")).trigger("' . WEvent::NEXT_DEAD . '"); ' .
             'this.next = null; ' .
             '} });' .
             'console.log(tl);' .

@@ -2,7 +2,7 @@
 
 namespace webship;
 
-use CliffSerializable;
+use ship\interoperability\IShippable;
 use webship\core\HtmlView;
 
 /**
@@ -24,7 +24,7 @@ interface IFolderGroup {
 
     /**
      * Get the items (objects) referred to this group.
-     * @return CliffSerializable[]
+     * @return IShippable[]
      */
     public function getItems() : array;
 
@@ -43,11 +43,11 @@ interface IFolderGroup {
 
     /**
      * Get the title of a specific item.
-     * @param CliffSerializable $item The item.
+     * @param IShippable $item The item.
      * @param int $language The language.
      * @return string
      */
-    public function getItemTitle(CliffSerializable $item, int $language) : string;
+    public function getItemTitle(IShippable $item, int $language) : string;
 
     /**
      * Creates a view of the items.

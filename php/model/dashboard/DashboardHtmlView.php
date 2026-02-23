@@ -4,7 +4,7 @@ namespace webship\dashboards;
 
 use DatabaseError;
 use Error;
-use Event;
+use webship\interoperability\WEvent;
 use Language;
 use Persistence;
 use User;
@@ -132,7 +132,7 @@ class DashboardHtmlView extends HtmlView {
     public static function create(?User $user = null, int $cols = 6, int $rows = 4, bool $init = true) : DashboardHtmlView {
         $view = new DashboardHtmlView([], $cols, $rows);
         $view->ref('dashboard');
-        $view->protocol(Event::DIRTY)->doIt('LoadDashboard', [
+        $view->protocol(WEvent::DIRTY)->doIt('LoadDashboard', [
             'user' => $user,
             'cols' => $cols,
             'rows' => $rows,
@@ -141,7 +141,7 @@ class DashboardHtmlView extends HtmlView {
         ], 'monitors');
         if ($init) {
             if ($user) {
-                $view->protocol(Event::ONLOADCONTENT)->doIt('LoadDashboard', [
+                $view->protocol(WEvent::ONLOADCONTENT)->doIt('LoadDashboard', [
                     'user' => $user,
                     'cols' => $cols,
                     'rows' => $rows,
@@ -149,7 +149,7 @@ class DashboardHtmlView extends HtmlView {
                     'replace' => $view
                 ], 'monitors');
             } else {
-                $view->protocol(Event::ONLOADCONTENT)->doIt('LoadDashboardUnsafe', [
+                $view->protocol(WEvent::ONLOADCONTENT)->doIt('LoadDashboardUnsafe', [
                     'cols' => $cols,
                     'rows' => $rows,
                     'init' => false,
@@ -201,7 +201,7 @@ class DashboardHtmlView extends HtmlView {
                 $it->notice(Language::GERMAN, 'Klicken, um deinen eigenen Inhalt auf das Dasbhoard zu legen');
                 if ($user) {
                     $it->access('survey-menu')->
-                        protocol(Event::CLICK)->
+                        protocol(WEvent::CLICK)->
                         mousePosition('dashboard-menu')->
                         addClass('dashboard-menu', 'active');
                 }

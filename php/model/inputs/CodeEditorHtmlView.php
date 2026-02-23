@@ -2,7 +2,7 @@
 
 namespace webship\inputs;
 
-use Event;
+use webship\interoperability\WEvent;
 use ProgrammingLanguage;
 use webship\WebshipTools;
 
@@ -87,7 +87,7 @@ class CodeEditorHtmlView extends TextHtmlView {
             '});');
 
         array_unshift($this->javaScripts,
-            '$("' . $this->idc() . '").on("' . Event::CONTENTMODIFY . '", function(event) {' .
+            '$("' . $this->idc() . '").on("' . WEvent::CONTENTMODIFY . '", function(event) {' .
             'cm' . $this->id() . '.save();' .
             '});');
 

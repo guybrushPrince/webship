@@ -4,7 +4,7 @@ namespace webship\protocols;
 
 use CliffSerializable;
 use DatabaseError;
-use Event;
+use webship\interoperability\WEvent;
 use Exception;
 use ship\interoperability\IShippable;
 use ship\interoperability\ShipperRegister;
@@ -122,7 +122,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 }
                 case 'delete': {
                     $view = $this->reduceView($modify["view"]);
-                    if ($view) return 'delElem(' . $this->createViewSelector($view) . ', ' . Event::DELETE . ');';
+                    if ($view) return 'delElem(' . $this->createViewSelector($view) . ', ' . WEvent::DELETE . ');';
                     else return '';
                 }
                 case 'resize': {
@@ -442,7 +442,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
         if ($view) {
             $sel = $this->createViewSelector($view);
             if ($modify["operation"] !== 'replace') $c .= $sel . '.';
-            else return $c . 'replaceDom(' . substr($sel, 1) . ', res, ' . Event::DELETE . ');';
+            else return $c . 'replaceDom(' . substr($sel, 1) . ', res, ' . WEvent::DELETE . ');';
             switch ($modify["operation"]) {
                 case 'after':
                     $c .= 'after';
@@ -464,7 +464,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     $c .= 'prepend';
                     break;
                 case 'delete':
-                    $c .= 'trigger("' . Event::DELETE . '").remove';
+                    $c .= 'trigger("' . WEvent::DELETE . '").remove';
                     break;
                 case 'text':
                     $c .= 'html';

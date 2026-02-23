@@ -2,7 +2,7 @@
 
 namespace webship\inputs;
 
-use Event;
+use webship\interoperability\WEvent;
 use ship\views\View;
 use webship\core\HtmlView;
 use webship\WebshipTools;
@@ -84,7 +84,7 @@ class TextHtmlView extends HtmlView {
 
         $this->localStyle('--rows: ' . $rows);
 
-        if ($resizable) $this->protocol(Event::INPUT)->reheight($this);
+        if ($resizable) $this->protocol(WEvent::INPUT)->reheight($this);
 
         self::addCSS();
     }

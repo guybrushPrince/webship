@@ -2,7 +2,7 @@
 
 namespace webship\protocols;
 
-use Event;
+use webship\interoperability\WEvent;
 use ship\protocols\EventProtocol;
 use ship\protocols\Protocol;
 use ship\views\DirectView;
@@ -14,6 +14,12 @@ use webship\core\HtmlView;
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  */
 class HtmlEventProtocol extends EventProtocol {
+
+    /**
+     * Additional events being registered.
+     * @var array
+     */
+    private static array $REGISTERED_EVENTS = [];
 
     /**
      * Whether the event should be handled with a delay, or not.
@@ -58,6 +64,16 @@ class HtmlEventProtocol extends EventProtocol {
     }
 
     /**
+     * Register additional events.
+     * @param array|string[]|int[]|string|int $events Additional events.
+     * @return void
+     */
+    public static function registerEvents(array|string|int $events) : void {
+        if (!is_array($events)) $events = [ $events ];
+        self::$REGISTERED_EVENTS = array_merge(self::$REGISTERED_EVENTS, $events);
+    }
+
+    /**
      * @inheritDoc
      */
     public function generate() : string {
@@ -65,57 +81,57 @@ class HtmlEventProtocol extends EventProtocol {
         if ($this->parent instanceof HtmlView) {
             $fn = ($this->attachEventPermanently ? '._on' : '.on');
 
-            if (!($this->parent instanceof SubmitHtmlView && $this->event === Event::CLICK)) {
+            if (!($this->parent instanceof SubmitHtmlView && $this->event === WEvent::CLICK)) {
                 if (!$this->forceObject) $code .= '$("' . $this->parent->idc() . '")';
                 else $code .= $this->forceObject;
-                if ($this->event === Event::CLICK) $code .= $fn . '("click", ';
-                if ($this->event === Event::CHANGE) $code .= $fn . '("change", ';
-                if ($this->event === Event::ONMOUSEOVER) $code .= $fn . '("mouseover", ';
-                if ($this->event === Event::ONMOUSEOUT) $code .= $fn . '("mouseout", ';
-                if ($this->event === Event::ONFOCUSOUT) $code .= $fn . '("focusout", ';
-                if ($this->event === Event::ONFOCUSIN) $code .= $fn . '("focusin", ';
-                if ($this->event === Event::ONKEYUP) $code .= $fn . '("keyup", ';
-                if ($this->event === Event::INPUT) $code .= $fn . '("input", ';
-                switch ($this->event) {
-                    case Event::CONTENTMODIFY:
-                    case Event::OBJECTMODIFY:
-                    case Event::VARIABLE_CHANGE:
-                    case Event::OPEN_LIST:
-                    case Event::CLOSE_LIST:
-                    case Event::MOVEUP:
-                    case Event::MOVEDOWN:
-                    case Event::MOVEDELETE:
-                    case Event::NEW_FILE:
-                    case Event::DIRTY:
-                    case Event::DRAGDROP:
-                    case Event::DRAGSTART:
-                    case Event::NEXT_STEP:
-                    case Event::NEXT_DEAD:
-                    case Event::JOB_START:
-                    case Event::JOB_IN_PROGRESS:
-                    case Event::JOB_DONE:
-                    case Event::JOB_ERROR:
-                    case Event::ON_IMPORT:
-                    case Event::CLOSE_MODAL:
-                        $code .= $fn . '("' . $this->event . '", ';
+                if ($this->event === WEvent::CLICK) $code .= $fn . '("click", ';
+                else if ($this->event === WEvent::CHANGE) $code .= $fn . '("change", ';
+                else if ($this->event === WEvent::ONMOUSEOVER) $code .= $fn . '("mouseover", ';
+                else if ($this->event === WEvent::ONMOUSEOUT) $code .= $fn . '("mouseout", ';
+                else if ($this->event === WEvent::ONFOCUSOUT) $code .= $fn . '("focusout", ';
+                else if ($this->event === WEvent::ONFOCUSIN) $code .= $fn . '("focusin", ';
+                else if ($this->event === WEvent::ONKEYUP) $code .= $fn . '("keyup", ';
+                else if ($this->event === WEvent::INPUT) $code .= $fn . '("input", ';
+                else if (in_array($this->event, self::$REGISTERED_EVENTS)) {
+                    $code .= $fn . '("' . $this->event . '", ';
+                } else {
+                    switch ($this->event) {
+                        case WEvent::CONTENTMODIFY:
+                        case WEvent::OBJECTMODIFY:
+                        case WEvent::VARIABLE_CHANGE:
+                        case WEvent::OPEN_LIST:
+                        case WEvent::CLOSE_LIST:
+                        case WEvent::MOVEUP:
+                        case WEvent::MOVEDOWN:
+                        case WEvent::MOVEDELETE:
+                        case WEvent::NEW_FILE:
+                        case WEvent::DIRTY:
+                        case WEvent::DRAGDROP:
+                        case WEvent::DRAGSTART:
+                        case WEvent::NEXT_STEP:
+                        case WEvent::NEXT_DEAD:
+                        case WEvent::ON_IMPORT:
+                        case WEvent::CLOSE_MODAL:
+                            $code .= $fn . '("' . $this->event . '", ';
+                    }
                 }
-                if ($this->event === Event::CONTEXTMENU) $code .= $fn . '("contextmenu", ';
-                if ($this->event === Event::CLICK_OUTSIDE) $code = '$(window)' . $fn . '("click", ';
-                if ($this->event === Event::TIMED) {
+                if ($this->event === WEvent::CONTEXTMENU) $code .= $fn . '("contextmenu", ';
+                if ($this->event === WEvent::CLICK_OUTSIDE) $code = '$(window)' . $fn . '("click", ';
+                if ($this->event === WEvent::TIMED) {
                     $code = '(() => { let i = setInterval(';
                 }
-                if ($this->event === Event::DELAYED) {
+                if ($this->event === WEvent::DELAYED) {
                     $code = '(() => { let i = setTimeout(';
                 }
-                if ($this->event === Event::ONLOAD) $code = '';
-                $code .= '(function(e' . ($this->event === Event::CONTENTMODIFY || $this->event === Event::OBJECTMODIFY ||
-                    $this->event === Event::DIRTY || $this->event === Event::DRAGDROP || $this->event === Event::DRAGSTART ? ',eData={}' : '') . ') {';
-                if ($this->sameTarget || $this->event === Event::OBJECTMODIFY)
+                if ($this->event === WEvent::ONLOAD) $code = '';
+                $code .= '(function(e' . ($this->event === WEvent::CONTENTMODIFY || $this->event === WEvent::OBJECTMODIFY ||
+                    $this->event === WEvent::DIRTY || $this->event === WEvent::DRAGDROP || $this->event === WEvent::DRAGSTART ? ',eData={}' : '') . ') {';
+                if ($this->sameTarget || $this->event === WEvent::OBJECTMODIFY)
                     $code .= 'if (e.target !== this) {sp(e); e.preventDefault(); return;}';
-                if ($this->event === Event::CONTEXTMENU) {
+                if ($this->event === WEvent::CONTEXTMENU) {
                     $code .= 'e.preventDefault();';
                 }
-                if ($this->event === Event::ONFOCUSOUT) {
+                if ($this->event === WEvent::ONFOCUSOUT) {
                     $code .= 'if (this.contains(e.relatedTarget)) return;';
                 }
                 $code .= 'let _i_n_ = "anonymous";';
@@ -123,65 +139,68 @@ class HtmlEventProtocol extends EventProtocol {
                     'if (p === lastDelay.length) {';
 
 
-                if ($this->event !== Event::ONLOADCONTENT) $code .= $this->generateCode($this->children);
+                if ($this->event !== WEvent::ONLOADCONTENT) $code .= $this->generateCode($this->children);
                 if ((!array_key_exists('include children', $this->parameters) ||
                         !$this->parameters["include children"]) &&
-                    !in_array($this->event, [Event::TIMED, Event::DELAYED])) $code .= 'sp(e);';
+                    !in_array($this->event, [WEvent::TIMED, WEvent::DELAYED])) $code .= 'sp(e);';
 
 
                 if ($this->delay) $code .= '}};' . 'lastDelay.push(l);' . 'delay(lastDelay, ' . $this->delay . ');';
-                if ($this->event === Event::TIMED) {
+                if ($this->event === WEvent::TIMED) {
                     $code .= 'if (' . ($this->forceObject ?: '$("[data-id=' . $this->parent->id() . '").length === 0') . ') {' .
                         'clearInterval(i);' .
                         'delete context.timers[i];' .
                         '}';
                 }
-                if ($this->event === Event::DELAYED) {
+                if ($this->event === WEvent::DELAYED) {
                     $code .= 'if (' . ($this->forceObject ?: '$("[data-id=' . $this->parent->id() . '").length === 0') . ') {' .
                         'clearTimeout(i);' .
                         'delete context.timers[i];' .
                         '}';
                 }
                 $code .= '})';
-                if ($this->event === Event::ONLOAD) $code .= '(' . ($this->forceObject ?: '$("' . $this->parent->idc() . '")') . ')';
+                if ($this->event === WEvent::ONLOAD) $code .= '(' . ($this->forceObject ?: '$("' . $this->parent->idc() . '")') . ')';
                 switch ($this->event) {
-                    case Event::CLICK:
-                    case Event::CLICK_OUTSIDE:
-                    case Event::CHANGE:
-                    case Event::ONMOUSEOVER:
-                    case Event::ONMOUSEOUT:
-                    case Event::ONFOCUSOUT:
-                    case Event::ONFOCUSIN:
-                    case Event::INPUT:
-                    case Event::ONKEYUP:
-                    case Event::CONTENTMODIFY:
-                    case Event::OBJECTMODIFY:
-                    case Event::VARIABLE_CHANGE:
-                    case Event::OPEN_LIST:
-                    case Event::CLOSE_LIST:
-                    case Event::MOVEUP:
-                    case Event::MOVEDOWN:
-                    case Event::NEXT_STEP:
-                    case Event::NEXT_DEAD:
-                    case Event::MOVEDELETE:
-                    case Event::NEW_FILE:
-                    case Event::DIRTY:
-                    case Event::CONTEXTMENU:
-                    case Event::DRAGSTART:
-                    case Event::DRAGDROP:
-                    case Event::JOB_START:
-                    case Event::JOB_IN_PROGRESS:
-                    case Event::JOB_DONE:
-                    case Event::JOB_ERROR:
-                    case Event::ON_IMPORT:
-                    case Event::CLOSE_MODAL:
+                    case WEvent::CLICK:
+                    case WEvent::CLICK_OUTSIDE:
+                    case WEvent::CHANGE:
+                    case WEvent::ONMOUSEOVER:
+                    case WEvent::ONMOUSEOUT:
+                    case WEvent::ONFOCUSOUT:
+                    case WEvent::ONFOCUSIN:
+                    case WEvent::INPUT:
+                    case WEvent::ONKEYUP:
+                    case WEvent::CONTENTMODIFY:
+                    case WEvent::OBJECTMODIFY:
+                    case WEvent::VARIABLE_CHANGE:
+                    case WEvent::OPEN_LIST:
+                    case WEvent::CLOSE_LIST:
+                    case WEvent::MOVEUP:
+                    case WEvent::MOVEDOWN:
+                    case WEvent::NEXT_STEP:
+                    case WEvent::NEXT_DEAD:
+                    case WEvent::MOVEDELETE:
+                    case WEvent::NEW_FILE:
+                    case WEvent::DIRTY:
+                    case WEvent::CONTEXTMENU:
+                    case WEvent::DRAGSTART:
+                    case WEvent::DRAGDROP:
+                    case WEvent::ON_IMPORT:
+                    case WEvent::CLOSE_MODAL: {
                         $code .= ')';
+                        break;
+                    }
+                    default: {
+                        if (in_array($this->event, self::$REGISTERED_EVENTS)) {
+                            $code .= ')';
+                        }
+                    }
                 }
-                if (in_array($this->event, [Event::TIMED, Event::DELAYED])) {
+                if (in_array($this->event, [WEvent::TIMED, WEvent::DELAYED])) {
                     $code .= ',' . ($this->parameters['interval'] * 1000) . '); context.timers[i] = i;})();';
                 }
                 $code .= ';';
-                if ($this->event === Event::ONLOADCONTENT) {
+                if ($this->event === WEvent::ONLOADCONTENT) {
                     $code = '(function() {';
                     $code .= 'let _i_n_ = "anonymous";';
                     $code .= $this->generateCode($this->children);

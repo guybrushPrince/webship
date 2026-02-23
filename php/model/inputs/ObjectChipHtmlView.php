@@ -139,7 +139,7 @@ class ObjectChipHtmlView extends ContainerHtmlView {
      * @param string $img The image.
      * @return HtmlView
      */
-    public function del(?string $id = null, string $img = '/tardis/pic/cancel.svg') : HtmlView {
+    public function del(?string $id = null, string $img = '/webship/pic/cancel.svg') : HtmlView {
         $delView = new ContainerHtmlView(['del', 'hor', 'vcent', 'hcent']);
         $delView->add(CloserHtmlView::create($id, $img)->plain()->mini());
         $this->add($delView);

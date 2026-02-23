@@ -2,9 +2,9 @@
 
 namespace webship\controller;
 
-use Event;
-use Language;
+use webship\interoperability\WEvent;
 use ship\controllers\EventAdder;
+use ship\interoperability\SLanguage as Language;
 use ship\template\TemplateObject;
 use webship\protocols\HtmlTemplateProtocol;
 
@@ -54,7 +54,7 @@ class BasicEvents implements EventAdder {
             throwevent(TemplateObject::_new('event'), TemplateObject::_new('view'), TemplateObject::_new('data'));
 
         HtmlTemplateProtocol::_new('ThrowEventToObjectBinding', self::ENVIRONMENT)->
-            throwevent(Event::OBJECTMODIFY, TemplateObject::_new('object'), TemplateObject::_new('data'));
+            throwevent(WEvent::OBJECTMODIFY, TemplateObject::_new('object'), TemplateObject::_new('data'));
 
         HtmlTemplateProtocol::_new('ThrowEventToObject', self::ENVIRONMENT)->
             throwObjectEvent(TemplateObject::_new('event'), TemplateObject::_new('object'), TemplateObject::_new('scope'), TemplateObject::_new('data'));

@@ -38,12 +38,12 @@ class CloserHtmlView extends StandardButtonHtmlView {
      * @param string|null $img The closer image.
      * @param string|null $id An optional button id.
      */
-    private function __construct(string|array $classes = [], string|null $img = '/tardis/pic/cancel.svg',
+    private function __construct(string|array $classes = [], string|null $img = '/webship/pic/cancel.svg',
                                 ?string $id = null) {
         $classes = is_array($classes) ? $classes : [ $classes ];
         parent::__construct(is_null($id) ? 'closer' : $id, array_merge([ 'closer' ], $classes));
 
-        if (is_null($img)) $img = '/tardis/pic/cancel.svg';
+        if (is_null($img)) $img = '/webship/pic/cancel.svg';
         $this->img($img);
         $this->onlyImg(true);
 
@@ -74,7 +74,7 @@ class CloserHtmlView extends StandardButtonHtmlView {
      * @return CloserHtmlView
      */
     public static function create(?string $id = null, array|string $classes = [],
-                                  string|null $img = '/tardis/pic/cancel.svg') : CloserHtmlView {
+                                  string|null $img = '/webship/pic/cancel.svg') : CloserHtmlView {
         return new CloserHtmlView($classes, $img, $id);
     }
 
@@ -85,7 +85,7 @@ class CloserHtmlView extends StandardButtonHtmlView {
      * @param string|null $id An optional button id.
      * @return CloserHtmlView
      */
-    public static function _new(string|array $classes = [], string|null $img = '/tardis/pic/cancel.svg',
+    public static function _new(string|array $classes = [], string|null $img = '/webship/pic/cancel.svg',
                                 ?string $id = null) : CloserHtmlView {
         return new CloserHtmlView($classes, $img, $id);
     }

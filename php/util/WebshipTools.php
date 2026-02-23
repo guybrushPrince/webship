@@ -2,6 +2,8 @@
 
 namespace webship;
 
+use ship\interoperability\IShippable;
+use ship\interoperability\ShipperRegister;
 use ship\interoperability\ShippingTools;
 use webship\core\HtmlView;
 

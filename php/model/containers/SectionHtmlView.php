@@ -2,7 +2,7 @@
 
 namespace webship\containers;
 
-use Event;
+use webship\interoperability\WEvent;
 use webship\core\HtmlView;
 use webship\protocols\HtmlActionProtocol;
 use webship\WebshipTools;
@@ -69,11 +69,11 @@ class SectionHtmlView extends HtmlView {
         if (!$open) $this->addClass('closed');
 
         if ($openable) {
-            $this->section->protocol(Event::CLICK)->
+            $this->section->protocol(WEvent::CLICK)->
             doIt('ToggleClass', ['view' => $this, 'class' => 'closed'], 'basics');
             if (!$open) {
-                $this->js('(function() { let open = false; $("' . $this->section->idc() . '").on("click", function() { if (!open) $("' . $this->idc() . '").trigger("' . Event::OPEN_LIST . '"); open = true; }); })();');
-            } else $this->js('(function() { let open = true; $("' . $this->section->idc() . '").on("click", function() { if (open) $("' . $this->idc() . '").trigger("' . Event::CLOSE_LIST . '"); open = false; }); })();');
+                $this->js('(function() { let open = false; $("' . $this->section->idc() . '").on("click", function() { if (!open) $("' . $this->idc() . '").trigger("' . WEvent::OPEN_LIST . '"); open = true; }); })();');
+            } else $this->js('(function() { let open = true; $("' . $this->section->idc() . '").on("click", function() { if (open) $("' . $this->idc() . '").trigger("' . WEvent::CLOSE_LIST . '"); open = false; }); })();');
         }
 
         self::addCSS();

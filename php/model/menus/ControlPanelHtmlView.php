@@ -230,7 +230,7 @@ class ControlPanelHtmlView extends HtmlView {
      * @return StandardButtonHtmlView
      */
     public function delete(string $id, string|array $classes = [],
-                           string $img = '/sunstone/pic/delete.svg') : StandardButtonHtmlView {
+                           string $img = '/webship/pic/delete.svg') : StandardButtonHtmlView {
         $but = $this->button($id, $img, $classes);
         $but->addClass('del');
         return $but;

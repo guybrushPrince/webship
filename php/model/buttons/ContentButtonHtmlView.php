@@ -2,7 +2,7 @@
 
 namespace webship\buttons;
 
-use Event;
+use webship\interoperability\WEvent;
 use ship\views\View;
 use webship\containers\ContainerHtmlView;
 use webship\core\HtmlView;
@@ -72,9 +72,9 @@ class ContentButtonHtmlView extends HtmlView {
         $control = ControlPanelHtmlView::create(1, 1, false)->fix();
         $this->content->add($control);
         $closer = $control->addMini((CloserHtmlView::create('close-' . $id))->mini());
-        $closer->protocol(Event::CLICK)->removeClass($this, 'active');
+        $closer->protocol(WEvent::CLICK)->removeClass($this, 'active');
 
-        $overlay->protocol(Event::CLICK)->toggleClass($this, 'active');
+        $overlay->protocol(WEvent::CLICK)->toggleClass($this, 'active');
 
         self::addCSS();
     }
@@ -119,7 +119,7 @@ class ContentButtonHtmlView extends HtmlView {
      * @inheritDoc
      */
     public function generateOpeningTag() : string {
-        $this->button()->protocol(Event::CLICK)->toggleClass($this, 'active');
+        $this->button()->protocol(WEvent::CLICK)->toggleClass($this, 'active');
         return parent::generateOpeningTag() . '<form>';
     }
 

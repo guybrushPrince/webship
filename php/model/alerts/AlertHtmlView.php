@@ -4,12 +4,11 @@ namespace webship\alerts;
 
 use BreakwaterUtil;
 use DatabaseError;
-use Event;
+use webship\interoperability\WEvent;
 use ParsedownExtra;
-use progression\CPTools;
 use ship\interoperability\SLanguage as Language;
+use ship\interoperability\DataType as Type;
 use ship\views\View;
-use Type;
 use webship\buttons\CloserHtmlView;
 use webship\core\HtmlView;
 use webship\menus\ControlPanelHtmlView;
@@ -168,7 +167,7 @@ class AlertHtmlView extends HtmlView {
         if ($screen || $fullView) {
             $v->ref('alert');
             $overlay = $v->add(new HtmlView('overlay'));
-            $overlay->protocol(Event::CLICK)->doIt('Delete', ['view' => $v], 'basics');
+            $overlay->protocol(WEvent::CLICK)->doIt('Delete', ['view' => $v], 'basics');
             $con = $v->add(new HtmlView('a-message'));
             $con->ref('alert-content');
         }
@@ -187,13 +186,13 @@ class AlertHtmlView extends HtmlView {
             $con->ref('alert-view');
             $control = ControlPanelHtmlView::create(1, 1, false)->fix()->plain();
             $con->add($control);
-            $closer = $control->add(CloserHtmlView::create('close-alert-' . CPTools::uuid()));
+            $closer = $control->add(CloserHtmlView::create('close-alert-' . WebshipTools::uuid()));
             if ($property) {
                 $closer->notices([
                     Language::ENGLISH, 'Do not show this hint anymore.',
                     Language::GERMAN, 'Diesen Hinweis nicht mehr anzeigen.'
                 ]);
-                $closer->protocol(Event::CLICK)->doIt('ChangeParameter', [
+                $closer->protocol(WEvent::CLICK)->doIt('ChangeParameter', [
                     'target' => BreakwaterUtil::getUserConfiguration(BreakwaterUtil::getCurrentUser()),
                     'parameter' => $property,
                     'type' => Type::BOOLEAN,
@@ -201,7 +200,7 @@ class AlertHtmlView extends HtmlView {
                     'error' => 'main-app'
                 ], 'texts')->doIt('Delete', ['view' => $v], 'basics');
             } else {
-                $closer->protocol(Event::CLICK)->doIt('Delete', ['view' => $v], 'basics');
+                $closer->protocol(WEvent::CLICK)->doIt('Delete', ['view' => $v], 'basics');
             }
         }
 

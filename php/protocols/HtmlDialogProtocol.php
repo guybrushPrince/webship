@@ -2,7 +2,7 @@
 
 namespace webship\protocols;
 
-use Event;
+use webship\interoperability\WEvent;
 use ship\protocols\DialogProtocol;
 use webship\dialogs\DialogHtmlView;
 
@@ -36,7 +36,7 @@ class HtmlDialogProtocol extends DialogProtocol {
         // Generate code for the actions.
         $code .= implode('', array_map(function (array $p) use ($v) {
             $choice = $v->getChoice($p["number"]);
-            $protocol = new HtmlEventProtocol(Event::CLICK, $choice);
+            $protocol = new HtmlEventProtocol(WEvent::CLICK, $choice);
             $protocol->modify()->delete($v)->append($p["protocol"]);
             return $protocol->generate();
         }, $this->protocol));

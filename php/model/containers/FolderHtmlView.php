@@ -2,14 +2,12 @@
 
 namespace webship\containers;
 
-use CliffSerializable;
 use Closure;
-use Event;
+use webship\interoperability\WEvent;
 use ITextBoxUser;
-use Language;
+use ship\interoperability\SLanguage as Language;
 use ship\interoperability\IShippable;
 use ship\interoperability\ShipperRegister;
-use Tools;
 use webship\core\HtmlView;
 use webship\IFolderGroup;
 use webship\inputs\EditableHtmlView;
@@ -83,7 +81,7 @@ class FolderHtmlView extends StandardHtmlView {
     /**
      * Creates a folder view.
      * @param IFolderGroup[] $folders A list of folders of type IFolderGroup.
-     * @param CliffSerializable[]|null $allItems An optional list of all items/objects in all groups.
+     * @param IShippable[]|null $allItems An optional list of all items/objects in all groups.
      * @param Closure|null $refreshFunction A function (FolderHtmlView) : void to refresh the view.
      * @param Closure|null $addFolderFunction A function (FolderHtmlView, StandardButtonHtmlView) : void to add functionality to an add-folder-button.
      * @param Closure|null $unlistedFunction A function (FolderHtmlView, CliffSerializable[], IFolderGroup[]) : HtmlView to create a view of the unlisted items.
@@ -106,13 +104,13 @@ class FolderHtmlView extends StandardHtmlView {
             $refreshFunction($folder);
         }
 
-        if (!WebshipTools::isEmpty($folders) && $folders[array_key_first($folders)] instanceof CliffSerializable &&
+        if (!WebshipTools::isEmpty($folders) && $folders[array_key_first($folders)] instanceof IShippable &&
             $addFolderFunction) {
             $control = ControlPanelHtmlView::create(1, 1, false);
             $control->fix();
             $folder->add($control);
 
-            $groupAdder = $control->button('add-folder', '/sunstone/pic/add-folder.svg');
+            $groupAdder = $control->button('add-folder', '/webship/pic/add-folder.svg');
             $groupAdder->notice(Language::ENGLISH, 'Create new folder');
             $groupAdder->notice(Language::GERMAN, 'Neuen Ordner erstellen');
             $addFolderFunction($folder, $groupAdder);
@@ -142,9 +140,9 @@ class FolderHtmlView extends StandardHtmlView {
         // Print the items that are non-referred.
         if ($allItems && $unlistedFunction) {
             // Determine ungrouped items
-            $nonReferred = array_filter($allItems, function (CliffSerializable $item) use ($folders) {
+            $nonReferred = array_filter($allItems, function (IShippable $item) use ($folders) {
                 return WebshipTools::isEmpty(array_filter($folders, function (IFolderGroup $group) use ($item) {
-                    return Tools::inArray($group->getItems(), $item);
+                    return WebshipTools::inArray($group->getItems(), $item);
                 }));
             });
             $unlistedFunction($folder, $nonReferred, $folders);
@@ -157,7 +155,7 @@ class FolderHtmlView extends StandardHtmlView {
      * Creates a single folder.
      * @param IFolderGroup $folderGroup The folder.
      * @param IFolderGroup[] $folderGroups All folder groups.
-     * @param CliffSerializable[]|null $allItems All items.
+     * @param IShippable[]|null $allItems All items.
      * @param Closure|null $addFunction A function (CliffSerializable, IFolderGroup, HtmlView, HtmlView, string) : void to add adding-functionality.
      * @param Closure|null $deleteFunction A function (StandardButtonHtmlView, HtmlView) : void to add delete-functionality.
      * @param Closure|null $toggleFunction A function (IFolderGroup, StandardButtonHtmlView, HtmlView) : void to add toggle-functionality.
@@ -184,7 +182,7 @@ class FolderHtmlView extends StandardHtmlView {
             $titleView = $title->add(EditableHtmlView::create());
             $titleView->ref('text', 'value');
             $titleView->texts($folderGroup->getTitle(self::getLanguage()));
-            $titleView->protocol(Event::ONFOCUSOUT)->
+            $titleView->protocol(WEvent::ONFOCUSOUT)->
             doIt('ChangeTextField', [
                 'part' => $folderGroup,
                 'language' => self::getLanguage(),
@@ -201,24 +199,24 @@ class FolderHtmlView extends StandardHtmlView {
             $control->fix();
             $view->add($control);
 
-            if ($addFunction) $adder = $control->button('add-to-folder', '/sunstone/pic/add.svg');
+            if ($addFunction) $adder = $control->button('add-to-folder', '/webship/pic/add.svg');
 
             if (WebshipTools::isEmpty($folderGroup->getItems()) && $deleteFunction) {
                 $deleteButton = $control->delete('delete-group');
                 $deleteFunction($deleteButton, $view);
             }
             if ($toggleFunction) {
-                $toggleButtonMin = $control->button('toggle-group-min', '/sunstone/pic/minimize.svg');
-                $toggleButtonMax = $control->button('toggle-group-max', '/sunstone/pic/maximize.svg');
+                $toggleButtonMin = $control->button('toggle-group-min', '/webship/pic/minimize.svg');
+                $toggleButtonMax = $control->button('toggle-group-max', '/webship/pic/maximize.svg');
                 $toggleFunction($folderGroup, $toggleButtonMin, $view);
                 $toggleFunction($folderGroup, $toggleButtonMax, $view);
             }
             if ($upFunction) {
-                $upButton = $control->button('up-group', '/sunstone/pic/up.svg');
+                $upButton = $control->button('up-group', '/webship/pic/up.svg');
                 $upFunction($folderGroup, $upButton, 'main-folder-list');
             }
             if ($downFunction) {
-                $downButton = $control->button('down-group', '/sunstone/pic/down.svg');
+                $downButton = $control->button('down-group', '/webship/pic/down.svg');
                 $downFunction($folderGroup, $downButton, 'main-folder-list');
             }
         }
@@ -230,24 +228,24 @@ class FolderHtmlView extends StandardHtmlView {
 
         // Items to add
         if ($allItems && $addFunction) {
-            $posItems = array_filter($allItems, function (CliffSerializable $item) use ($folderGroup) {
-                return !Tools::inArray($folderGroup->getItems(), $item);
+            $posItems = array_filter($allItems, function (IShippable $item) use ($folderGroup) {
+                return !WebshipTools::inArray($folderGroup->getItems(), $item);
             });
 
             if (!$folderGroup->isFolded() && !WebshipTools::isEmpty($posItems)) {
                 $menu = new ContextMenuHtmlView();
                 $menu->ref('add-to-folder-group-menu');
-                $menu->each($posItems, function (ContextMenuHtmlView $menu, CliffSerializable $item) use ($folderGroup, $addFunction, $view) {
+                $menu->each($posItems, function (ContextMenuHtmlView $menu, IShippable $item) use ($folderGroup, $addFunction, $view) {
                     $name = $folderGroup->getItemTitle($item, self::getLanguage());
                     $entry = $menu->entry()->texts()->text(self::getLanguage(), $name)->parent();
                     $addFunction($item, $folderGroup, $entry, $view, 'main-survey-list');
                 });
                 $view->add($menu);
                 $view->addClass('has-context-menu');
-                $adder->protocol(Event::CLICK)->
+                $adder->protocol(WEvent::CLICK)->
                 mousePosition($menu)->
                 addClass($menu, 'active');
-                $view->protocol(Event::CLICK_OUTSIDE)->
+                $view->protocol(WEvent::CLICK_OUTSIDE)->
                 removeClass($menu, 'active');
             }
         }

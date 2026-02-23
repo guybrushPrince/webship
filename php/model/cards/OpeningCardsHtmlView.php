@@ -101,7 +101,7 @@ class OpeningCardsHtmlView extends HtmlView {
      * @param string $image An optional image.
      * @return CardHtmlView
      */
-    public function adder(string|array $classes = [], string $image = '/sunstone/pic/add.svg') : CardHtmlView {
+    public function adder(string|array $classes = [], string $image = '/webship/pic/add.svg') : CardHtmlView {
         $classes = is_array($classes) ? $classes : [$classes];
         $classes[] = 'op-card';
         $classes[] = 'op-adder';

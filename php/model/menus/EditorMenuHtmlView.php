@@ -2,7 +2,7 @@
 
 namespace webship\menus;
 
-use Event;
+use webship\interoperability\WEvent;
 use webship\core\HtmlView;
 use webship\WebshipTools;
 
@@ -86,7 +86,7 @@ class EditorMenuHtmlView extends HtmlView {
         $entry = new HtmlView($classes);
         $this->add($entry);
         $entry->texts($texts);
-        $entry->protocol(Event::CLICK)->
+        $entry->protocol(WEvent::CLICK)->
         removeClassSiblings($this, 'active', true)->
         addClass($entry, 'active');
         return $entry;

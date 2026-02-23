@@ -2,7 +2,7 @@
 
 namespace webship\tabs;
 
-use Event;
+use webship\interoperability\WEvent;
 use webship\containers\ContainerHtmlView;
 use webship\WebshipTools;
 
@@ -55,8 +55,8 @@ class TabContainerHtmlView extends ContainerHtmlView {
 
         self::addCSS();
 
-        $this->js('$("' . $this->idc() . '").on("' . Event::NEW_TAB . '", function(event) { createNewTab(event, this, ' . self::TAB_HEADER_DISTANCE . '); });');
-        $this->js('$("' . $this->idc() . '").on("' . Event::CLOSE_TAB . '", function(event) { closeTab(event, this, "' . Event::DELETE . '", ' . self::TAB_HEADER_DISTANCE . '); });');
+        $this->js('$("' . $this->idc() . '").on("' . WEvent::NEW_TAB . '", function(event) { createNewTab(event, this, ' . self::TAB_HEADER_DISTANCE . '); });');
+        $this->js('$("' . $this->idc() . '").on("' . WEvent::CLOSE_TAB . '", function(event) { closeTab(event, this, "' . WEvent::DELETE . '", ' . self::TAB_HEADER_DISTANCE . '); });');
         $this->js('(() => { initTab("' . $this->idc() . '", ' . self::TAB_HEADER_DISTANCE . '); })();');
     }
 
@@ -98,7 +98,7 @@ class TabContainerHtmlView extends ContainerHtmlView {
     public function closingTab(array|string $headers = [], array|string $classes = [],
                                string|null $img = null, string|null $type = null) : TabContainerItemHtmlView {
         $view = $this->tab($headers, $classes, $img, $type);
-        $view->closer()->protocol(Event::CLICK)->event(Event::CLOSE_TAB, $view);
+        $view->closer()->protocol(WEvent::CLICK)->event(WEvent::CLOSE_TAB, $view);
         return $view;
     }
 

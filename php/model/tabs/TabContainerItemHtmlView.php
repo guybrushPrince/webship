@@ -3,7 +3,7 @@
 namespace webship\tabs;
 
 use DatabaseError;
-use Event;
+use webship\interoperability\WEvent;
 use Exception;
 use ship\interoperability\SLanguage as Language;
 use ship\views\TextView;
@@ -47,8 +47,8 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
 
         self::addCSS();
 
-        if (!$knownParent) $this->js('$("' . $this->idc() . '").trigger("' . Event::NEW_TAB . '");');
-        $this->js('$("' . $this->idc() . ' > .tab-header").on("click", function(event) { focusTab(this, "' . Event::CHANGE_TAB . '"); });');
+        if (!$knownParent) $this->js('$("' . $this->idc() . '").trigger("' . WEvent::NEW_TAB . '");');
+        $this->js('$("' . $this->idc() . ' > .tab-header").on("click", function(event) { focusTab(this, "' . WEvent::CHANGE_TAB . '"); });');
     }
 
     /**

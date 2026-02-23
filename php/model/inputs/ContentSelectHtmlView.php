@@ -2,7 +2,7 @@
 
 namespace webship\inputs;
 
-use Event;
+use webship\interoperability\WEvent;
 use Exception;
 use progression\NotImplementedException;
 use progression\ui\Representer;
@@ -212,11 +212,11 @@ class ContentSelectHtmlView extends SelectHtmlView {
         if (is_null($maxSelections)) $maxSelections = 'null';
         if (is_null($default)) $default = 'null';
         $select->ref('con-select');
-        $select->protocol(Event::CLICK, ['sameTarget' => true])->doIt('ToggleClass', [
+        $select->protocol(WEvent::CLICK, ['sameTarget' => true])->doIt('ToggleClass', [
             'view' => $select,
             'class' => 'open'
         ], 'basics');
-        $select->protocol(Event::CLICK_OUTSIDE)->doIt('RemoveClass', [
+        $select->protocol(WEvent::CLICK_OUTSIDE)->doIt('RemoveClass', [
             'view' => $select,
             'class' => 'open'
         ], 'basics')->scrollTop($select->contentOptions);

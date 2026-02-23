@@ -2,7 +2,7 @@
 
 namespace webship\panels;
 
-use Event;
+use webship\interoperability\WEvent;
 use Language;
 use ship\interoperability\IShippable;
 use ship\interoperability\ShipperRegister;
@@ -79,18 +79,18 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
 
         $this->js('$("' . $this->idc() . '-up' . '.move.up").click(function(event) {' .
             '$(event.target).parent().insertBefore($(event.target).parent().prev());' .
-            '$(event.target).trigger("' . Event::MOVEUP . '");' .
+            '$(event.target).trigger("' . WEvent::MOVEUP . '");' .
             '});');
 
         $this->js('$("' . $this->idc() . '-down' . '.move.down").click(function(event) {' .
             '$(event.target).parent().insertAfter($(event.target).parent().next());' .
-            '$(event.target).trigger("' . Event::MOVEDOWN . '");' .
+            '$(event.target).trigger("' . WEvent::MOVEDOWN . '");' .
             '});');
 
         if ($hasDelete) {
             $this->js('$("' . $this->idc() . '-delete' . '.move.delete").click(function(event) {' .
-                '$(event.target).trigger("' . Event::MOVEDELETE . '");' .
-                ($autoDelete ? '$(event.target).parent().trigger("' . Event::DELETE . '").remove();' : '') .
+                '$(event.target).trigger("' . WEvent::MOVEDELETE . '");' .
+                ($autoDelete ? '$(event.target).parent().trigger("' . WEvent::DELETE . '").remove();' : '') .
                 '});');
         }
 
@@ -130,7 +130,7 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
             'top: calc(50% - 15px)'));
         self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move.delete', ':after'],
             'display: flex', 'content: ""',
-            'width: 18px', 'background-image: url(\'' . HtmlActionProtocol::$serverURL . '/sunstone/pic/delete.svg\')',
+            'width: 18px', 'background-image: url(\'' . HtmlActionProtocol::$serverURL . '/webship/pic/delete.svg\')',
             'background-repeat: no-repeat', 'background-origin: padding-box', 'height: 60%'));
         self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move.delete:hover'],
             'background: var(--delete-2-hover-2)'));

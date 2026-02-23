@@ -2,7 +2,7 @@
 
 namespace webship\dialogs;
 
-use Event;
+use webship\interoperability\WEvent;
 use Tools;
 use webship\buttons\StandardButtonHtmlView;
 use webship\containers\ContainerHtmlView;
@@ -87,13 +87,13 @@ class ErrorFileListHtmlView extends StandardButtonHtmlView {
      */
     public static function createIt(string $id, array $information, array|string $classes = []) : ErrorFileListHtmlView {
         $view = new ErrorFileListHtmlView($id, $classes);
-        $view->onlyImg('/sunstone/pic/error.svg');
+        $view->onlyImg('/webship/pic/error.svg');
 
         // The error view.
         $v = ContainerHtmlView::createIt('invisible');
         $view->add($v);
         $v->ref('error');
-        $view->protocol(Event::CLICK)->doIt('ToggleClass', [
+        $view->protocol(WEvent::CLICK)->doIt('ToggleClass', [
             'view' => $v,
             'class' => 'invisible'
         ], 'basics');

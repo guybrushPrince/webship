@@ -2,7 +2,7 @@
 
 namespace webship\trees;
 
-use Event;
+use webship\interoperability\WEvent;
 use webship\core\HtmlView;
 use webship\WebshipTools;
 
@@ -78,7 +78,7 @@ class TreeHtmlView extends HtmlView {
         return '<script>' .
             '$("' . $this->idc() . '").children("li.sub").click((e) => { ' .
             'let p = $(e.currentTarget).parent();' .
-            'if (p.children().length <= 1) p.trigger((p.hasClass("open") ? "' . Event::CLOSE_LIST . '" : "' . Event::OPEN_LIST . '"));' .
+            'if (p.children().length <= 1) p.trigger((p.hasClass("open") ? "' . WEvent::CLOSE_LIST . '" : "' . WEvent::OPEN_LIST . '"));' .
             'p.toggleClass("open");' .
             '});' .
             '$("' . $this->idc() . '").children("script").remove();' .

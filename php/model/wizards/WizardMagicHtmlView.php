@@ -2,7 +2,7 @@
 
 namespace webship\wizards;
 
-use Event;
+use webship\interoperability\WEvent;
 use Language;
 use ship\protocols\Protocol;
 use webship\buttons\ButtonHtmlView;
@@ -45,7 +45,7 @@ class WizardMagicHtmlView extends HtmlView {
         $control = ControlPanelHtmlView::createUnbounded(false)->fix()->reverse();
         $view->add($control);
         $abortButton = $control->addMini(CloserHtmlView::create());
-        $abortButton->protocol(Event::CLICK)->
+        $abortButton->protocol(WEvent::CLICK)->
         doIt('Delete', ['view' => $view], 'basics')->
         append($finishProtocol);
 
@@ -56,12 +56,12 @@ class WizardMagicHtmlView extends HtmlView {
             if ($key !== array_key_first($wizards)) {
                 $wizard->addClass('invisible');
                 $controller->add(new ButtonHtmlView('back-' . $wizard->id(), 'back-' . $wizard->id()))->
-                add(new ImageHtmlView('/sunstone/pic/back.svg'))->parent()->
+                add(new ImageHtmlView('/webship/pic/back.svg'))->parent()->
                 texts()->
                 text(Language::ENGLISH, 'Back')->
                 text(Language::GERMAN, 'Zurück')->
                 parent()->
-                protocol(Event::CLICK)->
+                protocol(WEvent::CLICK)->
                 doIt('ToggleClass', ['view' => $wizard, 'class' => 'invisible'], 'basics')->
                 doIt('ToggleClass', ['view' => 'wizard-' . ($key - 1), 'class' => 'invisible'], 'basics')->
                 append($wizards[$key - 1]->getUpdateProtocol())->
@@ -71,14 +71,14 @@ class WizardMagicHtmlView extends HtmlView {
             $nextButton->texts()->
             text(Language::ENGLISH, $key !== array_key_last($wizards) ? 'Next' : 'Finish')->
             text(Language::GERMAN, $key !== array_key_last($wizards) ? 'Weiter' : 'Abschließen');
-            $nextButton->add(new ImageHtmlView('/sunstone/pic/next.svg'));
+            $nextButton->add(new ImageHtmlView('/webship/pic/next.svg'));
             if ($key !== array_key_last($wizards)) {
-                $nextButton->protocol(Event::CLICK)->
+                $nextButton->protocol(WEvent::CLICK)->
                 doIt('ToggleClass', ['view' => $wizard, 'class' => 'invisible'], 'basics')->
                 doIt('ToggleClass', ['view' => 'wizard-' . ($key + 1), 'class' => 'invisible'], 'basics')->
                 append($wizards[$key + 1]->getUpdateProtocol());
             } else {
-                $nextButton->protocol(Event::CLICK)->
+                $nextButton->protocol(WEvent::CLICK)->
                 doIt('Delete', ['view' => $view], 'basics')->
                 append($finishProtocol);
             }

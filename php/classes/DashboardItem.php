@@ -3,9 +3,8 @@
 namespace webship;
 
 use CObject;
-use webship\DashboardItemPersistentTrait;
 use DatabaseError;
-use Language;
+use ship\interoperability\SLanguage as Language;
 use ship\views\View;
 use User;
 use webship\core\HtmlView;

@@ -2,8 +2,8 @@
 
 namespace webship\controller;
 
-use Language;
 use ship\controllers\ShipController;
+use ship\interoperability\SLanguage as Language;
 use webship\dialogs\ModalHtmlView;
 use webship\help\HelpPageHtmlView;
 

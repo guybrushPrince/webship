@@ -2,7 +2,7 @@
 
 namespace webship\help;
 
-use Event;
+use webship\interoperability\WEvent;
 use ship\interoperability\SLanguage as Language;
 use ship\views\View;
 use webship\buttons\StandardButtonHtmlView;
@@ -47,7 +47,7 @@ class HelpPageHtmlView extends StandardButtonHtmlView {
         $this->img($img);
         $this->onlyImg(true);
 
-        $this->protocol(Event::CLICK)->doIt('OpenHelp', [
+        $this->protocol(WEvent::CLICK)->doIt('OpenHelp', [
             'package' => $package,
             'subpackage' => $subpackage,
             'doc' => $doc,
@@ -118,7 +118,7 @@ class HelpPageHtmlView extends StandardButtonHtmlView {
         ]);
 
         $modal->item(self::createHelpPage($package, $subpackage, $doc, $language));
-        $modal->protocol(Event::ONLOAD)->toggleClass($modal, 'invisible');
+        $modal->protocol(WEvent::ONLOAD)->toggleClass($modal, 'invisible');
         $modal->closer();
         return $modal;
     }

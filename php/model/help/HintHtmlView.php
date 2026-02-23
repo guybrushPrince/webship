@@ -2,7 +2,7 @@
 
 namespace webship\help;
 
-use Event;
+use webship\interoperability\WEvent;
 use webship\core\HtmlView;
 use webship\WebshipTools;
 
@@ -20,7 +20,7 @@ class HintHtmlView extends HtmlView {
         $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['hints'], $classes));
 
-        $this->js('$("' . $this->idc() . '").on("' . Event::SHOW_HINT . '", function(event, el, content, hint) {' .
+        $this->js('$("' . $this->idc() . '").on("' . WEvent::SHOW_HINT . '", function(event, el, content, hint) {' .
             'let c = $(\'' . HintHtmlView::createHint()->generateSafe() . '\');' .
             '$(c).append(content);' .
             '$(c).attr("hint", hint);' .
@@ -30,7 +30,7 @@ class HintHtmlView extends HtmlView {
             '});'
         );
 
-        $this->js('$("' . $this->idc() . '").on("' . Event::HIDE_HINT . '", function(event, hint) {' .
+        $this->js('$("' . $this->idc() . '").on("' . WEvent::HIDE_HINT . '", function(event, hint) {' .
             '$(this).find("[hint=" + hint + "]").remove();' .
             '});'
         );

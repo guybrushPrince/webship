@@ -2,7 +2,7 @@
 
 namespace webship\dialogs;
 
-use Event;
+use webship\interoperability\WEvent;
 use Exception;
 use webship\buttons\AbortHtmlView;
 use webship\buttons\ButtonHtmlView;
@@ -79,7 +79,7 @@ class ModalHtmlView extends HtmlView {
 
         $overlay = $this->add(new ContainerHtmlView('modal-overlay'));
         $overlay->ref('overlay')->
-        protocol(Event::CLICK, ['sameTarget' => true])->
+        protocol(WEvent::CLICK, ['sameTarget' => true])->
         append($this->getCloseAction());
         $overlay->add(new ContainerHtmlView(['modal-container', 'gap10']));
 
@@ -156,7 +156,7 @@ class ModalHtmlView extends HtmlView {
     public function closer(string|array $classes = []) : CloserHtmlView {
         $closer = CloserHtmlView::_new($classes);
         $this->controlPanel->addMini($closer);
-        $closer->protocol(Event::CLICK)->append($this->getCloseAction());
+        $closer->protocol(WEvent::CLICK)->append($this->getCloseAction());
         return $closer;
     }
 
@@ -172,7 +172,7 @@ class ModalHtmlView extends HtmlView {
             no()->parent()->
             yes();
         }
-        $current->throwevent(Event::CLOSE_MODAL, $this)->delete($this);
+        $current->throwevent(WEvent::CLOSE_MODAL, $this)->delete($this);
         return $protocol;
     }
 
@@ -210,8 +210,8 @@ class ModalHtmlView extends HtmlView {
             $this->subviews[0]->subviews[0]->add($this->control);
         }
         $this->control->add($abort);
-        $abort->protocol(Event::CLICK)->
-        throwevent(Event::CLOSE_MODAL, $this)->
+        $abort->protocol(WEvent::CLICK)->
+        throwevent(WEvent::CLOSE_MODAL, $this)->
         delete($this);
         return $abort;
     }
