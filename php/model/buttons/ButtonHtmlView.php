@@ -65,7 +65,7 @@ class ButtonHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('button', '', 'box-sizing: border-box', 'padding: 5px',
+        self::addStyle(WebshipTools::css('button', [], 'box-sizing: border-box', 'padding: 5px',
             'height: 50px', 'width: 100%', 'font-family: Roboto Condensed, Roboto, HelveticaNeue, sans-serif',
             'font-size: 16px'));
     }

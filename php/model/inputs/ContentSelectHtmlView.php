@@ -104,42 +104,42 @@ class ContentSelectHtmlView extends SelectHtmlView {
      */
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.content-select', [], 'position: relative',
-            'min-width: 100px', '--closed-scale: 1', '--closed-translate: none', '--closed-width: initial',
-            '--closed-height: initial', 'padding-right: 13px', '--list-height: 40px', 'padding-left: 5px',
+            'min-width: 100px', '--ws-cs-closed-scale: 1', '--ws-cs-closed-translate: none', '--closed-width: initial',
+            '--closed-height: initial', 'padding-right: 13px', '--ws-cs-list-height: 40px', 'padding-left: 5px',
             'height: 40px', 'min-height: 40px'));
 
         self::addStyle(WebshipTools::css('.content-select.mini', [], 'min-height: 20px', 'height: 20px',
-            'max-height: 20px', '--list-height: 20px'));
+            'max-height: 20px', '--ws-cs-list-height: 20px'));
 
         self::addStyle(WebshipTools::css('.content-select', [' > ', '.c-list'], 'z-index: 10',
             'position: fixed',
             'min-width: 150px', 'max-height: 400px', 'flex-wrap: nowrap', 'overflow-y: auto',
             'width: -moz-fit-content',
-            'width: fit-content', 'background: var(--neutral)', 'align-items: stretch',
-            'border: 2px solid var(--light-system-background)', 'box-sizing: content-box',
+            'width: fit-content', 'background: var(--ws-neutral)', 'align-items: stretch',
+            'border: 2px solid var(--ws-std-light-bg)', 'box-sizing: content-box',
             'overflow-x: hidden'));
 
         self::addStyle(WebshipTools::css('.content-select:not(.' . self::_OPEN . ')', [' > ', '.c-list'],
             'min-width: auto', 'z-index: initial',
-            'width: fit-content', 'height: var(--list-height)', 'min-height: var(--list-height)',
-            'max-height: var(--list-height)', 'padding: 0',
+            'width: fit-content', 'height: var(--ws-cs-list-height)', 'min-height: var(--ws-cs-list-height)',
+            'max-height: var(--ws-cs-list-height)', 'padding: 0',
             'position: initial', 'gap: 5px',
             'border: none', 'align-items: center', 'justify-content: flex-start', 'overflow-y: hidden',
             'flex-wrap: nowrap', 'flex-direction: row'));
 
         self::addStyle(WebshipTools::css('.content-select', [' > ', '.c-list', ' > ', 'div'],
             'position: relative', 'cursor: pointer', 'padding: 4px', /*'min-height: 40px',*/
-            'border-bottom: 1px solid var(--light-system-background)', 'box-sizing: content-box', 'margin: 0'));
+            'border-bottom: 1px solid var(--ws-std-light-bg)', 'box-sizing: content-box', 'margin: 0'));
         self::addStyle(WebshipTools::css('.content-select', [' > ', '.c-list', ' > ', 'div:last-child'],
             'border-bottom: none'));
 
         self::addStyle(WebshipTools::css('.content-select', [' > ', '.c-list', ' > ', 'div.' . self::_SELECTED],
-            'background: var(--login-panel)'));
+            'background: var(--ws-app)'));
 
         self::addStyle(WebshipTools::css('.content-select', [' > ', '.c-list', ' > ', 'div:after'],
             'content: ""', 'position: absolute', 'width: 100%', 'height: 100%', 'left: 0', 'top: 0'));
         self::addStyle(WebshipTools::css('.content-select', [' > ', '.c-list', ' > ', 'div:hover'],
-            'background: var(--light-system-background)'));
+            'background: var(--ws-std-light-bg)'));
         self::addStyle(WebshipTools::css('.content-select', [' > ', '.c-list', ' > ', 'div.def', ' > ', '*'],
             'min-height: 32px'));
         self::addStyle(WebshipTools::css('.content-select:not(.' . self::_OPEN . ')',
@@ -149,7 +149,7 @@ class ContentSelectHtmlView extends SelectHtmlView {
             'div:before'],
             'content: ""', 'position: absolute', 'width: 5px', 'height: 100%', 'left: 0', 'top: 0'));
         self::addStyle(WebshipTools::css('.content-select.' . self::_OPEN, [' > ', '.c-list', ' > ',
-            'div.' . self::_SELECTED . ':before'],'background: var(--login-border)'));
+            'div.' . self::_SELECTED . ':before'],'background: var(--ws-app-brd)'));
 
         self::addStyle(WebshipTools::css('.content-select:not(.' . self::_OPEN . ')', [' > ', '.c-list', ' > ',
             'div:not(.' . self::_SELECTED . ')'],
@@ -158,8 +158,8 @@ class ContentSelectHtmlView extends SelectHtmlView {
             'div.' . self::_SELECTED],
             'background-color: inherit', 'border: none', 'padding: 0', 'flex-wrap: nowrap'));
         self::addStyle(WebshipTools::css('.content-select:not(.' . self::_OPEN . ')', [' > ', '.c-list', ' > ',
-            'div.' . self::_SELECTED, ' > ', '*'],'scale: var(--closed-scale)',
-            'margin: var(--closed-translate)'
+            'div.' . self::_SELECTED, ' > ', '*'],'scale: var(--ws-cs-closed-scale)',
+            'margin: var(--ws-cs-closed-translate)'
         ));
         self::addStyle(WebshipTools::css('.content-select:not(.' . self::_OPEN . ')',
             [' > ', '.c-list', ' > ', 'div.def.' . self::_SELECTED], 'width: 100%', 'height: 100%',
@@ -168,9 +168,9 @@ class ContentSelectHtmlView extends SelectHtmlView {
         self::addStyle(WebshipTools::css('.content-select', [' > ', '.overlay'],
             'position: absolute', 'width: 100%', 'height: 100%', 'left: 0', 'top: 0',
             'cursor: pointer', 'display: none',
-            'box-sizing: border-box', 'border: 1px solid var(--border-3)', 'border-radius: 2px'));
+            'box-sizing: border-box', 'border: 1px solid var(--ws-std-brd-gray)', 'border-radius: 2px'));
         self::addStyle(WebshipTools::css('.content-select.mini', [' > ', '.overlay'],
-            'border-color: var(--font-info)', 'border-radius: 5px'));
+            'border-color: var(--ws-font-info)', 'border-radius: 5px'));
         self::addStyle(WebshipTools::css('.content-select:not(' . self::_OPEN . ')', [' > ', '.overlay'],
             'display: initial'));
         self::addStyle(WebshipTools::css('.content-select', [' > ', '.overlay:after'], 'position: absolute',

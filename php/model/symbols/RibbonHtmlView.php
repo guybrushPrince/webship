@@ -46,10 +46,10 @@ class RibbonHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('.ribbon', [], '--dark-ribbon-color: var(--font-info)',
-            '--font-color: var(--font-info)', '--background-color: var(--border-info)'));
-        self::addStyle(WebshipTools::css('.ribbon', ['.error'], '--dark-ribbon-color: var(--error-font)',
-            '--font-color: var(--error-font)', '--background-color: var(--error-border)'));
+        self::addStyle(WebshipTools::css('.ribbon', [], '--dark-ribbon-color: var(--ws-font-info)',
+            '--font-color: var(--ws-font-info)', '--background-color: var(--ws-border-info)'));
+        self::addStyle(WebshipTools::css('.ribbon', ['.error'], '--dark-ribbon-color: var(--ws-font-error)',
+            '--font-color: var(--ws-font-error)', '--background-color: var(--ws-border-error)'));
 
         /* common */
         self::addStyle(WebshipTools::css('.ribbon', [], 'width: 150px', 'height: 150px',

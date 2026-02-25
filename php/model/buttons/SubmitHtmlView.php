@@ -55,9 +55,9 @@ class SubmitHtmlView extends StandardButtonHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('button.std-button.submit', [], 'background: var(--button-submit)'));
+        self::addStyle(WebshipTools::css('button.std-button.submit', [], 'background: var(--ws-button-submit)'));
         self::addStyle(WebshipTools::css('button.std-button.submit', [':hover'],
-            'background: var(--dark-system-background)'));
+            'background: var(--ws-button-submit-hvr)'));
     }
 
     /**

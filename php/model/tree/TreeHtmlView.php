@@ -35,7 +35,7 @@ class TreeHtmlView extends HtmlView {
             'justify-content: flex-start'));
         self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li'], 'min-height: 20px', 'list-style-type: none', '--indent: -40px'));
         self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li:not(:last-child)'],
-            'border-bottom: 1px solid var(--system-background-hover)'));
+            'border-bottom: 1px solid var(--ws-std-bg-hvr)'));
         self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li.entry'], 'margin-left: var(--indent)'));
         self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li.sub'], 'margin-left: var(--indent)', 'cursor: pointer'));
         self::addStyle(WebshipTools::css('ul.tree:not(.open)', [' > ', 'li.sub'],
@@ -50,16 +50,16 @@ class TreeHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li.selectable'], 'transition: 0.5s',
             'cursor: pointer'));
         self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li.selectable:hover'],
-            'background: var(--system-background-hover)'));
+            'background: var(--ws-std-bg-hvr)'));
 
         self::addStyle(WebshipTools::css('ul.tree', [' ', '.leaf-info'], 'display: flex', 'flex-direction: row',
             'flex-wrap: nowrap', 'min-height: 20px', 'align-items: center'));
         self::addStyle(WebshipTools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow'], 'display: flex',
             'flex-direction: row', 'width: 15px', 'min-width: 15px', 'height: 15px', 'border-radius: 50%',
-            'background: var(--system-background)', 'justify-content: center', 'align-items: center',
+            'background: var(--ws-std-bg)', 'justify-content: center', 'align-items: center',
             'margin-left: 10px', 'transition: 0.5s', 'cursor: pointer'));
         self::addStyle(WebshipTools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow:hover'],
-            'background: var(--dark-system-background)'));
+            'background: var(--ws-std-dark-bg)'));
         self::addStyle(WebshipTools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow', ' > ', 'img'],
             'width: 10px', 'height: 10px'));
     }

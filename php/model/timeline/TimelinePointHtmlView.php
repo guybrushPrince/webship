@@ -25,7 +25,7 @@ class TimelinePointHtmlView extends HtmlView{
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.point', [], 'display: flex', 'flex-direction: row',
             'flex-wrap: nowrap', 'width: 100%', '--circle-radius: 15px', '--info-margin: 5%', 'align-items: center',
-            'position: relative', '--info-background: var(--neutral)'));
+            'position: relative', '--info-background: var(--ws-neutral)'));
         self::addStyle(WebshipTools::css('.point', [' > ', '.v-line'], 'width: var(--thickness)',
             'box-sizing: border-box', 'position: absolute', 'border-right: var(--thickness) solid var(--line-color)',
             'height: calc(50% - var(--circle-radius))',

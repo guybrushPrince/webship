@@ -57,20 +57,20 @@ class StandardButtonHtmlView extends ButtonHtmlView {
      */
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('button.std-button', [], 'display: flex', 'flex-direction: row',
-            '--common-width: 175px', '--common-height: 50px', '--bottom-distance: 1rem',
-            '--common-margin: .5rem 0 var(--bottom-distance) 0',
+            '--ws-common-width: 175px', '--ws-common-height: 50px', '--ws-bottom-distance: 1rem',
+            '--ws-common-margin: .5rem 0 var(--ws-bottom-distance) 0',
             'align-items: center', 'justify-content: center',
-            'width: var(--common-width)', 'min-height: var(--common-height)', 'cursor: pointer',
-            'border: 1px solid var(--dark-system-background)', 'background: var(--card-background)',
-            'color: var(--main-font)', 'font-size: 16px', 'text-align: center',
+            'width: var(--ws-common-width)', 'min-height: var(--ws-common-height)', 'cursor: pointer',
+            'border: 1px solid var(--ws-std-dark-bg)', 'background: var(--ws-button-bg)',
+            'color: var(--ws-main-font)', 'font-size: 16px', 'text-align: center',
             'font-family: Roboto Condensed, Roboto, sans-serif', 'position: relative',
-            'margin: var(--common-margin)',
+            'margin: var(--ws-common-margin)',
             '-webkit-transition: -webkit-box-shadow .25s', 'transition: box-shadow .25s',
-            '-webkit-box-shadow: var(--shadow-flow-1)', 'box-shadow: var(--shadow-flow-1)',
+            '-webkit-box-shadow: var(--ws-haptic-shadow)', 'box-shadow: var(--ws-haptic-shadow)',
             'transition: background 0.5s', 'border-radius: 5px', 'box-sizing: border-box', 'gap: 10px',
-            '--hover: var(--dark-system-background)'));
+            '--ws-hover: var(--ws-std-dark-bg)'));
         self::addStyle(WebshipTools::css('button.std-button', [':hover'],
-            'background: var(--hover)'));
+            'background: var(--ws-hover)'));
         self::addStyle(WebshipTools::css('button.std-button', [' > ', 'img'], 'height: 100%'));
 
         self::addStyle(WebshipTools::css('button.std-button.plain', [], 'background: none',
@@ -92,10 +92,10 @@ class StandardButtonHtmlView extends ButtonHtmlView {
 
         self::addStyle(WebshipTools::css('button.std-button.only-img', [], 'width: 30px', 'height: 30px',
             'padding: 5px', 'margin: 0', 'min-height: 30px', 'max-height: 30px', 'min-width: 30px', 'max-width: 30px'));
-        self::addStyle(WebshipTools::css('button.std-button.long.only-img', [], 'width: var(--common-height)',
-            'height: var(--common-height)', 'padding: 5px', 'margin: var(--common-margin)',
-            'min-height: var(--common-height)', 'max-height: var(--common-height)', 'min-width: var(--common-height)',
-            'max-width: var(--common-height)'));
+        self::addStyle(WebshipTools::css('button.std-button.long.only-img', [], 'width: var(--ws-common-height)',
+            'height: var(--ws-common-height)', 'padding: 5px', 'margin: var(--ws-common-margin)',
+            'min-height: var(--ws-common-height)', 'max-height: var(--ws-common-height)', 'min-width: var(--ws-common-height)',
+            'max-width: var(--ws-common-height)'));
         self::addStyle(WebshipTools::css('button.std-button:disabled', [], 'opacity: 0.25', 'cursor: not-allowed'));
 
         self::addStyle(WebshipTools::css('button.std-button.list-b', [], 'margin: 0',

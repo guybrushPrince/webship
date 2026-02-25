@@ -55,7 +55,7 @@ class CodeEditorHtmlView extends TextHtmlView {
         self::addStyle(WebshipTools::css('.code-editor', [' > ', 'textarea'], 'width: 100%',
             'font-family: Consolas, "Courier New", monospace', 'font-weight: normal', 'font-size: 14px',
             'font-feature-settings: "liga" 0, "calt" 0', 'line-height: 19px', 'letter-spacing: 0px', 'height: 190px',
-            'border: none', 'margin: none', 'background: var(--text-editor-background)', 'padding: 5px 5px',
+            'border: none', 'margin: none', 'background: var(--ws-code-editor-bg)', 'padding: 5px 5px',
             'box-sizing: content-box'));
 
         self::addStyle(WebshipTools::css('.code-editor', [' > ', 'textarea.text-input.resizable'],

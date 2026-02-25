@@ -84,20 +84,20 @@ class ContentButtonHtmlView extends HtmlView {
      */
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.content-button', '', 'position: relative',
-            '--hover: var(--dark-system-background)', '--bottom-distance: 1rem'));
+            '--ws-hover: var(--ws-std-dark-bg)', '--ws-bottom-distance: 1rem'));
         self::addStyle(WebshipTools::css('.content-button', [' > ', 'form'], 'padding: 0', 'margin: 0',
             'display: inherit', 'width: inherit', 'height: inherit', 'box-sizing: border-box'));
         self::addStyle(WebshipTools::css('.content-button', [' > ', 'form', ' > ', '.overlay'],
             'width: 100%', 'height: 100%', 'position: absolute', 'top: 0', 'left: 0', 'cursor: pointer',
             'z-index: 1'));
         self::addStyle(WebshipTools::css('.content-button', [' > ', 'form', ' > ', '.overlay:hover', ' + ', 'button'],
-            'background: var(--hover)'));
+            'background: var(--ws-hover)'));
         self::addStyle(WebshipTools::css('.content-button.active', [' > ', 'form', ' > ', '.overlay'],
             'display: none'));
         self::addStyle(WebshipTools::css('.content-button', [' > ', 'form', ' > ', '.content'], 'display: none',
-            'width: 100%', 'position: absolute', 'background: var(--light-system-background)',
-            'border: 1px solid var(--dark-system-background)', 'border-radius: 3px', 'padding: 5px 25px 5px 5px;',
-            '-webkit-box-shadow: var(--shadow-flow-1)', 'box-shadow: var(--shadow-flow-1)',
+            'width: 100%', 'position: absolute', 'background: var(--ws-std-light-bg)',
+            'border: 1px solid var(--ws-std-dark-bg)', 'border-radius: 3px', 'padding: 5px 25px 5px 5px;',
+            '-webkit-box-shadow: var(--ws-haptic-shadow)', 'box-shadow: var(--ws-haptic-shadow)',
             'min-width: 170px', 'z-index: 100'));
         self::addStyle(WebshipTools::css('.content-button.active', [' > ', 'form', ' > ', '.content'],
             'display: flex'));

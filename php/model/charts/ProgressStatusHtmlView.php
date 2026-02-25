@@ -43,26 +43,26 @@ class ProgressStatusHtmlView extends HtmlView {
         $classes[] = 'state-bar';
         parent::__construct($classes);
         self::addCSS();
-        $this->localStyle('--nr-states: ' . count($states));
-        $this->localStyle('--state-size: 10px');
-        $this->localStyle('--border-size: 1px');
+        $this->localStyle('--ws-nr-states: ' . count($states));
+        $this->localStyle('--ws-state-size: 10px');
+        $this->localStyle('--ws-border-size: 1px');
     }
 
     /**
      * @inheritDoc
      */
     public static function addCSS(): void {
-        self::addStyle(WebshipTools::css('.state-bar', [], 'display: grid', 'width: calc(var(--nr-states) * var(--state-size) + 2 * var(--border-size))',
-            'height: calc(var(--state-size)+2*var(--border-size))',
-            '--cell-gap: 1px', 'grid-template-columns: repeat(var(--nr-states), 1fr)', 'grid-template-rows: 1fr',
-            'column-gap: var(--cell-gap)', 'row-gap: var(--cell-gap)',
-            '--background: var(--neutral)',
-            'background: var(--system-background)',
-            'border: var(--border-size) solid var(--system-background)'));
-        self::addStyle(WebshipTools::css('.state-bar', [' > ', 'div'], 'background: var(--background)',
+        self::addStyle(WebshipTools::css('.state-bar', [], 'display: grid', 'width: calc(var(--ws-nr-states) * var(--ws-state-size) + 2 * var(--ws-border-size))',
+            'height: calc(var(--ws-state-size)+2*var(--ws-border-size))',
+            '--ws-pg-cell-gap: 1px', 'grid-template-columns: repeat(var(--ws-nr-states), 1fr)', 'grid-template-rows: 1fr',
+            'column-gap: var(--ws-pg-cell-gap)', 'row-gap: var(--ws-pg-cell-gap)',
+            '--ws-pg-background: var(--ws-neutral)',
+            'background: var(--ws-std-bg)',
+            'border: var(--ws-border-size) solid var(--ws-std-bg)'));
+        self::addStyle(WebshipTools::css('.state-bar', [' > ', 'div'], 'background: var(--ws-pg-background)',
             'aspect-ratio: 1'));
         self::addStyle(WebshipTools::css('.state-bar', [' > ', 'div.undone'],
-            'background: var(--system-background)'));
+            'background: var(--ws-std-bg)'));
     }
 
     /**
@@ -94,7 +94,7 @@ class ProgressStatusHtmlView extends HtmlView {
             }
         }
         if (!is_null($backgroundColor)) {
-            $view->localStyle('--background: ' . $backgroundColor);
+            $view->localStyle('--ws-pg-background: ' . $backgroundColor);
         }
 
         return $view;

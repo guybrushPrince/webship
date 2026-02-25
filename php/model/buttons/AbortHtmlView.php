@@ -44,9 +44,9 @@ class AbortHtmlView extends StandardButtonHtmlView {
      */
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('button.std-button.reset', '',
-            'background: var(--button-abort)'));
+            'background: var(--ws-button-abort)', 'color: var(--ws-button-abort-font)'));
         self::addStyle(WebshipTools::css('button.std-button.reset', ':hover',
-            'background: var(--dark-system-background)'));
+            'background: var(--ws-button-abort-hvr)'));
     }
 
     /**

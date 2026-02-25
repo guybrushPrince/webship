@@ -72,15 +72,15 @@ class LabelledContentSelectHtmlView extends ContentSelectHtmlView {
     public static function addCSS() : void {
         LabelledSelectHtmlView::addCSS();
         self::addStyle(WebshipTools::css('.clselect', [], 'position: relative', 'width: fit-content',
-            'box-sizing: border-box', 'width: -moz-fit-content', '--height: 40px', '--buffer: 10px',
-            'height: calc(var(--height) + var(--buffer))',
+            'box-sizing: border-box', 'width: -moz-fit-content', '--ws-lcs-height: 40px', '--ws-lcs-buffer: 10px',
+            'height: calc(var(--ws-lcs-height) + var(--ws-lcs-buffer))',
             'display: flex', 'flex-direction: row-reverse', 'align-items: flex-end', 'flex-wrap: nowrap'));
-        self::addStyle(WebshipTools::css('.clselect.ll', [], '--buffer: 0'));
+        self::addStyle(WebshipTools::css('.clselect.ll', [], '--ws-lcs-buffer: 0'));
         self::addStyle(WebshipTools::css('.clselect.ll', [' > ', '.content-select + label'], 'display: none'));
 
         self::addStyle(WebshipTools::css('.clselect', [' > ', '.content-select + label'],
-            'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--dark-system-background)',
-            'bottom: calc(100% - var(--buffer))', 'font-size: 10px'));
+            'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--ws-std-dark-bg)',
+            'bottom: calc(100% - var(--ws-lcs-buffer))', 'font-size: 10px'));
     }
 
     /**

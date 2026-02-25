@@ -58,23 +58,23 @@ class CardHtmlView extends HtmlView {
      */
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.card', [], 'position: relative', 'margin: .5rem 0 1rem 0',
-            'background-color: var(--neutral)', '-webkit-transition: -webkit-box-shadow .25s',
+            'background-color: var(--ws-card-bg)', '-webkit-transition: -webkit-box-shadow .25s',
             'transition: box-shadow .25s', 'border-radius: 2px',
-            '-webkit-box-shadow: var(--shadow-flow-1)',
-            'box-shadow: var(--shadow-flow-1)'));
+            '-webkit-box-shadow: var(--ws-haptic-shadow)',
+            'box-shadow: var(--ws-haptic-shadow)'));
         self::addStyle(WebshipTools::css('.card', [':hover'],
-            '-webkit-box-shadow: var(--shadow-flow-1-hover)',
-            'box-shadow: var(--shadow-flow-1-hover)'));
+            '-webkit-box-shadow: var(--ws-haptic-fc-shadow)',
+            'box-shadow: var(--ws-haptic-fc-shadow)'));
 
         self::addStyle(WebshipTools::css('.card.disabled', '', 'opacity: 0.5'));
         self::addStyle(WebshipTools::css('.card.disabled', [':hover'],
-            '-webkit-box-shadow: var(--shadow-flow-1)',
-            'box-shadow: var(--shadow-flow-1)'));
+            '-webkit-box-shadow: var(--ws-haptic-shadow)',
+            'box-shadow: var(--ws-haptic-shadow)'));
 
-        self::addStyle(WebshipTools::css('.card', [' > ', '.title'], 'color: var(--main-font)',
+        self::addStyle(WebshipTools::css('.card', [' > ', '.title'], 'color: var(--ws-main-font)',
             'width: 100%', 'max-width: 100%', 'padding: 24px', 'font-size: 24px',
-            'font-weight: 300', 'box-sizing: border-box', 'background: var(--card-title-background)',
-            'border-bottom: solid 1px var(--card-title-border)'));
+            'font-weight: 300', 'box-sizing: border-box', 'background: var(--ws-card-title-bg)',
+            'border-bottom: solid 1px var(--ws-card-title-brd)'));
         self::addStyle(WebshipTools::css('.card', [' > ', '.content'], 'padding: 5px'));
 
         self::addStyle(WebshipTools::css('.card.minimal', [' > ', '.title'], 'padding: 3px', 'font-size: 14px',

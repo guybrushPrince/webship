@@ -76,7 +76,7 @@ class SearchHtmlView extends ContainerHtmlView {
             $this->searchButton->notices($notes);
         }
 
-        $this->localStyle('--text: \'' . [
+        $this->localStyle('--ws-search-text \'' . [
                 Language::ENGLISH => 'Search',
                 Language::GERMAN  => 'Suche'
             ][self::getLanguage()] . ':\'');
@@ -91,26 +91,26 @@ class SearchHtmlView extends ContainerHtmlView {
         self::addStyle(WebshipTools::css('.search', [' > ', 'form', ' > ', '.container'], 'padding-bottom: 30px',
             'padding-top: 10px'));
         self::addStyle(WebshipTools::css('.search', [' > ', 'form', ' > ', '.container:before'],
-            'content: var(--text)', 'padding-right: 20px', 'text-transform: uppercase', 'letter-spacing: 3px',
-            'color: var(--font-light)'));
+            'content: var(--ws-search-text)', 'padding-right: 20px', 'text-transform: uppercase', 'letter-spacing: 3px',
+            'color: var(--ws-font-dgray)'));
 
         self::addStyle(WebshipTools::css('.search', [' ', 'input'], 'width: 75%',
-            'border-radius: 5px 0 0 5px', 'border: 1px solid var(--system-background)', 'transition: 0.5s background'));
+            'border-radius: 5px 0 0 5px', 'border: 1px solid var(--ws-std-bg)', 'transition: 0.5s background'));
         self::addStyle(WebshipTools::css('.search', [' ', 'input:hover'],
-            'border: 1px solid var(--border-5)'));
+            'border: 1px solid var(--ws-std-brd-gray)'));
         self::addStyle(WebshipTools::css('.search', [' ', 'input:focus'],
-            'border: 1px solid var(--border-5)', 'border-radius: 5px 0 0 5px', 'outline: none'));
+            'border: 1px solid var(--ws-std-brd-gray)', 'border-radius: 5px 0 0 5px', 'outline: none'));
         self::addStyle(WebshipTools::css('.search', [' ', 'input:hover', ' + ', 'button'],
-            'background: var(--dark-system-background)'));
+            'background: var(--ws-std-dark-bg)'));
 
         self::addStyle(WebshipTools::css('.search', [' ', 'button.std-button.submit'],'width: 50px',
-            'height: 50px', 'background: var(--system-background)', 'border-radius: 0 5px 5px 0',
+            'height: 50px', 'background: var(--ws-std-bg)', 'border-radius: 0 5px 5px 0',
             'transition: 0.5s background', 'border: none', 'cursor: pointer', 'margin: 0', 'box-shadow: none',
             '-webkit-box-shadow: none'));
         self::addStyle(WebshipTools::css('.search', [' ', 'button.std-button.submit', ' ', 'img'],
             'box-sizing: border-box', 'width: 100%', 'padding: 5px'));
         self::addStyle(WebshipTools::css('.search', [' ', 'button.std-button.submit:hover'],
-            'background: var(--dark-system-background)'));
+            'background: var(--ws-std-dark-bg)'));
     }
 
     /**

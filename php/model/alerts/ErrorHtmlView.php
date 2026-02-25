@@ -49,11 +49,11 @@ class ErrorHtmlView extends AlertHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('.alert.error', [], '--alert-border: var(--error-border)',
-            '--alert-font: var(--error-font)', '--alert-background: var(--error-background)',
-            '--alert-img-filter: brightness(0) saturate(100%) invert(36%) sepia(6%) saturate(4774%) hue-rotate(314deg) brightness(98%) contrast(99%)',
-            '--alert-img-filter-hover: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(241deg) brightness(110%) contrast(106%)',
-            '--alert-c-border: var(--error-font)'));
+        self::addStyle(WebshipTools::css('.alert.error', [], '--ws-alert-border: var(--ws-border-error)',
+            '--ws-alert-font: var(--ws-font-error)', '--ws-alert-background: var(--ws-background-error)',
+            '--ws-alert-img-filter: brightness(0) saturate(100%) invert(36%) sepia(6%) saturate(4774%) hue-rotate(314deg) brightness(98%) contrast(99%)',
+            '--ws-alert-img-filter-hover: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(241deg) brightness(110%) contrast(106%)',
+            '--ws-alert-c-border: var(--ws-font-error)'));
     }
 
     /**

@@ -60,15 +60,15 @@ class PanelHtmlView extends HtmlView {
             'box-sizing: border-box', 'flex-direction: column'));
 
         self::addStyle(WebshipTools::css('.panel', ['.border'],
-            'border: solid 1px var(--system-background)'));
+            'border: solid 1px var(--ws-std-bg)'));
         self::addStyle(WebshipTools::css('.panel', ['.border'],
-            'border: solid 1px var(--system-background)'));
+            'border: solid 1px var(--ws-std-bg)'));
         self::addStyle(WebshipTools::css('.panel', ['.sep-children'],
-            'gap: 1px', 'background: var(--system-background)'));
+            'gap: 1px', 'background: var(--ws-std-bg)'));
         self::addStyle(WebshipTools::css('.panel', ['.sep-children.light'],
-            'background: var(--ultra-light-system-background)'));
+            'background: var(--ws-std-ulight-bg)'));
         self::addStyle(WebshipTools::css('.panel', ['.sep-children', ' > ', '.panel-item'],
-            'background: var(--neutral)'));
+            'background: var(--ws-neutral)'));
 
         self::addStyle(WebshipTools::css('.panel', ['.gap'], 'gap: 5px'));
         self::addStyle(WebshipTools::css('.panel', ['.gap5'], 'gap: 5px'));
@@ -91,7 +91,7 @@ class PanelHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.panel.ac', [' > ', '.panel-item:nth-child(even)'],
             'background: var(--fine-system-background)'));
         self::addStyle(WebshipTools::css('.panel.ac', [' > ', '.panel-item:nth-child(odd)'],
-            'background: var(--neutral)'));
+            'background: var(--ws-neutral)'));
     }
 
     /**

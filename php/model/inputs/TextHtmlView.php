@@ -82,7 +82,7 @@ class TextHtmlView extends HtmlView {
         $this->rows = $rows;
         $this->max = $max;
 
-        $this->localStyle('--rows: ' . $rows);
+        $this->localStyle('--ws-ta-rows: ' . $rows);
 
         if ($resizable) $this->protocol(WEvent::INPUT)->reheight($this);
 
@@ -94,7 +94,7 @@ class TextHtmlView extends HtmlView {
      */
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('textarea', '', 'box-sizing: border-box', 'padding: 5px',
-            'height: calc(var(--rows) * 50px)', 'width: 100%',
+            'height: calc(var(--ws-ta-rows) * 50px)', 'width: 100%',
             'font-family: Roboto Condensed, Roboto, HelveticaNeue, sans-serif',
             'font-size: 16px'));
 

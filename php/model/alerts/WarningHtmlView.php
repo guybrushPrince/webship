@@ -49,11 +49,11 @@ class WarningHtmlView extends AlertHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('.alert.warning', [], '--alert-border: var(--border-warning)',
-            '--alert-font: var(--font-warning)', '--alert-background: var(--background-warning)',
-            '--alert-img-filter: brightness(0) saturate(100%) invert(43%) sepia(26%) saturate(738%) hue-rotate(359deg) brightness(96%) contrast(94%)',
-            '--alert-img-filter-hover: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(241deg) brightness(110%) contrast(106%)',
-            '--alert-c-border: var(--font-warning)'));
+        self::addStyle(WebshipTools::css('.alert.warning', [], '--ws-alert-border: var(--ws-border-warning)',
+            '--ws-alert-font: var(--ws-font-warning)', '--ws-alert-background: var(--ws-background-warning)',
+            '--ws-alert-img-filter: brightness(0) saturate(100%) invert(43%) sepia(26%) saturate(738%) hue-rotate(359deg) brightness(96%) contrast(94%)',
+            '--ws-alert-img-filter-hover: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(241deg) brightness(110%) contrast(106%)',
+            '--ws-alert-c-border: var(--ws-font-warning)'));
     }
 
     /**

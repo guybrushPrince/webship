@@ -45,7 +45,7 @@ class SectionLikeButtonHtmlView extends ButtonHtmlView {
         $classes[] = 'sect-but';
         parent::__construct($id, $type, $classes);
 
-        if ($img) $this->localStyle('--after-image: url("' . HtmlActionProtocol::$serverURL . $img . '")');
+        if ($img) $this->localStyle('--ws-after-image: url("' . HtmlActionProtocol::$serverURL . $img . '")');
 
         self::addCSS();
     }
@@ -61,7 +61,7 @@ class SectionLikeButtonHtmlView extends ButtonHtmlView {
         self::addStyle(WebshipTools::css('button.sect-but:last-child', [],'padding: 0'));
         self::addStyle(WebshipTools::css('button.sect-but', [':after'], 'content: ""',
             'margin-left: 5px', 'background-repeat: no-repeat', 'width: 15px', 'height: 15px', 'background-size: cover',
-            'background-image: var(--after-image)',
+            'background-image: var(--ws-after-image)',
             'box-sizing: border-box', 'display: inline-block', 'opacity: 0.25', 'transition: opacity 0.5s'));
         self::addStyle(WebshipTools::css('button.sect-but', [':hover', ':after'], 'opacity: 1'));
     }

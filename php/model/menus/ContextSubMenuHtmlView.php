@@ -36,14 +36,14 @@ class ContextSubMenuHtmlView extends SubMenuHtmlView {
             'content: ""', 'padding-left: 5px'));
         self::addStyle(WebshipTools::css('nav.menu.context', [' ', 'li.sub-menu-entry', ' > ', 'ul'],
             'display: none', 'list-style-type: none', 'margin: 0', 'background: var(--fine-system-background)',
-            'border: 1px solid var(--system-background)', 'padding: 0'));
+            'border: 1px solid var(--ws-std-bg)', 'padding: 0'));
         self::addStyle(WebshipTools::css('nav.menu.context', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li'],
             'width: fit-content',
             'min-height: 30px', 'height: auto', 'padding: 5px 20px', 'box-sizing: border-box', 'position: relative',
             'flex-basis: 100%', 'width: -moz-fit-content'));
         self::addStyle(WebshipTools::css('nav.menu.context', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li',
             ':hover'],
-            'background: var(--system-background)'));
+            'background: var(--ws-std-bg)'));
     }
 
     /**

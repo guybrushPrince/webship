@@ -45,7 +45,7 @@ class DropDownEntryHtmlView extends HtmlView {
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.drop-down-entry', [], 'display: flex', 'flex-wrap: wrap',
             'cursor: pointer', 'font-size: 15px', 'font-weight: normal', 'align-items: center'));
-        self::addStyle(WebshipTools::css('.drop-down-entry', [':hover'], 'background: var(--main-menu)'));
+        self::addStyle(WebshipTools::css('.drop-down-entry', [':hover'], 'background: var(--ws-main-menu)'));
         self::addStyle(WebshipTools::css('.drop-down-entry', [':hover', ' > ', ' ul.sub-menu-entry'],
             'display: flex', 'flex-wrap: wrap', 'position: absolute', 'left: 0', 'top: 35px'));
     }

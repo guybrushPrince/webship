@@ -23,18 +23,18 @@ class DynamicSplitHtmlView extends ContainerHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('.splitting', [], '--left-w: 50%', '--right-w: 50%',
-            '--right-w-h: var(--right-w)', 'position: relative'));
-        self::addStyle(WebshipTools::css('.splitting', [' > ', '.left'], 'width: var(--left-w)',
+        self::addStyle(WebshipTools::css('.splitting', [], '--ws-ds-left-w: 50%', '--ws-ds-right-w: 50%',
+            '--ws-ds-right-w-h: var(--ws-ds-right-w)', 'position: relative'));
+        self::addStyle(WebshipTools::css('.splitting', [' > ', '.left'], 'width: var(--ws-ds-left-w)',
             'transition: width 0.5s'));
         self::addStyle(WebshipTools::css('.splitting.dynamic', [' > ', '.right'],
-            'position: absolute', 'right: 0', 'background: var(--neutral)'));
+            'position: absolute', 'right: 0', 'background: var(--ws-neutral)'));
         self::addStyle(WebshipTools::css('.splitting.dynamic', [' > ', '.right:hover'],
-            'position: absolute', 'width: var(--right-w-h)'));
+            'position: absolute', 'width: var(--ws-ds-right-w-h)'));
         self::addStyle(WebshipTools::css('.splitting', [' > ', '.left.extended'], 'width: 100%'));
         self::addStyle(WebshipTools::css('.splitting', [' > ', '.left', ' > ', '*'], 'width: 100%'));
         self::addStyle(WebshipTools::css('.splitting', [' > ', '.right'], 'height: 100%',
-            'width: var(--right-w)', 'transition: width 0.5s'));
+            'width: var(--ws-ds-right-w)', 'transition: width 0.5s'));
         self::addStyle(WebshipTools::css('.splitting', [' > ', '.right', ' > ', '*'], 'height: 100%',
             'width: 100%'));
         self::addStyle(WebshipTools::css('.splitting', [' > ', '.right', ' > ', '*', ' > ', '*'],
@@ -53,12 +53,12 @@ class DynamicSplitHtmlView extends ContainerHtmlView {
 
         if ($hoverRightSize) {
             $view->addClass('dynamic');
-            $view->localStyle('--right-w-h: ' . $hoverRightSize . '%');
+            $view->localStyle('--ws-ds-right-w-h: ' . $hoverRightSize . '%');
         }
 
         if ($leftSize) {
-            $view->localStyle('--left-w: ' . $leftSize . '%');
-            $view->localStyle('--right-w: ' . (100 - $leftSize) . '%');
+            $view->localStyle('--ws-ds-left-w: ' . $leftSize . '%');
+            $view->localStyle('--ws-ds-right-w: ' . (100 - $leftSize) . '%');
         }
 
         $view->leftColumn = $leftColumn->container();

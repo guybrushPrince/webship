@@ -51,7 +51,7 @@ class ProgrammingLanguageHtmlView extends ColorHtmlView {
      */
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.prog-lang', [], 'padding: 5px', 'border-radius: 5px',
-            'font-weight: bold', 'border: 1px solid var(--border-3)'));
+            'font-weight: bold', 'border: 1px solid var(--ws-std-brd-gray)'));
     }
 
     /**

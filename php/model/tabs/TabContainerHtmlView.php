@@ -51,7 +51,7 @@ class TabContainerHtmlView extends ContainerHtmlView {
      */
     private function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [$classes];
-        parent::__construct(array_merge(['tabbed'], $classes), 'var(--main-menu)');
+        parent::__construct(array_merge(['tabbed'], $classes), 'var(--ws-main-menu)');
 
         self::addCSS();
 

@@ -80,31 +80,31 @@ class LabelledTextAreaHtmlView extends TextHtmlView {
      */
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.ltext-input', [], 'position: relative', 'width: fit-content',
-            'box-sizing: border-box', 'width: -moz-fit-content', '--height: 30px', '--buffer: 10px',
-            'min-height: calc(var(--height) + var(--buffer))',
+            'box-sizing: border-box', 'width: -moz-fit-content', '--ws-lta-height: 30px', '--ws-lta-buffer: 10px',
+            'min-height: calc(var(--ws-lta-height) + var(--ws-lta-buffer))',
             'display: flex', 'flex-direction: row', 'align-items: flex-end', 'flex-wrap: nowrap'));
-        self::addStyle(WebshipTools::css('.ltext-input.ll', [], '--buffer: 0'));
+        self::addStyle(WebshipTools::css('.ltext-input.ll', [], '--ws-lta-buffer: 0'));
         self::addStyle(WebshipTools::css('.ltext-input.ll', [' > ', 'textarea + label'], 'display: none'));
-        self::addStyle(WebshipTools::css('.ltext-input', [' > ', 'textarea'], 'min-height: var(--height)',
+        self::addStyle(WebshipTools::css('.ltext-input', [' > ', 'textarea'], 'min-height: var(--ws-lta-height)',
             'box-sizing: border-box', 'margin-top: 10px'));
         self::addStyle(WebshipTools::css('.ltext-input', [' > ', 'textarea + label'],
-            'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--dark-system-background)',
+            'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--ws-std-dark-bg)',
             'transition: 0.5s'));
         self::addStyle(WebshipTools::css('.ltext-input', [' > ', 'textarea:not(:focus):placeholder-shown + label'],
-            'display: flex', 'top: var(--buffer)', 'flex-direction: row',
-            'height: calc(100% - var(--buffer))', 'align-items: center', 'cursor: text', 'padding-left: 8px',
+            'display: flex', 'top: var(--ws-lta-buffer)', 'flex-direction: row',
+            'height: calc(100% - var(--ws-lta-buffer))', 'align-items: center', 'cursor: text', 'padding-left: 8px',
             'font-size: 13px'));
         self::addStyle(WebshipTools::css('.ltext-input', [' > ', 'textarea:focus: + label'],
-            'bottom: calc(100% - var(--buffer))', 'font-size: 10px', 'top: unset'));
+            'bottom: calc(100% - var(--ws-lta-buffer))', 'font-size: 10px', 'top: unset'));
         self::addStyle(WebshipTools::css('.ltext-input', [' > ', 'textarea:not(:placeholder-shown) + label'],
-            'bottom: calc(100% - var(--buffer))', 'font-size: 10px', 'top: unset'));
+            'bottom: calc(100% - var(--ws-lta-buffer))', 'font-size: 10px', 'top: unset'));
 
-        self::addStyle(WebshipTools::css('.ltext-input.mini', [], '--height: 20px', '--buffer: 0'));
+        self::addStyle(WebshipTools::css('.ltext-input.mini', [], '--ws-lta-height: 20px', '--ws-lta-buffer: 0'));
         self::addStyle(WebshipTools::css('.ltext-input.mini', [' > ', 'textarea'], 'border-radius: 3px',
-            'font-size: 10px', 'border: 1px solid var(--font-info)', 'color: var(--font-info)'));
+            'font-size: 10px', 'border: 1px solid var(--ws-font-info)', 'color: var(--ws-font-info)'));
         self::addStyle(WebshipTools::css('.ltext-input.mini', [' > ', 'textarea:focus'], 'outline: none'));
         self::addStyle(WebshipTools::css('.ltext-input.mini', [' > ', 'textarea:placeholder-shown + label'],
-            'height: var(--height)', 'color: var(--font-info)', 'font-size: 10px', 'padding-left: 5px'));
+            'height: var(--ws-lta-height)', 'color: var(--ws-font-info)', 'font-size: 10px', 'padding-left: 5px'));
         self::addStyle(WebshipTools::css('.ltext-input.mini', [' > ', 'textarea:focus:placeholder-shown + label'],
             'display: none'));
         self::addStyle(WebshipTools::css('.ltext-input.mini', [' > ', 'textarea:not(:placeholder-shown) + label'],

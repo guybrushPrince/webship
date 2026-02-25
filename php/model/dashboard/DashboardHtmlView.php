@@ -49,20 +49,20 @@ class DashboardHtmlView extends HtmlView {
         $this->cols = $cols;
         $this->rows = $rows;
 
-        $this->localStyle(['--dash-cols: ' . $cols, '--dash-rows: ' . $rows]);
+        $this->localStyle(['--ws-dash-cols: ' . $cols, '--ws-dash-rows: ' . $rows]);
         $this->style(WebshipTools::css('.dashboard', [], 'display: grid',
-            'grid-template-columns: repeat(var(--dash-cols), 1fr)', 'grid-template-rows: repeat(var(--dash-rows), 1fr)',
+            'grid-template-columns: repeat(var(--ws-dash-cols), 1fr)', 'grid-template-rows: repeat(var(--ws-dash-rows), 1fr)',
             'max-height: calc(100% - 20px)', 'column-gap: 10px', 'row-gap: 10px', 'padding: 10px 10px 10px 5px',
             'grid-auto-rows: 0', 'overflow-y: hidden', 'height: calc(100% - 20px)'));
         $this->style(WebshipTools::css('.dashboard', [' > ', '.dashboard-item'], 'justify-self: stretch',
-            'overflow-y: auto', 'box-sizing: border-box', 'align-self: stretch', 'background: var(--dashboard-background)',
-            'border: 0.5px solid var(--border-15)', 'border-radius: 5px',
-            'box-shadow: var(--shadow-flow-5)', '-webkit-box-shadow: var(--shadow-flow-5)',
-            '-moz-box-shadow: var(--shadow-flow-5-moz)', 'position: relative'));
+            'overflow-y: auto', 'box-sizing: border-box', 'align-self: stretch', 'background: var(--ws-dashboard-bg)',
+            'border: 0.5px solid var(--ws-dashboard-brd)', 'border-radius: 5px',
+            'box-shadow: var(--ws-dashboard-shadow)', '-webkit-box-shadow: var(--ws-dashboard-shadow)',
+            '-moz-box-shadow: var(--ws-dashboard-shadow-moz)', 'position: relative'));
         $this->style(WebshipTools::css('.dashboard', [' > ', '.dashboard-item', ':hover'],
-            'border: 0.5px solid var(--dashboard-item-border-hover)',
-            'box-shadow: var(--shadow-flow-5-hover)', '-webkit-box-shadow: var(--shadow-flow-5-hover)',
-            '-moz-box-shadow: var(--shadow-flow-5-moz-hover)'));
+            'border: 0.5px solid var(--ws-dashboard-item-brd-hvr)',
+            'box-shadow: var(--ws-dashboard-shadow-hover)', '-webkit-box-shadow: var(--ws-dashboard-shadow-hover)',
+            '-moz-box-shadow: var(--ws-dashboard-shadow-moz-hover)'));
         $this->style(WebshipTools::css('.dashboard', [' > ', '.dashboard-item', ':empty'], 'cursor: pointer',
             'content: "+"', 'width: 100%', 'height: 100%'));
         $this->style(WebshipTools::css('.dashboard', [' > ', '.dashboard-item', ':empty', ':hover'], ''
@@ -77,50 +77,16 @@ class DashboardHtmlView extends HtmlView {
 
         $this->style(WebshipTools::css('.dashboard', [' > ', '.dashboard-item.plus', ' > ', ' .box'],
             'display: flex', 'align-items: center', 'justify-content: center', 'cursor: pointer',
-            'background:var(--dashboard-plus)', 'opacity: 0.5', 'transition: opacity 1s'));
+            'background: var(--ws-dashboard-plus)', 'opacity: 0.5', 'transition: opacity 1s'));
         $this->style(WebshipTools::css('.dashboard', [' > ', '.dashboard-item.plus', ' > ', ' .box ', ' > ', '.plus'],
             'display: inline-block', 'padding: 6px', 'box-sizing: border-box',
-            'background: var(--plus)', 'background-position: center', 'background-size: 100% 5px, 5px 100%',
+            'background: var(--ws-plus)', 'background-position: center', 'background-size: 100% 5px, 5px 100%',
             'background-repeat: no-repeat', 'width: 50px', 'height: 50px'));
         $this->style(WebshipTools::css('.dashboard', [' > ', '.dashboard-item.plus', ' > ', ' .box', ':hover'],
             'opacity: 1.0'));
 
-        $this->style(WebshipTools::css('.dashboard', [' ', '.coast-text', ' > ', '.box'],
-            'padding: 0'));
-        $this->style(WebshipTools::css('.dashboard', [' ', '.coast-text', '.t1', ' > ', '.box'],
-            'background: var(--coast-text-t1)'));
-        $this->style(WebshipTools::css('.dashboard', [' ', '.coast-text', '.t1', ' > ', '.box', ' ', 'span'],
-            'font-size: 75px', 'letter-spacing: -10px', 'font-weight: normal', 'margin-right: 20px'));
-        $this->style(WebshipTools::css('.dashboard', [' ', '.coast-text', '.t2', ' > ', '.box'],
-            'background: var(--coast-text-t2)'));
-        $this->style(WebshipTools::css('.dashboard', [' ', '.coast-text', '.t3', ' > ', '.box'],
-            'background: var(--coast-text-t3)'));
-        $this->style(WebshipTools::css('.dashboard', [' ', '.coast-text', '.t4', ' > ', '.box'],
-            'background: var(--coast-text-t4)'));
-        $this->style(WebshipTools::css('.dashboard', [' ', '.coast-text', '.t5', ' > ', '.box'],
-            'background: var(--coast-text-t5)'));
-        $this->style(WebshipTools::css('.dashboard', [' ', '.coast-text', ' > ', '.box', ' > ', 'div'],
-            'font-family: Monospace', 'font-weight: bold', 'font-size: 30', 'display: flex', 'align-items: center',
-            'justify-content: center', 'width: 100%', 'height: 100%', 'box-sizing: border-box'));
-        $this->style(WebshipTools::css('.dashboard', [' ', '.coast-text', '.t1', ' > ', '.box', ' > ', 'div'],
-            'justify-content: center', 'text-align: center', 'letter-spacing: -2px'));
-        $this->style(WebshipTools::css('.dashboard', [' ', '.coast-text', '.t2', ' > ', '.box', ' > ', 'div'],
-            'justify-content: flex-start', 'padding-left: 20px', 'font-size: 70px'));
-        $this->style(WebshipTools::css('.dashboard', [' ', '.coast-text', '.t3', ' > ', '.box', ' > ', 'div'],
-            'justify-content: flex-end', 'padding-right: 20px', 'font-size: 90px'));
-        $this->style(WebshipTools::css('.dashboard', [' ', '.coast-text', '.t4', ' > ', '.box', ' > ', 'div'],
-            'font-size: 100px', 'color: var(--main-title-color)'));
-        $this->style(WebshipTools::css('.dashboard', [' ', '.coast-text', '.t5', ' > ', '.box', ' > ', 'div'],
-            'font-size: 40px'));
-        $this->style(WebshipTools::css('.dashboard', [' > ', '.dashboard-item.coast-image', ' > ', '.box'],
-            'display: flex', 'flex-direction: row', 'align-items: flex-end', 'justify-content: flex-end',
-            'overflow: hidden', 'padding: 0', 'background: var(--main-title-color)'));
-        $this->style(WebshipTools::css('.dashboard', [' ', '.coast-image', ' > ', '.box', ' ', 'img'],
-            /*'transform: scale(2)', */ 'transform-origin: 100% 100%'));
-
-
         $this->style(WebshipTools::css('.settings', [' ', '.dash-grid'], 'width: 300px',
-            'height: var(--dim-h)'));
+            'height: var(--ws-dim-h)'));
         $this->style(WebshipTools::css('.settings', [' ', '.hidden'], 'display: none'));
     }
 

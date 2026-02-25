@@ -83,7 +83,7 @@ class LinkHtmlView extends HtmlView {
      */
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('a', [], 'text-decoration: none', 'display: flex',
-            'justify-content: center', 'align-items: center', 'text-align: center', 'color: var(--main-font)',
+            'justify-content: center', 'align-items: center', 'text-align: center', 'color: var(--ws-main-font)',
             'box-sizing: border-box'));
     }
 

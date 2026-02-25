@@ -57,33 +57,33 @@ class SwitchHtmlView extends InputHtmlView {
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.switch', '', 'position: relative',
             'display: inline-block',
-            '--sw-width: 60px', '--sw-height: 34px', '--sw-gap-left: 4px', '--sw-gap-bottom: 4px',
-            '--sw-ball: calc(var(--sw-height) - var(--sw-gap-bottom))',
-            'width: var(--sw-width)', 'height: var(--sw-height)'));
+            '--ws-sw-width: 60px', '--ws-sw-height: 34px', '--ws-sw-gap-left: 4px', '--ws-sw-gap-bottom: 4px',
+            '--ws-sw-ball: calc(var(--ws-sw-height) - var(--ws-sw-gap-bottom))',
+            'width: var(--ws-sw-width)', 'height: var(--ws-sw-height)'));
         self::addStyle(WebshipTools::css('.switch', [' ', 'input'], 'opacity: 0', 'width: 0', 'height: 0'));
         self::addStyle(WebshipTools::css('.switch', [' ', 'input[type="checkbox"]'], 'height: 0'));
         self::addStyle(WebshipTools::css('.switch', [' ', '.slider'], 'position: absolute', 'cursor: pointer',
             'top: 0', 'left: 0', 'right: 0', 'bottom: 0', 'background-color: #ccc', '-webkit-transition: .4s',
-            'transition: .4s', 'border-radius: var(--sw-height)'));
+            'transition: .4s', 'border-radius: var(--ws-sw-height)'));
         self::addStyle(WebshipTools::css('.switch', [' ', '.slider', ':before'], 'position: absolute',
             'content: ""',
-            'height: var(--sw-ball)', 'width: var(--sw-ball)', 'left: var(--sw-gap-left)', 'bottom: var(--sw-gap-bottom)',
+            'height: var(--ws-sw-ball)', 'width: var(--ws-sw-ball)', 'left: var(--ws-sw-gap-left)', 'bottom: var(--ws-sw-gap-bottom)',
             'background-color: white',
             '-webkit-transition: .4s', 'transition: .4s', 'border-radius: 50%'));
         self::addStyle(WebshipTools::css('.switch', [' ', 'input:checked', ' + ', '.slider'],
-            'background-color: var(--slider-checked)'));
+            'background-color: var(--ws-slider-checked)'));
         self::addStyle(WebshipTools::css('.switch', [' ', 'input:focus', ' + ', '.slider'],
-            'box-shadow: 0 0 1px var(--slider-checked)'));
+            'box-shadow: 0 0 1px var(--ws-slider-checked)'));
         self::addStyle(WebshipTools::css('.switch', [' ', 'input:checked', ' + ', '.slider:before'],
-            '-webkit-transform: translateX(var(--sw-ball))', '-ms-transform: translateX(var(--sw-ball))',
-            'transform: translateX(var(--sw-ball))'));
+            '-webkit-transform: translateX(var(--ws-sw-ball))', '-ms-transform: translateX(var(--ws-sw-ball))',
+            'transform: translateX(var(--ws-sw-ball))'));
         self::addStyle(WebshipTools::css('.switch', [' ', 'input:disabled', ' + ', '.slider'],
-            'background-color: var(--system-background)', 'opacity: 0.5', 'cursor: not-allowed'));
+            'background-color: var(--ws-std-bg)', 'opacity: 0.5', 'cursor: not-allowed'));
 
-        self::addStyle(WebshipTools::css('.switch.mini', '', '--sw-width: 30px',
-            '--sw-height: 17px', '--sw-gap-bottom: 0', '--sw-gap-left: -2px', '--sw-ball: var(--sw-height)'));
+        self::addStyle(WebshipTools::css('.switch.mini', '', '--ws-sw-width: 30px',
+            '--ws-sw-height: 17px', '--ws-sw-gap-bottom: 0', '--ws-sw-gap-left: -2px', '--ws-sw-ball: var(--ws-sw-height)'));
         self::addStyle(WebshipTools::css('.switch.mini', [' > ', '.slider::before'],
-            'border: 1px solid var(--slider-checked)', 'box-sizing: border-box'));
+            'border: 1px solid var(--ws-slider-checked)', 'box-sizing: border-box'));
         self::addStyle(WebshipTools::css('.switch.mini', [' > ', 'input:not(:checked)', ' + ', '.slider::before'],
             'border-color: 1px solid #ccc'));
     }

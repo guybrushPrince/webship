@@ -65,9 +65,9 @@ class CSSColorGradientHtmlView extends HtmlView {
      */
     public static function addCSS(): void {
         self::addStyle(WebshipTools::css('.css-gradient', [], 'height: 20px', 'box-sizing: border-box',
-            'border-radius: 3px', 'border: 1px solid var(--dark-system-background)', 'position: relative'));
+            'border-radius: 3px', 'border: 1px solid var(--ws-std-dark-bg)', 'position: relative'));
         self::addStyle(WebshipTools::css('.css-gradient', [' > ', 'div'], 'height: 20px',
-            'box-sizing: border-box', 'width: 2px', 'background: var(--main-font)',
+            'box-sizing: border-box', 'width: 2px', 'background: var(--ws-main-font)',
             'position: absolute', 'top: -1px'));
     }
 

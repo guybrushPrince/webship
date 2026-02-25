@@ -9,3 +9,117 @@
         background-position: 0 50%;
     }
 }
+
+:root {
+    /* Application */
+    --ws-app: rgba(211, 234, 240, 1.0);
+    --ws-app-brd: rgba(130, 182, 194, 1.0);
+
+    /* Main menu */
+    --ws-main-menu: rgba(150, 202, 214, 1.0);
+    --ws-main-menu-hvr: rgba(211, 234, 240, 1.0);
+
+    /* Standard colors */
+    --ws-neutral: rgba(255, 255, 255, 1.0);
+
+    /* Font colors */
+    --ws-main-font: rgba(0, 0, 0, 1.0);
+    --ws-font-dark: rgba(30, 30, 30, 1.0);
+    --ws-font-gray: rgba(150, 150, 150, 1.0);
+    --ws-font-dgray: rgba(100, 100, 100, 1.0);
+    --ws-font-neutral: rgba(255, 255, 255, 1.0);
+
+    /* Background colors */
+    --ws-std-bg: rgba(200, 200, 200, 1.0);
+    --ws-std-bg-hvr: rgba(220, 220, 220, 1.0);
+    --ws-std-dark-bg: rgba(150, 150, 150, 1.0);
+    --ws-std-light-bg: rgba(230, 230, 230, 1.0);
+    --ws-std-ulight-bg: rgba(240, 240, 240, 1.0);
+
+    /* Borders */
+    --ws-std-brd: rgba(200, 200, 200, 1.0);
+    --ws-std-brd-dark-trans: rgba(0, 0, 0, 0.5);
+    --ws-std-brd-gray: rgba(118, 118, 118, 1.0);
+    --ws-std-brd-lgray: rgba(235, 235, 235, 1.0);
+    /*--ws-std-brd-gray: rgba(150, 150, 150, 1.0);*/
+
+    /* Shadows */
+    --ws-front-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.75);
+    --ws-haptic-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+    --ws-haptic-fc-shadow: 0 2px 2px 0 rgb(0 0 0 / 28%), 0 3px 1px -2px rgb(0 0 0 / 24%), 0 1px 5px 0 rgb(0 0 0 / 40%);
+
+    /* Overlays */
+    --ws-screen-overlay: rgba(0, 0, 0, 0.5);
+    --ws-disabled-overlay: rgba(255, 255, 255, 0.6);
+
+    /* Success */
+    --ws-font-success: rgba(60, 118, 61, 1.0);
+    --ws-border-success: rgba(214, 233, 198, 1.0);
+    --ws-background-success: rgba(223, 240, 216, 1.0);
+
+    /* Warning */
+    --ws-font-warning: rgba(138, 109, 59, 1.0);
+    --ws-border-warning: rgba(250, 235, 204, 1.0);
+    --ws-background-warning: rgba(252, 248, 227, 1.0);
+
+    /* Info */
+    --ws-font-info: rgba(49, 112, 143, 1.0);
+    --ws-border-info: rgba(188, 232, 241, 1.0);
+    --ws-background-info: rgba(217, 237, 247, 1.0);
+
+    /* Dialog/Error */
+    --ws-font-error: rgba(169, 68, 66, 1.0);
+    --ws-border-error: rgba(235, 204, 209, 1.0);
+    --ws-background-error: rgba(242, 222, 222, 1.0);
+    --ws-cbackground-error: rgba(235, 204, 209, 1.0);
+
+    /* Delete */
+    --ws-del-tr: rgba(255, 0, 0, 0.75);
+
+    /* Dashboard */
+    --ws-dashboard-bg: rgba(245, 245, 245, 1.0);
+    --ws-dashboard-brd: rgba(225, 225, 225, 1.0);
+    --ws-dashboard-item-brd-hvr: rgba(205, 205, 205, 1.0);
+    --ws-dashboard-plus: rgba(170, 170, 170, 1.0);
+    --ws-dashboard-filled: var(--ws-app-brd);
+    --ws-dashboard-free-brd: var(--ws-app-brd);
+    --ws-dashboard-free-chosen: var(--ws-font-info);
+    --ws-dashboard-shadow: 2px 2px 6px 0 rgb(0 0 0 / 6%);
+    --ws-dashboard-shadow-moz: 2px 2px 6px 0 rgba(0, 0, 0, 0.06);
+    --ws-dashboard-shadow-hover: 3px 3px 6px 0 rgba(0, 0, 0, 0.16);
+    --ws-dashboard-shadow-moz-hover: 3px 3px 6px 0 rgba(0, 0, 0, 0.16);
+    --ws-plus: linear-gradient(var(--ws-neutral), var(--ws-neutral)) content-box, linear-gradient(var(--ws-neutral), var(--ws-neutral)) content-box, rgba(255, 255, 255, 0);
+
+    /* Loading */
+    --ws-loading-start: rgba(150, 150, 150, 1.0);
+    --ws-loading-end: rgba(150, 150, 150, 0.2);
+
+    /* Buttons */
+    --ws-button-bg: rgba(239, 239, 239, 1.0);
+    --ws-button-abort: rgba(232, 176, 176, 0.6);
+    --ws-button-abort-hvr: var(--ws-std-dark-bg);
+    --ws-button-abort-font: var(--ws-font-dark);
+    --ws-button-submit: rgba(176, 232, 176, 0.6);
+    --ws-button-submit-hvr: var(--ws-std-dark-bg);
+    --ws-button-submit-font: var(--ws-font-dark);
+
+    /* Inputs */
+    --ws-multiple-switch: rgba(63, 110, 191, 1.0);
+    --ws-multiple-switch-hvr: rgba(63, 110, 191, 0.5);
+    --ws-slider-checked: rgba(147, 172, 186, 1.0);
+
+    /* Cards */
+    --ws-card-bg: var(--ws-neutral);
+    --ws-card-title-bg: rgba(252, 252, 252, 1.0);
+    --ws-card-title-brd: rgb(0 0 0 / 14%);
+
+    /* Inactive */
+    --ws-inactive: rgba(255, 240, 240, 1.0);
+    --ws-inactive-hvr: rgba(240, 225, 225, 1.0);
+
+    /* Hints */
+    --ws-hint-bg: rgba(255, 254, 222, 0.95);
+
+    /* Code editor */
+    --ws-code-editor-bg: rgba(255, 255, 230, 1.0);
+}

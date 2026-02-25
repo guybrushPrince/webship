@@ -34,9 +34,9 @@ class OpeningCardsHtmlView extends HtmlView {
             'width: calc(25%)', 'min-width: 350px', 'transition: 0.5s width', 'margin: 0'));
         $this->style(WebshipTools::css('.op-cards', [' > ', '.op-card.wide'], 'width: 100%'));
         $this->style(WebshipTools::css('.op-cards', [' > ', '.op-card.inactive', ' > ', '.op-title'],
-            'background: var(--survey-inactive)'));
+            'background: var(--ws-inactive)'));
         $this->style(WebshipTools::css('.op-cards', [' > ', '.op-card.inactive', ' > ', '.op-title', ':hover'],
-            'background: var(--survey-inactive-hover)'));
+            'background: var(--ws-inactive-hvr)'));
 
         $this->style(WebshipTools::css('.op-cards', [' > ', '.op-card', ' > ', '.title'], 'display: flex',
             'flex-direction: row', 'flex-wrap: wrap', 'font-size: 14px', 'height: 100%', 'cursor: pointer'));
@@ -56,7 +56,7 @@ class OpeningCardsHtmlView extends HtmlView {
             'height: 40px'));
 
         $this->style(WebshipTools::css('.op-cards', [' > ', '.op-card', ' > ', '.title', ' ', '.id:not(:empty)'],
-            'position: absolute', 'top: 5px', 'left: 5px', 'font-size: 10px', 'color: var(--font-lighter)',
+            'position: absolute', 'top: 5px', 'left: 5px', 'font-size: 10px', 'color: var(--ws-font-gray)',
             'width: 100%'));
         $this->style(WebshipTools::css('.op-cards', [' > ', '.op-card', ' > ', '.title', ' ', '.id:not(:empty)', ':before'],
             'content: \'Id:\'', 'margin-right: 5px'));

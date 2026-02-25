@@ -37,9 +37,9 @@ class FolderHtmlView extends StandardHtmlView {
         parent::__construct($classes);
 
         $this->style(WebshipTools::css('.folders', [' ', '.f-group'], 'padding: 0 5px', 'position: relative',
-            'width: 100%', 'border: 1px solid var(--border-2)', 'margin-bottom: 20px', 'min-height: 30px',
-            'margin-top: 10px', 'border-radius: 5px', '-webkit-box-shadow: var(--shadow-flow-1)',
-            'box-shadow: var(--shadow-flow-1)'));
+            'width: 100%', 'border: 1px solid var(--ws-std-brd-dark-trans)', 'margin-bottom: 20px', 'min-height: 30px',
+            'margin-top: 10px', 'border-radius: 5px', '-webkit-box-shadow: var(--ws-haptic-shadow)',
+            'box-shadow: var(--ws-haptic-shadow)'));
         $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.folder-title'], 'position: absolute',
             'top: 5px', 'left: 10px', 'width: 90%',
             'padding-right: 10px', 'display: flex', 'flex-direction: row', 'flex-wrap: nowrap', 'height: 20px',
@@ -55,7 +55,7 @@ class FolderHtmlView extends StandardHtmlView {
         $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.folder-title:hover', ' > .pencil'],
             'display: inherit'));
         $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.box'], 'left: 0', 'top: 0',
-            'position: absolute', 'width: 100%', 'height: 30px', 'background: var(--system-background)',
+            'position: absolute', 'width: 100%', 'height: 30px', 'background: var(--ws-std-bg)',
             'border-radius: 5px 5px 0 0'));
         $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.content'],
             'margin: 40px 0 10px 0'));

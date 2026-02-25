@@ -601,8 +601,8 @@ let scaleChildren = function (el) {
         let r = Math.min(1, h / hc);
         let nw = wc * r;
         let nh = hc * r;
-        c.css('--closed-scale', r);
-        c.css('--closed-translate', ((-1/2) * (hc - nh)) + 'px ' + ((-1/2) * (wc - nw)) + 'px');
+        c.css('--ws-cs-closed-scale', r);
+        c.css('--ws-cs-closed-translate', ((-1/2) * (hc - nh)) + 'px ' + ((-1/2) * (wc - nw)) + 'px');
     });
 };
 

@@ -32,17 +32,17 @@ class DashGridHtmlView extends HtmlView {
         $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['dash-grid'], $classes));
 
-        $this->localStyle(['--dg-cols: ' . $cols, '--dg-rows: ' . $rows]);
+        $this->localStyle(['--ws-dg-cols: ' . $cols, '--ws-dg-rows: ' . $rows]);
 
         $this->style(WebshipTools::css('.dash-grid', [], 'display: grid',
-            'grid-template-columns: repeat(var(--dg-cols), 1fr)', 'grid-template-rows: repeat(var(--dg-rows), 1fr)',
+            'grid-template-columns: repeat(var(--ws-dg-cols), 1fr)', 'grid-template-rows: repeat(var(--ws-dg-rows), 1fr)',
             'max-height: calc(100% - 20px)', 'column-gap: 10px', 'row-gap: 10px', 'padding: 10px 10px 10px 5px',
             'grid-auto-rows: 0', 'overflow-y: hidden', 'height: calc(100% - 20px)'));
         $this->style(WebshipTools::css('.dash-grid', [' > ', '*'], 'justify-self: stretch',
-            'box-sizing: border-box', 'align-self: stretch', 'background: var(--neutral)',
-            'border-radius: 5px', 'outline: 1px solid var(--dashboard-free-border)', 'outline-offset: 1px'));
+            'box-sizing: border-box', 'align-self: stretch', 'background: var(--ws-neutral)',
+            'border-radius: 5px', 'outline: 1px solid var(--ws-dashboard-free-brd)', 'outline-offset: 1px'));
         $this->style(WebshipTools::css('.dash-grid', [' > ', '.filled'],
-            'background: var(--dashboard-filled)', 'cursor: not-allowed', 'transition: opacity 1.0s'));
+            'background: var(--ws-dashboard-filled)', 'cursor: not-allowed', 'transition: opacity 1.0s'));
         $this->style(WebshipTools::css('.dash-grid.progress', [' > ', '.free:not(.selectable)'],
             'cursor: not-allowed', 'opacity: 0.3'));
         $this->style(WebshipTools::css('.dash-grid.progress', [' > ', '.filled'],
@@ -50,18 +50,18 @@ class DashGridHtmlView extends HtmlView {
         $this->style(WebshipTools::css('.dash-grid', [' > ', '.free'], 'cursor: pointer',
             'transition: opacity 1.0s'));
         $this->style(WebshipTools::css('.dash-grid', [' > ', '.free', ':hover'],
-            'outline-width: 5px', 'outline-color: var(--dashboard-free-chosen)'));
+            'outline-width: 5px', 'outline-color: var(--ws-dashboard-free-chosen)'));
         $this->style(WebshipTools::css('.dash-grid', [' > ', '.free.chosen', ':hover'],
             'outline-width: 5px'));
         $this->style(WebshipTools::css('.dash-grid', [' > ', '.free', '.selected'],
-            'background: var(--dashboard-free-chosen)'));
+            'background: var(--ws-dashboard-free-chosen)'));
         $this->style(WebshipTools::css('.dash-grid', [' > ', '.free', '.selectable'],
             'outline-width: 3px'));
         $this->style(WebshipTools::css('.dash-grid', [' > ', '.free', '.selectable', ':hover'],
             'outline-width: 5px'));
         $this->style(WebshipTools::css('.dash-grid', [' > ', '.free', '.chosen'],
-            'background: var(--dashboard-free-chosen)', 'outline-width: 3px',
-            'outline-color: var(--dashboard-free-chosen)'));
+            'background: var(--ws-dashboard-free-chosen)', 'outline-width: 3px',
+            'outline-color: var(--ws-dashboard-free-chosen)'));
     }
 
     /**

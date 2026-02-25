@@ -49,12 +49,12 @@ abstract class WizardHtmlView extends HtmlView {
             'flex-direction: column', 'flex-wrap: wrap', 'position: relative',
             '-webkit-transition: -webkit-box-shadow .25s',
             'transition: box-shadow .25s', 'border-radius: 2px',
-            '-webkit-box-shadow: var(--shadow-flow-1)',
-            'box-shadow: var(--shadow-flow-1)'));
+            '-webkit-box-shadow: var(--ws-haptic-shadow)',
+            'box-shadow: var(--ws-haptic-shadow)'));
         $this->style(WebshipTools::css('.wizard', [':hover'],
-            '-webkit-box-shadow: var(--shadow-flow-1-hover)',
-            'box-shadow: var(--shadow-flow-1-hover)'));
-        $this->style(WebshipTools::css('.wizard', [' > ', '.title'], 'color: var(--main-font)',
+            '-webkit-box-shadow: var(--ws-haptic-fc-shadow)',
+            'box-shadow: var(--ws-haptic-fc-shadow)'));
+        $this->style(WebshipTools::css('.wizard', [' > ', '.title'], 'color: var(--ws-main-font)',
             'padding: 24px', 'font-size: 24px',
             'font-weight: 300', 'box-sizing: border-box', 'background: var(--wizard-title-background)',
             'color: var(--wizard-title-font)',

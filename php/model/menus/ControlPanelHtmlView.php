@@ -59,37 +59,37 @@ class ControlPanelHtmlView extends HtmlView {
         $this->yDim = $yDim;
 
         $this->style(WebshipTools::css('.ctr', [], 'display: grid',
-            '--cell-height: 30px', '--cell-width: 30px', '--cell-gap: 2px',
+            '--cell-height: 30px', '--cell-width: 30px', '--ws-ctr-cell-gap: 2px',
             'grid-template-columns: repeat(var(--ctr-cols), 1fr)', 'grid-template-rows: repeat(var(--ctr-rows), 1fr)',
             'box-sizing: content-box',
-            'min-height: calc(var(--cell-height) * var(--ctr-rows) + var(--cell-gap) * (var(--ctr-rows) - 1))',
-            'min-width: calc(var(--cell-width) * var(--ctr-cols) + var(--cell-gap) * (var(--ctr-cols) - 1))',
-            'height: calc(var(--cell-height) * var(--ctr-rows) + var(--cell-gap) * (var(--ctr-rows) - 1))',
-            'width: calc(var(--cell-width) * var(--ctr-cols) + var(--cell-gap) * (var(--ctr-cols) - 1))',
-            'column-gap: var(--cell-gap)', 'row-gap: var(--cell-gap)', 'padding: 3px',
+            'min-height: calc(var(--cell-height) * var(--ctr-rows) + var(--ws-ctr-cell-gap) * (var(--ctr-rows) - 1))',
+            'min-width: calc(var(--cell-width) * var(--ctr-cols) + var(--ws-ctr-cell-gap) * (var(--ctr-cols) - 1))',
+            'height: calc(var(--cell-height) * var(--ctr-rows) + var(--ws-ctr-cell-gap) * (var(--ctr-rows) - 1))',
+            'width: calc(var(--cell-width) * var(--ctr-cols) + var(--ws-ctr-cell-gap) * (var(--ctr-cols) - 1))',
+            'column-gap: var(--ws-ctr-cell-gap)', 'row-gap: var(--ws-ctr-cell-gap)', 'padding: 3px',
             'grid-auto-rows: 0', 'overflow: hidden', 'align-items: center'));
-        $this->style(WebshipTools::css('.ctr.wb', [], 'border: 1px solid var(--system-background)',
+        $this->style(WebshipTools::css('.ctr.wb', [], 'border: 1px solid var(--ws-std-bg)',
             'border-radius: 5px'));
         $this->style(WebshipTools::css('.ctr.ub', [], 'width: fit-content', 'display: flex',
             'flex-direction: row', 'flex-wrap: nowrap'));
-        $this->style(WebshipTools::css('.ctr.ub.gap5', [], '--cell-gap:  5px'));
-        $this->style(WebshipTools::css('.ctr.ub.gap10', [], '--cell-gap: 10px'));
-        $this->style(WebshipTools::css('.ctr.ub.gap15', [], '--cell-gap: 15px'));
-        $this->style(WebshipTools::css('.ctr.ub.gap20', [], '--cell-gap: 20px'));
-        $this->style(WebshipTools::css('.ctr.ub.gap25', [], '--cell-gap: 25px'));
+        $this->style(WebshipTools::css('.ctr.ub.gap5', [], '--ws-ctr-cell-gap:  5px'));
+        $this->style(WebshipTools::css('.ctr.ub.gap10', [], '--ws-ctr-cell-gap: 10px'));
+        $this->style(WebshipTools::css('.ctr.ub.gap15', [], '--ws-ctr-cell-gap: 15px'));
+        $this->style(WebshipTools::css('.ctr.ub.gap20', [], '--ws-ctr-cell-gap: 20px'));
+        $this->style(WebshipTools::css('.ctr.ub.gap25', [], '--ws-ctr-cell-gap: 25px'));
         $this->style(WebshipTools::css('.ctr.ub.reverse', [], 'flex-direction: row-reverse'));
 
         $this->style(WebshipTools::css('.ctr', [' ', '.ctr.area'], 'display: grid',
             'grid-column-end: span var(--ctr-cols)', 'grid-row-end: span var(--ctr-rows)',
             'grid-template-columns: repeat(var(--ctr-cols), 1fr)', 'grid-template-rows: repeat(var(--ctr-rows), 1fr)',
             'box-sizing: content-box',
-            'min-height: calc(var(--cell-height) * var(--ctr-rows) + var(--cell-gap) * (var(--ctr-rows) - 1))',
-            'min-width: calc(var(--cell-width) * var(--ctr-cols) + var(--cell-gap) * (var(--ctr-cols) - 1))',
-            'height: calc(var(--cell-height) * var(--ctr-rows) + var(--cell-gap) * (var(--ctr-rows) - 1))',
-            'width: calc(var(--cell-width) * var(--ctr-cols) + var(--cell-gap) * (var(--ctr-cols) - 1))',
+            'min-height: calc(var(--cell-height) * var(--ctr-rows) + var(--ws-ctr-cell-gap) * (var(--ctr-rows) - 1))',
+            'min-width: calc(var(--cell-width) * var(--ctr-cols) + var(--ws-ctr-cell-gap) * (var(--ctr-cols) - 1))',
+            'height: calc(var(--cell-height) * var(--ctr-rows) + var(--ws-ctr-cell-gap) * (var(--ctr-rows) - 1))',
+            'width: calc(var(--cell-width) * var(--ctr-cols) + var(--ws-ctr-cell-gap) * (var(--ctr-cols) - 1))',
             'column-gap: 2px', 'row-gap: 2px', 'padding: 0px',
             'grid-auto-rows: 0', 'overflow: visible', 'align-items: center'));
-        $this->style(WebshipTools::css('.ctr', [' ', '.ctr.area.wb'], 'border: 1px solid var(--system-background)',
+        $this->style(WebshipTools::css('.ctr', [' ', '.ctr.area.wb'], 'border: 1px solid var(--ws-std-bg)',
             'border-radius: 5px'));
 
         $this->style(WebshipTools::css('.ctr.flexibleX', [], 'min-width: 0', 'width: fit-content',
@@ -98,7 +98,7 @@ class ControlPanelHtmlView extends HtmlView {
             'height: fit-content', 'height: -moz-fit-content', 'grid-template-rows: min-content 1fr'));
 
         $this->style(WebshipTools::css('.ctr', [' ', '.std-job-but'], 'grid-column-end: span 2'));
-        $this->style(WebshipTools::css('.ctr', [' ', '.del:hover'], 'background: var(--delete-2-hover-2)'));
+        $this->style(WebshipTools::css('.ctr', [' ', '.del:hover'], 'background: var(--ws-del-tr)'));
         $this->style(WebshipTools::css('.ctr', [' ', '.css-gradient'], 'height: 100%'));
         $this->style(WebshipTools::css('.ctr', [' ', '.css-gradient', ' > ', 'div'], 'height: 100%', 'top: 0'));
 
@@ -109,22 +109,22 @@ class ControlPanelHtmlView extends HtmlView {
         $this->style(WebshipTools::css('.ctr.fix.bl', [], 'left: 0', 'bottom: 0'));
         $this->style(WebshipTools::css('.ctr.fix.br', [], 'right: 0', 'bottom: 0'));
         $this->style(WebshipTools::css('.ctr.fix', [' ', 'button.std-button'], 'box-shadow: none',
-            '-webkit-box-shadow: none', '-moz-box-shadow: none', 'background: none', 'border-color: var(--font-info)',
+            '-webkit-box-shadow: none', '-moz-box-shadow: none', 'background: none', 'border-color: var(--ws-font-info)',
             'width: 20px', 'height: 20px', 'min-width: 20px', 'min-height: 20px', 'padding: 3px'));
         $this->style(WebshipTools::css('.ctr.fix', [' ', 'button.std-button', ':hover'],
-            'background: var(--font-info)'));
+            'background: var(--ws-font-info)'));
         $this->style(WebshipTools::css('.ctr.fix', [' ', 'button.std-button', ' > ', 'img'],
             'filter: brightness(0) saturate(100%) invert(39%) sepia(18%) saturate(1267%) hue-rotate(155deg) brightness(97%) contrast(98%)',
             'transition: filter 0.25s'));
         $this->style(WebshipTools::css('.ctr.fix', [' ', 'button.std-button', ':hover', ' > ', 'img'],
             'filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(241deg) brightness(110%) contrast(106%)'));
         $this->style(WebshipTools::css('.ctr.fix', [' ', 'button.std-button.del', ':hover'],
-            'background: var(--delete-2-hover-2)', 'border-color: var(--neutral)'));
+            'background: var(--ws-del-tr)', 'border-color: var(--ws-neutral)'));
 
         $this->style(WebshipTools::css('.ctr.small', [], 'min-height: 20px', 'height: 20px',
             'margin: 0 !important', '--cell-height: 20px', '--cell-width: 20px'));
         $this->style(WebshipTools::css('.ctr.small', [' ', 'button.std-button'], 'box-shadow: none',
-            '-webkit-box-shadow: none', '-moz-box-shadow: none', 'background: none', 'border-color: var(--font-info)',
+            '-webkit-box-shadow: none', '-moz-box-shadow: none', 'background: none', 'border-color: var(--ws-font-info)',
             'width: 20px', 'height: 20px', 'min-width: 20px', 'min-height: 20px', 'padding: 3px'));
 
         $this->style(WebshipTools::css('.ctr.plain', [' ', 'button.std-button'], 'border: none'));

@@ -54,28 +54,28 @@ class ErrorFileListHtmlView extends StandardButtonHtmlView {
         self::addStyle(WebshipTools::css('.gen-error', [], 'position: relative'));
         self::addStyle(WebshipTools::css('.gen-error', [' > ', 'div.container'],
             'position: fixed', 'top: 0', 'left: 0', 'width: 100%', 'height: 100%',
-            'background: var(--window-overlay)', 'z-index: 100001', 'overflow-y: auto'));
+            'background: var(--ws-screen-overlay)', 'z-index: 100001', 'overflow-y: auto'));
         self::addStyle(WebshipTools::css('.gen-error', [' > ', 'div.container', ' > ', '.container'],
             'position: absolute', 'left: 12.5%', 'top: 10%', 'width: 75%', 'padding: 20px',
-            'box-sizing: border-box', 'overflow-y: initial', 'background: var(--neutral)'));
+            'box-sizing: border-box', 'overflow-y: initial', 'background: var(--ws-neutral)'));
         self::addStyle(WebshipTools::css('.gen-error', [' > ', 'div.invisible'],
             'display: none'));
         self::addStyle(WebshipTools::css('.gen-error', [' ', 'pre'],
-            'padding: 10px', 'background: var(--ultra-light-system-background)', 'margin-top: 0',
-            'border: 1px solid var(--border-6)', 'box-sizing: border-box', 'font-size: 10px',
+            'padding: 10px', 'background: var(--ws-std-ulight-bg)', 'margin-top: 0',
+            'border: 1px solid var(--ws-std-brd)', 'box-sizing: border-box', 'font-size: 10px',
             'font-family: monospace', 'text-align: left', 'width: 100%'));
         self::addStyle(WebshipTools::css('.gen-error', [' ', 'pre:before'],
             'content: \'[... last 100 lines ...]\'', 'display: block', 'margin-bottom: 20px'));
         self::addStyle(WebshipTools::css('.gen-error', [' ', '.phase'],
             'font-size: 14px', 'font-weight: bold', 'letter-spacing: 2px'));
         self::addStyle(WebshipTools::css('.gen-error', [' ', '.phase-file'],
-            'font-family: monospace', 'font-size: 11px', 'font-weight: bold', 'background: var(--border-6)',
+            'font-family: monospace', 'font-size: 11px', 'font-weight: bold', 'background: var(--ws-std-brd)',
             'padding: 5px'));
         self::addStyle(WebshipTools::css('.gen-error', [' ', '.error'],
             'position: relative'));
         self::addStyle(WebshipTools::css('.gen-error', [' ', '.error:after'],
             'content: \'\'', 'display: block', 'position: absolute', 'top: 0', 'left: 0', 'width: 100%',
-            'height: 100%', 'background: var(--error-background-contrast)', 'opacity: 0.4'));
+            'height: 100%', 'background: var(--ws-cbackground-error)', 'opacity: 0.4'));
     }
 
     /**

@@ -63,8 +63,8 @@ class HelpPageHtmlView extends StandardButtonHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('.help-page', [' ', 'img'], 'position: relative', 'max-width: 500px',
-            'width: 100%', 'display: block', 'margin-left: auto', 'margin-right: auto'));
+        self::addStyle(WebshipTools::css('.help-page', [' ', 'img'], 'position: relative',
+            'max-width: 500px', 'width: 100%', 'display: block', 'margin-left: auto', 'margin-right: auto'));
     }
 
     /**

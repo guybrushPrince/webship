@@ -60,9 +60,9 @@ class FieldSetHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('fieldset', [], 'display: flex', 'flex-wrap: wrap',
             'flex-direction: row', 'align-items: center', 'justify-items: center', 'width: fit-content',
             'width: -moz-fit-content', 'border: none', 'padding: 0', 'margin: 0', 'box-sizing: border-box'));
-        self::addStyle(WebshipTools::css('fieldset:not(.plain)', [], '--side-margin: 2px',
-            'border: 1px solid var(--border-13)', 'border-radius: 5px', 'padding: 8px 10px',
-            'width: calc(100% - 2* var(--side-margin))', 'margin: 0 var(--side-margin)'));
+        self::addStyle(WebshipTools::css('fieldset:not(.plain)', [], '--ws-fs-side-margin: 2px',
+            'border: 1px solid var(--ws-std-brd-lgray)', 'border-radius: 5px', 'padding: 8px 10px',
+            'width: calc(100% - 2* var(--ws-fs-side-margin))', 'margin: 0 var(--ws-fs-side-margin)'));
         self::addStyle(WebshipTools::css('fieldset.gap5', [], 'gap:  5px'));
         self::addStyle(WebshipTools::css('fieldset.gap10', [], 'gap: 10px'));
         self::addStyle(WebshipTools::css('fieldset.gap15', [], 'gap: 15px'));

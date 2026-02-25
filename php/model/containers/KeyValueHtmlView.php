@@ -83,8 +83,8 @@ class KeyValueHtmlView extends HtmlView {
             $afterView->texts($afterText);
         }
 
-        $this->localStyle('--kr: ' . $keyRatio . '%');
-        $this->localStyle('--vr: ' . $valueRatio . '%');
+        $this->localStyle('--ws-kr: ' . $keyRatio . '%');
+        $this->localStyle('--ws-vr: ' . $valueRatio . '%');
 
         self::addCSS();
     }
@@ -96,11 +96,11 @@ class KeyValueHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.kv', [], 'display: flex', 'flex-direction: row', 'flex-wrap: nowrap',
             'width: 100%', 'align-items: center', 'padding: 10px', 'box-sizing: border-box', 'gap: 0 10px',
             'box-sizing: border-box'));
-        self::addStyle(WebshipTools::css('.kv.frame', [], 'border: 1px solid var(--ultra-light-system-background)'));
+        self::addStyle(WebshipTools::css('.kv.frame', [], 'border: 1px solid var(--ws-std-ulight-bg)'));
         self::addStyle(WebshipTools::css('.kv', [' > ', '.k'], 'display: flex', 'flex-direction: row',
-            'align-items: center', 'justify-content: flex-start', 'margin: 0', 'width: var(--kr)'));
+            'align-items: center', 'justify-content: flex-start', 'margin: 0', 'width: var(--ws-kr)'));
         self::addStyle(WebshipTools::css('.kv', [' > ', '.v'], 'display: flex', 'flex-direction: row',
-            'align-items: center', 'justify-content: flex-start', 'margin: 0', 'width: var(--vr)'));
+            'align-items: center', 'justify-content: flex-start', 'margin: 0', 'width: var(--ws-vr)'));
         self::addStyle(WebshipTools::css('.kv', [' > ', '.v', ' > ', 'input[type="checkbox"]'], 'width: 25px'));
         self::addStyle(WebshipTools::css('.kv', [' > ', '.ka'], 'width: 5%'));
         self::addStyle(WebshipTools::css('.kv.frame', [' + ', '.kv.frame'], 'border-top: none'));
@@ -110,7 +110,7 @@ class KeyValueHtmlView extends HtmlView {
 
         self::addStyle(WebshipTools::css('.kv.disabled', [], 'position: relative', 'cursor: not-allowed'));
         self::addStyle(WebshipTools::css('.kv.disabled', [':after'], 'content: ""', 'display: block',
-            'position: absolute', 'width: 100%', 'height: 100%', 'top: 0', 'left: 0', 'background: var(--thing-overlay)',
+            'position: absolute', 'width: 100%', 'height: 100%', 'top: 0', 'left: 0', 'background: var(--ws-disabled-overlay)',
             'border-radius: 5px'));
     }
 

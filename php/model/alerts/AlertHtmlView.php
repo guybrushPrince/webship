@@ -54,15 +54,15 @@ class AlertHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('.alert', [], '--alert-border: var(--light-system-background)',
-            '--alert-font: var(--font-dark)', '--alert-background: var(--ultra-light-system-background)',
-            '--alert-shadow: var(--shadow-flow-4)',
-            '--alert-c-border: var(--system-background)', '--alter-c-background: var(--neutral)',
-            '--alert-img-filter: none', '--alert-img-filter-hover: none'));
+        self::addStyle(WebshipTools::css('.alert', [], '--ws-alert-border: var(--ws-std-light-bg)',
+            '--ws-alert-font: var(--ws-font-dark)', '--ws-alert-background: var(--ws-std-ulight-bg)',
+            '--ws-alert-shadow: var(--ws-front-shadow)',
+            '--ws-alert-c-border: var(--ws-std-bg)', '--ws-alert-c-background: var(--ws-neutral)',
+            '--ws-alert-img-filter: none', '--ws-alert-img-filter-hover: none'));
 
         self::addStyle(WebshipTools::css('.alert:not(.cover)', [], 'padding: 15px',
-            'margin-bottom: 20px', 'margin-top: 20px', 'border: 1px solid var(--alert-border)',
-            'border-radius: 4px', 'color: var(--alert-font)', 'background-color: var(--alert-background)',
+            'margin-bottom: 20px', 'margin-top: 20px', 'border: 1px solid var(--ws-alert-border)',
+            'border-radius: 4px', 'color: var(--ws-alert-font)', 'background-color: var(--ws-alert-background)',
             'position: relative', 'box-sizing: border-box'));
         self::addStyle(WebshipTools::css('.alert:not(.cover).tiny', [], 'font-size: 10px'));
         self::addStyle(WebshipTools::css('.alert.cover', [], 'display: flex',
@@ -73,32 +73,32 @@ class AlertHtmlView extends HtmlView {
 
         // For screen-size alerts.
         self::addStyle(WebshipTools::css('.alert.cover', [' > ', '.overlay'], 'top: 0', 'left: 0',
-            'width: 100%', 'height: 100%', 'background: var(--window-overlay)', 'z-index: 100011'));
+            'width: 100%', 'height: 100%', 'background: var(--ws-screen-overlay)', 'z-index: 100011'));
         self::addStyle(WebshipTools::css('.alert.screen', [' > ', '.overlay'], 'position: fixed'));
         self::addStyle(WebshipTools::css('.alert.full', [' > ', '.overlay'], 'position: absolute'));
         self::addStyle(WebshipTools::css('.alert.cover', [' > ', '.a-message'], 'width: 75%', 'max-height: 75%',
-            'background: var(--alert-background)', 'z-index: 100012', 'padding: 20px',
-            '-webkit-box-shadow: var(--alert-shadow)',
-            '-moz-box-shadow: var(--alert-shadow)',
-            'box-shadow: var--alert-shadow)', 'position: relative'));
+            'background: var(--ws-alert-background)', 'z-index: 100012', 'padding: 20px',
+            '-webkit-box-shadow: var(--ws-alert-shadow)',
+            '-moz-box-shadow: var(--ws-alert-shadow)',
+            'box-shadow: var--ws-alert-shadow)', 'position: relative'));
 
         self::addStyle(WebshipTools::css('.alert.cover', [' > ', '.a-message', ' > ', '.closer'],
             'position: absolute', 'top: -15px', 'right: -15px', 'width: 30px', 'height: 30px',
-            'z-index: 100013', 'background: var(--alert-c-background)', 'border-radius: 45%',
+            'z-index: 100013', 'background: var(--ws-alert-c-background)', 'border-radius: 45%',
             'justify-content: center', 'cursor: pointer', 'box-sizing: border-box',
-            'border: 1px solid var(--alert-c-border)'));
+            'border: 1px solid var(--ws-alert-c-border)'));
         self::addStyle(WebshipTools::css('.alert.cover', [' > ', '.a-message', ' > ', '.closer', ':hover'],
-            'background: var(--alert-c-border)'));
+            'background: var(--ws-alert-c-border)'));
 
         self::addStyle(WebshipTools::css('.alert', [' ', '.ctr', ' > ', 'button.std-button.closer:hover'],
-            'background: var(--alert-c-border)'));
+            'background: var(--ws-alert-c-border)'));
         self::addStyle(WebshipTools::css('.alert', [' ', '.ctr', ' > ', 'button.std-button.closer', ' > ', 'img'],
-            'filter: var(--alert-img-filter)'));
+            'filter: var(--ws-alert-img-filter)'));
         self::addStyle(WebshipTools::css('.alert', [' ', '.ctr', ' > ', 'button.std-button.closer:hover', ' > ', 'img'],
-            'filter: var(--alert-img-filter-hover)'));
+            'filter: var(--ws-alert-img-filter-hover)'));
 
         self::addStyle(WebshipTools::css('.alert.cover', [' ', 'iframe'], 'width: 100%', 'border: 0',
-            'background: var(--neutral)', 'border-radius: 10px', 'min-height: 250px',
+            'background: var(--ws-neutral)', 'border-radius: 10px', 'min-height: 250px',
             'max-height: 500px'));
 
         self::addStyle(WebshipTools::css('.alert.cover', [' > ', '.a-message', ' > ', 'div:last-child'],
@@ -108,7 +108,7 @@ class AlertHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.alert', [' ', 'pre', ' > ', 'code'], 'width: 100%',
             'border-radius: 10px', 'max-height: 200px', 'overflow: auto', 'overflow: auto'));
         self::addStyle(WebshipTools::css('.alert', [' ', 'code'], 'border: 0',
-            'background: var(--neutral)', 'font-family: Monospace', 'font-size: 14px', 'padding: 5px',
+            'background: var(--ws-neutral)', 'font-family: Monospace', 'font-size: 14px', 'padding: 5px',
             'display: inline-block', 'border-radius: 3px'));
         self::addStyle(WebshipTools::css('.alert.cover', [' ', 'code'], 'display: block', 'height: 400px',
             'font-size: 10px', 'padding: inherit', 'min-height: 100px', 'max-height: 50%'));
@@ -119,12 +119,12 @@ class AlertHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.alert:not(.cover).with-image', [], 'display: flex',
             'flex-direction: row', 'flex-wrap: nowrap', 'gap: 15px'));
         self::addStyle(WebshipTools::css('.alert:not(.cover).with-image', [' > ', 'img'], 'width: 25px',
-            'filter: var(--alert-img-filter)'));
+            'filter: var(--ws-alert-img-filter)'));
         self::addStyle(WebshipTools::css('.alert:not(.cover).with-image.tiny', [' > ', 'img'], 'width: 15px'));
         self::addStyle(WebshipTools::css('.alert.cover', [' > ', '.a-message.with-image'], 'display: flex',
             'flex-direction: row', 'flex-wrap: nowrap', 'gap: 15px'));
         self::addStyle(WebshipTools::css('.alert.cover', [' > ', '.a-message.with-image', ' > ', 'img'],
-            'width: 25px', 'filter: var(--alert-img-filter)'));
+            'width: 25px', 'filter: var(--ws-alert-img-filter)'));
 
         self::addStyle(WebshipTools::css('.alert.inline', [], 'margin: 0', 'padding: 0 15px'));
     }

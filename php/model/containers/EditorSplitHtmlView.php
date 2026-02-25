@@ -45,8 +45,8 @@ class EditorSplitHtmlView extends HtmlView {
 
         if (!$editorSize) $editorSize = 75;
         $toolsSize = 100 - $editorSize;
-        $this->localStyle('--editor-size: calc(' . $editorSize . '% - var(--separator-size))');
-        $this->localStyle('--tools-size: ' . $toolsSize . '%');
+        $this->localStyle('--ws-editor-size: calc(' . $editorSize . '% - var(--ws-sep-size))');
+        $this->localStyle('--ws-tools-size: ' . $toolsSize . '%');
 
         $this->tools = TabContainerHtmlView::create(['tools']);
         $this->add($this->tools);
@@ -65,34 +65,34 @@ class EditorSplitHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('.editor-split', [], '--separator-size: 15px', 'display: flex',
+        self::addStyle(WebshipTools::css('.editor-split', [], '--ws-sep-size: 15px', 'display: flex',
             'flex-direction: row', 'flex-wrap: nowrap', 'width: 100%', 'height: 100%',
-            'border-top: 2px solid var(--login-border)'));
+            'border-top: 2px solid var(--ws-app-brd)'));
         self::addStyle(WebshipTools::css('.editor-split', [' ', '.tab'],
-            'padding: 0', 'height: calc(100% - 27px)', 'border-left: 2px solid var(--login-border)',
-            'border-right: 2px solid var(--login-border)', 'border-bottom: 2px solid var(--login-border)'));
+            'padding: 0', 'height: calc(100% - 27px)', 'border-left: 2px solid var(--ws-app-brd)',
+            'border-right: 2px solid var(--ws-app-brd)', 'border-bottom: 2px solid var(--ws-app-brd)'));
         self::addStyle(WebshipTools::css('.editor-split', [' ', '.tab', ' > ', '.tab-content'],
             'padding: 10px', 'width: 100%', 'height: 100%'));
         self::addStyle(WebshipTools::css('.editor-split', [' > ', '*'],
             'box-sizing: border-box', 'display: flex', 'flex-direction: column', 'overflow-y: hidden'));
-        self::addStyle(WebshipTools::css('.editor-split', [' > ', '.tools'], 'width: var(--tools-size)',
+        self::addStyle(WebshipTools::css('.editor-split', [' > ', '.tools'], 'width: var(--ws-tools-size)',
             'padding: 10px', 'transition: width 0.5s'));
         self::addStyle(WebshipTools::css('.editor-split', [' > ', '.tools.closed'], 'width: 0', 'padding: 0'));
         self::addStyle(WebshipTools::css('.editor-split', [' > ', '.tools.closed', ' > ', '*'],
             'display: none'));
-        self::addStyle(WebshipTools::css('.editor-split', [' > ', '.separator'], 'width: var(--separator-size)',
-            'cursor: pointer', 'transition: 0.5s', 'margin: 0', 'border-radius: 0', 'background: var(--main-menu)'));
+        self::addStyle(WebshipTools::css('.editor-split', [' > ', '.separator'], 'width: var(--ws-sep-size)',
+            'cursor: pointer', 'transition: 0.5s', 'margin: 0', 'border-radius: 0', 'background: var(--ws-main-menu)'));
         self::addStyle(WebshipTools::css('.editor-split', [' > ', '.separator', ':hover'],
-            'background: var(--main-menu-hover)'));
+            'background: var(--ws-main-menu-hvr)'));
         self::addStyle(WebshipTools::css('.editor-split', [' > ', '.separator', ':before'],
             'content: \'<\'', 'display: flex', 'width: 100%', 'height: 100%',
             'flex-direction: row', 'align-items: center', 'justify-content: center', 'font-weight: bold'));
         self::addStyle(WebshipTools::css('.editor-split', [' > ', '.tools.closed', ' + ', '.separator', ':before'],
             'content: \'>\''));
-        self::addStyle(WebshipTools::css('.editor-split', [' > ', '.editor'], 'width: var(--editor-size)',
+        self::addStyle(WebshipTools::css('.editor-split', [' > ', '.editor'], 'width: var(--ws-editor-size)',
             'padding: 15px', 'transition: width 0.5s'));
         self::addStyle(WebshipTools::css('.editor-split', [' > ', '.tools.closed', ' ~ ', '.editor'],
-            'width: calc(100% - var(--separator-size))'));
+            'width: calc(100% - var(--ws-sep-size))'));
     }
 
     /**

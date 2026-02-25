@@ -44,10 +44,10 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
             'box-sizing: border-box'));
 
         self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul'],
-            'display: none', 'list-style-type: none', 'margin: 0', 'background: var(--main-menu-hover)',
+            'display: none', 'list-style-type: none', 'margin: 0', 'background: var(--ws-main-menu-hvr)',
             'padding: 0',
-            '-webkit-box-shadow: var(--shadow-flow-4)', '-moz-box-shadow: var(--shadow-flow-4)',
-            'box-shadow: var(--shadow-flow-4)', 'border-radius: 0 6px 6px 6px'));
+            '-webkit-box-shadow: var(--ws-front-shadow)', '-moz-box-shadow: var(--ws-front-shadow)',
+            'box-shadow: var(--ws-front-shadow)', 'border-radius: 0 6px 6px 6px'));
 
         self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li'],
             'width: fit-content',
@@ -55,7 +55,7 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
             'width: -moz-fit-content'));
 
         self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li', ':hover'],
-            'background: var(--main-menu)'));
+            'background: var(--ws-main-menu)'));
 
         self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li:first-child'],
             'border-radius: 0 6px 0 0'));

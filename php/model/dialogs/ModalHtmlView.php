@@ -94,24 +94,24 @@ class ModalHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('.modal', [], '--modal-pad: 20px'));
+        self::addStyle(WebshipTools::css('.modal', [], '--ws-modal-pad: 20px'));
         self::addStyle(WebshipTools::css('.modal.invisible', [], 'display: none !important'));
         self::addStyle(WebshipTools::css('.modal', [' > ', '.modal-overlay'], 'position: fixed',
-            'top: 0', 'left: 0', 'width: 100%', 'height: 100%', 'background: var(--window-overlay)', 'z-index: 100001',
+            'top: 0', 'left: 0', 'width: 100%', 'height: 100%', 'background: var(--ws-screen-overlay)', 'z-index: 100001',
             'overflow-y: auto'));
         self::addStyle(WebshipTools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container'],
             'position: absolute',
             'left: 12.5%', 'top: 10%', 'width: 75%', 'overflow-y: initial',
-            'background: var(--neutral)', 'z-index: 100002', 'padding: var(--modal-pad)', 'border-radius: 5px',
-            '-webkit-box-shadow: var(--shadow-flow-4)',
-            '-moz-box-shadow: var(--shadow-flow-4)',
-            'box-shadow: var(--shadow-flow-4)'));
+            'background: var(--ws-neutral)', 'z-index: 100002', 'padding: var(--ws-modal-pad)', 'border-radius: 5px',
+            '-webkit-box-shadow: var(--ws-front-shadow)',
+            '-moz-box-shadow: var(--ws-front-shadow)',
+            'box-shadow: var(--ws-front-shadow)'));
         self::addStyle(WebshipTools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' > ', '.form'],
             'width: 100%'));
         self::addStyle(WebshipTools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' ', '.alert'],
             'width: 100%'));
         self::addStyle(WebshipTools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' > ', 'div',
-            ' > ', '.ctr.fix.tr'], 'right: var(--cell-gap)', 'top: calc((-1)* var(--modal-pad))'));
+            ' > ', '.ctr.fix.tr'], 'right: var(--ws-ctr-cell-gap)', 'top: calc((-1)* var(--ws-modal-pad))'));
         self::addStyle(WebshipTools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container',
             ' > ', 'div:not(.ctr.fix.tr)'], 'position: relative'));
     }

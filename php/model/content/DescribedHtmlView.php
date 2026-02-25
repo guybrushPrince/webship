@@ -42,7 +42,7 @@ class DescribedHtmlView extends HtmlView {
         $this->style(WebshipTools::css($coreSelector, '',
             'display: flex', 'flex-wrap: nowrap', 'flex-direction: column', 'padding-top: 20px',
             'align-items: flex-start', 'justify-content: flex-start', 'box-sizing: border-box'));
-        $this->style(WebshipTools::css($coreSelector, ' > .described-description', 'width: 100%', 'color: var(--system-background)',
+        $this->style(WebshipTools::css($coreSelector, ' > .described-description', 'width: 100%', 'color: var(--ws-std-bg)',
             'font-size: 10px', 'font-weight: 600', 'box-sizing: border-box'));
         $this->style(WebshipTools::css($coreSelector, ' > .described-content', 'width: 100%',
             'box-sizing: border-box'));

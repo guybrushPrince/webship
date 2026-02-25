@@ -70,7 +70,7 @@ class DropDownHtmlView extends HtmlView {
             ':not(:first-child)'], 'display: block'));
         self::addStyle(WebshipTools::css('.drop-down', [' > ', '[data-drop-down-content]', ' > ', '*'],
             'width: fit-content', 'height: 35px', 'padding: 10px 20px', 'box-sizing: border-box',
-            'position: relative', 'width: -moz-fit-content', 'background: var(--main-menu-hover)',
+            'position: relative', 'width: -moz-fit-content', 'background: var(--ws-main-menu-hvr)',
             'white-space: nowrap'));
     }
 

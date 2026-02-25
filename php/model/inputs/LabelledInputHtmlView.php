@@ -105,53 +105,53 @@ class LabelledInputHtmlView extends InputHtmlView {
      */
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.linput', [], 'position: relative', 'width: fit-content',
-            'box-sizing: border-box', 'width: -moz-fit-content', '--height: 30px', '--buffer: 10px',
-            'height: calc(var(--height) + var(--buffer))',
+            'box-sizing: border-box', 'width: -moz-fit-content', '--ws-li-height: 30px', '--ws-li-buffer: 10px',
+            'height: calc(var(--ws-li-height) + var(--ws-li-buffer))',
             'display: flex', 'flex-direction: row', 'align-items: flex-end', 'flex-wrap: nowrap'));
-        self::addStyle(WebshipTools::css('.linput.bl', [], '--buffer: 0'));
-        self::addStyle(WebshipTools::css('.linput.ll', [], '--buffer: 0'));
+        self::addStyle(WebshipTools::css('.linput.bl', [], '--ws-li-buffer: 0'));
+        self::addStyle(WebshipTools::css('.linput.ll', [], '--ws-li-buffer: 0'));
         self::addStyle(WebshipTools::css('.linput.ll', [' > ', 'input + label'], 'display: none'));
-        self::addStyle(WebshipTools::css('.linput', [' > ', 'input'], 'height: var(--height)',
+        self::addStyle(WebshipTools::css('.linput', [' > ', 'input'], 'height: var(--ws-li-height)',
             'box-sizing: border-box'));
         self::addStyle(WebshipTools::css('.linput', [' > ', 'input:not([type=date]):not([type=checkbox]) + label'],
-            'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--dark-system-background)',
+            'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--ws-std-dark-bg)',
             'transition: 0.5s'));
         self::addStyle(WebshipTools::css('.linput', [' > ', 'input:not(:focus):not([type=date]):not([type=checkbox]):placeholder-shown + label'],
-            'display: flex', 'top: var(--buffer)', 'flex-direction: row', /*'width: 100%',*/
-            'height: calc(100% - var(--buffer))', 'align-items: center', 'cursor: text', 'padding-left: 8px',
+            'display: flex', 'top: var(--ws-li-buffer)', 'flex-direction: row', /*'width: 100%',*/
+            'height: calc(100% - var(--ws-li-buffer))', 'align-items: center', 'cursor: text', 'padding-left: 8px',
             'font-size: 13px'));
         self::addStyle(WebshipTools::css('.linput', [' > ', 'input:focus:not([type=date]):not([type=checkbox]) + label'],
-            'bottom: calc(100% - var(--buffer))', 'font-size: 10px', 'top: unset'));
+            'bottom: calc(100% - var(--ws-li-buffer))', 'font-size: 10px', 'top: unset'));
         self::addStyle(WebshipTools::css('.linput', [' > ', 'input:not([type=date]):not([type=checkbox]):not(:placeholder-shown) + label'],
-            'bottom: calc(100% - var(--buffer))', 'font-size: 10px', 'top: unset'));
-        self::addStyle(WebshipTools::css('.linput', [' > ', 'input[type=checkbox]'], '--height: 25px',
-            '--margin: 2.5px', 'margin: var(--margin)',
-            'height: var(--height)', 'width: var(--height)', 'box-sizing: border-box'));
+            'bottom: calc(100% - var(--ws-li-buffer))', 'font-size: 10px', 'top: unset'));
+        self::addStyle(WebshipTools::css('.linput', [' > ', 'input[type=checkbox]'], '--ws-li-height: 25px',
+            '--ws-li-margin: 2.5px', 'margin: var(--ws-li-margin)',
+            'height: var(--ws-li-height)', 'width: var(--ws-li-height)', 'box-sizing: border-box'));
         self::addStyle(WebshipTools::css('.linput', [' > ', 'input[type=checkbox] + label'], 'cursor: pointer'));
 
-        self::addStyle(WebshipTools::css('.linput.mini', [], '--height: 20px', '--buffer: 0'));
+        self::addStyle(WebshipTools::css('.linput.mini', [], '--ws-li-height: 20px', '--ws-li-buffer: 0'));
         self::addStyle(WebshipTools::css('.linput.mini', [' > ', 'input'], 'border-radius: 3px',
-            'font-size: 10px', 'border: 1px solid var(--font-info)', 'color: var(--font-info)'));
+            'font-size: 10px', 'border: 1px solid var(--ws-font-info)', 'color: var(--ws-font-info)'));
         self::addStyle(WebshipTools::css('.linput.mini', [' > ', 'input:focus'], 'outline: none'));
         self::addStyle(WebshipTools::css('.linput.mini', [' > ', 'input:not([type=date]):not([type=checkbox]):placeholder-shown + label'],
-            'height: var(--height)', 'color: var(--font-info)', 'font-size: 10px', 'padding-left: 5px'));
+            'height: var(--ws-li-height)', 'color: var(--ws-font-info)', 'font-size: 10px', 'padding-left: 5px'));
         self::addStyle(WebshipTools::css('.linput.mini', [' > ', 'input:focus:not([type=date]):not([type=checkbox]):placeholder-shown + label'],
             'display: none'));
         self::addStyle(WebshipTools::css('.linput.mini', [' > ', 'input:not([type=date]):not([type=checkbox]):not(:placeholder-shown) + label'],
             'display: none'));
-        self::addStyle(WebshipTools::css('.linput.mini', [' > ', 'input[type=checkbox]'],'--height: 15px'));
+        self::addStyle(WebshipTools::css('.linput.mini', [' > ', 'input[type=checkbox]'],'--ws-li-height: 15px'));
 
         self::addStyle(WebshipTools::css('.linput.out', [], 'flex-direction: row-reverse'));
         self::addStyle(WebshipTools::css('.linput.out', [' > ', 'label'], 'display: flex', 'flex-wrap: nowrap',
-            'flex-direction: row', 'height: var(--height)', 'width: fit-content', 'width: -moz-fit-content',
+            'flex-direction: row', 'height: var(--ws-li-height)', 'width: fit-content', 'width: -moz-fit-content',
             'align-items: center'));
         self::addStyle(WebshipTools::css('.linput.out', [' > ', 'label:not(:empty):after'],
             'content: ":"', 'display: block', 'margin-right: 5px'));
-        self::addStyle(WebshipTools::css('.linput.mini.out', [' > ', 'label'], 'color: var(--font-info)',
+        self::addStyle(WebshipTools::css('.linput.mini.out', [' > ', 'label'], 'color: var(--ws-font-info)',
             'font-size: 10px'));
         self::addStyle(WebshipTools::css('.linput.mini.out', [' > ', 'label:empty'], 'display: none'));
         self::addStyle(WebshipTools::css('.linput.mini.out', [' > ', 'label:not(:empty):after'],
-            'color: var(--font-info)', 'font-size: 10px', 'content: ":"', 'display: block',
+            'color: var(--ws-font-info)', 'font-size: 10px', 'content: ":"', 'display: block',
             'margin-right: 5px'));
     }
 

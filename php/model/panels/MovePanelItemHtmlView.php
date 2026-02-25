@@ -133,7 +133,7 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
             'width: 18px', 'background-image: url(\'' . HtmlActionProtocol::$serverURL . '/webship/pic/delete.svg\')',
             'background-repeat: no-repeat', 'background-origin: padding-box', 'height: 60%'));
         self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move.delete:hover'],
-            'background: var(--delete-2-hover-2)'));
+            'background: var(--ws-del-tr)'));
 
         // Drag button
         self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.drag'], 'cursor: grab',
@@ -147,7 +147,7 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
 
         // Move targets
         self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move-position'], 'width: 100%',
-            'height: 0', 'background: linear-gradient(-45deg, var(--neutral), var(--move-position-background))',
+            'height: 0', 'background: linear-gradient(-45deg, var(--ws-neutral), var(--move-position-background))',
             'background-size: 400% 400%',
             'border-radius: 5px', 'align-items: center', 'justify-content: center', 'transition: 0.5s',
             'display: flex'));

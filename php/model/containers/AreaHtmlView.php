@@ -43,9 +43,9 @@ class AreaHtmlView extends ContainerHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('.c-area', [], 'background: var(--ultra-light-system-background)',
+        self::addStyle(WebshipTools::css('.c-area', [], 'background: var(--ws-std-ulight-bg)',
             'border-radius: 10px', 'margin-top: 10px', 'box-sizing: border-box',
-            'border: solid 1px var(--system-background)'));
+            'border: solid 1px var(--ws-std-bg)'));
         self::addStyle(WebshipTools::css('.c-area', [' > ', '.sub-title'], 'padding: 0',
             'margin-bottom: 10px'));
         self::addStyle(WebshipTools::css('.c-area.fit', [], 'height: fit-content'));
@@ -54,9 +54,9 @@ class AreaHtmlView extends ContainerHtmlView {
         self::addStyle(WebshipTools::css('.c-area.small', [], 'background: none',
             'border-radius: inherit', 'border: inherit'));
         self::addStyle(WebshipTools::css('.c-area.small', [' > ', ':not(.sub-title)'],
-            'border-radius: 10px', 'border: solid 1px var(--system-background)'));
+            'border-radius: 10px', 'border: solid 1px var(--ws-std-bg)'));
         self::addStyle(WebshipTools::css('.c-area.small', [' > ', '.sub-title'], 'margin-bottom: 0',
-            'font-size: 12px', 'color: var(--font-light)'));
+            'font-size: 12px', 'color: var(--ws-font-dgray)'));
     }
 
     /**

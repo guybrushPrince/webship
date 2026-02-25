@@ -61,7 +61,7 @@ class TimelineHtmlView extends HtmlView {
          self::addStyle(WebshipTools::css('.timeline', [], 'width: 100%', 'height: 100%', 'display: flex',
             'flex-direction: column', '--thickness: 3px', '--interval: 30px', '--line-color: var(--survey-trans)',
             '--h-line-width: 5%', '--line-error-color: var(--signal)', '--line-warning-color: var(--similarity-orange)',
-            '--line-dead-color: var(--border-6)'));
+            '--line-dead-color: var(--ws-std-brd)'));
          self::addStyle(WebshipTools::css('.timeline', [' > ', '.line'],
             'width: calc(50% - var(--thickness) / 2)', 'height: var(--interval)',
             'border-right: var(--thickness) solid var(--line-color)'));

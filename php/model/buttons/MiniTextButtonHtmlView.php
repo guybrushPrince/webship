@@ -47,11 +47,11 @@ class MiniTextButtonHtmlView extends ButtonHtmlView {
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('button.mini', [],'border: none', 'background: none',
             'height: 20px', 'border-radius: 3px', 'padding: 3px', 'width: initial', 'font-size: 10px',
-            'color: var(--font-info)', 'transition: all 0.25s', 'cursor: pointer'));
-        self::addStyle(WebshipTools::css('button.mini', [':hover'], 'background: var(--font-info)',
-            'color: var(--neutral)'));
-        self::addStyle(WebshipTools::css('button.mini.del', [':hover'],'background: var(--delete-2-hover-2)',
-            'color: var(--neutral)'));
+            'color: var(--ws-font-info)', 'transition: all 0.25s', 'cursor: pointer'));
+        self::addStyle(WebshipTools::css('button.mini', [':hover'], 'background: var(--ws-font-info)',
+            'color: var(--ws-neutral)'));
+        self::addStyle(WebshipTools::css('button.mini.del', [':hover'],'background: var(--ws-del-tr)',
+            'color: var(--ws-neutral)'));
     }
 
     /**

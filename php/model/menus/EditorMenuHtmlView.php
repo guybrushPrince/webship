@@ -38,16 +38,16 @@ class EditorMenuHtmlView extends HtmlView {
      */
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.editor-menu', [], 'width: 100%', 'padding: 0', 'margin: 5px 0 0 0',
-            'background: var(--login-border)', 'height: 30px', 'display: flex', 'flex-direction: row'));
+            'background: var(--ws-app-brd)', 'height: 30px', 'display: flex', 'flex-direction: row'));
 
         self::addStyle(WebshipTools::css('.editor-menu', [' > ', '.entry'], 'font-family: Roboto, sans-serif',
             'text-transform: none', 'font-size: 12px', 'cursor: pointer', 'padding: 0 10px', 'height: 100%',
             'display: flex', 'flex-direction: row', 'align-items: center'));
         self::addStyle(WebshipTools::css('.editor-menu', [' > ', '.entry', ':hover'],
-            'opacity: 1', 'background: var(--main-menu)'));
+            'opacity: 1', 'background: var(--ws-main-menu)'));
         self::addStyle(WebshipTools::css('.editor-menu', [' > ', '.entry', '.active'],
-            'opacity: 1', 'background: var(--main-menu)', 'box-sizing: border-box',
-            'text-decoration: underline', 'text-decoration-thickness: 3px', 'text-decoration-color: var(--neutral)',
+            'opacity: 1', 'background: var(--ws-main-menu)', 'box-sizing: border-box',
+            'text-decoration: underline', 'text-decoration-thickness: 3px', 'text-decoration-color: var(--ws-neutral)',
             'text-underline-offset: 5px'));
     }
 

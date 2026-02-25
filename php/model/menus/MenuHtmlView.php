@@ -34,7 +34,7 @@ class MenuHtmlView extends HtmlView {
      */
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('nav.menu', '', 'position: fixed', 'left: 0',
-            'top: 0', 'width: 100%', 'display: flex', 'flex-direction: column', 'background: var(--main-menu)',
+            'top: 0', 'width: 100%', 'display: flex', 'flex-direction: column', 'background: var(--ws-main-menu)',
             'z-index: 100'));
         self::addStyle(WebshipTools::css('nav.menu', [' ', 'ul'], '', 'list-style-type: none',
             'display: flex', 'margin: 0', 'flex-wrap: nowrap', 'padding: 0'));
@@ -42,8 +42,8 @@ class MenuHtmlView extends HtmlView {
             'height: 35px', 'padding: 10px 20px', 'box-sizing: border-box', 'position: relative',
             'width: -moz-fit-content'));
         self::addStyle(WebshipTools::css('nav.menu', [' ', 'ul', ' > ', 'li:hover'],
-            '-webkit-box-shadow: var(--shadow-flow-1)', '-moz-box-shadow: var(--shadow-flow-1)',
-            'box-shadow: var(--shadow-flow-1)'));
+            '-webkit-box-shadow: var(--ws-haptic-shadow)', '-moz-box-shadow: var(--ws-haptic-shadow)',
+            'box-shadow: var(--ws-haptic-shadow)'));
 
         self::addStyle(WebshipTools::css('nav.menu', [' ', '.signals-1', ' > ', '.signal:first-of-type'],
             'top: 5px', 'right: 5px'));
@@ -54,8 +54,8 @@ class MenuHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('nav.menu', [' ', '.signal'], 'position: absolute',
             'width: 20px', 'height: 20px', 'font-size: 10px', 'background: var(--signal)',
             'border-radius: 10px', 'opacity: 0.6'));
-        self::addStyle(WebshipTools::css('nav.menu', [' ', '.signal.blue'], 'background: var(--background-info)'));
-        self::addStyle(WebshipTools::css('nav.menu', [' ', '.signal.yellow'], 'background: var(--background-warning)'));
+        self::addStyle(WebshipTools::css('nav.menu', [' ', '.signal.blue'], 'background: var(--ws-background-info)'));
+        self::addStyle(WebshipTools::css('nav.menu', [' ', '.signal.yellow'], 'background: var(--ws-background-warning)'));
     }
 
     /**

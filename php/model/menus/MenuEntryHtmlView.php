@@ -37,7 +37,7 @@ class MenuEntryHtmlView extends HtmlView {
             'cursor: pointer', 'font-size: 15px', 'font-weight: normal',
             'align-items: center'));
         self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.menu-entry', ':hover'],
-            'background: var(--main-menu-hover)'));
+            'background: var(--ws-main-menu-hvr)'));
         self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.menu-entry', ':hover', ' > ', ' ul'],
             'display: flex', 'flex-wrap: wrap', 'position: absolute', 'left: 0', 'top: 35px'));
     }

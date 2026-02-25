@@ -70,21 +70,21 @@ class ObjectChipHtmlView extends ContainerHtmlView {
 
         if (!is_null($type)) {
             if (!$swap) {
-                $this->localStyle('--premier-color: var(--' . $type . ')');
-                $this->localStyle('--secondary-color: var(--' . $type . '-highlight)');
-                $this->localStyle('--premier-font: var(--' . $type . '-font)');
-                $this->localStyle('--secondary-font: var(--' . $type . '-highlight-font)');
+                $this->localStyle('--ws-premier-color: var(--' . $type . ')');
+                $this->localStyle('--ws-secondary-color: var(--' . $type . '-highlight)');
+                $this->localStyle('--ws-premier-font: var(--' . $type . '-font)');
+                $this->localStyle('--ws-secondary-font: var(--' . $type . '-highlight-font)');
             } else {
-                $this->localStyle('--premier-color: var(--' . $type . '-highlight)');
-                $this->localStyle('--secondary-color: var(--' . $type . ')');
-                $this->localStyle('--premier-font: var(--' . $type . '-highlight-font)');
-                $this->localStyle('--secondary-font: var(--' . $type . '-font)');
+                $this->localStyle('--ws-premier-color: var(--' . $type . '-highlight)');
+                $this->localStyle('--ws-secondary-color: var(--' . $type . ')');
+                $this->localStyle('--ws-premier-font: var(--' . $type . '-highlight-font)');
+                $this->localStyle('--ws-secondary-font: var(--' . $type . '-font)');
             }
         } else {
-            if ($premierColor) $this->localStyle('--premier-color: ' . $premierColor);
-            if ($secondaryColor) $this->localStyle('--secondary-color: ' .$secondaryColor);
-            if ($premierFont) $this->localStyle('--premier-font: ' . $premierFont);
-            if ($secondaryFont) $this->localStyle('--secondary-font: ' . $secondaryFont);
+            if ($premierColor) $this->localStyle('--ws-premier-color: ' . $premierColor);
+            if ($secondaryColor) $this->localStyle('--ws-secondary-color: ' .$secondaryColor);
+            if ($premierFont) $this->localStyle('--ws-premier-font: ' . $premierFont);
+            if ($secondaryFont) $this->localStyle('--ws-secondary-font: ' . $secondaryFont);
         }
     }
 
@@ -94,14 +94,14 @@ class ObjectChipHtmlView extends ContainerHtmlView {
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.obj-chip', [], 'border-radius: 5px', 'padding: 0',
             'transition: 0.5s background', 'width: -moz-fit-content', 'width: fit-content',
-            'background: var(--premier-color)', 'color: var(--premier-font)', 'gap: 10px'));
+            'background: var(--ws-premier-color)', 'color: var(--ws-premier-font)', 'gap: 10px'));
         self::addStyle(WebshipTools::css('.obj-chip.clickable', [], 'cursor: pointer',
             'transition: 0.5s opacity'));
         self::addStyle(WebshipTools::css('.obj-chip.clickable:hover', [], 'opacity: 0.8'));
 
         self::addStyle(WebshipTools::css('.obj-chip', [' > ', 'div:first-child'],
-            'background: var(--secondary-color)',
-            'color: var(--secondary-font)', 'border-right: 2px solid var(--premier-color)', 'font-weight: bold',
+            'background: var(--ws-secondary-color)',
+            'color: var(--ws-secondary-font)', 'border-right: 2px solid var(--ws-premier-color)', 'font-weight: bold',
             'font-size: 12px', 'padding: 6px 10px', 'border-radius: 5px 0 0 5px', 'white-space: nowrap'));
 
         self::addStyle(WebshipTools::css('.obj-chip', [' > ', 'div:nth-child(2):not(:first-child):not(.del)'],

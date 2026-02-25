@@ -55,12 +55,12 @@ class TableRowHtmlView extends ContainerHtmlView {
         self::addStyle(WebshipTools::css('.table > .tr.stretch', [' > ', '.cell.full'] ,'grid-column: 1/-1'));
         self::addStyle(WebshipTools::css('.table > .tr.header', [], 'font-weight: bold'));
         self::addStyle(WebshipTools::css('.table > .tr.header.border', [], 'align-items: flex-end',
-            'border-bottom: 1px solid var(--system-background)', 'padding-bottom: 4px'));
+            'border-bottom: 1px solid var(--ws-std-bg)', 'padding-bottom: 4px'));
         self::addStyle(WebshipTools::css('.table > .tr.header.border', [' > ', '.cell'], 'align-items: flex-end',
             'align-content: flex-end'));
         self::addStyle(WebshipTools::css('.table > .tr.hoverable', [], 'transition: 0.5s background'));
         self::addStyle(WebshipTools::css('.table > .tr.hoverable', [':hover'],
-            'background: var(--light-system-background)'));
+            'background: var(--ws-std-light-bg)'));
         self::addStyle(WebshipTools::css('.table > .tr.h40px', [' > ', '.cell'],'min-height: 40px'));
     }
     /**
