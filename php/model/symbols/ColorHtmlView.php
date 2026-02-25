@@ -2,7 +2,6 @@
 
 namespace webship\symbols;
 
-use Tools;
 use webship\core\HtmlView;
 use webship\WebshipTools;
 
@@ -48,7 +47,7 @@ class ColorHtmlView extends HtmlView {
         parent::__construct($classes);
 
         if ($color === 'none') $font = '#000000';
-        else $font = Tools::getFontColor($color);
+        else $font = WebshipTools::getFontColor($color);
         $this->localStyle([
             '--bg: ' . $color,
             '--fc: ' . $font,
@@ -56,7 +55,7 @@ class ColorHtmlView extends HtmlView {
         ]);
 
         if ($title) {
-            if (!is_array($title)) $title = [self::getLanguage() => $title];
+            if (!is_array($title)) $title = [ self::getLanguage() => $title ];
             $this->notices($title);
         }
 
@@ -78,7 +77,7 @@ class ColorHtmlView extends HtmlView {
      * @param string[]|string $classes Some classes.
      * @return ColorHtmlView
      */
-    public static function createIt(string       $color, array|string|null $title = null,
+    public static function createIt(string $color, array|string|null $title = null,
                                     array|string $classes = []) : ColorHtmlView {
         return new ColorHtmlView($color, $classes, $title);
     }

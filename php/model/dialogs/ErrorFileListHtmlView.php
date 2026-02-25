@@ -2,8 +2,8 @@
 
 namespace webship\dialogs;
 
+use webship\controller\BasicEvents;
 use webship\interoperability\WEvent;
-use Tools;
 use webship\buttons\StandardButtonHtmlView;
 use webship\containers\ContainerHtmlView;
 use webship\contents\PlainHtmlView;
@@ -93,10 +93,10 @@ class ErrorFileListHtmlView extends StandardButtonHtmlView {
         $v = ContainerHtmlView::createIt('invisible');
         $view->add($v);
         $v->ref('error');
-        $view->protocol(WEvent::CLICK)->doIt('ToggleClass', [
+        $view->protocol(WEvent::CLICK)->doIt(BasicEvents::ToggleClass, [
             'view' => $v,
             'class' => 'invisible'
-        ], 'basics');
+        ], BasicEvents::environment());
 
         $pV = $v->container();
         $subViews = [];
@@ -112,7 +112,7 @@ class ErrorFileListHtmlView extends StandardButtonHtmlView {
                     $sweave = strpos($value, '-sweave') > 0;
                     $lPV->container('phase-file')->texts(basename($value));
                     if (file_exists($value)) {
-                        $content = Tools::getLastLinesOfFile($value, 100);
+                        $content = WebshipTools::getLastLinesOfFile($value, 100);
                     }
                     if ($sweave) $key = 's' . $key;
                     if ($tex) $key = 't' . $key;
@@ -123,7 +123,7 @@ class ErrorFileListHtmlView extends StandardButtonHtmlView {
                         $key = 'y-' . $key;
                     }
                 } else if (WebshipTools::endsWith('.ini', $value)) {
-                    $content = Tools::getLastLinesOfFile($value, 100);
+                    $content = WebshipTools::getLastLinesOfFile($value, 100);
                 } else {
                     $content = $value . PHP_EOL . PHP_EOL;
                     $key = 'z-' . $key;

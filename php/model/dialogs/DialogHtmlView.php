@@ -2,8 +2,8 @@
 
 namespace webship\dialogs;
 
-use Language;
 use ParsedownExtra;
+use ship\interoperability\SLanguage as Language;
 use webship\core\HtmlView;
 
 /**

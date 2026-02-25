@@ -2,14 +2,13 @@
 
 namespace webship\tabs;
 
-use DatabaseError;
-use webship\interoperability\WEvent;
 use Exception;
 use ship\interoperability\SLanguage as Language;
 use ship\views\TextView;
 use webship\buttons\CloserHtmlView;
 use webship\containers\ContainerItemHtmlView;
 use webship\core\HtmlView;
+use webship\interoperability\WEvent;
 use webship\symbols\ImageHtmlView;
 use webship\WebshipTools;
 
@@ -115,7 +114,6 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
 
     /**
      * @inheritDoc
-     * @throws DatabaseError
      * @throws Exception
      */
     public function generateOpeningTag() : string {

@@ -4,10 +4,10 @@ namespace webship\protocols;
 
 use ReflectionClass;
 use ReflectionException;
-use SeaStarMethod;
 use ship\protocols\ActionProtocol;
 use ship\protocols\ModifyProtocol;
 use ship\views\View;
+use webship\interoperability\IWebSocketAction;
 use webship\interoperability\ParameterSerializer;
 use webship\WebshipTools;
 
@@ -26,6 +26,12 @@ use webship\WebshipTools;
  */
 class HtmlActionProtocol extends ActionProtocol {
 
+    /**
+     * Registered socket actions.
+     * @var IWebSocketAction[]
+     */
+    private static array $sockets = [];
+
 
     /**
      * @inheritDoc
@@ -34,6 +40,15 @@ class HtmlActionProtocol extends ActionProtocol {
                                 array $parameters = [], array $title = [], string|int|null $seaStar = null) {
         parent::__construct($parent, $controller, $method, HtmlModifyProtocol::class,
             $parameters, $title, $seaStar);
+    }
+
+    /**
+     * Register a socket action of type {@link IWebSocketAction}.
+     * @param IWebSocketAction $socketAction The socket action.
+     * @return void
+     */
+    public static function registerSocketAction(IWebSocketAction $socketAction) : void {
+        self::$sockets[] = $socketAction;
     }
 
     /**
@@ -120,44 +135,16 @@ class HtmlActionProtocol extends ActionProtocol {
                             'sysTF(taskId);})';
                     }
                 }, $this->protocol)) . ';';
+            return $code;
         } else { // WebSocket Call
-            $code = 'seastar.';
-            // Add the method
-            switch ($this->action) {
-                case SeaStarMethod::CALL:
-                {
-                    $code .= 'call';
-                    break;
-                }
-                case SeaStarMethod::START:
-                {
-                    $code .= 'atStart';
-                    break;
-                }
-                case SeaStarMethod::EVENT:
-                {
-                    $code .= 'regListener';
-                    break;
-                }
-                default:
-                {
-                    $code .= '';
-                    break;
-                }
+            foreach (self::$sockets as $socketAction) {
+                $code = $socketAction->action($this->controller, $this->method, $this->action,
+                    $data ?? null, $this->protocol);
+                if (!is_null($code)) return $code;
             }
-            // Add controller, method and context, event respectively.
-            $code .= '("' . $this->controller . '","' . $this->method . '"' . ',';
-            if (($this->action === SeaStarMethod::CALL || $this->action === SeaStarMethod::START) && isset($data)) {
-                $code .= '{' . implode(',', $data) . '},';
-            }
-            // Add callbacks.
-            $code .= implode(',', array_map(function (array $p) {
-                return 'function(result) {result = extractStyle(result);' . $p["protocol"]->generate() . '}';
-            }, $this->protocol));
-            $code .= ');';
         }
 
-        return $code;
+        return '';
     }
 }
 ?>

@@ -2,9 +2,6 @@
 
 namespace webship\protocols;
 
-use CliffSerializable;
-use DatabaseError;
-use webship\interoperability\WEvent;
 use Exception;
 use ship\interoperability\IShippable;
 use ship\interoperability\ShipperRegister;
@@ -16,6 +13,7 @@ use ship\views\DirectView;
 use ship\views\View;
 use webship\core\HtmlView;
 use webship\interoperability\ParameterSerializer;
+use webship\interoperability\WEvent;
 use webship\JSProperty;
 use webship\WebshipTools;
 
@@ -408,7 +406,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
      * Generate the dom action.
      * @param array $modify The associative array with information.
      * @return string
-     * @throws DatabaseError
+     * @throws Exception
      */
     private function generateDomAction(array $modify) : string {
         // Although not beautiful, this code section is required to handle unknown variables, which cannot be
@@ -502,7 +500,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                 return ', ' . WebshipTools::jsonEncode(array_reduce(array_keys($dataInfo),
                         function (array $values, $param) use ($dataInfo) {
                             $value = $dataInfo[$param];
-                            if ($value instanceof CliffSerializable) {
+                            if ($value instanceof IShippable) {
                                 $value = ParameterSerializer::handleObject($value);
                                 $values[$param] = $value["value"];
                                 $values[$param . 'IClass'] = $value["IClass"];

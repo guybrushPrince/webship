@@ -2,7 +2,6 @@
 
 namespace webship\core;
 
-use DatabaseError;
 use Exception;
 use ship\interoperability\IShippable;
 use ship\protocols\ModifyProtocol;
@@ -144,7 +143,7 @@ class HtmlView extends View {
     }
 
     /**
-     * Add java script to the view.
+     * Add JavaScript to the view.
      * @param string[]|string $js The code.
      */
     public function addJavaScript(array|string $js) : void {
@@ -207,7 +206,7 @@ class HtmlView extends View {
      * Generates a complete style sheet.
      * @param bool $force Whether the generation of a new style shall be forced, or not.
      * @return string
-     * @throws DatabaseError
+     * @throws Exception
      */
     public function generateStyle(bool $force = false) : string {
         $styles = [];
@@ -220,7 +219,6 @@ class HtmlView extends View {
      * @param bool $force Whether the generation of a new style shall be forced, or not.
      * @param string[]|null $checkContainer (Internal) container for CSS.
      * @return string[]
-     * @throws DatabaseError
      * @throws Exception
      */
     private function collectStyles(array &$styles, bool $force = false, ?array &$checkContainer = null) : array {
@@ -254,7 +252,7 @@ class HtmlView extends View {
     /**
      * Generates a complete java script.
      * @return string
-     * @throws DatabaseError
+     * @throws Exception
      */
     public function generateJS() : string {
         return implode(PHP_EOL, array_unique($this->collectJS()));
@@ -263,7 +261,6 @@ class HtmlView extends View {
     /**
      * Collect the java scripts.
      * @return string[]
-     * @throws DatabaseError
      * @throws Exception
      */
     private function collectJS() : array {

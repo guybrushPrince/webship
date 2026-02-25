@@ -2,17 +2,11 @@
 
 namespace webship\symbols;
 
-use AccessCreationHelper;
-use DatabaseError;
-use DescribableObject;
 use Exception;
-use ITextBoxUser;
-use Language;
-use Persistence;
-use ship\interoperability\ShipperRegister;
-use TextController;
+use ship\interoperability\SLanguage as Language;
 use webship\contents\PlainHtmlView;
 use webship\core\HtmlView;
+use webship\interoperability\ITextEditable;
 use webship\WebshipTools;
 
 /**
@@ -28,16 +22,16 @@ class NamelessHtmlView extends HtmlView {
 
     /**
      * Constructor.
-     * @param ITextBoxUser|DescribableObject $target The target.
+     * @param ITextEditable $target The target.
      * @param string|string[]|null $fields A field or some fields.
      * @param int $language The language.
      * @param bool $textBox If it refers to a text box or to a description.
      * @param string|null $defaultText A default text if it shall be one set.
      * @param string|null $img The image.
      * @param string[]|string $classes Some classes.
-     * @throws DatabaseError
+     * @throws Exception
      */
-    private function __construct(ITextBoxUser|DescribableObject $target,
+    private function __construct(ITextEditable $target,
                                  string|array|null $fields = null, int $language = Language::GERMAN,
                                  bool $textBox = true, ?string $defaultText = null,
                                  ?string $img = '/webship/pic/unknown.svg', array|string $classes = []) {
@@ -65,8 +59,7 @@ class NamelessHtmlView extends HtmlView {
     }
 
     /**
-     * Generate the CSS code.
-     * @return void
+     * @inheritDoc
      */
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.unknown', [], 'width: -moz-fit-content', 'width: fit-content',
@@ -82,7 +75,7 @@ class NamelessHtmlView extends HtmlView {
 
     /**
      * Create a nameless view.
-     * @param ITextBoxUser|DescribableObject $target The target.
+     * @param ITextEditable $target The target.
      * @param string|string[]|null $fields A field or some fields.
      * @param int $language The language.
      * @param bool $textBox If it refers to a text box or to a description.
@@ -91,10 +84,9 @@ class NamelessHtmlView extends HtmlView {
      * @param bool|null $invisible Set invisible if empty.
      * @param string[]|string $classes Some classes.
      * @return string
-     * @throws DatabaseError
      * @throws Exception
      */
-    public static function create(ITextBoxUser|DescribableObject $target,
+    public static function create(ITextEditable $target,
                                   string|array|null $fields = null, int $language = Language::GERMAN,
                                   bool $textBox = true, ?string $defaultText = null,
                                   ?string $img = '/webship/pic/unknown.svg',
@@ -134,63 +126,34 @@ class NamelessHtmlView extends HtmlView {
     }
 
     /**
-     * Create linkable text.
-     * @param ITextBoxUser|DescribableObject $target The target.
+     * Create a linked text if the corresponding entry, key, etc. are known.
+     * @param string $entry The entry.
+     * @param string|int $objectKey The key of the object.
      * @param string $field The field.
      * @param int $language The language.
-     * @param bool $textBox If the text box or the description shall be accessed.
+     * @param string $text An optional text.
+     * @return string
+     */
+    public static function createLinkedText(string $entry, string|int $objectKey, string $field, int $language,
+                                            string $text) : string {
+        return '<span data-' . $entry . '="' . $objectKey . '" ' .
+            'data-field="' . $field . '" ' . 'data-lang="' . $language . '">' . $text . '</span>';
+    }
+
+    /**
+     * Create linkable text.
+     * @param ITextEditable $target The target.
+     * @param string $field The field.
+     * @param int $language The language.
+     * @param array|string|int|bool $params Some additional parameters.
      * @param string|null $text The text (if available).
      * @return string
-     * @throws DatabaseError
+     * @throws Exception
      */
-    public function createLinkableText(ITextBoxUser|DescribableObject $target, string $field,
-                                       int $language = Language::GERMAN, bool $textBox = true,
+    public function createLinkableText(ITextEditable $target, string $field,
+                                       int $language = Language::GERMAN, array|string|int|bool $params = [],
                                        ?string $text = null) : string {
-        $entry = ($textBox ? 'box' : 'desc');
-
-        // "Repair" objects that do not have a text box or description yet.
-        if ($textBox && !$target->getTextBoxEntry()) {
-            if (get_class($target)::exists($target->getKey()) && AccessCreationHelper::hasWriteAccess($target) &&
-                AccessCreationHelper::hasReadAccess($target)) {
-                $textController = new TextController();
-                $textController->changeTextField($target, 'header', $language, null);
-            } else return '';
-        } else if (!$textBox && (!$target->getDescription() || !$target->getLanguageDescription($language, true))) {
-            if (AccessCreationHelper::hasReadAccess($target) && AccessCreationHelper::hasWriteAccess($target)) {
-
-                $target = get_class($target)::get($target->getId());
-
-                Persistence::instance()->startTransaction();
-                $addDescriptionAccess = !$target->getDescription();
-                if (!$addDescriptionAccess) $addLanguageAccess = !($target->getLanguageDescription($language));
-                else $addLanguageAccess = true;
-
-                $target->setDescriptionText($field, $language, '');
-
-                $persistence = Persistence::instance();
-                $persistence->startTransaction();
-                if ($addDescriptionAccess) {
-                    AccessCreationHelper::inheritOrAddAccessRights($target, $target->getDescription());
-                    $target->getDescription()->create();
-                }
-                if ($addLanguageAccess) {
-                    AccessCreationHelper::inheritOrAddAccessRights($target, $target->getLanguageDescription($language));
-                    $target->getLanguageDescription($language)->create();
-                    $target->getDescription()->updateClose();
-                } else {
-                    $target->getLanguageDescription($language)->updateClose();
-                }
-                $target->updateClose();
-                Persistence::instance()->endTransaction();
-            } else return '';
-        }
-
-
-        $obj = ($textBox ? $target->getTextBoxEntry() : $target->getLanguageDescription($language));
-        $text = ($text !== null) ?: '';
-
-        return '<span data-' . $entry . '="' . ShipperRegister::convertKey($obj->getKey()) . '" ' .
-            'data-field="' . $field . '" ' . 'data-lang="' . $language . '">' . $text . '</span>';
+        return $target->createLinkableText($field, $language, $params, $text);
     }
 }
 ?>

@@ -2,6 +2,7 @@
 
 namespace webship\containers;
 
+use webship\controller\BasicEvents;
 use webship\interoperability\WEvent;
 use webship\core\HtmlView;
 use webship\protocols\HtmlActionProtocol;
@@ -70,7 +71,7 @@ class SectionHtmlView extends HtmlView {
 
         if ($openable) {
             $this->section->protocol(WEvent::CLICK)->
-            doIt('ToggleClass', ['view' => $this, 'class' => 'closed'], 'basics');
+                doIt(BasicEvents::ToggleClass, ['view' => $this, 'class' => 'closed'], BasicEvents::environment());
             if (!$open) {
                 $this->js('(function() { let open = false; $("' . $this->section->idc() . '").on("click", function() { if (!open) $("' . $this->idc() . '").trigger("' . WEvent::OPEN_LIST . '"); open = true; }); })();');
             } else $this->js('(function() { let open = true; $("' . $this->section->idc() . '").on("click", function() { if (open) $("' . $this->idc() . '").trigger("' . WEvent::CLOSE_LIST . '"); open = false; }); })();');

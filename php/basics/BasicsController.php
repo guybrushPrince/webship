@@ -33,5 +33,13 @@ class BasicsController extends ShipController {
         return HelpPageHtmlView::createHelpCenter($package, $subpackage, $doc, $language);
     }
 
+    /**
+     * @inheritDoc
+     * @ignore
+     */
+    public function getScope() : ?string {
+        return BasicEvents::environment();
+    }
+
 }
 ?>

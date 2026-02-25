@@ -2,8 +2,6 @@
 
 namespace webship\menus;
 
-use Job;
-use JobProgressHtmlView;
 use webship\buttons\StandardButtonHtmlView;
 use webship\core\HtmlView;
 use webship\links\LinkHtmlView;
@@ -194,7 +192,7 @@ class ControlPanelHtmlView extends HtmlView {
      * @return StandardButtonHtmlView
      */
     public function availableButton(StandardButtonHtmlView $but, ?string $img = null,
-                                    string|array           $classes = []) : StandardButtonHtmlView {
+                                    string|array $classes = []) : StandardButtonHtmlView {
         $this->add($but);
         if ($img) $but->img($img);
         $but->onlyImg(true);
@@ -253,19 +251,6 @@ class ControlPanelHtmlView extends HtmlView {
             array_merge(['area'], $classes));
         $this->add($view);
         return $view;
-    }
-
-    /**
-     * Adds a progress into a control panel.
-     * @param Job $job The job to state the progress of.
-     * @param int $xDim The x-dimension of the view.
-     * @param int $yDim The y-dimension of the view.
-     * @return HtmlView
-     */
-    public function progress(Job $job, int $xDim, int $yDim) : HtmlView {
-        $progress = JobProgressHtmlView::createJob($job, 'var(--neutral)', 'var(--font-info)',
-            '100%');
-        return $this->addMini($progress, $xDim, $yDim, true);
     }
 
     /**

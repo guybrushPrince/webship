@@ -2,15 +2,9 @@
 
 namespace webship\dashboards;
 
-use ChangelogDashboardItem;
-use DatabaseError;
-use InvitationDashboardItem;
-use MonitorDashboardItem;
-use Persistence;
-use ReferenceDashboardItem;
-use ship\interoperability\SLanguage as Language;
+use ship\interoperability\ShipperRegister;
 use webship\core\HtmlView;
-use webship\DashboardItem;
+use webship\interoperability\IDashboardItem;
 use webship\WebshipTools;
 
 /**
@@ -72,16 +66,15 @@ class DashGridHtmlView extends HtmlView {
 
     /**
      * Create a dash-grid html view.
-     * @param DashboardItem|null $dashItem The dashboard item.
+     * @param IDashboardItem|null $dashItem The dashboard item.
      * @param int $cols The number of columns.
      * @param int $rows The number of rows.
      * @param HtmlView|null $instruction1 A view that has the instruction.
      * @param HtmlView|null $instruction2 A view that has the second instruction.
      * @param HtmlView|null $container
      * @return DashGridHtmlView
-     * @throws DatabaseError
      */
-    public static function create(?DashboardItem $dashItem = null, int $cols = 6, int $rows = 4,
+    public static function create(?IDashboardItem $dashItem = null, int $cols = 6, int $rows = 4,
                                   ?HtmlView $instruction1 = null, ?HtmlView $instruction2 = null,
                                   ?HtmlView $container = null) : DashGridHtmlView {
         $view = new DashGridHtmlView([], $cols, $rows);
@@ -89,30 +82,20 @@ class DashGridHtmlView extends HtmlView {
         // Determine the map
         $map = array_fill(0, $rows, array_fill(0, $cols, ['kind' => self::FREE]));
 
-        // Determine the user
-        $user = Persistence::instance()->getUserSession() ? Persistence::instance()->getUserSession()->getUser() : null;
-
-
-        $items = DashboardItem::getAllWhere('user', $user);
-        $created = false;
-        if (!$dashItem) {
-            $dashItem = new MonitorDashboardItem(); // Any class can be used.
-            $dashItem->setXPosition(-1);
-            $dashItem->setYPosition(-1);
-            $dashItem->setXDimension(-1);
-            $dashItem->setXDimension(-1);
-            $created = true;
-        }
+        $dashboardHandler = DashboardHtmlView::getDashboardHandler();
+        if (!is_null($dashboardHandler)) {
+            $items = $dashboardHandler->getDashboardItems();
+        } else $items = [];
 
         $firstFree = null;
 
         // All user-specific dashboard items
-        if ($user) {
-            foreach ($items as $k => $item) {
-                if ($item instanceof DashboardItem) {
+        if (!is_null($items)) {
+            foreach ($items as $item) {
+                if ($item instanceof IDashboardItem) {
                     for ($c = $item->getXPosition(); $c < $item->getXPosition() + $item->getXDimension(); $c++) {
                         for ($r = $item->getYPosition(); $r < $item->getYPosition() + $item->getYDimension(); $r++) {
-                            if ($item->getId() !== $dashItem->getId()) {
+                            if (is_null($dashItem) || ShipperRegister::getKey($item) !== ShipperRegister::getKey($dashItem)) {
                                 $map[$r - 1][$c - 1] = ['kind' => self::FILLED, 'with' => $item];
                             } else {
                                 $map[$r - 1][$c - 1] = ['kind' => self::PLACEHOLDER];
@@ -129,13 +112,13 @@ class DashGridHtmlView extends HtmlView {
                 $state = $row[$c];
                 if ($state['kind'] === self::FREE && !$firstFree) {
                     $firstFree = [$c + 1, $r + 1, 1, 1];
-                    if ($created) $state = ['kind' => self::PLACEHOLDER];
+                    if (is_null($dashItem)) $state = ['kind' => self::PLACEHOLDER];
                 }
                 $view->item($state, $c, $r, $map);
             }
         }
 
-        if (!$created) {
+        if (!is_null($dashItem)) {
             $view->initXPos = $dashItem->getXPosition();
             $view->initYPos = $dashItem->getYPosition();
             $view->initXDim = $dashItem->getXDimension();
@@ -241,28 +224,8 @@ class DashGridHtmlView extends HtmlView {
         $title = null;
         if (array_key_exists('with', $stateInfo)) {
             $item = $stateInfo['with'];
-            if ($item instanceof DashboardItem) {
-                if ($item instanceof ReferenceDashboardItem) {
-                    $title = [
-                        Language::ENGLISH => 'Pinned ' . get_class($item->getReference()),
-                        Language::GERMAN => 'Angepinnt'
-                    ];
-                } else if ($item instanceof ChangelogDashboardItem) {
-                    $title = [
-                        Language::ENGLISH => 'Changelog',
-                        Language::GERMAN => 'Changelog'
-                    ];
-                } else if ($item instanceof MonitorDashboardItem) {
-                    $title = [
-                        Language::ENGLISH => 'Survey Monitoring',
-                        Language::GERMAN => 'Befragungsmonitoring'
-                    ];
-                } else if ($item instanceof InvitationDashboardItem) {
-                    $title = [
-                        Language::ENGLISH => 'Invitation',
-                        Language::GERMAN => 'Einladung'
-                    ];
-                }
+            if ($item instanceof IDashboardItem) {
+                $title = $item->getTitle();
             }
         }
         $view = new HtmlView($cl);

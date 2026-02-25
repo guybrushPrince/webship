@@ -3,9 +3,9 @@
 namespace webship\panels;
 
 use webship\interoperability\WEvent;
-use Language;
 use ship\interoperability\IShippable;
 use ship\interoperability\ShipperRegister;
+use ship\interoperability\SLanguage as Language;
 use webship\protocols\HtmlActionProtocol;
 use webship\WebshipTools;
 

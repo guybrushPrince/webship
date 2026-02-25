@@ -2,9 +2,9 @@
 
 namespace webship\protocols;
 
-use webship\interoperability\WEvent;
 use ship\protocols\DialogProtocol;
 use webship\dialogs\DialogHtmlView;
+use webship\interoperability\WEvent;
 
 /**
  * Class HtmlDialogProtocol

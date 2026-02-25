@@ -2,12 +2,13 @@
 
 namespace webship\wizards;
 
-use webship\interoperability\WEvent;
-use Language;
+use ship\interoperability\SLanguage as Language;
 use ship\protocols\Protocol;
 use webship\buttons\ButtonHtmlView;
 use webship\buttons\CloserHtmlView;
+use webship\controller\BasicEvents;
 use webship\core\HtmlView;
+use webship\interoperability\WEvent;
 use webship\menus\ControlPanelHtmlView;
 use webship\symbols\ImageHtmlView;
 use webship\WebshipTools;
@@ -46,7 +47,7 @@ class WizardMagicHtmlView extends HtmlView {
         $view->add($control);
         $abortButton = $control->addMini(CloserHtmlView::create());
         $abortButton->protocol(WEvent::CLICK)->
-        doIt('Delete', ['view' => $view], 'basics')->
+            doIt(BasicEvents::Delete, ['view' => $view], BasicEvents::environment())->
         append($finishProtocol);
 
         $view->each($wizards, function (WizardMagicHtmlView $view, WizardHtmlView $wizard, int $key) use ($wizards, $finishProtocol) {
@@ -56,31 +57,30 @@ class WizardMagicHtmlView extends HtmlView {
             if ($key !== array_key_first($wizards)) {
                 $wizard->addClass('invisible');
                 $controller->add(new ButtonHtmlView('back-' . $wizard->id(), 'back-' . $wizard->id()))->
-                add(new ImageHtmlView('/webship/pic/back.svg'))->parent()->
-                texts()->
-                text(Language::ENGLISH, 'Back')->
-                text(Language::GERMAN, 'Zurück')->
-                parent()->
-                protocol(WEvent::CLICK)->
-                doIt('ToggleClass', ['view' => $wizard, 'class' => 'invisible'], 'basics')->
-                doIt('ToggleClass', ['view' => 'wizard-' . ($key - 1), 'class' => 'invisible'], 'basics')->
-                append($wizards[$key - 1]->getUpdateProtocol())->
-                parent();
+                    add(new ImageHtmlView('/webship/pic/back.svg'))->parent()->
+                        texts()->
+                            text(Language::ENGLISH, 'Back')->
+                            text(Language::GERMAN, 'Zurück')->
+                        parent()->
+                        protocol(WEvent::CLICK)->
+                            doIt(BasicEvents::ToggleClass, ['view' => $wizard, 'class' => 'invisible'], BasicEvents::environment())->
+                            doIt(BasicEvents::ToggleClass, ['view' => 'wizard-' . ($key - 1), 'class' => 'invisible'], BasicEvents::environment())->
+                            append($wizards[$key - 1]->getUpdateProtocol());
             }
             $nextButton = $controller->add(new ButtonHtmlView('next-' . $wizard->id(), 'next-' . $wizard->id()));
             $nextButton->texts()->
-            text(Language::ENGLISH, $key !== array_key_last($wizards) ? 'Next' : 'Finish')->
-            text(Language::GERMAN, $key !== array_key_last($wizards) ? 'Weiter' : 'Abschließen');
+                text(Language::ENGLISH, $key !== array_key_last($wizards) ? 'Next' : 'Finish')->
+                text(Language::GERMAN, $key !== array_key_last($wizards) ? 'Weiter' : 'Abschließen');
             $nextButton->add(new ImageHtmlView('/webship/pic/next.svg'));
             if ($key !== array_key_last($wizards)) {
                 $nextButton->protocol(WEvent::CLICK)->
-                doIt('ToggleClass', ['view' => $wizard, 'class' => 'invisible'], 'basics')->
-                doIt('ToggleClass', ['view' => 'wizard-' . ($key + 1), 'class' => 'invisible'], 'basics')->
-                append($wizards[$key + 1]->getUpdateProtocol());
+                    doIt(BasicEvents::ToggleClass, ['view' => $wizard, 'class' => 'invisible'], BasicEvents::environment())->
+                    doIt(BasicEvents::ToggleClass, ['view' => 'wizard-' . ($key + 1), 'class' => 'invisible'], BasicEvents::environment())->
+                    append($wizards[$key + 1]->getUpdateProtocol());
             } else {
                 $nextButton->protocol(WEvent::CLICK)->
-                doIt('Delete', ['view' => $view], 'basics')->
-                append($finishProtocol);
+                    doIt(BasicEvents::Delete, ['view' => $view], BasicEvents::environment())->
+                    append($finishProtocol);
             }
 
         });

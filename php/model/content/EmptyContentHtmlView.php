@@ -2,7 +2,7 @@
 
 namespace webship\contents;
 
-use DatabaseError;
+use Exception;
 use webship\alerts\InfoHtmlView;
 use webship\core\HtmlView;
 use webship\symbols\ImageHtmlView;
@@ -56,7 +56,7 @@ class EmptyContentHtmlView extends HtmlView {
      * @param string|string[]|null $info (Optional) An info text.
      * @param string|string[] $classes Some classes.
      * @return EmptyContentHtmlView
-     * @throws DatabaseError
+     * @throws Exception
      */
     public static function create(string|array|null $info = null, string|array $classes = []) : EmptyContentHtmlView {
         $view = new EmptyContentHtmlView($classes);

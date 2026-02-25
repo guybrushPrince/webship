@@ -2,12 +2,12 @@
 
 namespace webship\alerts;
 
-use BreakwaterUtil;
-use DatabaseError;
+use Exception;
+use webship\controller\BasicEvents;
+use webship\interoperability\IClickAway;
 use webship\interoperability\WEvent;
 use ParsedownExtra;
 use ship\interoperability\SLanguage as Language;
-use ship\interoperability\DataType as Type;
 use ship\views\View;
 use webship\buttons\CloserHtmlView;
 use webship\core\HtmlView;
@@ -37,6 +37,8 @@ class AlertHtmlView extends HtmlView {
      * @var HtmlView
      */
     private HtmlView $box;
+
+    private static IClickAway|null $clickAwayEffect = null;
 
     /**
      * AlertHtmlView constructor.
@@ -128,25 +130,34 @@ class AlertHtmlView extends HtmlView {
     }
 
     /**
+     * Initialize the effect if an alert is clicked away.
+     * @param IClickAway $clickAway The click away implementation.
+     * @return void
+     */
+    public static function initClickAway(IClickAway $clickAway) : void {
+        self::$clickAwayEffect = $clickAway;
+    }
+
+    /**
      * Creates an alert html view.
      * @param string[]|string $message The multilingual messages.
      * @param bool $screen If it should cover the screen.
      * @param bool $fullView If it should cover the view.
      * @param AlertHtmlView|null $v A view that is recycled.
-     * @param string|null $property A property of the user context, which shall be set.
+     * @param string|null $alertId A property of the user context, which shall be set.
      * @param string|null $image An image to be shown on the left.
      * @param string[]|string $classes Some classes.
      * @return AlertHtmlView
-     * @throws DatabaseError
+     * @throws Exception
      */
     protected static function create(array|string $message = [], bool $screen = false, bool $fullView = false,
-                                  ?AlertHtmlView $v = null, ?string $property = null,
+                                  ?AlertHtmlView $v = null, ?string $alertId = null,
                                   ?string $image = null, array|string $classes = []) : AlertHtmlView {
         $classes = is_array($classes) ? $classes : [ $classes ];
         if (!is_array($message)) $message = [ View::getLanguage() => $message ];
 
-        if ($property !== null) {
-            $show = BreakwaterUtil::getUserParameter($property, Type::BOOLEAN, true);
+        if (!is_null(self::$clickAwayEffect) && !is_null($alertId)) {
+            $show = self::$clickAwayEffect->shallShow($alertId);
             if (!$show) {
                 if (!$v) return new AlertHtmlView(array_merge($classes, [ 'invisible' ]));
                 else {
@@ -167,7 +178,7 @@ class AlertHtmlView extends HtmlView {
         if ($screen || $fullView) {
             $v->ref('alert');
             $overlay = $v->add(new HtmlView('overlay'));
-            $overlay->protocol(WEvent::CLICK)->doIt('Delete', ['view' => $v], 'basics');
+            $overlay->protocol(WEvent::CLICK)->doIt(BasicEvents::Delete, ['view' => $v], BasicEvents::environment());
             $con = $v->add(new HtmlView('a-message'));
             $con->ref('alert-content');
         }
@@ -182,25 +193,22 @@ class AlertHtmlView extends HtmlView {
         $textView->texts((array_key_exists(self::getLanguage(), $message) ?
             ParsedownExtra::instance()->text($message[self::getLanguage()]) : ''));
 
-        if ($screen || $fullView || $property !== null) {
+        if ($screen || $fullView || $alertId !== null) {
             $con->ref('alert-view');
             $control = ControlPanelHtmlView::create(1, 1, false)->fix()->plain();
             $con->add($control);
-            $closer = $control->add(CloserHtmlView::create('close-alert-' . WebshipTools::uuid()));
-            if ($property) {
+            $closer = CloserHtmlView::create('close-alert-' . WebshipTools::uuid());
+            $control->add($closer);
+            if (!is_null($alertId) && !is_null(self::$clickAwayEffect)) {
                 $closer->notices([
                     Language::ENGLISH, 'Do not show this hint anymore.',
                     Language::GERMAN, 'Diesen Hinweis nicht mehr anzeigen.'
                 ]);
-                $closer->protocol(WEvent::CLICK)->doIt('ChangeParameter', [
-                    'target' => BreakwaterUtil::getUserConfiguration(BreakwaterUtil::getCurrentUser()),
-                    'parameter' => $property,
-                    'type' => Type::BOOLEAN,
-                    'value' => false,
-                    'error' => 'main-app'
-                ], 'texts')->doIt('Delete', ['view' => $v], 'basics');
+                $closer->protocol(WEvent::CLICK)->
+                    append(self::$clickAwayEffect->doNotShowAnymore($alertId, $closer))->
+                    doIt(BasicEvents::Delete, ['view' => $v], BasicEvents::environment());
             } else {
-                $closer->protocol(WEvent::CLICK)->doIt('Delete', ['view' => $v], 'basics');
+                $closer->protocol(WEvent::CLICK)->doIt(BasicEvents::Delete, ['view' => $v], BasicEvents::environment());
             }
         }
 

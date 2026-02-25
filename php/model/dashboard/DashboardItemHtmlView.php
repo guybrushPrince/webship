@@ -2,10 +2,10 @@
 
 namespace webship\dashboards;
 
-use Language;
+use ship\interoperability\SLanguage as Language;
 use webship\buttons\CloserHtmlView;
 use webship\core\HtmlView;
-use webship\DashboardItem;
+use webship\interoperability\IDashboardItem;
 use webship\menus\ControlPanelHtmlView;
 use webship\symbols\PencilHtmlView;
 use webship\WebshipTools;
@@ -115,11 +115,11 @@ class DashboardItemHtmlView extends HtmlView {
 
     /**
      * Create a view from the dashboard items.
-     * @param DashboardItem $item The dashboard item.
+     * @param IDashboardItem $item The dashboard item.
      * @param string[]|string $classes (optional) The classes.
      * @return DashboardItemHtmlView
      */
-    public static function _new(DashboardItem $item, array|string $classes = []) : DashboardItemHtmlView {
+    public static function _new(IDashboardItem $item, array|string $classes = []) : DashboardItemHtmlView {
         return $item->createView($classes);
     }
 

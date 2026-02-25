@@ -3,7 +3,7 @@
 namespace webship\inputs;
 
 use webship\interoperability\WEvent;
-use ProgrammingLanguage;
+use ship\interoperability\SProgrammingLanguage;
 use webship\WebshipTools;
 
 /**
@@ -19,7 +19,7 @@ class CodeEditorHtmlView extends TextHtmlView {
     private array $coreClasses;
 
     /**
-     * The programming language (as one of {@link ProgrammingLanguage}).
+     * The programming language (as one of {@link SProgrammingLanguage}).
      * @var int|null
      */
     private ?int $programmingLanguage;
@@ -71,17 +71,17 @@ class CodeEditorHtmlView extends TextHtmlView {
         array_unshift($this->javaScripts,
             'let cm' . $this->id() . ' = CodeMirror.fromTextArea($("' . $this->idc() . '")[0], { ' .
             ($this->programmingLanguage !== null ? 'mode: "' . [
-                    ProgrammingLanguage::CSS => 'css',
-                    ProgrammingLanguage::R => 'r',
-                    ProgrammingLanguage::HTML => 'html',
-                    ProgrammingLanguage::PHP => 'php',
-                    ProgrammingLanguage::JS => 'javascript',
-                    ProgrammingLanguage::LATEX => 'latex',
-                    ProgrammingLanguage::CSV => 'csv',
-                    ProgrammingLanguage::PYTHON => 'python',
-                    ProgrammingLanguage::VERIFIER => 'php'
-                ][(array_key_exists($this->programmingLanguage, ProgrammingLanguage::$PROGRAMMING_LANGUAGE) ?
-                    $this->programmingLanguage : ProgrammingLanguage::PHP)] . '",' : 'mode: "expression",') .
+                    SProgrammingLanguage::CSS => 'css',
+                    SProgrammingLanguage::R => 'r',
+                    SProgrammingLanguage::HTML => 'html',
+                    SProgrammingLanguage::PHP => 'php',
+                    SProgrammingLanguage::JS => 'javascript',
+                    SProgrammingLanguage::LATEX => 'latex',
+                    SProgrammingLanguage::CSV => 'csv',
+                    SProgrammingLanguage::PYTHON => 'python',
+                    SProgrammingLanguage::VERIFIER => 'php'
+                ][(array_key_exists($this->programmingLanguage, SProgrammingLanguage::PROGRAMMING_LANGUAGE) ?
+                    $this->programmingLanguage : SProgrammingLanguage::PHP)] . '",' : 'mode: "expression",') .
             'lineNumbers: true, lineWrapping: true, extraKeys: {"Ctrl-Space": "autocomplete"}, ' .
             ($this->disabled() ? 'readOnly: true' : '') .
             '});');

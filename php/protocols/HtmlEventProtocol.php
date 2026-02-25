@@ -2,12 +2,12 @@
 
 namespace webship\protocols;
 
-use webship\interoperability\WEvent;
 use ship\protocols\EventProtocol;
 use ship\protocols\Protocol;
 use ship\views\DirectView;
 use webship\buttons\SubmitHtmlView;
 use webship\core\HtmlView;
+use webship\interoperability\WEvent;
 
 /**
  * Class HtmlEventProtocol

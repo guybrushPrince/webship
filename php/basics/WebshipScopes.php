@@ -2,7 +2,7 @@
 
 namespace webship\controller;
 
-use Enumeration;
+use ship\interoperability\SEnumeration;
 
 /**
  * Enumeration WebshipScopes.
@@ -13,9 +13,9 @@ use Enumeration;
  * @subpackage php/basics
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
- * @version 1.0.0
+ * @version 1.1.0
  */
-class WebshipScopes extends Enumeration {
+class WebshipScopes extends SEnumeration {
 
     public const OPENING_CARD_OPENS = 'opening-cards-open';
     public const OPENING_CARD_CLOSES = 'opening-cards-closes';

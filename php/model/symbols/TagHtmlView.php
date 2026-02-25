@@ -2,7 +2,6 @@
 
 namespace webship\symbols;
 
-use Tools;
 use webship\core\HtmlView;
 use webship\WebshipTools;
 
@@ -39,7 +38,7 @@ class TagHtmlView extends ColorHtmlView {
                                  array|string $classes = []) {
         if (!is_array($classes)) $classes = [$classes];
         $classes[] = 'ctag';
-        if (is_null($color)) $color = Tools::textToColor($tag);
+        if (is_null($color)) $color = WebshipTools::textToColor($tag);
         parent::__construct($color, $classes, $tag);
 
         if (!$content) $this->container(['ver', 'vcent', 'hcent', 'h100'])->texts($tag);

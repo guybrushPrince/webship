@@ -2,10 +2,10 @@
 
 namespace webship\inputs;
 
+use webship\controller\BasicEvents;
 use webship\interoperability\WEvent;
 use Exception;
-use progression\NotImplementedException;
-use progression\ui\Representer;
+use webship\WebRepresenter;
 use ship\interoperability\IShippable;
 use ship\interoperability\ShipperRegister;
 use ship\interoperability\SLanguage as Language;
@@ -212,14 +212,14 @@ class ContentSelectHtmlView extends SelectHtmlView {
         if (is_null($maxSelections)) $maxSelections = 'null';
         if (is_null($default)) $default = 'null';
         $select->ref('con-select');
-        $select->protocol(WEvent::CLICK, ['sameTarget' => true])->doIt('ToggleClass', [
+        $select->protocol(WEvent::CLICK, ['sameTarget' => true])->doIt(BasicEvents::ToggleClass, [
             'view' => $select,
             'class' => 'open'
-        ], 'basics');
-        $select->protocol(WEvent::CLICK_OUTSIDE)->doIt('RemoveClass', [
+        ], BasicEvents::environment());
+        $select->protocol(WEvent::CLICK_OUTSIDE)->doIt(BasicEvents::RemoveClass, [
             'view' => $select,
             'class' => 'open'
-        ], 'basics')->scrollTop($select->contentOptions);
+        ], BasicEvents::environment())->scrollTop($select->contentOptions);
         $select->js('scaleChildren($("' . $select->idc() . '").children(".c-list"));');
         $select->js('addConSelectFunctionality($("' . $select->idc() . '"), ' . $maxSelections . ', ' . $default . ');');
         $select->js('applySelectChanges($("select' . $select->idc() . '"));');
@@ -228,11 +228,11 @@ class ContentSelectHtmlView extends SelectHtmlView {
 
     /**
      * @inheritDoc
-     * @throws NotImplementedException
+     * @throws Exception
      */
     public function option($value, $classes = [], $selected = false) : OptionHtmlView {
         if (!is_array($value) && !($value instanceof IShippable) && $value !== $this->default)
-            throw new NotImplementedException();
+            throw new Exception();
         $addClass = [];
         $isDefault = false;
 
@@ -267,7 +267,7 @@ class ContentSelectHtmlView extends SelectHtmlView {
             $isDefault = true;
         } else if (!is_array($value)) {
             $value = [
-                Representer::getVisualRepresentation($value, self::getLanguage(), false),
+                WebRepresenter::getVisualRepresentation($value, self::getLanguage(), false),
                 $value
             ];
         }

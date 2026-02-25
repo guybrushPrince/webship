@@ -3,8 +3,8 @@
 namespace webship\containers;
 
 use Closure;
+use webship\interoperability\ITextEditable;
 use webship\interoperability\WEvent;
-use ITextBoxUser;
 use ship\interoperability\SLanguage as Language;
 use ship\interoperability\IShippable;
 use ship\interoperability\ShipperRegister;
@@ -59,13 +59,6 @@ class FolderHtmlView extends StandardHtmlView {
             'border-radius: 5px 5px 0 0'));
         $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.content'],
             'margin: 40px 0 10px 0'));
-
-        /*$this->style(WebshipTools::css('.surveys', [' ', '.survey-group', ' > ', '.menu'],
-            'height: 300px', 'overflow-y: auto'));
-        $this->style(WebshipTools::css('.surveys', [' ', '.survey-group', ' > ', '.menu', ' ', 'li.menu-entry'],
-            'min-height: 15px', 'font-size: 12px'));
-        $this->style(WebshipTools::css('.surveys', [' ', '.survey-group', ' > ', '.menu', ' ', 'li.menu-entry', ' > ',
-            'span:not(:empty):first-child:after'], 'content: \':\'', 'margin-right: 5px', 'font-weight: bold'));*/
 
         $this->style(WebshipTools::css('.folders', [' ', '.f-group.folded', ' > ', '.content'], 'display: none'));
         $this->style(WebshipTools::css('.folders', [' ', '.f-group:not(.folded)', ' ', '#toggle-group-min'],
@@ -178,16 +171,13 @@ class FolderHtmlView extends StandardHtmlView {
         $view->add(new HtmlView('box'));
 
         $title = $view->add(new HtmlView('folder-title'));
-        if ($folderGroup instanceof ITextBoxUser) {
-            $titleView = $title->add(EditableHtmlView::create());
+        if ($folderGroup instanceof ITextEditable) {
+            $titleView = EditableHtmlView::create();
+            $title->add($titleView);
             $titleView->ref('text', 'value');
             $titleView->texts($folderGroup->getTitle(self::getLanguage()));
             $titleView->protocol(WEvent::ONFOCUSOUT)->
-            doIt('ChangeTextField', [
-                'part' => $folderGroup,
-                'language' => self::getLanguage(),
-                'fieldName' => 'header'
-            ], 'texts');
+                append($folderGroup->getChangeProtocol('header', self::getLanguage(), $titleView));
             $title->add(PencilHtmlView::_new());
         } else {
             $title->texts($folderGroup->getTitle(self::getLanguage()));

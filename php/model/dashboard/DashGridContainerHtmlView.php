@@ -2,10 +2,9 @@
 
 namespace webship\dashboards;
 
-use DatabaseError;
 use ship\interoperability\SLanguage as Language;
 use webship\core\HtmlView;
-use webship\DashboardItem;
+use webship\interoperability\IDashboardItem;
 use webship\WebshipTools;
 
 /**
@@ -37,14 +36,13 @@ class DashGridContainerHtmlView extends HtmlView {
 
     /**
      * Create a dash-grid html view.
-     * @param DashboardItem|null $dashItem The dashboard item.
+     * @param IDashboardItem|null $dashItem The dashboard item.
      * @param int $cols The number of columns.
      * @param int $rows The number of rows.
      * @param bool $withInstructions If instructions should be displayed.
      * @return DashGridHtmlView|DashGridContainerHtmlView
-     * @throws DatabaseError
      */
-    public static function create(?DashboardItem $dashItem = null, int $cols = 6, int $rows = 4,
+    public static function create(?IDashboardItem $dashItem = null, int $cols = 6, int $rows = 4,
                                   bool $withInstructions = false) : DashGridHtmlView|DashGridContainerHtmlView {
         if (!$withInstructions) {
             return DashGridHtmlView::create($dashItem, $cols, $rows);

@@ -2,16 +2,14 @@
 
 namespace webship\dashboards;
 
-use DatabaseError;
 use Error;
+use webship\controller\DashboardFunctions;
+use webship\interoperability\IDashboardHandler;
+use webship\interoperability\IDashboardItem;
 use webship\interoperability\WEvent;
-use Language;
-use Persistence;
-use User;
+use ship\interoperability\SLanguage as Language;
 use webship\core\HtmlView;
-use webship\DashboardItem;
 use webship\dialogs\LoadingHtmlView;
-use webship\symbols\ImageHtmlView;
 use webship\symbols\PlusHtmlView;
 use webship\WebshipTools;
 
@@ -20,6 +18,12 @@ use webship\WebshipTools;
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  */
 class DashboardHtmlView extends HtmlView {
+
+    /**
+     * The dashboard handler to manage dashboard items.
+     * @var IDashboardHandler|null
+     */
+    private static IDashboardHandler|null $dashboardHandler = null;
 
     /**
      * The number of columns.
@@ -122,74 +126,57 @@ class DashboardHtmlView extends HtmlView {
 
     /**
      * Create a dashboard html view.
-     * @param User|null $user The user.
      * @param int $cols The number of columns.
      * @param int $rows The number of rows.
      * @param bool $init Whether it is loaded or not.
      * @return DashboardHtmlView
-     * @throws DatabaseError
      */
-    public static function create(?User $user = null, int $cols = 6, int $rows = 4, bool $init = true) : DashboardHtmlView {
+    public static function create(int $cols = 6, int $rows = 4, bool $init = true) : DashboardHtmlView {
         $view = new DashboardHtmlView([], $cols, $rows);
         $view->ref('dashboard');
-        $view->protocol(WEvent::DIRTY)->doIt('LoadDashboard', [
-            'user' => $user,
+        $view->protocol(WEvent::DIRTY)->doIt(DashboardFunctions::LoadDashboard, [
             'cols' => $cols,
             'rows' => $rows,
             'init' => false,
             'replace' => $view
-        ], 'monitors');
+        ], DashboardFunctions::environment());
+        $isSafe = !is_null(self::$dashboardHandler) && self::$dashboardHandler->isSafe();
         if ($init) {
-            if ($user) {
-                $view->protocol(WEvent::ONLOADCONTENT)->doIt('LoadDashboard', [
-                    'user' => $user,
+            if ($isSafe) {
+                $view->protocol(WEvent::ONLOADCONTENT)->doIt(DashboardFunctions::LoadDashboard, [
                     'cols' => $cols,
                     'rows' => $rows,
                     'init' => false,
                     'replace' => $view
-                ], 'monitors');
+                ], DashboardFunctions::environment());
             } else {
-                $view->protocol(WEvent::ONLOADCONTENT)->doIt('LoadDashboardUnsafe', [
+                $view->protocol(WEvent::ONLOADCONTENT)->doIt(DashboardFunctions::LoadDashboardUnsafe, [
                     'cols' => $cols,
                     'rows' => $rows,
                     'init' => false,
                     'replace' => $view
-                ], 'monitors');
+                ], DashboardFunctions::environment());
             }
         }
 
-        // All user-specific dashboard items
+        // All session-specific dashboard items
         if (!$init) {
-            if ($user) {
-                $userSession = Persistence::instance()->getUserSession();
-                if ($userSession && $userSession->getCurrentGroup()) {
-                    $group = $userSession->getCurrentGroup();
-                    $items = DashboardItem::getAllWhere('user', $user);
-                    $items = array_filter($items, function (DashboardItem $item) use ($group) {
-                        if ($item->getAccess()) {
-                            foreach ($item->getAccess()->getAccessRights() as $accessRight) {
-                                if ($accessRight->getReadAccessGroup()->getName() === $group->getName()) {
-                                    return true;
-                                }
-                            }
-                            return false;
-                        }
-                        return true;
-                    });
-                    $view->each($items, function (DashboardHtmlView $view, DashboardItem $item) {
-                        try {
-                            $view->add($item->createView());
-                        } catch (Error $error) {
+            $items = null;
+            if (!is_null(self::$dashboardHandler)) {
+                $items = self::$dashboardHandler->getDashboardItems();
+            }
+            if (!is_null($items)) {
+                $view->each($items, function (DashboardHtmlView $view, IDashboardItem $item) {
+                    try {
+                        $view->add($item->createView());
+                    } catch (Error $error) {
 
-                        }
-                    });
-                }
-            } else {
-                //DancingScript-Regular
-                $item = $view->add(new DashboardItemHtmlView(['coast-text', 't1'], 1, $cols, 1, 1));
-                $item->add(new HtmlView())->texts()->text(Language::GERMAN, '<p><span>Coast.</span> Deine Befragung ist bereit, erstellt zu werden.');
-                $item = $view->add(new DashboardItemHtmlView('coast-image', 1, $cols, 2, 3));
-                $item->add(new ImageHtmlView('/sunstone/brand/cover.png'));
+                    }
+                });
+            } else if (!is_null(self::$dashboardHandler)) {
+                $view->each(self::$dashboardHandler->getWelcomeScreen($view->cols, $view->rows), function (DashboardHtmlView $view, DashboardItemHtmlView $itemView) {
+                    $view->add($itemView);
+                });
             }
 
             $used = array_reduce($view->subviews, function (int $used, DashboardItemHtmlView $item) {
@@ -199,7 +186,7 @@ class DashboardHtmlView extends HtmlView {
                 $it = $view->item();
                 $it->notice(Language::ENGLISH, 'Click to add your own content');
                 $it->notice(Language::GERMAN, 'Klicken, um deinen eigenen Inhalt auf das Dasbhoard zu legen');
-                if ($user) {
+                if ($isSafe) {
                     $it->access('survey-menu')->
                         protocol(WEvent::CLICK)->
                         mousePosition('dashboard-menu')->
@@ -262,6 +249,23 @@ class DashboardHtmlView extends HtmlView {
     public static function _new(array|string $classes = []): DashboardHtmlView {
         $classes = is_array($classes) ? $classes : [$classes];
         return new DashboardHtmlView($classes);
+    }
+
+    /**
+     * Initializes the dashboard handler.
+     * @param IDashboardHandler $dashboardHandler The dashboard handler.
+     * @return void
+     */
+    public static function initDashboardHandler(IDashboardHandler $dashboardHandler) : void {
+        self::$dashboardHandler = $dashboardHandler;
+    }
+
+    /**
+     * Get the dashboard handler.
+     * @return IDashboardHandler|null
+     */
+    public static function getDashboardHandler() : IDashboardHandler|null {
+        return self::$dashboardHandler;
     }
 }
 ?>
