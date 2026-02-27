@@ -53,7 +53,7 @@ class MenuHtmlView extends HtmlView {
             'top: 5px', 'left: 5px'));
         self::addStyle(WebshipTools::css('nav.menu', [' ', '.signal'], 'position: absolute',
             'width: 20px', 'height: 20px', 'font-size: 10px', 'background: var(--ws-main-menu-signal)',
-            'border-radius: 10px', 'opacity: 0.6'));
+            'border-radius: 10px', 'opacity: 0.6', 'display: flex', 'align-items: center', 'justify-content: center'));
         self::addStyle(WebshipTools::css('nav.menu', [' ', '.signal.blue'], 'background: var(--ws-background-info)'));
         self::addStyle(WebshipTools::css('nav.menu', [' ', '.signal.yellow'], 'background: var(--ws-background-warning)'));
         self::addStyle(WebshipTools::css('nav.menu', [' ', '.signal:empty'], 'display: none'));
