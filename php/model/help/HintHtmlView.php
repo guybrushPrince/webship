@@ -2,8 +2,10 @@
 
 namespace webship\help;
 
+use Exception;
 use webship\interoperability\WEvent;
 use webship\core\HtmlView;
+use webship\symbols\ImageHtmlView;
 use webship\WebshipTools;
 
 /**
@@ -13,10 +15,11 @@ use webship\WebshipTools;
 class HintHtmlView extends HtmlView {
 
     /**
-     * SystemTaskHtmlView constructor.
-     * @param array|string $classes An array of additional classes.
+     * Constructor.
+     * @param string[]|string $classes Some classes.
+     * @throws Exception
      */
-    public function __construct($classes = []) {
+    private function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['hints'], $classes));
 
@@ -34,28 +37,52 @@ class HintHtmlView extends HtmlView {
             '$(this).find("[hint=" + hint + "]").remove();' .
             '});'
         );
+    }
 
-        $this->style(WebshipTools::css('.hints', '',
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(WebshipTools::css('.hints', '',
             'visibility: visible', 'opacity: 1', 'position: absolute',
             'transition: visibility 0s, opacity 0.5s linear', 'z-index: 10000000'));
-        $this->style(WebshipTools::css('.hints', ':empty', 'width: 0', 'height: 0',
+        self::addStyle(WebshipTools::css('.hints', ':empty', 'width: 0', 'height: 0',
             'visibility: hidden', 'opacity: 0'));
 
-        $this->style(WebshipTools::css('.hints', [' > ', '.hint'], 'width: 250px', 'min-height: 40px',
+        self::addStyle(WebshipTools::css('.hints', [' > ', '.hint'], 'width: 250px', 'min-height: 40px',
             'background: var(--ws-hint-bg)', 'width: 100%',
             'padding: 10px', 'font-size: 12px', 'font-style: normal', 'text-transform: none'));
-        $this->style(WebshipTools::css('.hints', [' > ', '.hint', ' > ', 'ul'], 'list-style-type: none',
+        self::addStyle(WebshipTools::css('.hints', [' > ', '.hint', ' > ', 'ul'], 'list-style-type: none',
             'padding-left: 10px'));
+
+        self::addStyle(WebshipTools::css('.hints', [' > ', '.pic', ':only-child'], 'display: none'));
+
+        self::addStyle(WebshipTools::css('.hints', [' > ', '.pic', ' + ', '.hint'], 'width: 250px',
+            'min-height: 40px', 'transition: width 0.5s, height 0.5s'));
+        self::addStyle(WebshipTools::css('.hints', [' > ', '.pic'], 'width: 25px', 'height: 25px',
+            'background: var(--ws-hint-img-bg)', 'border-radius: 12.5px', 'display: flex', 'align-items: center',
+            'justify-content: center'));
+        self::addStyle(WebshipTools::css('.hints', [' > ', '.pic', ' > ', '.bulb'], 'width: 20px'));
     }
 
     /**
      * Create a new hint.
-     * @param HintHtmlView|null $view A potential view.
+     * @param string[]|string $classes Some classes.
+     * @return HintHtmlView
+     * @throws Exception
+     */
+    public static function create(array|string $classes = []) : HintHtmlView {
+        return new HintHtmlView($classes);
+    }
+
+    /**
+     * Create a new hint internally.
      * @return HtmlView
      */
-    public static function createHint(HintHtmlView $view = null) : HtmlView {
+    private static function createHint() : HtmlView {
         $item = new HtmlView('hint');
-        if ($view !== null) $view->add(new HtmlView('hint'));
+        $item->add(new HtmlView('pic'))->
+            add(new ImageHtmlView('/webship/pic/light-bulb.svg', 'bulb'));
 
         return $item;
     }

@@ -49,6 +49,7 @@
     /* Overlays */
     --ws-screen-overlay: rgba(0, 0, 0, 0.5);
     --ws-disabled-overlay: rgba(255, 255, 255, 0.6);
+    --ws-dialog-overlay: rgba(255, 255, 255, 0.8);
 
     /* Main menu */
     --ws-main-menu: rgba(150, 202, 214, 1.0);
@@ -165,6 +166,7 @@
 
     /* Hints */
     --ws-hint-bg: rgba(255, 254, 222, 0.95);
+    --ws-hint-img-bg: rgba(255, 234, 158, 0.95);
 
     /* Code editor */
     --ws-code-editor-bg: rgba(255, 255, 230, 1.0);

@@ -5,6 +5,7 @@ namespace webship\dialogs;
 use ParsedownExtra;
 use ship\interoperability\SLanguage as Language;
 use webship\core\HtmlView;
+use webship\WebshipTools;
 
 /**
  * Class DialogHtmlView
@@ -32,16 +33,57 @@ class DialogHtmlView extends HtmlView {
     public function __construct(array $texts, array|string $classes = []) {
         parent::__construct(array_merge(['dialog'], is_array($classes) ? $classes : []));
 
-
-        $message = $this->add(new HtmlView('dialog-message'));
-        $title = $message->add(new HtmlView('d-title'));
-        $title->texts()->
-        text(Language::ENGLISH, 'Note')->
-        text(Language::GERMAN, 'Hinweis');
-        $textView = $message->add(new HtmlView('text'));
+        $message = new HtmlView('dialog-message');
+        $this->add($message);
+        $title = new HtmlView('d-title');
+        $message->add($title);
+        $title->texts([
+            Language::ENGLISH => 'Note',
+            Language::GERMAN  => 'Hinweis'
+        ]);
+        $textView = new HtmlView('text');
+        $message->add($textView);
         $parseDown = new ParsedownExtra();
-        $textView->texts()->text(self::getLanguage(), $parseDown->text($texts[self::getLanguage()]));
-        $this->choicesBox = $message->add(new HtmlView('choices'));
+        $textView->texts($parseDown->text($texts[self::getLanguage()]));
+        $this->choicesBox = new HtmlView('choices');
+        $message->add($this->choicesBox);
+
+        self::addCSS();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(WebshipTools::css('.dialog', [], 'position: fixed', 'top: 0', 'left: 0',
+            'width: 100%', 'height: 100%', 'background: var(--ws-dialog-overlay)', 'z-index: 10000000'));
+        self::addStyle(WebshipTools::css('.dialog', [' > ', '.dialog-message'], 'position: absolute',
+            'top: calc((100% - 150px) / 2)', 'left: calc((100% - 300px) / 2)',
+            'width: 300px', 'height: 150px', 'border-color: var(--ws-border-error)',
+            'color: var(--ws-font-error)', 'background-color: var(--ws-background-error)', 'border: 1px solid',
+            'border-radius: 5px'));
+        self::addStyle(WebshipTools::css('.dialog', [' ', 'p'], 'margin: 0'));
+        self::addStyle(WebshipTools::css('.dialog', [' > ', '.dialog-message', ' > ', '.d-title'],
+            'padding: 10px', 'background-color: var(--ws-cbackground-error)', 'border-radius: 5px 5px 0 0',
+            'font-weight: bold'));
+        self::addStyle(WebshipTools::css('.dialog', [' > ', '.dialog-message', ' > ', '.text'],
+            'padding: 10px'));
+        self::addStyle(WebshipTools::css('.dialog', [' > ', '.dialog-message', ' > ', '.choices'],
+            'position: absolute', 'bottom: 0', 'display: flex', 'flex-direction: row', 'width: 100%',
+            'height: 30px', 'border-radius: 0 0 5px 5px', 'border-top: 1px solid var(--ws-border-error)'));
+        self::addStyle(WebshipTools::css('.dialog', [' > ', '.dialog-message', ' > ', '.choices', ' > ',
+            '.choice'],
+            'display: flex', 'flex-direction: row', 'flex: 1 1 0', 'justify-content: center',
+            'align-items: center', 'cursor: pointer', 'transition: background 0.5s'));
+        self::addStyle(WebshipTools::css('.dialog', [' > ', '.dialog-message', ' > ', '.choices', ' > ',
+            '.choice', ':hover'],
+            'background-color: var(--ws-cbackground-error)'));
+        self::addStyle(WebshipTools::css('.dialog', [' > ', '.dialog-message', ' > ', '.choices', ' > ',
+            '.choice', ':last-child'],
+            'border-radius: 0 0 5px 0'));
+        self::addStyle(WebshipTools::css('.dialog', [' > ', '.dialog-message', ' > ', '.choices', ' > ',
+            '.choice', ':first-child'],
+            'border-radius: 0 0 0 5px'));
     }
 
     /**
@@ -51,9 +93,10 @@ class DialogHtmlView extends HtmlView {
      * @return HtmlView
      */
     public function choice(int $nr, array $texts) : HtmlView {
-        $v = $this->choicesBox->add(new HtmlView(['choice', 'c-' . $nr]));
+        $v = new HtmlView(['choice', 'c-' . $nr]);
+        $this->choicesBox->add($v);
         $this->choices[$nr] = $v;
-        $v->texts()->text(self::getLanguage(), $texts[self::getLanguage()]);
+        $v->texts($texts);
         $v->ref("choice-" . $nr);
         return $v;
     }
