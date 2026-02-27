@@ -79,7 +79,7 @@ class LabelledContentSelectHtmlView extends ContentSelectHtmlView {
         self::addStyle(WebshipTools::css('.clselect.ll', [' > ', '.content-select + label'], 'display: none'));
 
         self::addStyle(WebshipTools::css('.clselect', [' > ', '.content-select + label'],
-            'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--ws-std-dark-bg)',
+            'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--ws-std-bg-dark)',
             'bottom: calc(100% - var(--ws-lcs-buffer))', 'font-size: 10px'));
     }
 

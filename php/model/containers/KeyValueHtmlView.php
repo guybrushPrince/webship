@@ -96,7 +96,7 @@ class KeyValueHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.kv', [], 'display: flex', 'flex-direction: row', 'flex-wrap: nowrap',
             'width: 100%', 'align-items: center', 'padding: 10px', 'box-sizing: border-box', 'gap: 0 10px',
             'box-sizing: border-box'));
-        self::addStyle(WebshipTools::css('.kv.frame', [], 'border: 1px solid var(--ws-std-ulight-bg)'));
+        self::addStyle(WebshipTools::css('.kv.frame', [], 'border: 1px solid var(--ws-std-bg-ultra)'));
         self::addStyle(WebshipTools::css('.kv', [' > ', '.k'], 'display: flex', 'flex-direction: row',
             'align-items: center', 'justify-content: flex-start', 'margin: 0', 'width: var(--ws-kr)'));
         self::addStyle(WebshipTools::css('.kv', [' > ', '.v'], 'display: flex', 'flex-direction: row',

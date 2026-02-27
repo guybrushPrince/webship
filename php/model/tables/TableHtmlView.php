@@ -68,7 +68,7 @@ class TableHtmlView extends ContainerHtmlView {
      */
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.table.fixed', [' > ', '.tr'], 'display: grid',
-            'grid-template-columns: var(--table)'));
+            'grid-template-columns: var(--ws-table)'));
     }
 
     /**
@@ -81,7 +81,7 @@ class TableHtmlView extends ContainerHtmlView {
         $table = new TableHtmlView($classes);
         if (!is_null($dimensions)) {
             $table->addClass('fixed');
-            $table->localStyle('--table: ' . implode(' ', $dimensions));
+            $table->localStyle('--ws-table: ' . implode(' ', $dimensions));
         }
         return $table;
     }

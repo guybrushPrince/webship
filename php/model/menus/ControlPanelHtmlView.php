@@ -59,13 +59,13 @@ class ControlPanelHtmlView extends HtmlView {
         $this->yDim = $yDim;
 
         $this->style(WebshipTools::css('.ctr', [], 'display: grid',
-            '--cell-height: 30px', '--cell-width: 30px', '--ws-ctr-cell-gap: 2px',
-            'grid-template-columns: repeat(var(--ctr-cols), 1fr)', 'grid-template-rows: repeat(var(--ctr-rows), 1fr)',
+            '--ws-ctr-cell-height: 30px', '--ws-ctr-cell-width: 30px', '--ws-ctr-cell-gap: 2px',
+            'grid-template-columns: repeat(var(--ws-ctr-cols), 1fr)', 'grid-template-rows: repeat(var(--ws-ctr-rows), 1fr)',
             'box-sizing: content-box',
-            'min-height: calc(var(--cell-height) * var(--ctr-rows) + var(--ws-ctr-cell-gap) * (var(--ctr-rows) - 1))',
-            'min-width: calc(var(--cell-width) * var(--ctr-cols) + var(--ws-ctr-cell-gap) * (var(--ctr-cols) - 1))',
-            'height: calc(var(--cell-height) * var(--ctr-rows) + var(--ws-ctr-cell-gap) * (var(--ctr-rows) - 1))',
-            'width: calc(var(--cell-width) * var(--ctr-cols) + var(--ws-ctr-cell-gap) * (var(--ctr-cols) - 1))',
+            'min-height: calc(var(--ws-ctr-cell-height) * var(--ws-ctr-rows) + var(--ws-ctr-cell-gap) * (var(--ws-ctr-rows) - 1))',
+            'min-width: calc(var(--ws-ctr-cell-width) * var(--ws-ctr-cols) + var(--ws-ctr-cell-gap) * (var(--ws-ctr-cols) - 1))',
+            'height: calc(var(--ws-ctr-cell-height) * var(--ws-ctr-rows) + var(--ws-ctr-cell-gap) * (var(--ws-ctr-rows) - 1))',
+            'width: calc(var(--ws-ctr-cell-width) * var(--ws-ctr-cols) + var(--ws-ctr-cell-gap) * (var(--ws-ctr-cols) - 1))',
             'column-gap: var(--ws-ctr-cell-gap)', 'row-gap: var(--ws-ctr-cell-gap)', 'padding: 3px',
             'grid-auto-rows: 0', 'overflow: hidden', 'align-items: center'));
         $this->style(WebshipTools::css('.ctr.wb', [], 'border: 1px solid var(--ws-std-bg)',
@@ -80,16 +80,16 @@ class ControlPanelHtmlView extends HtmlView {
         $this->style(WebshipTools::css('.ctr.ub.reverse', [], 'flex-direction: row-reverse'));
 
         $this->style(WebshipTools::css('.ctr', [' ', '.ctr.area'], 'display: grid',
-            'grid-column-end: span var(--ctr-cols)', 'grid-row-end: span var(--ctr-rows)',
-            'grid-template-columns: repeat(var(--ctr-cols), 1fr)', 'grid-template-rows: repeat(var(--ctr-rows), 1fr)',
+            'grid-column-end: span var(--ws-ctr-cols)', 'grid-row-end: span var(--ws-ctr-rows)',
+            'grid-template-columns: repeat(var(--ws-ctr-cols), 1fr)', 'grid-template-rows: repeat(var(--ws-ctr-rows), 1fr)',
             'box-sizing: content-box',
-            'min-height: calc(var(--cell-height) * var(--ctr-rows) + var(--ws-ctr-cell-gap) * (var(--ctr-rows) - 1))',
-            'min-width: calc(var(--cell-width) * var(--ctr-cols) + var(--ws-ctr-cell-gap) * (var(--ctr-cols) - 1))',
-            'height: calc(var(--cell-height) * var(--ctr-rows) + var(--ws-ctr-cell-gap) * (var(--ctr-rows) - 1))',
-            'width: calc(var(--cell-width) * var(--ctr-cols) + var(--ws-ctr-cell-gap) * (var(--ctr-cols) - 1))',
+            'min-height: calc(var(--ws-ctr-cell-height) * var(--ws-ctr-rows) + var(--ws-ctr-cell-gap) * (var(--ws-ctr-rows) - 1))',
+            'min-width: calc(var(--ws-ctr-cell-width) * var(--ws-ctr-cols) + var(--ws-ctr-cell-gap) * (var(--ws-ctr-cols) - 1))',
+            'height: calc(var(--ws-ctr-cell-height) * var(--ws-ctr-rows) + var(--ws-ctr-cell-gap) * (var(--ws-ctr-rows) - 1))',
+            'width: calc(var(--ws-ctr-cell-width) * var(--ws-ctr-cols) + var(--ws-ctr-cell-gap) * (var(--ws-ctr-cols) - 1))',
             'column-gap: 2px', 'row-gap: 2px', 'padding: 0px',
             'grid-auto-rows: 0', 'overflow: visible', 'align-items: center'));
-        $this->style(WebshipTools::css('.ctr', [' ', '.ctr.area.wb'], 'border: 1px solid var(--ws-std-bg)',
+        $this->style(WebshipTools::css('.ctr', [' ', '.ctr.area.wb'], 'border: 1px solid var(--ws-ctr-brd)',
             'border-radius: 5px'));
 
         $this->style(WebshipTools::css('.ctr.flexibleX', [], 'min-width: 0', 'width: fit-content',
@@ -103,9 +103,9 @@ class ControlPanelHtmlView extends HtmlView {
         $this->style(WebshipTools::css('.ctr', [' ', '.css-gradient', ' > ', 'div'], 'height: 100%', 'top: 0'));
 
         $this->style(WebshipTools::css('.ctr.fix', [], 'position: absolute', 'min-height: 20px', 'height: 20px',
-            'margin: 0 !important', '--cell-height: 20px', '--cell-width: 20px', 'z-index: 1'));
-        $this->style(WebshipTools::css('.ctr.fix.tl', [], 'left: 0', 'top: var(--top-dist)'));
-        $this->style(WebshipTools::css('.ctr.fix.tr', [], 'right: 0', 'top: var(--top-dist)'));
+            'margin: 0 !important', '--ws-ctr-cell-height: 20px', '--ws-ctr-cell-width: 20px', 'z-index: 1'));
+        $this->style(WebshipTools::css('.ctr.fix.tl', [], 'left: 0', 'top: var(--ws-ctr-top-dist)'));
+        $this->style(WebshipTools::css('.ctr.fix.tr', [], 'right: 0', 'top: var(--ws-ctr-top-dist)'));
         $this->style(WebshipTools::css('.ctr.fix.bl', [], 'left: 0', 'bottom: 0'));
         $this->style(WebshipTools::css('.ctr.fix.br', [], 'right: 0', 'bottom: 0'));
         $this->style(WebshipTools::css('.ctr.fix', [' ', 'button.std-button'], 'box-shadow: none',
@@ -122,7 +122,7 @@ class ControlPanelHtmlView extends HtmlView {
             'background: var(--ws-del-tr)', 'border-color: var(--ws-neutral)'));
 
         $this->style(WebshipTools::css('.ctr.small', [], 'min-height: 20px', 'height: 20px',
-            'margin: 0 !important', '--cell-height: 20px', '--cell-width: 20px'));
+            'margin: 0 !important', '--ws-ctr-cell-height: 20px', '--ws-ctr-cell-width: 20px'));
         $this->style(WebshipTools::css('.ctr.small', [' ', 'button.std-button'], 'box-shadow: none',
             '-webkit-box-shadow: none', '-moz-box-shadow: none', 'background: none', 'border-color: var(--ws-font-info)',
             'width: 20px', 'height: 20px', 'min-width: 20px', 'min-height: 20px', 'padding: 3px'));
@@ -136,8 +136,8 @@ class ControlPanelHtmlView extends HtmlView {
     public function generateOpeningTag() : string {
         $tag = substr(parent::generateOpeningTag(), 0, -1);
         if ($this->xDim === null) $this->xDim = 1;
-        $tag .= ' style="--ctr-cols: ' . $this->xDim . ';' . '--ctr-rows: ' . $this->yDim . ';' .
-            ($this->top !== null ? '--top-dist: ' . $this->top . ';' : '--top-dist: 0;') . '">';
+        $tag .= ' style="--ws-ctr-cols: ' . $this->xDim . ';' . '--ws-ctr-rows: ' . $this->yDim . ';' .
+            ($this->top !== null ? '--ws-ctr-top-dist: ' . $this->top . ';' : '--ws-ctr-top-dist: 0;') . '">';
         return $tag;
     }
 

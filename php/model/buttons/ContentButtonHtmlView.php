@@ -84,7 +84,7 @@ class ContentButtonHtmlView extends HtmlView {
      */
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.content-button', '', 'position: relative',
-            '--ws-hover: var(--ws-std-dark-bg)', '--ws-bottom-distance: 1rem'));
+            '--ws-hover: var(--ws-std-bg-dark)', '--ws-bottom-distance: 1rem'));
         self::addStyle(WebshipTools::css('.content-button', [' > ', 'form'], 'padding: 0', 'margin: 0',
             'display: inherit', 'width: inherit', 'height: inherit', 'box-sizing: border-box'));
         self::addStyle(WebshipTools::css('.content-button', [' > ', 'form', ' > ', '.overlay'],
@@ -95,8 +95,8 @@ class ContentButtonHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.content-button.active', [' > ', 'form', ' > ', '.overlay'],
             'display: none'));
         self::addStyle(WebshipTools::css('.content-button', [' > ', 'form', ' > ', '.content'], 'display: none',
-            'width: 100%', 'position: absolute', 'background: var(--ws-std-light-bg)',
-            'border: 1px solid var(--ws-std-dark-bg)', 'border-radius: 3px', 'padding: 5px 25px 5px 5px;',
+            'width: 100%', 'position: absolute', 'background: var(--ws-std-bg-light)',
+            'border: 1px solid var(--ws-std-bg-dark)', 'border-radius: 3px', 'padding: 5px 25px 5px 5px;',
             '-webkit-box-shadow: var(--ws-haptic-shadow)', 'box-shadow: var(--ws-haptic-shadow)',
             'min-width: 170px', 'z-index: 100'));
         self::addStyle(WebshipTools::css('.content-button.active', [' > ', 'form', ' > ', '.content'],

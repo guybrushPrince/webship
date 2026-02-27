@@ -54,17 +54,17 @@ abstract class WizardHtmlView extends HtmlView {
         $this->style(WebshipTools::css('.wizard', [':hover'],
             '-webkit-box-shadow: var(--ws-haptic-fc-shadow)',
             'box-shadow: var(--ws-haptic-fc-shadow)'));
-        $this->style(WebshipTools::css('.wizard', [' > ', '.title'], 'color: var(--ws-main-font)',
+        $this->style(WebshipTools::css('.wizard', [' > ', '.title'], 
             'padding: 24px', 'font-size: 24px',
-            'font-weight: 300', 'box-sizing: border-box', 'background: var(--wizard-title-background)',
-            'color: var(--wizard-title-font)',
-            'border-bottom: solid 1px var(--wizard-title-border)'));
+            'font-weight: 300', 'box-sizing: border-box', 'background: var(--ws-wizard-ttl-bg)',
+            'color: var(--ws-wizard-ttl-font)',
+            'border-bottom: solid 1px var(--ws-wizard-ttl-brd)'));
         $this->style(WebshipTools::css('.wizard', [' > ', '.title', ' > ', 'img'], 'height: 20px',
-            'filter: var(--wizard-img-title-filter)'));
+            'filter: var(--ws-wizard-ttl-img-fltr)'));
         $this->style(WebshipTools::css('.wizard', [' > ', '.explanation'], 'padding: 20px',
-            'background: var(--wizard-expl-background)'));
+            'background: var(--ws-wizard-expl-bg)'));
         $this->style(WebshipTools::css('.wizard', [' > ', '.active'], 'padding: 20px',
-            'background: var(--wizard-active-background)'));
+            'background: var(--ws-wizard-actv-bg)'));
         $this->style(WebshipTools::css('.wizard', [' > ', '.active', ' ', '.tiles'], 'border: 0'));
         $this->style(WebshipTools::css('.wizard', [' > ', '.controller'], 'display: flex',
             'flex-direction: row', 'flex-wrap: nowrap', 'flex: 1 0 0'));
@@ -72,9 +72,9 @@ abstract class WizardHtmlView extends HtmlView {
             'flex-direction: row', 'align-items: center', 'justify-content: center', 'cursor: pointer', 'border: 0',
             'transition: 0.5s background'));
         $this->style(WebshipTools::css('.wizard', [' > ', '.controller', ' ', '.button.abort'],
-            'width: 50px', 'background: var(--wizard-abort)'));
+            'width: 50px', 'background: var(--ws-wizard-abort)'));
         $this->style(WebshipTools::css('.wizard', [' > ', '.controller', ' ', '.button.abort', ':hover'],
-            'background: var(--wizard-abort-hover) !important'));
+            'background: var(--ws-wizard-abort-hvr) !important'));
         $this->style(WebshipTools::css('.wizard', [' > ', '.controller', ' ', '.button', ' > ', 'img'],
             'height: 20px', 'margin-left: 10px'));
         $this->style(WebshipTools::css('.wizard', [' > ', '.controller', ' ', '.button.abort', ' > ', 'img'],

@@ -66,7 +66,7 @@ class PanelHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.panel', ['.sep-children'],
             'gap: 1px', 'background: var(--ws-std-bg)'));
         self::addStyle(WebshipTools::css('.panel', ['.sep-children.light'],
-            'background: var(--ws-std-ulight-bg)'));
+            'background: var(--ws-std-bg-ultra)'));
         self::addStyle(WebshipTools::css('.panel', ['.sep-children', ' > ', '.panel-item'],
             'background: var(--ws-neutral)'));
 
@@ -81,15 +81,15 @@ class PanelHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.panel', ['.p15'], 'padding: 15px'));
         self::addStyle(WebshipTools::css('.panel', ['.p20'], 'padding: 20px'));
 
-        self::addStyle(WebshipTools::css('.panel', ['.rounded'], '--radius: 5px',
-            'border-radius: var(--radius)'));
+        self::addStyle(WebshipTools::css('.panel', ['.rounded'], '--ws-pnl-brd-radius: 5px',
+            'border-radius: var(--ws-pnl-brd-radius)'));
         self::addStyle(WebshipTools::css('.panel', ['.rounded', ' > ', '*:first-child'],
-            'border-radius: var(--radius) var(--radius) 0 0'));
+            'border-radius: var(--ws-pnl-brd-radius) var(--ws-pnl-brd-radius) 0 0'));
         self::addStyle(WebshipTools::css('.panel', ['.rounded', ' > ', '*:last-child'],
-            'border-radius: 0 0 var(--radius) var(--radius)'));
+            'border-radius: 0 0 var(--ws-pnl-brd-radius) var(--ws-pnl-brd-radius)'));
 
         self::addStyle(WebshipTools::css('.panel.ac', [' > ', '.panel-item:nth-child(even)'],
-            'background: var(--fine-system-background)'));
+            'background: var(--ws-std-bg-fine)'));
         self::addStyle(WebshipTools::css('.panel.ac', [' > ', '.panel-item:nth-child(odd)'],
             'background: var(--ws-neutral)'));
     }
@@ -170,7 +170,7 @@ class PanelHtmlView extends HtmlView {
      */
     public function rounded(int $radius = 5) : static {
         $this->addClass('rounded');
-        if ($radius !== 5) $this->localStyle('--radius: ' . $radius . 'px');
+        if ($radius !== 5) $this->localStyle('--ws-pnl-brd-radius: ' . $radius . 'px');
         return $this;
     }
 

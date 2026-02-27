@@ -51,7 +51,7 @@ class TabContainerHtmlView extends ContainerHtmlView {
      */
     private function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [$classes];
-        parent::__construct(array_merge(['tabbed'], $classes), 'var(--ws-main-menu)');
+        parent::__construct(array_merge(['tabbed'], $classes), 'var(--ws-tab-main-clr)');
 
         self::addCSS();
 
@@ -66,8 +66,9 @@ class TabContainerHtmlView extends ContainerHtmlView {
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.tabbed', [], 'position: relative',
             'width: 100%', 'height: 100%', 'overflow-y: clip'));
-        self::addStyle(WebshipTools::css('.tabbed', [' > ', '.tab'], 'position: absolute', 'left: 0', 'top: 27px',
-            'width: 100%', 'box-sizing: border-box', 'overflow-y: visible', 'height: 100%', 'padding: 0'));
+        self::addStyle(WebshipTools::css('.tabbed', [' > ', '.tab'], 'position: absolute',
+            'left: 0', 'top: 27px', 'width: 100%', 'box-sizing: border-box', 'overflow-y: visible', 'height: 100%',
+            'padding: 0'));
     }
 
     /**

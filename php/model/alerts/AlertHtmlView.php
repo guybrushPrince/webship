@@ -54,8 +54,8 @@ class AlertHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('.alert', [], '--ws-alert-border: var(--ws-std-light-bg)',
-            '--ws-alert-font: var(--ws-font-dark)', '--ws-alert-background: var(--ws-std-ulight-bg)',
+        self::addStyle(WebshipTools::css('.alert', [], '--ws-alert-border: var(--ws-std-bg-light)',
+            '--ws-alert-font: var(--ws-font-dark)', '--ws-alert-background: var(--ws-std-bg-ultra)',
             '--ws-alert-shadow: var(--ws-front-shadow)',
             '--ws-alert-c-border: var(--ws-std-bg)', '--ws-alert-c-background: var(--ws-neutral)',
             '--ws-alert-img-filter: none', '--ws-alert-img-filter-hover: none'));

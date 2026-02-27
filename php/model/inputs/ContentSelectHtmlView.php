@@ -116,7 +116,7 @@ class ContentSelectHtmlView extends SelectHtmlView {
             'min-width: 150px', 'max-height: 400px', 'flex-wrap: nowrap', 'overflow-y: auto',
             'width: -moz-fit-content',
             'width: fit-content', 'background: var(--ws-neutral)', 'align-items: stretch',
-            'border: 2px solid var(--ws-std-light-bg)', 'box-sizing: content-box',
+            'border: 2px solid var(--ws-std-bg-light)', 'box-sizing: content-box',
             'overflow-x: hidden'));
 
         self::addStyle(WebshipTools::css('.content-select:not(.' . self::_OPEN . ')', [' > ', '.c-list'],
@@ -129,7 +129,7 @@ class ContentSelectHtmlView extends SelectHtmlView {
 
         self::addStyle(WebshipTools::css('.content-select', [' > ', '.c-list', ' > ', 'div'],
             'position: relative', 'cursor: pointer', 'padding: 4px', /*'min-height: 40px',*/
-            'border-bottom: 1px solid var(--ws-std-light-bg)', 'box-sizing: content-box', 'margin: 0'));
+            'border-bottom: 1px solid var(--ws-std-bg-light)', 'box-sizing: content-box', 'margin: 0'));
         self::addStyle(WebshipTools::css('.content-select', [' > ', '.c-list', ' > ', 'div:last-child'],
             'border-bottom: none'));
 
@@ -139,7 +139,7 @@ class ContentSelectHtmlView extends SelectHtmlView {
         self::addStyle(WebshipTools::css('.content-select', [' > ', '.c-list', ' > ', 'div:after'],
             'content: ""', 'position: absolute', 'width: 100%', 'height: 100%', 'left: 0', 'top: 0'));
         self::addStyle(WebshipTools::css('.content-select', [' > ', '.c-list', ' > ', 'div:hover'],
-            'background: var(--ws-std-light-bg)'));
+            'background: var(--ws-std-bg-light)'));
         self::addStyle(WebshipTools::css('.content-select', [' > ', '.c-list', ' > ', 'div.def', ' > ', '*'],
             'min-height: 32px'));
         self::addStyle(WebshipTools::css('.content-select:not(.' . self::_OPEN . ')',

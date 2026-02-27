@@ -43,7 +43,7 @@ class AreaHtmlView extends ContainerHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('.c-area', [], 'background: var(--ws-std-ulight-bg)',
+        self::addStyle(WebshipTools::css('.c-area', [], 'background: var(--ws-std-bg-ultra)',
             'border-radius: 10px', 'margin-top: 10px', 'box-sizing: border-box',
             'border: solid 1px var(--ws-std-bg)'));
         self::addStyle(WebshipTools::css('.c-area', [' > ', '.sub-title'], 'padding: 0',

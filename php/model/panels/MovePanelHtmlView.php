@@ -67,9 +67,6 @@ class MovePanelHtmlView extends PanelHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('.panel.movable', [],
-            '--drag-background-hover: rgba(0, 0, 0, 0.25)', '--drag-color-hover: var(--ws-main-font)'));
-
         self::addStyle(WebshipTools::css('.panel.movable.outside', [], 'position: relative'));
         self::addStyle(WebshipTools::css('.panel.movable:not(.outside)', [' > ', '*'],
             'padding-left: 25px !important', 'padding-right: 50px !important'));
@@ -77,7 +74,7 @@ class MovePanelHtmlView extends PanelHtmlView {
             'left: -20px', 'width: 20px'));
         self::addStyle(WebshipTools::css('.panel.movable.outside', [' > ', '.movable', ' > ', '.move'],
             'display: none', 'width: 20px', 'height: 20px', 'right: -20px', 'left: initial',
-            'background: var(--ws-std-dark-bg)', 'font-size: 20px', 'z-index: 100000'));
+            'background: var(--ws-std-bg-dark)', 'font-size: 20px', 'z-index: 100000'));
         self::addStyle(WebshipTools::css('.panel.movable.outside', [' > ', '.movable', ':hover', ' > ', '.move'],
             'display: flex'));
         self::addStyle(WebshipTools::css('.panel.movable.outside', [' > ', '.movable', ' > ', '.move.up'],
@@ -93,7 +90,7 @@ class MovePanelHtmlView extends PanelHtmlView {
             'padding-left: 0 !important'));
 
         self::addStyle(WebshipTools::css('.panel.movable.mH', [' > ', '.movable'],
-            'min-height: var(--mov-min-height)'));
+            'min-height: var(--ws-mov-min-height)'));
     }
 
     /**
@@ -177,7 +174,7 @@ class MovePanelHtmlView extends PanelHtmlView {
      */
     public function minHeightChildren(int $minHeight = 30) : static {
         $this->addClass('mH');
-        $this->localStyle('--mov-min-height: ' . $minHeight . 'px');
+        $this->localStyle('--ws-mov-min-height: ' . $minHeight . 'px');
         return $this;
     }
 }

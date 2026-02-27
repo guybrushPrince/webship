@@ -100,7 +100,7 @@ class LabelledSelectHtmlView extends SelectHtmlView {
 
         self::addStyle(WebshipTools::css('.lselect:not(.mini)', [' > ', 'select + label', ', ',
             '.lselect:not(.mini)', ' > ', 'div.select + label'],
-            'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--ws-std-dark-bg)',
+            'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--ws-std-bg-dark)',
             'bottom: calc(100% - var(--ws-ls-buffer))', 'font-size: 10px'));
 
         self::addStyle(WebshipTools::css('.lselect.mini', [], '--ws-ls-height: 20px', '--ws-ls-buffer: 0'));

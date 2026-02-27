@@ -41,14 +41,14 @@ class TimelineBranchHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.timeline-branch', [], 'width: 100%', 'display: flex',
             'flex-direction: column'));
         self::addStyle(WebshipTools::css('.timeline-branch', [' > ', '.line'], 'box-sizing: border-box',
-            'height: var(--thickness)', 'width: calc((100% / var(--branches)) + var(--thickness))',
-            'margin: 0 calc((100% / (2 * var(--branches))) - var(--thickness) / 2)'));
+            'height: var(--ws-tml-thickness)', 'width: calc((100% / var(--ws-tml-branches)) + var(--ws-tml-thickness))',
+            'margin: 0 calc((100% / (2 * var(--ws-tml-branches))) - var(--ws-tml-thickness) / 2)'));
         self::addStyle(WebshipTools::css('.timeline-branch', [' > ', '.line.opening'],
-            'border-top: var(--thickness) solid var(--line-color)',
-            'border-radius: var(--thickness) var(--thickness) 0 0'));
+            'border-top: var(--ws-tml-thickness) solid var(--ws-tml-line-color)',
+            'border-radius: var(--ws-tml-thickness) var(--ws-tml-thickness) 0 0'));
         self::addStyle(WebshipTools::css('.timeline-branch', [' > ', '.line.closing'],
-            'border-bottom: var(--thickness) solid var(--line-color)',
-            'border-radius: 0 0 var(--thickness) var(--thickness)'));
+            'border-bottom: var(--ws-tml-thickness) solid var(--ws-tml-line-color)',
+            'border-radius: 0 0 var(--ws-tml-thickness) var(--ws-tml-thickness)'));
         self::addStyle(WebshipTools::css('.timeline-branch', [' > ', '.box'], 'display: flex',
             'flex-direction: row', 'flex-wrap: nowrap'));
         self::addStyle(WebshipTools::css('.timeline-branch', [' > ', '.box', ' > ', '.timeline'],
@@ -102,7 +102,7 @@ class TimelineBranchHtmlView extends HtmlView {
      */
     public function generateOpeningTag() : string {
         $open = parent::generateOpeningTag();
-        return substr($open, 0, -1) . ' style="--branches: ' . (count($this->box->subviews)) . '">';
+        return substr($open, 0, -1) . ' style="--ws-tml-branches: ' . (count($this->box->subviews)) . '">';
     }
 }
 ?>

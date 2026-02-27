@@ -101,7 +101,7 @@ class SearchHtmlView extends ContainerHtmlView {
         self::addStyle(WebshipTools::css('.search', [' ', 'input:focus'],
             'border: 1px solid var(--ws-std-brd-gray)', 'border-radius: 5px 0 0 5px', 'outline: none'));
         self::addStyle(WebshipTools::css('.search', [' ', 'input:hover', ' + ', 'button'],
-            'background: var(--ws-std-dark-bg)'));
+            'background: var(--ws-std-bg-dark)'));
 
         self::addStyle(WebshipTools::css('.search', [' ', 'button.std-button.submit'],'width: 50px',
             'height: 50px', 'background: var(--ws-std-bg)', 'border-radius: 0 5px 5px 0',
@@ -110,7 +110,7 @@ class SearchHtmlView extends ContainerHtmlView {
         self::addStyle(WebshipTools::css('.search', [' ', 'button.std-button.submit', ' ', 'img'],
             'box-sizing: border-box', 'width: 100%', 'padding: 5px'));
         self::addStyle(WebshipTools::css('.search', [' ', 'button.std-button.submit:hover'],
-            'background: var(--ws-std-dark-bg)'));
+            'background: var(--ws-std-bg-dark)'));
     }
 
     /**

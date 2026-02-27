@@ -114,7 +114,7 @@ class LabelledInputHtmlView extends InputHtmlView {
         self::addStyle(WebshipTools::css('.linput', [' > ', 'input'], 'height: var(--ws-li-height)',
             'box-sizing: border-box'));
         self::addStyle(WebshipTools::css('.linput', [' > ', 'input:not([type=date]):not([type=checkbox]) + label'],
-            'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--ws-std-dark-bg)',
+            'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--ws-std-bg-dark)',
             'transition: 0.5s'));
         self::addStyle(WebshipTools::css('.linput', [' > ', 'input:not(:focus):not([type=date]):not([type=checkbox]):placeholder-shown + label'],
             'display: flex', 'top: var(--ws-li-buffer)', 'flex-direction: row', /*'width: 100%',*/

@@ -58,11 +58,11 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
 
         self::addStyle(WebshipTools::css('.tab', [' > ', '.tab-header'],
             'position: absolute', 'top: -25px', 'height: 25px', 'z-index: 2',
-            'background: var(--ws-neutral)', 'border: solid 2px var(--ws-app-brd)',
+            'background: var(--ws-tab-head-bg)', 'border: solid 2px var(--ws-tab-brd)',
             'border-bottom: none', 'display: flex', 'align-items: center', 'padding: 0 5px',
             'box-sizing: border-box', 'cursor: pointer', 'border-radius: 6px 6px 0 0'));
         self::addStyle(WebshipTools::css('.tabbed:not(.lo)', [' > ', '.tab:first-child', ' > ', '.tab-header'],
-            'border-left: solid 2px var(--ws-app-brd)'));
+            'border-left: solid 2px var(--ws-tab-brd)'));
         self::addStyle(WebshipTools::css('.tab', [' > ', '.tab-header', ' > ', 'div:first-child'],
             'display: flex', 'flex-direction: row', 'flex-wrap: nowrap'));
         self::addStyle(WebshipTools::css('.tab', [' > ', '.tab-header', ' ', '.icon:empty'],
@@ -75,9 +75,9 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
         self::addStyle(WebshipTools::css('.tab', [' > ', '.tab-header', ' > ', '.closer'],
             'width: 20px', 'height: 25px', 'padding-right: 0'));
         self::addStyle(WebshipTools::css('.tab', [':not(.active)', ' > ', '.tab-header'],
-            'background: var(--system-background-other)'));
+            'background: var(--ws-tab-head-bg-ina)'));
         self::addStyle(WebshipTools::css('.tab', [':not(.active)', ' > ', '.tab-header:hover'],
-            'background: var(--ws-std-dark-bg)'));
+            'background: var(--ws-tab-head-bg-hvr)'));
         self::addStyle(WebshipTools::css('.tab', ['.active', ' > ', '.tab-header', ' ', '.closer'],
             'text-shadow: none'));
         self::addStyle(WebshipTools::css('.tab', [':first-child', ' > ', '.tab-header', ' > ', ':first-child'],
@@ -87,10 +87,10 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
 
         self::addStyle(WebshipTools::css('.tab', [' > ', '.tab-separator'],
             'position: absolute', 'left: 0', 'top: -2px', 'width: 100%', 'box-sizing: border-box',
-            'border-bottom: solid 2px var(--ws-app-brd)', 'z-index: 1'));
+            'border-bottom: solid 2px var(--ws-tab-brd)', 'z-index: 1'));
 
         self::addStyle(WebshipTools::css('.tab', [' > ', '.tab-content'], 'box-sizing: border-box',
-            'position: absolute', 'width: 100%', 'top: 0', 'background: var(--ws-neutral)',
+            'position: absolute', 'width: 100%', 'top: 0', 'background: var(--ws-tab-bg)',
             'height: calc(100% - 27px)', 'overflow-y: auto'));
 
         self::addStyle(WebshipTools::css('.tab', [' > ', '.tab-content', ' > ', '.panel'],

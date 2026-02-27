@@ -13,13 +13,13 @@ class CircleHtmlView extends HtmlView {
 
     /**
      * CircleHtmlView constructor.
-     * @param string $target The target.
+     * @param string[]|string $classes Some classes.
      */
-    public function __construct($classes = array()) {
-        $classes = is_array($classes) ? $classes : array($classes);
-        parent::__construct(array_merge(array('circle'), $classes));
+    public function __construct(array|string $classes = []) {
+        $classes = is_array($classes) ? $classes : [ $classes ];
+        parent::__construct(array_merge(['circle'], $classes));
 
-        $this->style(WebshipTools::css('.circle', '', 'width: 50px', 'border-radius: 25px'));
+        $this->style(WebshipTools::css('.circle', [], 'width: 50px', 'border-radius: 25px'));
     }
 
     /**

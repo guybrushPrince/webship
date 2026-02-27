@@ -63,7 +63,7 @@ class CloserHtmlView extends StandardButtonHtmlView {
         self::addStyle(WebshipTools::css('button.std-button.closer.plain', [' > ','img'], 'border-radius: 50%',
             'transition: background 0.25s'));
         self::addStyle(WebshipTools::css('button.std-button.closer.plain:hover', [' > ','img'],
-            'background: var(--ws-std-dark-bg)'));
+            'background: var(--ws-std-bg-dark)'));
     }
 
     /**

@@ -59,29 +59,27 @@ class TimelineHtmlView extends HtmlView {
      */
     public static function addCSS() : void {
          self::addStyle(WebshipTools::css('.timeline', [], 'width: 100%', 'height: 100%', 'display: flex',
-            'flex-direction: column', '--thickness: 3px', '--interval: 30px', '--line-color: var(--survey-trans)',
-            '--h-line-width: 5%', '--line-error-color: var(--signal)', '--line-warning-color: var(--similarity-orange)',
-            '--line-dead-color: var(--ws-std-brd)'));
+            'flex-direction: column', '--ws-tml-thickness: 3px', '--ws-tml-interval: 30px', '--ws-tml-h-line-width: 5%'));
          self::addStyle(WebshipTools::css('.timeline', [' > ', '.line'],
-            'width: calc(50% - var(--thickness) / 2)', 'height: var(--interval)',
-            'border-right: var(--thickness) solid var(--line-color)'));
+            'width: calc(50% - var(--ws-tml-thickness) / 2)', 'height: var(--ws-tml-interval)',
+            'border-right: var(--ws-tml-thickness) solid var(--ws-tml-line-color)'));
 
          self::addStyle(WebshipTools::css('.timeline', [' > ', '.point.dead', ' ~ ', '.line'],
-            'border-right-color: var(--line-dead-color)'));
+            'border-right-color: var(--ws-tml-line-dead-color)'));
          self::addStyle(WebshipTools::css('.timeline', [' > ', '.point.dead', ' ~ ', '.point', ' ', '.circ'],
-            'border-color: var(--line-dead-color)'));
+            'border-color: var(--ws-tml-line-dead-color)'));
          self::addStyle(WebshipTools::css('.timeline', [' > ', '.point.dead', ' > ', '.circ'],
-            'border-color: var(--line-dead-color)'));
+            'border-color: var(--ws-tml-line-dead-color)'));
          self::addStyle(WebshipTools::css('.timeline', [' > ', '.point.dead', ' > ', '.circ', ' ~ ', '.v-line'],
-            'border-right-color: var(--line-dead-color)'));
+            'border-right-color: var(--ws-tml-line-dead-color)'));
          self::addStyle(WebshipTools::css('.timeline', [' > ', '.point.dead', ' ~ ', '.point', ' ', '.v-line'],
-            'border-right-color: var(--line-dead-color)'));
+            'border-right-color: var(--ws-tml-line-dead-color)'));
          self::addStyle(WebshipTools::css('.timeline', [' > ', '.point.dead', ' ~ ', '.timeline-branch', ' ', '.line'],
-            'border-right-color: var(--line-dead-color)'));
+            'border-right-color: var(--ws-tml-line-dead-color)'));
          self::addStyle(WebshipTools::css('.timeline', [' > ', '.point.dead', ' ~ ', '.timeline-branch', ' ', '.circ'],
-            'border-color: var(--line-dead-color)'));
+            'border-color: var(--ws-tml-line-dead-color)'));
          self::addStyle(WebshipTools::css('.timeline', [' > ', '.point.dead', ' ~ ', '.timeline-branch', ' ', '.v-line'],
-            'border-right-color: var(--line-dead-color)'));
+            'border-right-color: var(--ws-tml-line-dead-color)'));
     }
 
     /**

@@ -67,11 +67,11 @@ class TileHtmlView extends ContainerHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('.tiles', [], 'border: 1px solid var(--ws-std-light-bg)'));
+        self::addStyle(WebshipTools::css('.tiles', [], 'border: 1px solid var(--ws-std-bg-light)'));
         self::addStyle(WebshipTools::css('.tiles', [' > ', '.tile'], 'align-items: center',
             'justify-content: flex-start', 'border: 1px solid var(--ws-std-bg-hvr)',
             'cursor: pointer', 'transition: background 0.5s',
-            'text-align: center', 'background: var(--ws-std-ulight-bg)',
+            'text-align: center', 'background: var(--ws-std-bg-ultra)',
             'width: var(--ws-tiles-tw)', 'max-width: var(--ws-tiles-tw)', 'height: var(--ws-tiles-tw)', 'font-size: var(--ws-tiles-fs)'));
         self::addStyle(WebshipTools::css('.tiles', [' > ', '.tile', ' > ', 'span.small'], 'display: none'));
         self::addStyle(WebshipTools::css('.tiles', [' > ', '.tile', ' > ', 'img'], 'height: 50%',
@@ -79,7 +79,7 @@ class TileHtmlView extends ContainerHtmlView {
         self::addStyle(WebshipTools::css('.tiles', [' > ', '.tile', ':hover'],
             'background: var(--ws-std-bg)'));
         self::addStyle(WebshipTools::css('.tiles', [' > ', '.tile', '.active'],
-            'background: var(--ws-std-bg-hvr)', 'border-color: var(--ws-std-dark-bg)'));
+            'background: var(--ws-std-bg-hvr)', 'border-color: var(--ws-std-bg-dark)'));
     }
 
     /**

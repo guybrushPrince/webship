@@ -46,23 +46,23 @@ class RibbonHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('.ribbon', [], '--dark-ribbon-color: var(--ws-font-info)',
-            '--font-color: var(--ws-font-info)', '--background-color: var(--ws-border-info)'));
-        self::addStyle(WebshipTools::css('.ribbon', ['.error'], '--dark-ribbon-color: var(--ws-font-error)',
-            '--font-color: var(--ws-font-error)', '--background-color: var(--ws-border-error)'));
+        self::addStyle(WebshipTools::css('.ribbon', [], '--ws-rbn-brd: var(--ws-font-info)',
+            '--ws-rbn-font: var(--ws-font-info)', '--ws-rbn-bg: var(--ws-border-info)'));
+        self::addStyle(WebshipTools::css('.ribbon', ['.error'], '--ws-rbn-brd: var(--ws-font-error)',
+            '--ws-rbn-font: var(--ws-font-error)', '--ws-rbn-bg: var(--ws-border-error)'));
 
         /* common */
         self::addStyle(WebshipTools::css('.ribbon', [], 'width: 150px', 'height: 150px',
             'overflow: hidden', 'position: absolute', 'z-index: 2'));
         self::addStyle(WebshipTools::css('.ribbon', ['::before'], 'position: absolute', 'z-index: -1',
-            'content: ""', 'display: block', 'border: 5px solid var(--dark-ribbon-color)'));
+            'content: ""', 'display: block', 'border: 5px solid var(--ws-rbn-brd)'));
         self::addStyle(WebshipTools::css('.ribbon', ['::after'], 'position: absolute', 'z-index: -1',
-            'content: ""', 'display: block', 'border: 5px solid var(--dark-ribbon-color)'));
+            'content: ""', 'display: block', 'border: 5px solid var(--ws-rbn-brd)'));
         self::addStyle(WebshipTools::css('.ribbon', [' ', 'span'], 'position: absolute', 'display: flex',
             'flex-direction: row', 'align-items: center', 'justify-content: center',
-            'width: 225px', 'height: 48px', 'background-color: var(--background-color)',
+            'width: 225px', 'height: 48px', 'background-color: var(--ws-rbn-bg)',
             'box-shadow: 0 5px 10px rgba(0,0,0,.1)',
-            'color: var(--font-color)', 'font: 700 18px/1 Lato, sans-serif', 'text-shadow: 0 1px 1px rgba(0,0,0,.2)',
+            'color: var(--ws-rbn-font)', 'font: 700 18px/1 Lato, sans-serif', 'text-shadow: 0 1px 1px rgba(0,0,0,.2)',
             'text-transform: uppercase'));
 
         self::addStyle(WebshipTools::css('.ribbon.tiny', [], 'width: 50px', 'height: 50px'));
@@ -71,9 +71,9 @@ class RibbonHtmlView extends HtmlView {
             'padding: 0', 'height: 15px', 'top: 13px', 'right: -6px', 'font-family: monospace',
             'box-shadow: 0 1.33px 3.33px rgba(0,0,0,.1)'));
         self::addStyle(WebshipTools::css('.ribbon.tiny', ['::before'],
-            'border: 2.5px solid var(--dark-ribbon-color)'));
+            'border: 2.5px solid var(--ws-rbn-brd)'));
         self::addStyle(WebshipTools::css('.ribbon.tiny', ['::after'],
-            'border: 2.5px solid var(--dark-ribbon-color)'));
+            'border: 2.5px solid var(--ws-rbn-brd)'));
 
         /* top left*/
 

@@ -28,7 +28,7 @@ class WizardMagicHtmlView extends HtmlView {
 
         $this->style(WebshipTools::css('.magic', [], 'width: 100%', 'position: relative'));
         $this->style(WebshipTools::css('.magic', [' ', '.invisible'], 'display: none'));
-        $this->style(WebshipTools::css('.magic', [' > ', '.ctr'], 'background: var(--ws-neutral)',
+        $this->style(WebshipTools::css('.magic', [' > ', '.ctr'], 'background: var(--ws-wizard-ctr-bg)',
             'border-radius: 0 0 0 5px'));
     }
 

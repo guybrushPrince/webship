@@ -33,9 +33,8 @@ class MenuEntryHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.menu-entry'], 'display: flex', 'flex-wrap: wrap',
-            'cursor: pointer', 'font-size: 15px', 'font-weight: normal',
-            'align-items: center'));
+        self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.menu-entry'], 'display: flex',
+            'flex-wrap: wrap', 'cursor: pointer', 'font-size: 15px', 'font-weight: normal', 'align-items: center'));
         self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.menu-entry', ':hover'],
             'background: var(--ws-main-menu-hvr)'));
         self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.menu-entry', ':hover', ' > ', ' ul'],

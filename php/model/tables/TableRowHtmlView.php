@@ -60,7 +60,7 @@ class TableRowHtmlView extends ContainerHtmlView {
             'align-content: flex-end'));
         self::addStyle(WebshipTools::css('.table > .tr.hoverable', [], 'transition: 0.5s background'));
         self::addStyle(WebshipTools::css('.table > .tr.hoverable', [':hover'],
-            'background: var(--ws-std-light-bg)'));
+            'background: var(--ws-std-bg-light)'));
         self::addStyle(WebshipTools::css('.table > .tr.h40px', [' > ', '.cell'],'min-height: 40px'));
     }
     /**

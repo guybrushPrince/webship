@@ -24,59 +24,60 @@ class TimelinePointHtmlView extends HtmlView{
      */
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.point', [], 'display: flex', 'flex-direction: row',
-            'flex-wrap: nowrap', 'width: 100%', '--circle-radius: 15px', '--info-margin: 5%', 'align-items: center',
-            'position: relative', '--info-background: var(--ws-neutral)'));
-        self::addStyle(WebshipTools::css('.point', [' > ', '.v-line'], 'width: var(--thickness)',
-            'box-sizing: border-box', 'position: absolute', 'border-right: var(--thickness) solid var(--line-color)',
-            'height: calc(50% - var(--circle-radius))',
-            'left: calc(50% - var(--thickness) / 2)', 'z-index: 0'));
+            'flex-wrap: nowrap', 'width: 100%', 'align-items: center', 'position: relative',
+            '--ws-tml-circle-radius: 15px',
+            '--ws-tml-info-margin: 5%'));
+        self::addStyle(WebshipTools::css('.point', [' > ', '.v-line'], 'width: var(--ws-tml-thickness)',
+            'box-sizing: border-box', 'position: absolute', 'border-right: var(--ws-tml-thickness) solid var(--ws-tml-line-color)',
+            'height: calc(50% - var(--ws-tml-circle-radius))',
+            'left: calc(50% - var(--ws-tml-thickness) / 2)', 'z-index: 0'));
         self::addStyle(WebshipTools::css('.point', [' > ', '.v-line.t'], 'top: 0'));
         self::addStyle(WebshipTools::css('.point:first-child', [' > ', '.v-line.t'], 'display: none'));
         self::addStyle(WebshipTools::css('.point', [' > ', '.v-line.b'], 'bottom: 0'));
         self::addStyle(WebshipTools::css('.point:last-child', [' > ', '.v-line.b'], 'display: none'));
-        self::addStyle(WebshipTools::css('.point', [' > ', '.info'], 'width: calc(50% - var(--circle-radius))',
-            'box-sizing: border-box'/*, 'position: relative'*/, 'background: var(--info-background)', 'z-index: 1'));
-        self::addStyle(WebshipTools::css('.point', [' > ', '.circ'], 'width: calc(2 * var(--circle-radius))',
-            'height: calc(2 * var(--circle-radius))',
-            'border-radius: var(--circle-radius)', 'border: var(--thickness) solid var(--line-color)',
+        self::addStyle(WebshipTools::css('.point', [' > ', '.info'], 'width: calc(50% - var(--ws-tml-circle-radius))',
+            'box-sizing: border-box'/*, 'position: relative'*/, 'background: var(--ws-tml-info-background)', 'z-index: 1'));
+        self::addStyle(WebshipTools::css('.point', [' > ', '.circ'], 'width: calc(2 * var(--ws-tml-circle-radius))',
+            'height: calc(2 * var(--ws-tml-circle-radius))',
+            'border-radius: var(--ws-tml-circle-radius)', 'border: var(--ws-tml-thickness) solid var(--ws-tml-line-color)',
             'box-sizing: border-box', 'z-index: 1'));
         self::addStyle(WebshipTools::css('.point', [' > ', '.circ', ' > ', 'img'], 'width: 60%',
             'padding: 20%'));
         self::addStyle(WebshipTools::css('.point.next-step', [' > ', '.circ'],
-            'border: var(--thickness) dotted var(--line-color)'));
+            'border: var(--ws-tml-thickness) dotted var(--ws-tml-line-color)'));
         self::addStyle(WebshipTools::css('.point.next-step', [' > ', '.info:not(:empty)', ' > ', '.box'],
             'border-style: dotted'));
         self::addStyle(WebshipTools::css('.point.problem', [' > ', '.circ'],
-            'border: var(--thickness) dotted var(--line-error-color)'));
+            'border: var(--ws-tml-thickness) dotted var(--ws-tml-line-error-color)'));
         self::addStyle(WebshipTools::css('.point.problem', [' > ', '.info:not(:empty)', ' > ', '.h-line'],
-            'border-bottom: var(--thickness) dotted var(--line-error-color)'));
+            'border-bottom: var(--ws-tml-thickness) dotted var(--ws-tml-line-error-color)'));
         self::addStyle(WebshipTools::css('.point.problem', [' > ', '.info:not(:empty)', ' > ', '.box'],
-            'border-color: var(--line-error-color)', 'border-style: dotted'));
+            'border-color: var(--ws-tml-line-error-color)', 'border-style: dotted'));
         self::addStyle(WebshipTools::css('.point.warning', [' > ', '.circ'],
-            'border: var(--thickness) solid var(--line-warning-color)'));
+            'border: var(--ws-tml-thickness) solid var(--ws-tml-line-warning-color)'));
         self::addStyle(WebshipTools::css('.point.warning', [' > ', '.info:not(:empty)', ' > ', '.h-line'],
-            'border-bottom: var(--thickness) dotted var(--line-warning-color)'));
+            'border-bottom: var(--ws-tml-thickness) dotted var(--ws-tml-line-warning-color)'));
         self::addStyle(WebshipTools::css('.point.warning', [' > ', '.info:not(:empty)', ' > ', '.box'],
-            'border-color: var(--line-warning-color)', 'border-style: dotted'));
+            'border-color: var(--ws-tml-line-warning-color)', 'border-style: dotted'));
 
         self::addStyle(WebshipTools::css('.point', [' > ', '.info:empty'], 'visibility: hidden'));
         self::addStyle(WebshipTools::css('.point', [' > ', '.info:not(:empty)'],
-            'width: calc(50% - var(--info-margin) - var(--circle-radius))', 'display: flex',
+            'width: calc(50% - var(--ws-tml-info-margin) - var(--ws-tml-circle-radius))', 'display: flex',
             'flex-direction: row', 'flex-wrap: nowrap', 'align-items: center'/*, 'position: relative'*/));
         self::addStyle(WebshipTools::css('.point', [' > ', '.info:not(:empty)', ' > ', '.box'],
-            'border-radius: 10px', 'border: var(--thickness) solid var(--line-color)', 'padding: 10px'/*,
+            'border-radius: 10px', 'border: var(--ws-tml-thickness) solid var(--ws-tml-line-color)', 'padding: 10px'/*,
             'position: absolute'*/));
         self::addStyle(WebshipTools::css('.point', [' > ', '.info.right:not(:empty)'],
-            'justify-content: flex-start', 'margin-right: var(--info-margin)'));
+            'justify-content: flex-start', 'margin-right: var(--ws-tml-info-margin)'));
         self::addStyle(WebshipTools::css('.point', [' > ', '.info.right:not(:empty)', ' > ', '.box'],
-            'left: var(--h-line-width)'));
+            'left: var(--ws-tml-h-line-width)'));
         self::addStyle(WebshipTools::css('.point', [' > ', '.info:not(:empty)', ' > ', '.h-line'],
-            'height: 0', 'border-bottom: var(--thickness) dotted var(--line-color)',
-            'width: var(--h-line-width)'));
+            'height: 0', 'border-bottom: var(--ws-tml-thickness) dotted var(--ws-tml-line-color)',
+            'width: var(--ws-tml-h-line-width)'));
         self::addStyle(WebshipTools::css('.point', [' > ', '.info.left:not(:empty)'],
-            'justify-content: flex-end', 'margin-left: var(--info-margin)'));
+            'justify-content: flex-end', 'margin-left: var(--ws-tml-info-margin)'));
         self::addStyle(WebshipTools::css('.point', [' > ', '.info.left:not(:empty)', ' > ', '.box'],
-            'right: var(--h-line-width)'));
+            'right: var(--ws-tml-h-line-width)'));
 
         self::addStyle(WebshipTools::css('.point.loading', [], 'background: initial', 'animation: none'));
         self::addStyle(WebshipTools::css('.point.loading', [' > ', '.circ'], 'animation: pulse 2s infinite'));

@@ -15,15 +15,12 @@
     --ws-app: rgba(211, 234, 240, 1.0);
     --ws-app-brd: rgba(130, 182, 194, 1.0);
 
-    /* Main menu */
-    --ws-main-menu: rgba(150, 202, 214, 1.0);
-    --ws-main-menu-hvr: rgba(211, 234, 240, 1.0);
-
     /* Standard colors */
     --ws-neutral: rgba(255, 255, 255, 1.0);
 
     /* Font colors */
     --ws-main-font: rgba(0, 0, 0, 1.0);
+    --ws-main-font-trs: rgba(0, 0, 0, 0.5);
     --ws-font-dark: rgba(30, 30, 30, 1.0);
     --ws-font-gray: rgba(150, 150, 150, 1.0);
     --ws-font-dgray: rgba(100, 100, 100, 1.0);
@@ -32,16 +29,17 @@
     /* Background colors */
     --ws-std-bg: rgba(200, 200, 200, 1.0);
     --ws-std-bg-hvr: rgba(220, 220, 220, 1.0);
-    --ws-std-dark-bg: rgba(150, 150, 150, 1.0);
-    --ws-std-light-bg: rgba(230, 230, 230, 1.0);
-    --ws-std-ulight-bg: rgba(240, 240, 240, 1.0);
+    --ws-std-bg-dark: rgba(150, 150, 150, 1.0);
+    --ws-std-bg-light: rgba(230, 230, 230, 1.0);
+    --ws-std-bg-ultra: rgba(240, 240, 240, 1.0);
+    --ws-std-bg-fine: rgba(250, 250, 250, 1.0);
 
     /* Borders */
     --ws-std-brd: rgba(200, 200, 200, 1.0);
+    --ws-std-brd-dark: rgba(0, 0, 0, 1.0);
     --ws-std-brd-dark-trans: rgba(0, 0, 0, 0.5);
     --ws-std-brd-gray: rgba(118, 118, 118, 1.0);
     --ws-std-brd-lgray: rgba(235, 235, 235, 1.0);
-    /*--ws-std-brd-gray: rgba(150, 150, 150, 1.0);*/
 
     /* Shadows */
     --ws-front-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.75);
@@ -51,6 +49,18 @@
     /* Overlays */
     --ws-screen-overlay: rgba(0, 0, 0, 0.5);
     --ws-disabled-overlay: rgba(255, 255, 255, 0.6);
+
+    /* Main menu */
+    --ws-main-menu: rgba(150, 202, 214, 1.0);
+    --ws-main-menu-hvr: rgba(211, 234, 240, 1.0);
+    --ws-main-menu-signal: rgba(161, 50, 61, 0.5);
+
+    /* Context menu */
+    --ws-context-menu-bg: rgba(250, 250, 250, 1.0);
+    --ws-context-menur-brd: var(--ws-std-bg);
+
+    /* Control panel */
+    --ws-ctr-brd: var(--ws-std-bg);
 
     /* Success */
     --ws-font-success: rgba(60, 118, 61, 1.0);
@@ -90,6 +100,42 @@
     --ws-dashboard-shadow-moz-hover: 3px 3px 6px 0 rgba(0, 0, 0, 0.16);
     --ws-plus: linear-gradient(var(--ws-neutral), var(--ws-neutral)) content-box, linear-gradient(var(--ws-neutral), var(--ws-neutral)) content-box, rgba(255, 255, 255, 0);
 
+    /* Drag & Drop */
+    --ws-mov-pnl-hvr-bg: rgba(0, 0, 0, 0.25);
+    --ws-mov-pnl-hvr-font: var(--ws-main-font);
+    --ws-mov-tgt-bg: rgba(224, 122, 95, 1);
+
+    /* Tabs */
+    --ws-tab-main-clr: var(--ws-main-menu);
+    --ws-tab-brd: var(--ws-app-brd);
+    --ws-tab-bg: var(--ws-neutral);
+    --ws-tab-head-bg: var(--ws-neutral);
+    --ws-tab-head-bg-ina: rgba(225, 225, 225, 1.0);
+    --ws-tab-head-bg-hvr: var(--ws-std-bg-dark);
+
+    /* Timeline */
+    --ws-tml-line-color: var(--ws-font-success);
+    --ws-tml-line-error-color: var(--ws-font-error);
+    --ws-tml-line-warning-color: rgba(255, 209, 92, 1.0);
+    --ws-tml-line-dead-color: var(--ws-std-brd);
+    --ws-tml-info-background: var(--ws-neutral);
+
+    /* Tree */
+    --ws-tree-brd: var(--ws-std-bg-hvr);
+    --ws-tree-arrow: var(--ws-std-bg);
+    --ws-tree-hvr: var(--ws-std-bg-dark);
+
+    /* Wizards */
+    --ws-wizard-ttl-font: var(--ws-main-font);
+    --ws-wizard-ttl-bg: var(--ws-std-bg);
+    --ws-wizard-ttl-brd: rgb(0 0 0 / 14%);
+    --ws-wizard-ttl-img-fltr: none;
+    --ws-wizard-expl-bg: var(--ws-neutral);
+    --ws-wizard-actv-bg: var(--ws-neutral);
+    --ws-wizard-abort: rgba(255, 150, 150, 1.0);
+    --ws-wizard-abort-hvr: rgba(190, 0, 0, 1.0);;
+    --ws-wizard-ctr-bg: var(--ws-neutral);
+
     /* Loading */
     --ws-loading-start: rgba(150, 150, 150, 1.0);
     --ws-loading-end: rgba(150, 150, 150, 0.2);
@@ -97,10 +143,10 @@
     /* Buttons */
     --ws-button-bg: rgba(239, 239, 239, 1.0);
     --ws-button-abort: rgba(232, 176, 176, 0.6);
-    --ws-button-abort-hvr: var(--ws-std-dark-bg);
+    --ws-button-abort-hvr: var(--ws-std-bg-dark);
     --ws-button-abort-font: var(--ws-font-dark);
     --ws-button-submit: rgba(176, 232, 176, 0.6);
-    --ws-button-submit-hvr: var(--ws-std-dark-bg);
+    --ws-button-submit-hvr: var(--ws-std-bg-dark);
     --ws-button-submit-font: var(--ws-font-dark);
 
     /* Inputs */

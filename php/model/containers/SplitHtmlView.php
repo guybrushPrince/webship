@@ -79,7 +79,7 @@ class SplitHtmlView extends HtmlView {
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.std-split', [], 'width: 100%', 'padding: 0',
             'box-sizing: border-box', 'position: relative', 'display: flex', 'flex-direction: row',
-            'flex-wrap: nowrap', '--ws-split-sep-width: 5px', '--ws-split-sep-color: var(--ws-std-light-bg)',
+            'flex-wrap: nowrap', '--ws-split-sep-width: 5px', '--ws-split-sep-color: var(--ws-std-bg-light)',
         ));
         self::addStyle(WebshipTools::css('.std-split.scroll', [], 'height: 100%'));
         self::addStyle(WebshipTools::css('.std-split', [' > ', 'div:nth-child(1)'],

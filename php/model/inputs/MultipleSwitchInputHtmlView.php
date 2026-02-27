@@ -60,7 +60,7 @@ class MultipleSwitchInputHtmlView extends HtmlView {
      */
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.mul-switch', [], 'display: flex', 'flex-direction: row',
-            'flex-wrap: nowrap', 'flex: 1 1 0px', 'gap: 0', '--ws-ms-unselected: var(--ws-std-dark-bg)',
+            'flex-wrap: nowrap', 'flex: 1 1 0px', 'gap: 0', '--ws-ms-unselected: var(--ws-std-bg-dark)',
             '--ws-ms-unselected-font: var(--ws-neutral)', '--ws-ms-selected: var(--ws-multiple-switch)',
             '--ws-ms-selected-font: var(--ws-neutral)', '--ws-ms-hover: var(--ws-multiple-switch-hvr)',
             '--ws-ms-hover-font: var(--ws-neutral)'));

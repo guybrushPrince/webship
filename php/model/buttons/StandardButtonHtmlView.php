@@ -61,14 +61,14 @@ class StandardButtonHtmlView extends ButtonHtmlView {
             '--ws-common-margin: .5rem 0 var(--ws-bottom-distance) 0',
             'align-items: center', 'justify-content: center',
             'width: var(--ws-common-width)', 'min-height: var(--ws-common-height)', 'cursor: pointer',
-            'border: 1px solid var(--ws-std-dark-bg)', 'background: var(--ws-button-bg)',
+            'border: 1px solid var(--ws-std-bg-dark)', 'background: var(--ws-button-bg)',
             'color: var(--ws-main-font)', 'font-size: 16px', 'text-align: center',
             'font-family: Roboto Condensed, Roboto, sans-serif', 'position: relative',
             'margin: var(--ws-common-margin)',
             '-webkit-transition: -webkit-box-shadow .25s', 'transition: box-shadow .25s',
             '-webkit-box-shadow: var(--ws-haptic-shadow)', 'box-shadow: var(--ws-haptic-shadow)',
             'transition: background 0.5s', 'border-radius: 5px', 'box-sizing: border-box', 'gap: 10px',
-            '--ws-hover: var(--ws-std-dark-bg)'));
+            '--ws-hover: var(--ws-std-bg-dark)'));
         self::addStyle(WebshipTools::css('button.std-button', [':hover'],
             'background: var(--ws-hover)'));
         self::addStyle(WebshipTools::css('button.std-button', [' > ', 'img'], 'height: 100%'));

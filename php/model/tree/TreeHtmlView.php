@@ -33,11 +33,14 @@ class TreeHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('ul.tree', '', 'padding-top: 0', 'padding-bottom: 0'));
         self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li', ' ', 'a'], 'text-align: left',
             'justify-content: flex-start'));
-        self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li'], 'min-height: 20px', 'list-style-type: none', '--indent: -40px'));
+        self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li'], 'min-height: 20px',
+            'list-style-type: none', '--ws-tree-indent: -40px'));
         self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li:not(:last-child)'],
-            'border-bottom: 1px solid var(--ws-std-bg-hvr)'));
-        self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li.entry'], 'margin-left: var(--indent)'));
-        self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li.sub'], 'margin-left: var(--indent)', 'cursor: pointer'));
+            'border-bottom: 1px solid var(--ws-tree-brd)'));
+        self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li.entry'],
+            'margin-left: var(--ws-tree-indent)'));
+        self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li.sub'],
+            'margin-left: var(--ws-tree-indent)', 'cursor: pointer'));
         self::addStyle(WebshipTools::css('ul.tree:not(.open)', [' > ', 'li.sub'],
             'list-style-type: disclosure-closed', 'border-bottom: none'));
         self::addStyle(WebshipTools::css('ul.tree:not(.open)', [' > ', 'li.sub', ' ~ ', 'li'],
@@ -50,16 +53,16 @@ class TreeHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li.selectable'], 'transition: 0.5s',
             'cursor: pointer'));
         self::addStyle(WebshipTools::css('ul.tree', [' > ', 'li.selectable:hover'],
-            'background: var(--ws-std-bg-hvr)'));
+            'background: var(--ws-tree-brd)'));
 
         self::addStyle(WebshipTools::css('ul.tree', [' ', '.leaf-info'], 'display: flex', 'flex-direction: row',
             'flex-wrap: nowrap', 'min-height: 20px', 'align-items: center'));
         self::addStyle(WebshipTools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow'], 'display: flex',
             'flex-direction: row', 'width: 15px', 'min-width: 15px', 'height: 15px', 'border-radius: 50%',
-            'background: var(--ws-std-bg)', 'justify-content: center', 'align-items: center',
+            'background: var(--ws-tree-arrow)', 'justify-content: center', 'align-items: center',
             'margin-left: 10px', 'transition: 0.5s', 'cursor: pointer'));
         self::addStyle(WebshipTools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow:hover'],
-            'background: var(--ws-std-dark-bg)'));
+            'background: var(--ws-tree-hvr)'));
         self::addStyle(WebshipTools::css('ul.tree', [' ', '.leaf-info', ' > ', '.arrow', ' > ', 'img'],
             'width: 10px', 'height: 10px'));
     }

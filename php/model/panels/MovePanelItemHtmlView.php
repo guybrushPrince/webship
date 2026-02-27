@@ -103,12 +103,12 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
     public static function addCSS() : void {
         // Move buttons
         self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move'], 'cursor: pointer',
-            'text-align: center', 'font-size: 25px', 'color: var(--font-trans)', 'position: absolute',
+            'text-align: center', 'font-size: 25px', 'color: var(--ws-main-font-trs)', 'position: absolute',
             'right: 0', 'width: 50px', 'box-sizing: border-box', 'height: 30px',
             'transition: background 0.5s', 'display: flex', 'flex-direction: row', 'align-items: center',
             'justify-content: center', 'border-radius: 3px'));
         self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move', ':hover'],
-            'background: var(--drag-background-hover)', 'color: var(--drag-color-hover)'));
+            'background: var(--ws-mov-pnl-hvr-bg)', 'color: var(--ws-mov-pnl-hvr-font)'));
         self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move', ':after'],
             'display: flex', 'flex-direction: row', 'align-items: center', 'justify-content: center',
             'width: 100%'));
@@ -141,13 +141,13 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
             'transition: background 0.5s', 'display: flex', 'align-items: center', 'justify-content: center',
             'border-radius: 5px', 'top: 0px'));
         self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.drag', ':hover'],
-            'background: var(--drag-background-hover)'));
+            'background: var(--ws-mov-pnl-hvr-bg)'));
         self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.drag', ' > ', 'img'],
             'opacity: 0.25', 'width: 100%'));
 
         // Move targets
         self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move-position'], 'width: 100%',
-            'height: 0', 'background: linear-gradient(-45deg, var(--ws-neutral), var(--move-position-background))',
+            'height: 0', 'background: linear-gradient(-45deg, var(--ws-neutral), var(--ws-mov-tgt-bg))',
             'background-size: 400% 400%',
             'border-radius: 5px', 'align-items: center', 'justify-content: center', 'transition: 0.5s',
             'display: flex'));
@@ -158,7 +158,7 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
         self::addStyle(WebshipTools::css('.panel-item.movable', ['.over.not-top', ' > ', '.move-position.top'],
             'display: none'));
         self::addStyle(WebshipTools::css('.panel-item.movable', ['.over:not(.in-move)', ' > ', '.move-position.hover'],
-            'border: 1px solid var(--border-1)', 'opacity: 1.0', 'height: 50px',
+            'border: 1px solid var(--ws-std-brd-dark)', 'opacity: 1.0', 'height: 50px',
             'animation: gradient 15s ease infinite'));
         self::addStyle(WebshipTools::css('.panel-item.movable', ['.over:not(.in-move)', ' > ', '.move-position.hover',
             ' > ', 'img'], 'opacity: 1.0', 'height: 30px'));

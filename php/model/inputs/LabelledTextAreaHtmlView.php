@@ -88,7 +88,7 @@ class LabelledTextAreaHtmlView extends TextHtmlView {
         self::addStyle(WebshipTools::css('.ltext-input', [' > ', 'textarea'], 'min-height: var(--ws-lta-height)',
             'box-sizing: border-box', 'margin-top: 10px'));
         self::addStyle(WebshipTools::css('.ltext-input', [' > ', 'textarea + label'],
-            'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--ws-std-dark-bg)',
+            'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--ws-std-bg-dark)',
             'transition: 0.5s'));
         self::addStyle(WebshipTools::css('.ltext-input', [' > ', 'textarea:not(:focus):placeholder-shown + label'],
             'display: flex', 'top: var(--ws-lta-buffer)', 'flex-direction: row',

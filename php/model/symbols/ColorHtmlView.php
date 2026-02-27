@@ -49,9 +49,9 @@ class ColorHtmlView extends HtmlView {
         if ($color === 'none') $font = '#000000';
         else $font = WebshipTools::getFontColor($color);
         $this->localStyle([
-            '--bg: ' . $color,
-            '--fc: ' . $font,
-            '--dc: ' . $color
+            '--ws-clr-bg: ' . $color,
+            '--ws-clr-fc: ' . $font,
+            '--ws-clr-dc: ' . $color
         ]);
 
         if ($title) {
@@ -66,8 +66,8 @@ class ColorHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('.color-v', [], 'background: var(--bg) !important',
-            'color: var(--fc)', '--dev-color: var(--dc)'));
+        self::addStyle(WebshipTools::css('.color-v', [], 'background: var(--ws-clr-bg) !important',
+            'color: var(--ws-clr-fc)', '--dev-color: var(--ws-clr-dc)'));
     }
 
     /**

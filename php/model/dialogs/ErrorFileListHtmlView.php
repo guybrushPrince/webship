@@ -61,7 +61,7 @@ class ErrorFileListHtmlView extends StandardButtonHtmlView {
         self::addStyle(WebshipTools::css('.gen-error', [' > ', 'div.invisible'],
             'display: none'));
         self::addStyle(WebshipTools::css('.gen-error', [' ', 'pre'],
-            'padding: 10px', 'background: var(--ws-std-ulight-bg)', 'margin-top: 0',
+            'padding: 10px', 'background: var(--ws-std-bg-ultra)', 'margin-top: 0',
             'border: 1px solid var(--ws-std-brd)', 'box-sizing: border-box', 'font-size: 10px',
             'font-family: monospace', 'text-align: left', 'width: 100%'));
         self::addStyle(WebshipTools::css('.gen-error', [' ', 'pre:before'],
