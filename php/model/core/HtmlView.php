@@ -11,6 +11,7 @@ use ship\views\TextView;
 use ship\views\View;
 use webship\containers\ContainerHtmlView;
 use webship\contents\DescribedHtmlView;
+use webship\dialogs\DialogHtmlView;
 use webship\forms\FormHtmlView;
 use webship\interoperability\ParameterSerializer;
 use webship\menus\MenuHtmlView;
@@ -87,6 +88,8 @@ class HtmlView extends View {
         $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(__CLASS__);
         $this->classes = $classes;
+
+        DialogHtmlView::addCSS();
     }
 
     /**
