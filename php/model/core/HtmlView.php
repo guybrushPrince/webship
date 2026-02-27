@@ -13,6 +13,7 @@ use webship\containers\ContainerHtmlView;
 use webship\contents\DescribedHtmlView;
 use webship\dialogs\DialogHtmlView;
 use webship\forms\FormHtmlView;
+use webship\help\HintHtmlView;
 use webship\interoperability\ParameterSerializer;
 use webship\menus\MenuHtmlView;
 use webship\panels\PanelHtmlView;
@@ -90,6 +91,7 @@ class HtmlView extends View {
         $this->classes = $classes;
 
         DialogHtmlView::addCSS();
+        HintHtmlView::addCSS();
     }
 
     /**
