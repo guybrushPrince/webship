@@ -96,7 +96,7 @@ class LinkHtmlView extends HtmlView {
      * @return LinkHtmlView
      */
     public static function create(AnchorHtmlView|string $url, string $target = self::TARGET_NEW_PAGE,
-                                  array|string          $classes = [], bool $download = false) : LinkHtmlView {
+                                  array|string $classes = [], bool $download = false) : LinkHtmlView {
         return new LinkHtmlView($url, $classes, $download, $target);
     }
 

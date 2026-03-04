@@ -362,12 +362,26 @@ class HtmlView extends View {
     /**
      * Generate a container.
      * @param string[]|string $classes One or more classes.
+     * @param string|null $color An optional background color.
+     * @param string|null $fontColor An optional font color.
      * @return ContainerHtmlView
      */
-    public function container(array|string $classes = []) : ContainerHtmlView {
-        $containerView = new ContainerHtmlView($classes);
+    public function container(array|string $classes = [], string|null $color = null,
+                              string|null $fontColor = null) : ContainerHtmlView {
+        $containerView = new ContainerHtmlView($classes, $color, $fontColor);
         $this->add($containerView);
         return $containerView;
+    }
+
+    /**
+     * Create a misc. (HTML) view.
+     * @param string[]|string $classes Some classes.
+     * @return HtmlView
+     */
+    public function view(array|string $classes = []) : HtmlView {
+        $view = new HtmlView($classes);
+        $this->add($view);
+        return $view;
     }
 
     /**

@@ -38,7 +38,9 @@ class ContainerHtmlView extends HtmlView {
 
     /**
      * Constructor.
-     * @param string[]|string $classes
+     * @param string[]|string $classes Some classes.
+     * @param string|null $color An optional background color.
+     * @param string|null $fontColor An optional font color.
      */
     public function __construct(array|string $classes = [], string|null $color = null, string|null $fontColor = null) {
         $classes = is_array($classes) ? $classes : [$classes];
