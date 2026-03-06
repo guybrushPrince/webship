@@ -34,6 +34,7 @@ class BasicEvents implements EventAdder {
     public const ThrowEvent = 'ThrowEvent';
     public const ThrowEventToObjectBinding = 'ThrowEventToObjectBinding';
     public const ThrowEventToObject = 'ThrowEventToObject';
+    public const BroadcastEvent = 'BroadcastEvent';
     public const UnbindEventFromObject = 'UnbindEventFromObject';
     public const AddView = 'AddView';
     public const Delete = 'Delete';
@@ -75,6 +76,9 @@ class BasicEvents implements EventAdder {
 
         HtmlTemplateProtocol::_new(self::ThrowEventToObject, self::ENVIRONMENT)->
             throwObjectEvent(TemplateObject::_new('event'), TemplateObject::_new('object'), TemplateObject::_new('scope'), TemplateObject::_new('data'));
+
+        HtmlTemplateProtocol::_new(self::BroadcastEvent, self::ENVIRONMENT)->
+            broadcastEvent(TemplateObject::_new('event'), TemplateObject::_new('scope'), TemplateObject::_new('data'));
 
         HtmlTemplateProtocol::_new(self::UnbindEventFromObject, self::ENVIRONMENT)->
             unbindObjectEvent(TemplateObject::_new('view'), TemplateObject::_new('event'), TemplateObject::_new('object'), TemplateObject::_new('scope'));

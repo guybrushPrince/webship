@@ -213,6 +213,12 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         return '';
                     }
                 }
+                case 'broadcastEvent': {
+                    $event = $this->handleEventType($modify["event"]);
+                    $scopes = $this->generateScopes($modify["scopes"]);
+                    $data = $this->generateData($modify["data"]);
+                    return 'eventBus.broadcast(' . $event . ', _i_n_' . $scopes . $data . ');';
+                }
                 case 'clear': {
                     $view = $this->reduceView($modify["view"]);
                     if ($view) return 'clear(' . $this->createViewSelector($view) . ');';

@@ -412,6 +412,7 @@ let checkWindowClosed = (function() {
 let eventBus = (function () {
     function EventBus() {
         this.registry = {};
+        this.broadcaster = {};
         this.bind = function (view, objId, event, fun = (data) => {}, igData = null, scope = undefined) {
             let events = event;
             if (!Array.isArray(event)) events = [ events ];
@@ -491,6 +492,71 @@ let eventBus = (function () {
                             }
                         }
                     });
+                }
+            });
+        };
+        this.bindBroadcast = function (event, view, fun = (data) => {}, igData = null, scope = undefined) {
+            let events = event;
+            if (!Array.isArray(event)) events = [ events ];
+            events.forEach((event) => {
+                event = "e" + event;
+                if (scope === undefined) scope = 'undefined';
+                let sc;
+                if (!this.broadcaster.hasOwnProperty(scope)) {
+                    sc = [];
+                    this.broadcaster[scope] = sc;
+                } else sc = this.broadcaster[scope];
+                let ev;
+                if (!sc.hasOwnProperty(event)) {
+                    ev = [];
+                    sc[event] = ev;
+                } else ev = sc[event];
+                sc[event] = ev = ev.filter((el) => {
+                    return $('[data-id="' + el.view.attr('data-id') + '"]').length > 0;
+                });
+                igData = (typeof igData === 'object' && igData !== null && igData !== undefined) ? Object.values(igData) : igData;
+                igData = (igData === undefined) ? null : igData;
+                ev.push({ view: view, fun: fun, igData: igData });
+            });
+        };
+        this.unbindBroadcast = function (event, view, scope = undefined) {
+            event = "e" + event;
+            if (scope === undefined) scope = 'undefined';
+            if (!this.broadcaster.hasOwnProperty(scope)) return;
+            let sc = this.broadcaster[scope];
+            if (!sc.hasOwnProperty(event)) return;
+            sc[event] = sc[event].filter((el) => {
+                return !$(el.view).is($(view));
+            });
+        };
+        this.broadcast = function (event, callee = undefined, scopes = undefined, data = undefined) {
+            event = "e" + event;
+            if (scopes !== undefined && scopes !== null) {
+                console.log(event, callee, scopes, data);
+                if (typeof scopes === 'object') scopes = Object.values(scopes);
+                if (!Array.isArray(scopes)) scopes = [ scopes ];
+            }
+            else scopes = Object.getOwnPropertyNames(this.broadcaster);
+            scopes.forEach((scope) => {
+                if (this.broadcaster.hasOwnProperty(scope)) {
+                    let sc = this.broadcaster[scope];
+                    if (sc.hasOwnProperty(event)) {
+                        let ev = sc[event];
+                        ev.forEach((b) => {
+                            let locData = data;
+                            if (data !== undefined) {
+                                locData = Object.assign({}, data);
+                                if (b.igData !== null && b.igData !== undefined) {
+                                    for (let f of b.igData) {
+                                        delete locData[f];
+                                    }
+                                }
+                            }
+
+                            console.log(['Broadcast', event, scope, locData, b, b.view.toArray()]);
+                            b.fun(Object.assign(locData, {_view: b.view}));
+                        });
+                    }
                 }
             });
         };

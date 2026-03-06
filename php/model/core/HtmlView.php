@@ -486,8 +486,9 @@ class HtmlView extends View {
     /**
      * @inheritDoc
      */
-    public function bind($object, array|int|null $event = null, ModifyProtocol|string|null $protocol = null,
-                         ?string $scope = null, ?array $ignoreData = null, ?DirectView $view = null) : static {
+    public function bind(IShippable|null $object, array|int|null $event = null,
+                         ModifyProtocol|string|null $protocol = null, ?string $scope = null, ?array $ignoreData = null,
+                         ?DirectView $view = null) : static {
         if ($object && !is_null($event) && $protocol) {
             $objId = ParameterSerializer::handleObject($object);
             if (!is_array($event)) $event = [$event];
@@ -499,6 +500,21 @@ class HtmlView extends View {
             if (is_string($protocol)) $protocol = null;
         }
         return parent::bind($object, $event, $protocol, $scope, $ignoreData, $view);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function bindBroadcast(array|int $event, ModifyProtocol|string|null $protocol = null,
+                                  ?string $scope = null, ?array $ignoreData = null, ?DirectView $view = null) : static {
+        if (!is_array($event)) $event = [$event];
+        $this->js('eventBus.bindBroadcast($("' . $this->idc() . '"), ' .
+            '["' . implode('", "', $event) . '"], function(eData) { ' .
+            ($protocol instanceof ModifyProtocol ? $protocol->generate() : $protocol) . '}, ' .
+            (is_array($ignoreData) && !WebshipTools::isEmpty($ignoreData) ? ('["' . implode('","', $ignoreData) . '"]') : 'null') .
+            ($scope ? ', "' . $scope . '"' : '') . ');');
+        if (is_string($protocol)) $protocol = null;
+        return parent::bindBroadcast($event, $protocol, $scope, $ignoreData, $view);
     }
 
     /**
