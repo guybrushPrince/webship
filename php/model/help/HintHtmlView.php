@@ -51,7 +51,8 @@ class HintHtmlView extends HtmlView {
 
         self::addStyle(WebshipTools::css('.hints', [' > ', '.hint'], 'width: 250px', 'min-height: 40px',
             'background: var(--ws-hint-bg)', 'width: 100%', 'transition: width 0.5s, height 0.5s',
-            'padding: 10px', 'font-size: 12px', 'font-style: normal', 'text-transform: none'));
+            'padding: 10px', 'font-size: 12px', 'font-style: normal', 'text-transform: none',
+            'box-shadow: var(--ws-front-shadow)', 'border-radius: 5px'));
         self::addStyle(WebshipTools::css('.hints', [' > ', '.hint', ' > ', 'ul'], 'list-style-type: none',
             'padding-left: 10px'));
 
