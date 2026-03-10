@@ -50,19 +50,16 @@ class HintHtmlView extends HtmlView {
             'visibility: hidden', 'opacity: 0'));
 
         self::addStyle(WebshipTools::css('.hints', [' > ', '.hint'], 'width: 250px', 'min-height: 40px',
-            'background: var(--ws-hint-bg)', 'width: 100%',
+            'background: var(--ws-hint-bg)', 'width: 100%', 'transition: width 0.5s, height 0.5s',
             'padding: 10px', 'font-size: 12px', 'font-style: normal', 'text-transform: none'));
         self::addStyle(WebshipTools::css('.hints', [' > ', '.hint', ' > ', 'ul'], 'list-style-type: none',
             'padding-left: 10px'));
 
-        self::addStyle(WebshipTools::css('.hints', [' > ', '.pic', ':only-child'], 'display: none'));
-
-        self::addStyle(WebshipTools::css('.hints', [' > ', '.pic', ' + ', '.hint'], 'width: 250px',
-            'min-height: 40px', 'transition: width 0.5s, height 0.5s'));
-        self::addStyle(WebshipTools::css('.hints', [' > ', '.pic'], 'width: 25px', 'height: 25px',
-            'background: var(--ws-hint-img-bg)', 'border-radius: 12.5px', 'display: flex', 'align-items: center',
-            'justify-content: center'));
-        self::addStyle(WebshipTools::css('.hints', [' > ', '.pic', ' > ', '.bulb'], 'width: 20px'));
+        self::addStyle(WebshipTools::css('.hints', [' > ', '.hint', ' > ', '.pic'], 'width: 25px',
+            'height: 25px', 'background: var(--ws-hint-img-bg)', 'border-radius: 12.5px', 'display: flex',
+            'align-items: center', 'justify-content: center'));
+        self::addStyle(WebshipTools::css('.hints', [' > ', '.hint', ' > ', '.pic', ' > ', '.bulb'],
+            'width: 20px'));
     }
 
     /**
