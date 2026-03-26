@@ -31,6 +31,21 @@ class WebshipTools extends ShippingTools {
     }
 
     /**
+     * Create CSS strings with the same content.
+     * @param string[]|string $common Common basic selectors.
+     * @param string[]|string[][] $selectors The specific selectors.
+     * @param string[]|string ...$content The shared CSS styles.
+     * @return string[]
+     */
+    public static function mCss(array|string $common, array $selectors, string ...$content) : array {
+        if (is_array($common)) $common = implode($common);
+        return array_map(function (array|string $selector) use ($common, $content) : string {
+            return $common . (is_array($selector) ? implode($selector) : $selector) .
+                '{' . implode(';', $content) . ';}';
+        }, $selectors);
+    }
+
+    /**
      * Converts a text to a (HTML/hex) color.
      * @param string|null $text The text.
      * @return string

@@ -48,6 +48,8 @@ class MiniTextButtonHtmlView extends ButtonHtmlView {
         self::addStyle(WebshipTools::css('button.mini', [],'border: none', 'background: none',
             'height: 20px', 'border-radius: 3px', 'padding: 3px', 'width: initial', 'font-size: 10px',
             'color: var(--ws-font-info)', 'transition: all 0.25s', 'cursor: pointer'));
+        self::addStyle(WebshipTools::css('button.mini.wb', [], 'border: 1px solid var(--ws-font-info)',
+            'box-sizing: border-box'));
         self::addStyle(WebshipTools::css('button.mini', [':hover'], 'background: var(--ws-font-info)',
             'color: var(--ws-neutral)'));
         self::addStyle(WebshipTools::css('button.mini.del', [':hover'],'background: var(--ws-del-tr)',
@@ -80,6 +82,15 @@ class MiniTextButtonHtmlView extends ButtonHtmlView {
         $view = self::create($id, $texts, $classes);
         $view->addClass('del');
         return $view;
+    }
+
+    /**
+     * Set that the button has a border.
+     * @return $this
+     */
+    public function withBorder() : static {
+        $this->addClass('wb');
+        return $this;
     }
 }
 ?>

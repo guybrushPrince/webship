@@ -463,11 +463,12 @@ class HtmlView extends View {
     /**
      * Adds a class to this view.
      * @param string|string[] $class The class(es).
-     * @return void
+     * @return $this
      */
-    public function addClass(string|array $class) : void {
+    public function addClass(string|array $class) : static {
         if (!is_array($class)) $class = [ $class ];
         $this->classes = array_unique(array_merge($this->classes, $class));
+        return $this;
     }
 
     /**

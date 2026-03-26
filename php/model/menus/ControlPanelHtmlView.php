@@ -126,8 +126,12 @@ class ControlPanelHtmlView extends HtmlView {
         $this->style(WebshipTools::css('.ctr.small', [' ', 'button.std-button'], 'box-shadow: none',
             '-webkit-box-shadow: none', '-moz-box-shadow: none', 'background: none', 'border-color: var(--ws-font-info)',
             'width: 20px', 'height: 20px', 'min-width: 20px', 'min-height: 20px', 'padding: 3px'));
+        $this->style(WebshipTools::css('.ctr.small.wip', [], 'padding: 0 3px',
+            'align-items: baseline'));
 
         $this->style(WebshipTools::css('.ctr.plain', [' ', 'button.std-button'], 'border: none'));
+        $this->style(WebshipTools::css('.ctr.plain.wip', [], 'padding: 0 3px',
+            'align-items: baseline'));
     }
 
     /**
@@ -296,10 +300,12 @@ class ControlPanelHtmlView extends HtmlView {
 
     /**
      * Sets it plain.
+     * @param bool $withoutPadding If it should avoid padding.
      * @return $this
      */
-    public function plain() : static {
+    public function plain(bool $withoutPadding = false) : static {
         $this->addClass('plain');
+        if ($withoutPadding) $this->addClass('wip');
         return $this;
     }
 
@@ -314,10 +320,12 @@ class ControlPanelHtmlView extends HtmlView {
 
     /**
      * Sets it small.
+     * @param bool $withoutPadding If it should avoid padding.
      * @return $this
      */
-    public function small() : static {
+    public function small(bool $withoutPadding = false) : static {
         $this->addClass('small');
+        if ($withoutPadding) $this->addClass('wip');
         return $this;
     }
 }

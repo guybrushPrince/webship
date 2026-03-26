@@ -59,6 +59,11 @@ class TagHtmlView extends ColorHtmlView {
         self::addStyle(WebshipTools::css('.ctag.small', [], 'border-radius: 3px',
             'width: fit-content', 'width: -moz-fit-content', 'font-weight: normal', 'letter-spacing: normal',
             'height: 20px'));
+        self::addStyle(WebshipTools::css('.ctag.clickable', [], 'cursor: pointer',
+            'transition: 0.5s opacity'));
+        self::addStyle(WebshipTools::css('.ctag.clickable:hover', [], 'opacity: 0.8'));
+        self::addStyle(WebshipTools::css('.ctag.nf', [], 'font-weight: normal',
+            'letter-spacing: normal'));
     }
 
     /**
@@ -81,6 +86,24 @@ class TagHtmlView extends ColorHtmlView {
      */
     public function small() : static {
         $this->addClass('small');
+        return $this;
+    }
+
+    /**
+     * Set the tag clickable.
+     * @return $this
+     */
+    public function clickable() : static {
+        $this->addClass('clickable');
+        return $this;
+    }
+
+    /**
+     * Set this tag as normal font.
+     * @return $this
+     */
+    public function normalFont() : static {
+        $this->addClass('nf');
         return $this;
     }
 }

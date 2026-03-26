@@ -64,6 +64,8 @@ class ObjectChipHtmlView extends ContainerHtmlView {
             if ($content instanceof HtmlView) {
                 $contentView->add($content);
             } else $contentView->texts($content);
+        } else {
+            $this->classes[] = 'wc';
         }
 
         self::addCSS();
@@ -103,6 +105,8 @@ class ObjectChipHtmlView extends ContainerHtmlView {
             'background: var(--ws-secondary-color)',
             'color: var(--ws-secondary-font)', 'border-right: 2px solid var(--ws-premier-color)', 'font-weight: bold',
             'font-size: 12px', 'padding: 6px 10px', 'border-radius: 5px 0 0 5px', 'white-space: nowrap'));
+        self::addStyle(WebshipTools::css('.obj-chip.wc', [' > ', 'div:first-child'],
+            'border-right: none', 'border-radius: 5px'));
 
         self::addStyle(WebshipTools::css('.obj-chip', [' > ', 'div:nth-child(2):not(:first-child):not(.del)'],
             'padding: 5px 10px 5px 0', 'white-space: nowrap'));
@@ -125,7 +129,7 @@ class ObjectChipHtmlView extends ContainerHtmlView {
      * @param string|null $secondaryFont The secondary font.
      * @return ObjectChipHtmlView
      */
-    public static function create(?string $type, string|array $prefix, string|HtmlView|array|null $content,
+    public static function create(?string $type, string|array $prefix, string|HtmlView|array|null $content = null,
                                   array|string $classes = [],
                                   bool $swap = false, ?string $premierColor = null, ?string $premierFont = null,
                                   ?string $secondaryColor = null, ?string $secondaryFont = null) : ObjectChipHtmlView {
