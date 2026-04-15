@@ -104,7 +104,7 @@ class SectionHtmlView extends HtmlView {
             'font-style: italic'));
         self::addStyle(WebshipTools::css('.sect:not(.ao)', [' > ', '.section', ':after'], 'content: ""',
             'margin-left: 5px', 'background-repeat: no-repeat', 'width: 10px', 'height: 10px', 'background-size: cover',
-            'background-image: url(' . HtmlActionProtocol::$serverURL . '/webship/pic/arrow-down-sign-to-navigate.svg)',
+            'background-image: url(' . HtmlActionProtocol::getServerURL() . '/webship/pic/arrow-down-sign-to-navigate.svg)',
             'box-sizing: border-box', 'display: inline-block', 'opacity: 0.25', 'transition: opacity 0.5s'));
         self::addStyle(WebshipTools::css('.sect', [' > ', '.section', ':hover', ':after'],
             'opacity: 1'));

@@ -178,7 +178,9 @@ class AlertHtmlView extends HtmlView {
         if ($screen || $fullView) {
             $v->ref('alert');
             $overlay = $v->add(new HtmlView('overlay'));
-            $overlay->protocol(WEvent::CLICK)->doIt(BasicEvents::Delete, ['view' => $v], BasicEvents::environment());
+            $overlay->protocol(WEvent::CLICK)->doIt(BasicEvents::Delete, [
+                'view' => $v
+            ], BasicEvents::environment());
             $con = $v->add(new HtmlView('a-message'));
             $con->ref('alert-content');
         }

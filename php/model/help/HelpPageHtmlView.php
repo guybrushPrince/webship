@@ -96,7 +96,7 @@ class HelpPageHtmlView extends StandardButtonHtmlView {
             $doc . '_' . Language::BCP47[$language] . '.md';
         if (file_exists($file)) {
             return MarkdownHtmlView::create($file, true, ['help-page'],
-                HtmlActionProtocol::$serverURL . '/' . $package . '/docs/' .
+                HtmlActionProtocol::getServerURL() . '/' . $package . '/docs/' .
                 ($subpackage ? $subpackage . '/' : ''));
         } else return MarkdownHtmlView::create('Cannot find help file ' . $file, false, ['help-page']);
     }

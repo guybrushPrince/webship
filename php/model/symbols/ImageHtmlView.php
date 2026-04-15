@@ -84,7 +84,7 @@ class ImageHtmlView extends HtmlView {
         $tag = parent::generateOpeningTag();
         $tag = substr($tag, 4);
 
-        return '<img src="' . HtmlActionProtocol::$serverURL . $this->src . '" ' .
+        return '<img src="' . HtmlActionProtocol::getServerURL() . $this->src . '" ' .
             ($alt ? ' alt="' . $alt . '"' : '') .
             $tag;
     }

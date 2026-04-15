@@ -39,7 +39,7 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
         // <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
         self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.sub-menu-entry', ':after'],
             'content: ""', 'margin-left: 5px', 'background-image: url("' .
-            HtmlActionProtocol::$serverURL . '/webship/pic/arrow-down-sign-to-navigate.svg")',
+            HtmlActionProtocol::getServerURL() . '/webship/pic/arrow-down-sign-to-navigate.svg")',
             'background-repeat: no-repeat', 'width: 10px', 'height: 10px', 'background-size: cover',
             'box-sizing: border-box'));
 

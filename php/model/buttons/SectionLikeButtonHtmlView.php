@@ -45,7 +45,7 @@ class SectionLikeButtonHtmlView extends ButtonHtmlView {
         $classes[] = 'sect-but';
         parent::__construct($id, $type, $classes);
 
-        if ($img) $this->localStyle('--ws-after-image: url("' . HtmlActionProtocol::$serverURL . $img . '")');
+        if ($img) $this->localStyle('--ws-after-image: url("' . HtmlActionProtocol::getServerURL() . $img . '")');
 
         self::addCSS();
     }

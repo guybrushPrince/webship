@@ -102,10 +102,14 @@ class TableHtmlView extends ContainerHtmlView {
     /**
      * Create a row.
      * @param string[]|string $classes A set of classes.
+     * @param string[]|null $dimensions Some optional dimensions of the columns.
      * @return TableRowHtmlView
      */
-    public function row(array|string $classes = []): TableRowHtmlView {
+    public function row(array|string $classes = [], array $dimensions = null): TableRowHtmlView {
         $rowView = TableRowHtmlView::create($classes);
+        if (!is_null($dimensions)) {
+            $rowView->localStyle('--ws-table: ' . implode(' ', $dimensions));
+        }
         $this->add($rowView);
         return $rowView;
     }

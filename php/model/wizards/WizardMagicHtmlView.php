@@ -46,8 +46,9 @@ class WizardMagicHtmlView extends HtmlView {
         $control = ControlPanelHtmlView::createUnbounded(false)->fix()->reverse();
         $view->add($control);
         $abortButton = $control->addMini(CloserHtmlView::create());
-        $abortButton->protocol(WEvent::CLICK)->
-            doIt(BasicEvents::Delete, ['view' => $view], BasicEvents::environment())->
+        $abortButton->protocol(WEvent::CLICK)->doIt(BasicEvents::Delete, [
+            'view' => $view
+        ], BasicEvents::environment())->
         append($finishProtocol);
 
         $view->each($wizards, function (WizardMagicHtmlView $view, WizardHtmlView $wizard, int $key) use ($wizards, $finishProtocol) {
@@ -78,8 +79,9 @@ class WizardMagicHtmlView extends HtmlView {
                     doIt(BasicEvents::ToggleClass, ['view' => 'wizard-' . ($key + 1), 'class' => 'invisible'], BasicEvents::environment())->
                     append($wizards[$key + 1]->getUpdateProtocol());
             } else {
-                $nextButton->protocol(WEvent::CLICK)->
-                    doIt(BasicEvents::Delete, ['view' => $view], BasicEvents::environment())->
+                $nextButton->protocol(WEvent::CLICK)->doIt(BasicEvents::Delete, [
+                    'view' => $view
+                ], BasicEvents::environment())->
                     append($finishProtocol);
             }
 

@@ -130,7 +130,7 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
             'top: calc(50% - 15px)'));
         self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move.delete', ':after'],
             'display: flex', 'content: ""',
-            'width: 18px', 'background-image: url(\'' . HtmlActionProtocol::$serverURL . '/webship/pic/delete.svg\')',
+            'width: 18px', 'background-image: url(\'' . HtmlActionProtocol::getServerURL() . '/webship/pic/delete.svg\')',
             'background-repeat: no-repeat', 'background-origin: padding-box', 'height: 60%'));
         self::addStyle(WebshipTools::css('.panel-item.movable', [' > ', '.move.delete:hover'],
             'background: var(--ws-del-tr)'));
@@ -188,7 +188,7 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
         $open = parent::generateOpeningTag();
         if ($this->isDraggable) {
             $open = substr($open, 0, -1) . '><div class="move-position top">' .
-                '<img src="' . HtmlActionProtocol::$serverURL . '/webship/pic/move-cursor.svg" alt="move-cursor"></div>';
+                '<img src="' . HtmlActionProtocol::getServerURL() . '/webship/pic/move-cursor.svg" alt="move-cursor"></div>';
         }
         if ($this->showMoves) {
             $open .= '<div class="' . implode(' ', ['move', 'up', $this->id() . '-up']) . '" title="' . [
@@ -223,10 +223,10 @@ class MovePanelItemHtmlView extends PanelItemHtmlView {
                     Language::ENGLISH => 'Move this element to another place',
                     Language::GERMAN => 'Verschiebe dieses Element an eine andere Stelle'
                 ][self::getLanguage()] . '">' .
-                '<img src="' . HtmlActionProtocol::$serverURL . '/webship/pic/drag-handle.svg" alt="move-cursor">' .
+                '<img src="' . HtmlActionProtocol::getServerURL() . '/webship/pic/drag-handle.svg" alt="move-cursor">' .
                 '</div>';
             $closing .= '<div class="move-position bottom">' .
-                '<img src="' . HtmlActionProtocol::$serverURL . '/webship/pic/move-cursor.svg" alt="move-cursor">' .
+                '<img src="' . HtmlActionProtocol::getServerURL() . '/webship/pic/move-cursor.svg" alt="move-cursor">' .
                 '</div>';
         }
         return $closing . parent::generateClosingTag();

@@ -125,7 +125,7 @@ class ParameterSerializer {
      * @return string|array
      */
     private static function serializeValue(Protocol $protocol, $param, $value, ?DirectView $entry, array $parameters,
-                                           bool     $asIs = false) {
+                                           bool $asIs = false) {
         if ($param instanceof TemplateObject) {
             $isView = $param->isView();
             $asIs = $param->isAsIs();
@@ -135,7 +135,8 @@ class ParameterSerializer {
             if ($isView && !WebshipTools::hasStringKeys($value)) {
                 return '"' . $param . '"' . ': "' . implode(',',
                         array_filter(
-                            array_map(function (string|HtmlView $val) use ($protocol, $entry) : ?string {
+                            array_map(function (string|HtmlView|null $val) use ($protocol, $entry) : ?string {
+                                if (is_null($val)) return null;
                                 if ($val instanceof HtmlView) return $val->idc();
                                 if (!$protocol->innerView()) $innerView = $entry;
                                 else $innerView = $protocol->innerView();
