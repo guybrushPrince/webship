@@ -73,10 +73,19 @@ let context = {
     windows: [],
     formContexts: {},
     timers: {},
-    killTimers: function () { Object.values(context.timers).forEach((i) => {
-        clearTimeout(i);
-        delete context.timers[i];
-    }); }
+    killTimers: function () {
+        Object.values(context.timers).forEach((i) => {
+            clearTimeout(i);
+            delete context.timers[i];
+        });
+    },
+    apiSafe: () => {
+        if (!("user" in context) || context["user"] === "" || !("group" in context) || context["group"] === "") {
+            return context["api"]();
+        } else {
+            return context["baseApi"] + context["user"] + "/" + context["group"] + context["relApi"];
+        }
+    }
 };
 
 let setContext = function(k, v) { context[k] = v; };

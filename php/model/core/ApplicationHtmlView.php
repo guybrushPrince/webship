@@ -111,6 +111,14 @@ class ApplicationHtmlView extends HtmlView {
 
         $application->css('/webship/css/webship.css');
 
+        $apiURL = HtmlActionProtocol::getApiURL();
+        $relApiURL = HtmlActionProtocol::getRelativeApiURL();
+
+        $application->js('context["server"] = "' . HtmlActionProtocol::getServerURL() . '";');
+        $application->js('context["api"] = () => "/' . $apiURL . $relApiURL . '";');
+        $application->js('context["baseApi"] = "/' . $apiURL . '";');
+        $application->js('context["relApi"] = "/' . $relApiURL . '";');
+
         return $application;
     }
 
