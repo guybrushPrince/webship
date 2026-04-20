@@ -548,10 +548,10 @@ class HtmlModifyProtocol extends ModifyProtocol {
         return '[' . implode(',', array_filter(array_map(function ($c) : ?string {
                 if (is_string($c)) return '"' . $c . '"';
                 else if ($c instanceof TemplateObject) {
-                    return $this->asContext($c);
+                    return 'asArray(' . $this->asContext($c) . ')';
                 }
                 return null;
-            }, $classes), 'is_string')) . ']' . (is_null($join) ? '' : '.join("' . $join . '")');
+            }, $classes), 'is_string')) . '].flat()' . (is_null($join) ? '' : '.join("' . $join . '")');
     }
 }
 ?>

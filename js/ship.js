@@ -108,7 +108,8 @@ let delay = (function () {
     }
 })();
 
-let isObject = function(x) { return typeof x === 'object' && !Array.isArray(x) && x !== null; }
+let isObject = function(x) { return typeof x === 'object' && !Array.isArray(x) && x !== null; };
+let asArray = function(x) { return isObject(x) ? Object.values(x) : (Array.isArray(x) ? x : [x]); };
 
 let downloadFile = function(data, fileName, path = true) {
     let link = document.createElement('a');

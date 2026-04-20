@@ -91,6 +91,7 @@ class ControlPanelHtmlView extends HtmlView {
             'grid-auto-rows: 0', 'overflow: visible', 'align-items: center'));
         $this->style(WebshipTools::css('.ctr', [' ', '.ctr.area.wb'], 'border: 1px solid var(--ws-ctr-brd)',
             'border-radius: 5px'));
+        $this->style(WebshipTools::css('.ctr', [' ', '.ctr.area', ' > ', 'div'], 'height: 100%'));
 
         $this->style(WebshipTools::css('.ctr.flexibleX', [], 'min-width: 0', 'width: fit-content',
             'width: -moz-fit-content'));

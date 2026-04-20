@@ -1,9 +1,17 @@
 <?php
 
 namespace webship\interoperability;
+
 /**
- * Class Event
+ * Class WEvent.
+ *
+ * <p>A class or enumeration of events that can be thrown by the WebShip ecosystem.</p>
+ *
+ * @package webship
+ * @subpackge php/interoperability
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.13.0
  */
 class WEvent {
     const CLICK = 0;

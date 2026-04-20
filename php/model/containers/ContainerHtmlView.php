@@ -69,6 +69,7 @@ class ContainerHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.container', '.rev-ver', 'flex-direction: column-reverse'));
         self::addStyle(WebshipTools::css('.container', '.rev-hor', 'flex-direction: row-reverse'));
         self::addStyle(WebshipTools::css('.container', '.single', 'flex-wrap: nowrap'));
+        self::addStyle(WebshipTools::css('.container', '.revert', 'flex-wrap: revert'));
         self::addStyle(WebshipTools::css('.container', '.vcent', 'align-items: center',
             'align-content: center'));
         self::addStyle(WebshipTools::css('.container', '.vbot', 'align-items: flex-end',
