@@ -154,6 +154,17 @@ class ContainerHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.container', '.br10', 'border-radius: 10px'));
         self::addStyle(WebshipTools::css('.container', '.br15', 'border-radius: 15px'));
         self::addStyle(WebshipTools::css('.container', '.br20', 'border-radius: 20px'));
+
+        self::addStyle(WebshipTools::css('.container', '.tbr0', 'border-radius: 0'));
+        self::addStyle(WebshipTools::css('.container', '.tbr5', 'border-radius: 5px 5px 0 0'));
+        self::addStyle(WebshipTools::css('.container', '.tbr10', 'border-radius: 10px 10px 0 0'));
+        self::addStyle(WebshipTools::css('.container', '.tbr15', 'border-radius: 15px 15px 0 0'));
+        self::addStyle(WebshipTools::css('.container', '.tbr20', 'border-radius: 20px 20px 0 0'));
+        self::addStyle(WebshipTools::css('.container', '.bbr0', 'border-radius:  0'));
+        self::addStyle(WebshipTools::css('.container', '.bbr5', 'border-radius:  0 0 5px 5px'));
+        self::addStyle(WebshipTools::css('.container', '.bbr10', 'border-radius: 0 0 10px 10px'));
+        self::addStyle(WebshipTools::css('.container', '.bbr15', 'border-radius: 0 0 15px 15px'));
+        self::addStyle(WebshipTools::css('.container', '.bbr20', 'border-radius: 0 0 20px 20px'));
     }
 
     /**

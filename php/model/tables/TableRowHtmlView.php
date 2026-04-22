@@ -59,8 +59,11 @@ class TableRowHtmlView extends ContainerHtmlView {
         self::addStyle(WebshipTools::css('.table > .tr.header.border', [' > ', '.cell'], 'align-items: flex-end',
             'align-content: flex-end'));
         self::addStyle(WebshipTools::css('.table > .tr.hoverable', [], 'transition: 0.5s background'));
+        self::addStyle(WebshipTools::css('.table > .tr.op-hoverable', [], 'transition: 0.5s opacity'));
         self::addStyle(WebshipTools::css('.table > .tr.hoverable', [':hover'],
             'background: var(--ws-std-bg-light)'));
+        self::addStyle(WebshipTools::css('.table > .tr.op-hoverable', [':hover'],
+            'opacity: 0.7'));
         self::addStyle(WebshipTools::css('.table > .tr.h40px', [' > ', '.cell'],'min-height: 40px'));
     }
     /**
@@ -118,10 +121,11 @@ class TableRowHtmlView extends ContainerHtmlView {
 
     /**
      * Makes the row hoverable.
+     * @param bool $opacity If the opacity or the background shall be hovered.
      * @return $this
      */
-    public function hoverable() : static {
-        $this->addClass('hoverable');
+    public function hoverable(bool $opacity = false) : static {
+        $this->addClass(($opacity ? 'op-' : '') . 'hoverable');
         return $this;
     }
 
