@@ -65,6 +65,9 @@ let isJson = function (item) {
 };
 Array.prototype.unique = function () { return [...new Set(this)]; }
 
+let sysTask = (params) => {};
+let sysTF = (taskId) => {};
+
 let context = {
     currentTaskId: 0,
     currentHintId: 0,
