@@ -26,7 +26,7 @@ use webship\protocols\HtmlActionProtocol;
  *
  * @view
  * @examples
- *     $app = ApplicationHtmlView::create('Hello World', 'favicon.ico');
+ *     $app = ApplicationHtmlView::create('Hello World', 'favicon.i co');
  *     $app->css('helloworld.css');
  */
 class ApplicationHtmlView extends HtmlView {
