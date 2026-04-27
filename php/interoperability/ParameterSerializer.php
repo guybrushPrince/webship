@@ -184,6 +184,7 @@ class ParameterSerializer {
                         else if ($field instanceof View) $field = '"' . $field->idc() . '"';
                         else if (is_object($field)) $field = WebshipTools::jsonEncode(self::handleObject($field));
                         else if (is_array($field)) $field = WebshipTools::jsonEncode(self::preserveArrayKeys($field));
+                        else if (is_null($field)) $field = 'null';
                         return '"' . $key . '"' . ': ' . $field;
                     }
                 }, array_keys($value))) . '}';
@@ -231,7 +232,7 @@ class ParameterSerializer {
                     }
                 } else return '"' . $param . '"' . ': ""';
             }
-        } else if ($value === null) {
+        } else if (is_null($value)) {
             return '"' . $param . '"' . ': null';
         } else if (is_string($value)) {
             if (!$isView) return '"' . $param . '"' . ': ' . '"' . str_replace(['\\','"'], ['\\\\','\\"'], $value) . '"';

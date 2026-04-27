@@ -120,9 +120,15 @@ class ContainerHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.container', '.hend', 'justify-content: flex-end',
             'justify-items: flex-end'));
         self::addStyle(WebshipTools::css('.container', '.h100', 'height: 100%'));
-        self::addStyle(WebshipTools::css('.container', '.w50', 'width: 50%'));
-        self::addStyle(WebshipTools::css('.container', '.w33', 'width: calc(100% / 3)'));
-        self::addStyle(WebshipTools::css('.container', '.w25', 'width: 25%'));
+        self::addStyle(WebshipTools::css('.container', ['.w50'], 'width: 50%'));
+        self::addStyle(WebshipTools::css('.container', ['.w40'], 'width: 40%'));
+        self::addStyle(WebshipTools::css('.container', ['.w33'], 'width: calc(100% / 3)'));
+        self::addStyle(WebshipTools::css('.container', ['.w30'], 'width: 30%'));
+        self::addStyle(WebshipTools::css('.container', ['.w25'], 'width: 25%'));
+        self::addStyle(WebshipTools::css('.container', ['.w20'], 'width: 20%'));
+        self::addStyle(WebshipTools::css('.container', ['.w10'], 'width: 10%'));
+
+
         self::addStyle(WebshipTools::css('.container', '.rel', 'position: relative'));
         self::addStyle(WebshipTools::css('.container', ['.self-fit'], 'width: -moz-fit-content',
             'width: fit-content'));
