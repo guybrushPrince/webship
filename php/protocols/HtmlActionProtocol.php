@@ -83,7 +83,7 @@ class HtmlActionProtocol extends ActionProtocol {
                 $name = trim($matches[1], " ,:\n\r" . PHP_EOL);
                 if ($name === "") $name = null;
             }
-            $isJS = (preg_match('/@JS(.*)/', $reflection->getDocComment(), $matches) >= 1);
+            $isJS = (preg_match('/@ECMA(.*)/', $reflection->getDocComment(), $matches) >= 1);
 
             $code = 'let taskId = nId();';
             $code .= 'request({ ' . implode(',', $data) . ' },';
