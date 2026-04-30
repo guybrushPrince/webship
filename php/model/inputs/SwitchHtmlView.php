@@ -55,6 +55,14 @@ class SwitchHtmlView extends InputHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
+
+        /*, 'height: 22px', 'width: 40px'));
+        $this->style(Tools::css('.page-con', [' > ', '.switch', ' ', '.slider'], 'border-radius: 11px'));
+        $this->style(Tools::css('.page-con', [' > ', '.switch', ' ', '.slider:before'],
+            'height: 14px', 'width: 14px'));
+        $this->style(Tools::css('.page-con', [' > ', '.switch', ' ', 'input:checked', ' + ', '.slider:before'],
+            'transform: translateX(18px)' ));*/
+
         self::addStyle(WebshipTools::css('.switch', '', 'position: relative',
             'display: inline-block',
             '--ws-sw-width: 60px', '--ws-sw-height: 34px', '--ws-sw-gap-left: 4px', '--ws-sw-gap-bottom: 4px',

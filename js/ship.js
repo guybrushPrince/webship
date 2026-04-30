@@ -53,6 +53,13 @@ $.fn.rebind = function () {
     });
     return this;
 };
+String.trim = String.trim || function (value) {
+    if (value === null)
+        return '';
+    else
+        return String(value).trim();
+};
+
 let isString = (s) => typeof s === "string";
 let isJson = function (item) {
     let value = typeof item !== "string" ? JSON.stringify(item) : item;
@@ -663,7 +670,7 @@ let domAction = function(res, t = false) {
 };
 let checkIfEmpty = function(el, clazz) {
     $(el).toArray().forEach((e) => {
-        if ($(e).children('span').toArray().filter((s) => $.trim(($(s).html()))).length === 0) {
+        if ($(e).children('span').toArray().filter((s) => String.trim(($(s).html()))).length === 0) {
             $(e).addClass(clazz);
         } else $(e).removeClass(clazz);
     });

@@ -64,6 +64,7 @@ class NamelessHtmlView extends HtmlView {
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.unknown', [], 'width: -moz-fit-content', 'width: fit-content',
             'display: flex', 'flex-direction: row'));
+        self::addStyle(WebshipTools::css('span', [' > ', '.unknown'], 'display: inline-flex'));
         self::addStyle(WebshipTools::css('.unknown', [' > ', 'span:empty'], 'display: none'));
         self::addStyle(WebshipTools::css('.unknown', [' > ', 'img'], 'height: 10px'));
         self::addStyle(WebshipTools::css('.unknown.hidden', [' > ', 'img'], 'display: none'));

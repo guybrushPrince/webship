@@ -79,8 +79,8 @@ class ModalHtmlView extends HtmlView {
 
         $overlay = $this->add(new ContainerHtmlView('modal-overlay'));
         $overlay->ref('overlay')->
-        protocol(WEvent::CLICK, ['sameTarget' => true])->
-        append($this->getCloseAction());
+            protocol(WEvent::CLICK, ['sameTarget' => true])->
+            append($this->getCloseAction());
         $overlay->add(new ContainerHtmlView(['modal-container', 'gap10']));
 
         $this->controlPanel = ControlPanelHtmlView::createUnbounded(false);
@@ -169,8 +169,8 @@ class ModalHtmlView extends HtmlView {
         $current = $protocol;
         if ($this->outProtected) {
             $current = $protocol->alert($this->outProtected)->
-            no()->parent()->
-            yes();
+                no()->parent()->
+                yes();
         }
         $current->throwevent(WEvent::CLOSE_MODAL, $this)->delete($this);
         return $protocol;
@@ -211,8 +211,8 @@ class ModalHtmlView extends HtmlView {
         }
         $this->control->add($abort);
         $abort->protocol(WEvent::CLICK)->
-        throwevent(WEvent::CLOSE_MODAL, $this)->
-        delete($this);
+            throwevent(WEvent::CLOSE_MODAL, $this)->
+                delete($this);
         return $abort;
     }
 
