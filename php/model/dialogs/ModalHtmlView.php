@@ -110,7 +110,7 @@ class ModalHtmlView extends HtmlView {
             'width: 100%'));
         self::addStyle(WebshipTools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' ', '.alert'],
             'width: 100%'));
-        self::addStyle(WebshipTools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' > ', 'div',
+        self::addStyle(WebshipTools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container', ' > ', 'div:not(.alert)',
             ' > ', '.ctr.fix.tr'], 'right: var(--ws-ctr-cell-gap)', 'top: calc((-1)* var(--ws-modal-pad))'));
         self::addStyle(WebshipTools::css('.modal', [' > ', '.modal-overlay', ' > ', '.modal-container',
             ' > ', 'div:not(.ctr.fix.tr)'], 'position: relative'));

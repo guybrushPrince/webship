@@ -47,7 +47,8 @@ class TabContainerItemHtmlView extends ContainerItemHtmlView {
         self::addCSS();
 
         if (!$knownParent) $this->js('$("' . $this->idc() . '").trigger("' . WEvent::NEW_TAB . '");');
-        $this->js('$("' . $this->idc() . ' > .tab-header").on("click", function(event) { focusTab(this, "' . WEvent::CHANGE_TAB . '"); });');
+        $this->js('$("' . $this->idc() . ' > .tab-header").on("click ' . WEvent::SWITCH_TAB . '", function(event) { focusTab(this, "' . WEvent::CHANGE_TAB . '"); });');
+        $this->js('$("' . $this->idc() . '").on("' . WEvent::SWITCH_TAB . '", function(event) { focusTab($(this).children(".tab-header"), "' . WEvent::CHANGE_TAB . '"); });');
     }
 
     /**

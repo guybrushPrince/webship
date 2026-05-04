@@ -28,8 +28,12 @@ class TitleHtmlView extends HtmlView {
         parent::__construct($classes);
         $this->classes[] = 'title';
 
-        if ($img) $this->add(new ImageHtmlView($img));
-        if ($dataType) $this->add(new SpanTextHtmlView('title-circle'))->data($dataType);
+        if (!is_null($img) && is_null($dataType)) $this->add(new ImageHtmlView($img));
+        if ($dataType) {
+            $span = $this->view('title-circle');
+            $span->data($dataType);
+            if (!is_null($img)) $span->add(new ImageHtmlView($img));
+        }
 
         self::addCSS();
     }

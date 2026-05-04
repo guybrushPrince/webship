@@ -20,6 +20,8 @@ class WEvent {
     const ONMOUSEOUT = 3;
     const NEW_TAB = 4;
     const CLOSE_TAB = 5;
+    const CHANGE_TAB = 38;
+    const SWITCH_TAB = 47;
     const NEW_TASK = 6;
     const REMOVE_TASK = 7;
     const CLICK_OUTSIDE = 8;
@@ -52,7 +54,6 @@ class WEvent {
     const NEXT_STEP = 35;
     const NEXT_DEAD = 36;
     const CLOSE_MODAL = 37;
-    const CHANGE_TAB = 38;
     const DELAYED = 45;
     const ON_IMPORT = 46;
 
