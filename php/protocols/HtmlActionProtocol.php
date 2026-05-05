@@ -113,10 +113,11 @@ class HtmlActionProtocol extends ActionProtocol {
                         }
                         if ($isJS && $p["operation"] === "success") {
                             $func .= 'eval(result);';
+                            $func .= '(function(result) {' . $p["protocol"]->generate() . '})("");';
                         } else {
                             if (!$isJSON) $func .= 'result = extractStyle(result);';
                             if (!$isJS || $hasFail && $p["operation"] === "fail") $func .= '(function(result) {' . $p["protocol"]->generate() . '})(result);';
-                            else /*if ($hasFail && $p["operation"] !== "fail)) */ $func .= '(function(result) {' . ($hasFail ? 'result="";' : '') . $p["protocol"]->generate() . '})(result);';
+                            else $func .= '(function(result) {' . ($hasFail ? 'result="";' : '') . $p["protocol"]->generate() . '})(result);';
                             if (($isCSV || $isPDF || $isZIP) && $p["operation"] === "success") {
                                 $d = '(new Date()).toISOString().split(/[-T:,.]/).slice(0,3).join("_")';
                                 $func .= 'downloadFile(result, ' . ($isPDF || $isZIP ? '"' . ($name ? $name : 'download') . '_" + ' . $d . ' + "' . ($isPDF ? '.pdf"' : '.zip"') :

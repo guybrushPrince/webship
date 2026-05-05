@@ -12,6 +12,7 @@ use ship\template\TemplateObject;
 use ship\views\DirectView;
 use ship\views\View;
 use webship\core\HtmlView;
+use webship\inputs\ContentSelectHtmlView;
 use webship\interoperability\ParameterSerializer;
 use webship\interoperability\WEvent;
 use webship\JSProperty;
@@ -96,6 +97,9 @@ class HtmlModifyProtocol extends ModifyProtocol {
                         $scope = $modify["scope"];
                         $selector = '$("' . $val->idc() . '")';
                         if ($scope === "value") {
+                            if ($val instanceof ContentSelectHtmlView) {
+                                $selector = '$("select' . $val->idc() . '")';
+                            }
                             $selector .= '.val()';
                         } else if (!$scope) {
                             $selector .= '.attr("' . $scope . '")';

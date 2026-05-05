@@ -231,8 +231,12 @@ class ContentSelectHtmlView extends SelectHtmlView {
      * @throws Exception
      */
     public function option($value, $classes = [], $selected = false) : OptionHtmlView {
-        if (!is_array($value) && !($value instanceof IShippable) && $value !== $this->default)
+        if ($value === 'null') $value = null;
+        if (!is_array($value) && !
+            ($value instanceof IShippable) &&
+            $value !== $this->default) {
             throw new Exception();
+        }
         $addClass = [];
         $isDefault = false;
 

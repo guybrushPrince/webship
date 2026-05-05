@@ -169,6 +169,9 @@ class ParameterSerializer {
                                 } else if ($view instanceof FieldSetHtmlView) {
                                     $selector .= 'addFieldSetSel(' . $selector . ', "' . $info["name"] . '")';
                                 } else {
+                                    if ($view instanceof ContentSelectHtmlView) {
+                                        $selector = '$("select' . $view->idc() . '")';
+                                    }
                                     $selector .= '.val()';
                                 }
                             } else if (!$scope) {
@@ -250,11 +253,11 @@ class ParameterSerializer {
 
     /**
      * Handles an object.
-     * @param object $value The object.
+     * @param IShippable $value The object.
      * @param string|null $param The parameter.
      * @return string[]
      */
-    public static function handleObject(object $value, ?string $param = null) : array {
+    public static function handleObject(IShippable $value, ?string $param = null) : array {
         $key = ShipperRegister::getKey($value);
         // Convert it
         $key = (is_integer($key) ? ShipperRegister::convertKey($key) : $key);

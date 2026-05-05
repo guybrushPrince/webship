@@ -164,7 +164,7 @@ class ModalHtmlView extends HtmlView {
      * Create the action when the closer is pressed.
      * @return HtmlModifyProtocol
      */
-    private function getCloseAction() : HtmlModifyProtocol {
+    public function getCloseAction() : HtmlModifyProtocol {
         $protocol = new HtmlModifyProtocol($this);
         $current = $protocol;
         if ($this->outProtected) {
