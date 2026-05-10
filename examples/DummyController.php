@@ -3,6 +3,9 @@
 require_once __DIR__ . '../../php/model/menus/ControlPanelHtmlView.php';
 require_once __DIR__ . '../../php/model/buttons/ButtonHtmlView.php';
 require_once __DIR__ . '../../php/model/buttons/StandardButtonHtmlView.php';
+require_once __DIR__ . '../../php/model/cards/CardHtmlView.php';
+
+use webship\cards\CardHtmlView;
 use webship\core\ApplicationHtmlView;
 use webship\core\HtmlView;
 use webship\interoperability\WEvent;
@@ -23,6 +26,13 @@ class DummyController
 
 
         $app = ApplicationHtmlView::create('WebShip Demo');
+        $app->js('context["server"] = "/webship/examples";');
+
+        $app->js('context["api"] = () => "/api/";');
+
+        $app->js('context["apiSafe"] = () => context["api"]();');
+
+        $app->js("setContext('server', '/webship/examples/v1');");
 
         ApplicationHtmlView::addStyle(\webship\WebshipTools::css('.menu', [],'position: static !important'));
 
@@ -57,7 +67,7 @@ class DummyController
         $content->add($icons);
 
         $t1 = new TextView();
-        $t1->text(0, "Welcome to the open-sourced Webship");
+        $t1->text(0, "Welcome to the open-sourced Webship. ");
 
         $t2 = new TextView();
         $t2->text(0, "Below are some test images using ImageHtmlView.");
@@ -94,12 +104,12 @@ class DummyController
         $panel = ControlPanelHtmlView::create(1,1);
         $btn = $panel->button('load', '/webship/pic/box.png');
         $btn->protocol(WEvent::CLICK)
-                ->action(DummyController::class, 'loadDashboard', [], [
-                    0 => 'Loading dashboard...'
-                ])
-             ->success()
-             ->replace('data-area')
-             ->parent();
+            ->action(DummyController::class, 'loadDashboard', [], [
+                0 => 'Loading dashboard...'
+            ])
+            ->success()
+            ->replace('data-area')
+            ->parent();
 
         $content->add($panel);
 
@@ -115,21 +125,25 @@ class DummyController
         return $app;
     }
 
+    /**
+     * @without
+     */
     public function loadDashboard() : HtmlView
     {
         $container = new HtmlView();
 
-        $title = new TextView();
-        $title->text(0, "Dashboard Loaded!");
+        $card = CardHtmlView::create('Dashboard loaded!');
+        $val1 = new TextView();
+        $val1->text(0, "123,4567");
 
         $row = new HtmlView();
 
-        $row->add((new ImageHtmlView('/webship/pic/help.svg'))->localStyle('width:40px'));
-        $row->add((new ImageHtmlView('/webship/pic/settings.svg'))->localStyle('width:40px'));
+        $row->add((new ImageHtmlView('/webship/pic/alert-info.svg'))->localStyle('width:40px'));
+        $row->add((new ImageHtmlView('/webship/pic/wand.svg'))->localStyle('width:40px'));
+        $card->add($row);
 
-        $container->add($title);
-        $container->add($row);
-
+        $card->add($val1);
+        $container->add($card);
         return $container;
     }
 }

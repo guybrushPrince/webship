@@ -22,7 +22,7 @@ class DemoEvents implements EventAdder
         HtmlTemplateProtocol::_new('LoadDashboard', 'demo')
             ->action(DummyController::class, 'loadDashboard')
             ->success()
-            ->replace(TemplateObject::_new('content'))
+            ->replace(TemplateObject::_new('data-area'))
             ->parent()
             ->error()
             ->parent();
