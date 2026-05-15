@@ -1,9 +1,9 @@
 <?php
 
-require_once __DIR__ . '../../php/model/menus/ControlPanelHtmlView.php';
-require_once __DIR__ . '../../php/model/buttons/ButtonHtmlView.php';
-require_once __DIR__ . '../../php/model/buttons/StandardButtonHtmlView.php';
-require_once __DIR__ . '../../php/model/cards/CardHtmlView.php';
+require_once __DIR__ . '/../../webship/php/model/menus/ControlPanelHtmlView.php';
+require_once __DIR__ . '/../../webship/php/model/buttons/ButtonHtmlView.php';
+require_once __DIR__ . '/../../webship/php/model/buttons/StandardButtonHtmlView.php';
+require_once __DIR__ . '/../../webship/php/model/cards/CardHtmlView.php';
 
 use webship\cards\CardHtmlView;
 use webship\core\ApplicationHtmlView;
@@ -26,13 +26,13 @@ class DummyController
 
 
         $app = ApplicationHtmlView::create('WebShip Demo');
-        $app->js('context["server"] = "/webship/examples";');
+        $app->js('context["server"] = "' . APP_BASE_PATH . '";');
 
         $app->js('context["api"] = () => "/api/";');
 
         $app->js('context["apiSafe"] = () => context["api"]();');
 
-        $app->js("setContext('server', '/webship/examples/v1');");
+        $app->js("setContext('server', '" . APP_BASE_PATH . "/v1');");
 
         ApplicationHtmlView::addStyle(\webship\WebshipTools::css('.menu', [],'position: static !important'));
 
