@@ -82,23 +82,9 @@ $app->group("/v1", function (RouteCollectorProxy $group) {
     ]);
 
     $ar->bindEvents([DemoEvents::class  ]);
-    $group->get('/', function ($request, $response) {
-        $controller = new DummyController();
-        $view = $controller->index();
-
-        $response->getBody()->write($view->generate());
-        return $response;
-    });
 });
 
-$app->get('/', function ($request, $response)
-{
-    $controller = new DummyController();
-    $view = $controller->index();
 
-    $response->getBody()->write($view->generate());
-    return $response;
-});
 
 $app->addRoutingMiddleware();
 

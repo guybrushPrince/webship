@@ -19,8 +19,8 @@ class DemoEvents implements EventAdder
 
     public static function add(): bool
     {
-        HtmlTemplateProtocol::_new('LoadDashboard', 'demo')
-            ->action(DummyController::class, 'loadDashboard')
+        HtmlTemplateProtocol::_new('ProcessData', 'demo')
+            ->action(DummyController::class, 'processData')
             ->success()
             ->replace(TemplateObject::_new('data-area'))
             ->parent()
