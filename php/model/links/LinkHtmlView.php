@@ -109,7 +109,7 @@ class LinkHtmlView extends HtmlView {
         else $url = $this->url;
 
         return '<a href="' . $url . '"' . ($this->download ? ' download' : '') .
-            '" target="' . $this->target . '"' . substr($opening, 4);
+            ' target="' . $this->target . '"' . substr($opening, 4);
     }
 
     /**
@@ -119,5 +119,4 @@ class LinkHtmlView extends HtmlView {
         return '</a>';
     }
 }
-
 ?>
