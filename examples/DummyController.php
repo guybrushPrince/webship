@@ -47,7 +47,6 @@ class DummyController {
         $app->js("setContext('server', '" . APP_BASE_PATH . "/v1');");
 
         // Example navigation bar/menu
-        ApplicationHtmlView::addStyle(\webship\WebshipTools::css('.menu', [],'position: static !important'));
         $menu = MenuHtmlView::create();
         $menu->entry()->texts([SLanguage::ENGLISH => 'Home']);
         
@@ -62,6 +61,7 @@ class DummyController {
         $menu->entry()->texts([SLanguage::ENGLISH => 'Contact']);
 
         $content = StandardHtmlView::createStandard();
+        $content->localStyle('padding-top: 80px;');
 
         // Title and description
         $title = TitleHtmlView::create([SLanguage::ENGLISH => 'WebShip Demo']);
@@ -70,17 +70,29 @@ class DummyController {
         $welcomeAlert = InfoHtmlView::create([SLanguage::ENGLISH => 'Welcome to the WebShip Example page! This page showcases various components built with WebShip.']);
         $content->add($welcomeAlert);
 
-        // ImageHtmlView Card Example
-        $imageCard = CardHtmlView::create([SLanguage::ENGLISH => 'ImageHtmlView Example']);
+        // ImageHtmlView Example
+        $imageContainer = new HtmlView();
+        $imageContainer->localStyle('margin-bottom: 20px; padding: 15px; border: 1px solid; border-radius: 8px;');
+        $imageTitle = new HtmlView();
+        $imageTitle->texts([SLanguage::ENGLISH => 'ImageHtmlView Example']);
+        $imageTitle->localStyle('font-weight: bold; margin-bottom: 10px;');
+        $imageContainer->add($imageTitle);
+        
         $img = new ImageHtmlView('/webship/pic/wand.svg');
         $img->localStyle('width: 80px;');
-        $imageCard->content()->add($img);
-        $content->add($imageCard);
+        $imageContainer->add($img);
+        $content->add($imageContainer);
 
-        // 3. Form & Controls Demo Card
-        $formCard = CardHtmlView::create([SLanguage::ENGLISH => 'LabelledInputHtmlView & SwitchHtmlView']);
-        $formContent = $formCard->content();
-        $formContent->localStyle('padding: 15px; display: flex; flex-direction: column; gap: 15px;');
+        // Form & Controls Demo
+        $formContainer = new HtmlView();
+        $formContainer->localStyle('padding: 15px; border: 1px solid; border-radius: 8px; margin-bottom: 20px;');
+        $formTitle = new HtmlView();
+        $formTitle->texts([SLanguage::ENGLISH => 'LabelledInputHtmlView & SwitchHtmlView']);
+        $formTitle->localStyle('font-weight: bold; margin-bottom: 15px;');
+        $formContainer->add($formTitle);
+
+        $formContent = new HtmlView();
+        $formContent->localStyle('display: flex; flex-direction: column; gap: 15px;');
 
         // Text field input
         $nameField = LabelledInputHtmlView::createTextField([SLanguage::ENGLISH => 'Username'], 'username');
@@ -96,21 +108,29 @@ class DummyController {
         $switchLabel->localStyle('display: flex; align-items: center; gap: 10px;');
         $switchLabel->add(SwitchHtmlView::create('notifications_toggle', true));
         $formContent->add($switchLabel);
-        $content->add($formCard);
+        
+        $formContainer->add($formContent);
+        $content->add($formContainer);
 
-        // Progress Tracker Card Example
-        $progressCard = CardHtmlView::create([SLanguage::ENGLISH => 'ProgressStatusHtmlView']);
-        $progressContent = $progressCard->content();
-        $progressContent->localStyle('padding: 15px;');
+        // Progress Tracker
+        $progressContainer = new HtmlView();
+        $progressContainer->localStyle('padding: 15px; border: 1px solid; border-radius: 8px; margin-bottom: 20px;');
+        $progressTitle = new HtmlView();
+        $progressTitle->texts([SLanguage::ENGLISH => 'ProgressStatusHtmlView']);
+        $progressTitle->localStyle('font-weight: bold; margin-bottom: 15px;');
+        $progressContainer->add($progressTitle);
+        
+        $progressContent = new HtmlView();
         $progressContent->texts([SLanguage::ENGLISH => 'Current Project Status:']);
+        $progressContent->localStyle('margin-bottom: 10px;');
+        $progressContainer->add($progressContent);
         
         $progress = ProgressStatusHtmlView::create(
             ['Planning', 'Development', 'Testing', 'Release'],
             'Testing'
         );
-
-        $progressContent->add($progress);
-        $content->add($progressCard);
+        $progressContainer->add($progress);
+        $content->add($progressContainer);
 
         // ActionProtocol Card Example
         $actionCard = CardHtmlView::create([SLanguage::ENGLISH => 'ControlPanelHtmlView & WEvent::CLICK']);
