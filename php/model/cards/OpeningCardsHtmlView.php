@@ -83,13 +83,15 @@ class OpeningCardsHtmlView extends HtmlView {
     /**
      * Creates a new card in the view.
      * @param bool|null $opened Whether the card is opened, or not.
+     * @param bool $openable Whether the card can be opened, or not.
      * @param string|string[] $classes Some classes.
      * @return OpeningCardHtmlView
      */
-    public function card(?bool $opened = null, string|array $classes = []) : OpeningCardHtmlView {
+    public function card(?bool $opened = null, bool $openable = true,
+                         string|array $classes = []) : OpeningCardHtmlView {
         $classes = is_array($classes) ? $classes : [$classes];
         if ($opened) $classes[] = 'wide';
-        $card = new OpeningCardHtmlView($opened, $classes);
+        $card = new OpeningCardHtmlView($opened, $openable, $classes);
         $this->add($card);
 
         return $card;

@@ -42,15 +42,21 @@ class OpeningCardHtmlView extends CardHtmlView {
 
     /**
      * A bounded object.
-     * @var null
+     * @var IShippable|null
      */
-    private $object = null;
+    private IShippable|null $object = null;
 
     /**
      * Whether the card is opened, or not.
      * @var bool|null
      */
     private ?bool $opened = null;
+
+    /**
+     * Whether the card can be opened, or not.
+     * @var bool
+     */
+    private bool $openable = true;
 
     /**
      * The title view.
@@ -61,9 +67,10 @@ class OpeningCardHtmlView extends CardHtmlView {
     /**
      * Constructor.
      * @param bool|null $opened Whether the card is opened, or not.
+     * @param bool $openable Whether the card can be opened, or not.
      * @param string|string[] $classes Some additional classes.
      */
-    public function __construct(?bool $opened = false, string|array $classes = []) {
+    public function __construct(bool|null $opened = false, bool $openable = true, array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [$classes];
         $classes[] = 'op-card';
         parent::__construct($classes);
@@ -81,9 +88,11 @@ class OpeningCardHtmlView extends CardHtmlView {
 
         $this->control();
 
-        $titleView->protocol(WEvent::CLICK)->
-            doIt(BasicEvents::ToggleClass, ['view' => $this, 'class' => 'wide'], BasicEvents::environment())->
-            doIt(BasicEvents::ToggleClass, ['view' => $contentView, 'class' => 'invisible'], BasicEvents::environment());
+        if ($openable) {
+            $titleView->protocol(WEvent::CLICK)->
+                doIt(BasicEvents::ToggleClass, ['view' => $this, 'class' => 'wide'], BasicEvents::environment())->
+                doIt(BasicEvents::ToggleClass, ['view' => $contentView, 'class' => 'invisible'], BasicEvents::environment());
+        }
 
         $this->opened = $opened;
         $this->titleView = $titleView;
@@ -156,7 +165,7 @@ class OpeningCardHtmlView extends CardHtmlView {
      * @inheritDoc
      */
     public function generateOpeningTag() : string {
-        if ($this->object) {
+        if ($this->object && $this->openable) {
             if (!$this->opened) {
                 $this->titleView->protocol(WEvent::CLICK)->
                     doIt(BasicEvents::ThrowEventToObject, ['object' => $this->object, 'event' => WEvent::CONTENTMODIFY, 'scope' => WebshipScopes::OPENING_CARD_OPENS], BasicEvents::environment())->
