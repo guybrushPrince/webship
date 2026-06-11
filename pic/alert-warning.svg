@@ -1,2 +1,40 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" width="512" height="512"><path d="M23.64,18.1L14.24,2.28c-.47-.8-1.3-1.28-2.24-1.28s-1.77,.48-2.23,1.28L.36,18.1h0c-.47,.82-.47,1.79,0,2.6s1.31,1.3,2.24,1.3H21.41c.94,0,1.78-.49,2.24-1.3s.46-1.78-.01-2.6Zm-1.72,1.6c-.05,.09-.2,.29-.51,.29H2.59c-.31,0-.46-.21-.51-.29s-.15-.32,0-.59L11.49,3.29c.15-.26,.41-.29,.51-.29s.35,.03,.51,.3l9.4,15.82c.16,.26,.05,.5,0,.59ZM11,8h2v6h-2v-6Zm0,8h2v2h-2v-2Z" fill="rgb(138, 109, 59)"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   id="Layer_1"
+   data-name="Layer 1"
+   viewBox="0 0 24 24"
+   width="512"
+   height="512"
+   version="1.1"
+   sodipodi:docname="alert-warning.svg"
+   inkscape:version="1.3.1 (91b66b0783, 2023-11-16)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.9765625"
+     inkscape:cx="256"
+     inkscape:cy="255.488"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="1072"
+     inkscape:window-y="110"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Layer_1" />
+  <path
+     d="M23.64,18.1L14.24,2.28c-.47-.8-1.3-1.28-2.24-1.28s-1.77,.48-2.23,1.28L.36,18.1h0c-.47,.82-.47,1.79,0,2.6s1.31,1.3,2.24,1.3H21.41c.94,0,1.78-.49,2.24-1.3s.46-1.78-.01-2.6Zm-1.72,1.6c-.05,.09-.2,.29-.51,.29H2.59c-.31,0-.46-.21-.51-.29s-.15-.32,0-.59L11.49,3.29c.15-.26,.41-.29,.51-.29s.35,.03,.51,.3l9.4,15.82c.16,.26,.05,.5,0,.59ZM11,8h2v6h-2v-6Zm0,8h2v2h-2v-2Z"
+     fill="rgb(138, 109, 59)"
+     id="path1"
+     inkscape:label="triangle" />
+</svg>

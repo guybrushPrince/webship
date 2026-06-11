@@ -14,7 +14,7 @@ use webship\WebshipTools;
  *
  * <code>
  * SectionLikeButtonHtmlView::create('example-1')->texts('Press me!')
- * SectionLikeButtonHtmlView::create('example-2', '/webship/pic/arrow-down-sign-to-navigate.svg')->
+ * SectionLikeButtonHtmlView::create('example-2', '/webship/pic/arrow-down.svg')->
  *     texts('Press me!')
  * </code>
  *
@@ -27,7 +27,7 @@ use webship\WebshipTools;
  * @view
  * @examples
  *     SectionLikeButtonHtmlView::create('example-1')->texts('Press me!')
- *     SectionLikeButtonHtmlView::create('example-2', '/webship/pic/arrow-down-sign-to-navigate.svg')->
+ *     SectionLikeButtonHtmlView::create('example-2', '/webship/pic/arrow-down.svg')->
  *         texts('Press me!')
  */
 class SectionLikeButtonHtmlView extends ButtonHtmlView {

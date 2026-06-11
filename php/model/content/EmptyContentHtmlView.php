@@ -60,7 +60,7 @@ class EmptyContentHtmlView extends HtmlView {
      */
     public static function create(string|array|null $info = null, string|array $classes = []) : EmptyContentHtmlView {
         $view = new EmptyContentHtmlView($classes);
-        $view->add(new ImageHtmlView('/webship/pic/box.png'));
+        $view->add(new ImageHtmlView('/webship/pic/box.svg'));
         if ($info) {
             if (is_string($info)) $info = [self::getLanguage() => $info];
             $view->add(InfoHtmlView::create($info));

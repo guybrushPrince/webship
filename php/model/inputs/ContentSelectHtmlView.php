@@ -176,7 +176,7 @@ class ContentSelectHtmlView extends SelectHtmlView {
         self::addStyle(WebshipTools::css('.content-select', [' > ', '.overlay:after'], 'position: absolute',
             'right: 0', 'top: 0', 'height: 100%', 'width: 7px', 'margin-right: 3px', 'content: ""',
             'background-image: url("' .
-            HtmlActionProtocol::getServerURL() . '/webship/pic/arrow-down-sign-to-navigate.svg")',
+            HtmlActionProtocol::getServerURL() . '/webship/pic/arrow-down.svg")',
             'background-repeat: no-repeat', 'background-size: 7px 7px', 'background-position-y: center'));
         self::addStyle(WebshipTools::css('.content-select.mini', [' > ', '.overlay:after'],
             'filter: brightness(0) saturate(100%) invert(39%) sepia(18%) saturate(1267%) hue-rotate(155deg) brightness(97%) contrast(98%)'));
