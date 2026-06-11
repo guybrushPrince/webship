@@ -202,11 +202,11 @@ class FolderHtmlView extends StandardHtmlView {
                 $toggleFunction($folderGroup, $toggleButtonMax, $view);
             }
             if ($upFunction) {
-                $upButton = $control->button('up-group', '/webship/pic/up.svg');
+                $upButton = $control->button('up-group', '/webship/pic/arrow-up.svg');
                 $upFunction($folderGroup, $upButton, 'main-folder-list');
             }
             if ($downFunction) {
-                $downButton = $control->button('down-group', '/webship/pic/down.svg');
+                $downButton = $control->button('down-group', '/webship/pic/arrow-down.svg');
                 $downFunction($folderGroup, $downButton, 'main-folder-list');
             }
         }

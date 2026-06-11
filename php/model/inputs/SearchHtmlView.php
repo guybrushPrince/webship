@@ -71,7 +71,7 @@ class SearchHtmlView extends ContainerHtmlView {
         // from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
         $this->searchButton = SubmitHtmlView::create('search-button', [], $form);
         $search->add($this->searchButton);
-        $this->searchButton->add(new ImageHtmlView('/webship/pic/loupe.png'));
+        $this->searchButton->add(new ImageHtmlView('/webship/pic/loupe.svg'));
         if ($notes) {
             $this->searchButton->notices($notes);
         }

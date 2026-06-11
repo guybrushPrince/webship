@@ -1,2 +1,53 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" id="Isolation_Mode" data-name="Isolation Mode" viewBox="0 0 24 24" width="512" height="512"><path d="M12,24A12,12,0,1,1,24,12,12.013,12.013,0,0,1,12,24ZM12,3a9,9,0,1,0,9,9A9.01,9.01,0,0,0,12,3Z"/><path d="M10.5,14.154a4.319,4.319,0,0,1,2.155-3.821,1.364,1.364,0,1,0-2.018-1.2h-3a4.364,4.364,0,0,1,5.141-4.295A4.364,4.364,0,0,1,14.1,12.96a1.347,1.347,0,0,0-.6,1.194Z"/><rect x="10.565" y="15.994" width="3" height="3"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   id="Isolation_Mode"
+   data-name="Isolation Mode"
+   viewBox="0 0 24 24"
+   width="512"
+   height="512"
+   version="1.1"
+   sodipodi:docname="unknown.svg"
+   inkscape:version="1.3.1 (91b66b0783, 2023-11-16)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="namedview2"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.9765625"
+     inkscape:cx="256"
+     inkscape:cy="255.488"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="1072"
+     inkscape:window-y="110"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Isolation_Mode" />
+  <circle
+     style="fill:none;stroke:#000000;stroke-width:2.81249;stroke-miterlimit:20;stroke-dasharray:none;paint-order:markers fill stroke"
+     id="path3"
+     cx="12.000001"
+     cy="12.000001"
+     r="10.546881"
+     inkscape:label="circle" />
+  <path
+     d="M10.5,14.154a4.319,4.319,0,0,1,2.155-3.821,1.364,1.364,0,1,0-2.018-1.2h-3a4.364,4.364,0,0,1,5.141-4.295A4.364,4.364,0,0,1,14.1,12.96a1.347,1.347,0,0,0-.6,1.194Z"
+     id="path2"
+     inkscape:label="qm-bow" />
+  <rect
+     x="10.565"
+     y="15.994"
+     width="3"
+     height="3"
+     id="rect2"
+     inkscape:label="qm-dot" />
+</svg>

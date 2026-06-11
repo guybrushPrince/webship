@@ -1,38 +1,54 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 217.858 217.858" style="enable-background:new 0 0 217.858 217.858;" xml:space="preserve">
-<path d="M134.988,26.858c0.019-0.407,0.031-0.815,0.031-1.227C135.019,11.498,123.521,0,109.387,0S83.755,11.498,83.755,25.632
-	c0,0.411,0.012,0.82,0.031,1.227H23.429v41h13v150h145v-150h13v-41H134.988z M75.429,187.858h-18v-104h18V187.858z M117.429,187.858
-	h-18v-104h18V187.858z M159.429,187.858h-19v-104h19V187.858z"/>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
-<g>
-</g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1.1"
+   id="Capa_1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 217.858 217.858"
+   style="enable-background:new 0 0 217.858 217.858;"
+   xml:space="preserve"
+   sodipodi:docname="delete.svg"
+   inkscape:version="1.3.1 (91b66b0783, 2023-11-16)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs15" /><sodipodi:namedview
+   id="namedview15"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   inkscape:zoom="2.2950729"
+   inkscape:cx="108.929"
+   inkscape:cy="108.71114"
+   inkscape:window-width="1920"
+   inkscape:window-height="1009"
+   inkscape:window-x="1072"
+   inkscape:window-y="110"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="Capa_1" />
+<path
+   d="m 134.988,26.858 c 0.019,-0.407 0.031,-0.815 0.031,-1.227 C 135.019,11.498 123.521,0 109.387,0 95.253,0 83.755,11.498 83.755,25.632 c 0,0.411 0.012,0.82 0.031,1.227 H 23.429 v 34 h 16 v 157 h 139 v -157 h 16 v -34 h -59.441 z m -59.559,161 h -18 v -104 h 18 z m 42,0 h -18 v -104 h 18 z m 42,0 h -19 v -104 h 19 z"
+   id="path1"
+   sodipodi:nodetypes="cssscccccccccccccccccccccccccc"
+   inkscape:label="bin" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </svg>
