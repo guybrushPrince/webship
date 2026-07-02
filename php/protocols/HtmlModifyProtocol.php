@@ -83,7 +83,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     // Idea: The appended protocol is wrapped in an anonymous function that is called.
                     $anonymousProtocol = $modify["protocol"]; // It is a template object
                     if ($anonymousProtocol instanceof TemplateObject) {
-                        return 'callFunc(' . $this->asContext($anonymousProtocol) . ', result);';
+                        return 'callFunc(' . $this->asContext($anonymousProtocol) . ', result, this);';
                     } else return '';
                 }
                 case 'setCookie': {
@@ -275,7 +275,7 @@ class HtmlModifyProtocol extends ModifyProtocol {
                     $view = $modify["view"];
                     if ($protocol instanceof TemplateObject) {
                         $handler = 'callFunc(' . $this->asContext($protocol) . ', ' .
-                            '(typeof result !== "undefined") ? result : undefined)';
+                            '(typeof result !== "undefined") ? result : undefined, this)';
                     } else $handler = null;
                     $url = $this->asContext($modify["url"], null, true);
                     $name = $this->asContext($modify["name"], null, true);

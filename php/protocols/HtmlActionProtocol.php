@@ -113,7 +113,8 @@ class HtmlActionProtocol extends ActionProtocol {
                         }
                         if ($isJS && $p["operation"] === "success") {
                             $func .= 'eval(result);';
-                            $func .= '(function(result) {' . $p["protocol"]->generate() . '})("");';
+                            //$func .= '(function(result) {' . $p["protocol"]->generate() . '})("");';
+                            $func .= '((result) => {' . $p["protocol"]->generate() . '})("");';
                         } else {
                             if (!$isJSON) $func .= 'result = extractStyle(result);';
                             if (!$isJS || $hasFail && $p["operation"] === "fail") $func .= '(function(result) {' . $p["protocol"]->generate() . '})(result);';

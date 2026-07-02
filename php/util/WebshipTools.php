@@ -67,5 +67,47 @@ class WebshipTools extends ShippingTools {
         $b = hexdec(substr($hex, 4, 2));
         return ($r * 0.299 + $g * 0.587 + $b * 0.114) * 255 > 150 ? '#ffffff' : '#000000';
     }
+
+    /**
+     * Splits a text up into chunks.
+     * @param string $text The text.
+     * @param int $chunkLength The expected maximum size of chunks.
+     * @return array
+     */
+    public static function breakTextIntoChunks(string $text, int $chunkLength = 20) : array {
+        $chunks = [];
+        $tmpChunks = array_map(function (string $s) {
+            return ' ' . $s;
+        }, explode(' ', $text));
+        $tmpChunks = array_reduce($tmpChunks, function (array $chunks, string $s) {
+            $c = explode('-', $s);
+            if (count($c) >= 2) {
+                for ($i = 0; $i < count($c) - 1; $i++) {
+                    $chunks[] = $c[$i] . '-';
+                }
+            }
+            $chunks[] = $c[array_key_last($c)];
+            return $chunks;
+        }, []);
+        $curChunk = '';
+        foreach ($tmpChunks as $tmpChunk) {
+            if (strlen($curChunk) + strlen($tmpChunk) <= $chunkLength) {
+                $curChunk .= ($curChunk === '' ? ltrim($tmpChunk) : $tmpChunk);
+            } else if ($curChunk === '') {
+                // The current word is longer than the available space.
+                $chunks[] = ltrim($tmpChunk);
+            } else {
+                $chunks[] = $curChunk;
+                if (strlen($tmpChunk) > $chunkLength) {
+                    $chunks[] = ltrim($tmpChunk);
+                    $curChunk = '';
+                } else {
+                    $curChunk = ltrim($tmpChunk);
+                }
+            }
+        }
+        if ($curChunk !== '') $chunks[] = $curChunk;
+        return $chunks;
+    }
 }
 ?>

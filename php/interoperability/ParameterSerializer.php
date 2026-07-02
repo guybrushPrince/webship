@@ -216,9 +216,9 @@ class ParameterSerializer {
             }, array());
             if (!$protocol->innerView()) $innerView = $entry;
             else $innerView = $protocol->innerView();
-            return '"' . $param . '"' . ': function(result = undefined) {' . $value->generate($reducedParameters, $innerView) . '}';
+            return '"' . $param . '"' . ': function(result = undefined, that) {' . $value->generate($reducedParameters, $innerView) . '}';
         } else if ($value instanceof Script) {
-            return '"' . $param . '"' . ': function(result = undefined) {' . $value->getCode() . '}';
+            return '"' . $param . '"' . ': function(result = undefined, that) {' . $value->getCode() . '}';
         } else if (is_object($value)) {
             if (!$isView) return self::handleObject($value, $param);
             else {
