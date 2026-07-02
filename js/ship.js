@@ -263,9 +263,9 @@ let triggerEvent = function(s,e,d = undefined) {
     if (d === undefined || d === null) s.trigger(e);
     else s.trigger(e,d);
 };
-let callFunc = function(f,r) {
+let callFunc = function(f,r,t) {
     r = (typeof r !== "undefined") ? r : undefined;
-    if (isFunction(f)) f(r);
+    if (isFunction(f)) f(r,t);
 };
 let callAnFunc = function(con,n,result) {
     let f = con[n];
