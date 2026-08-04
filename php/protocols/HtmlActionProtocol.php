@@ -104,12 +104,14 @@ class HtmlActionProtocol extends ActionProtocol {
                                 return $pr["operation"] === "fail";
                             })
                         );
+                        $taskState = 'SUCCESS';
                         if ($hasFail && $p["operation"] === "success") {
                             $func .= 'if (isObject(result) && ("__intern_fail" in result)) return;';
                         }
                         if ($hasFail && $p["operation"] === "fail") {
                             $func .= 'if (!(isObject(result) && "__intern_fail" in result)) return;';
                             $func .= 'result = result["content"];';
+                            $taskState = 'FAIL';
                         }
                         if ($isJS && $p["operation"] === "success") {
                             $func .= 'eval(result);';
@@ -126,7 +128,7 @@ class HtmlActionProtocol extends ActionProtocol {
                                     ($isCSV ? 'false' : 'true') . ');';
                             }
                         }
-                        $func .= 'sysTF(taskId);})';
+                        $func .= 'sysTF(taskId, TaskState.' . $taskState . ');})';
                         return $func;
                     } else if ($p["operation"] === "error") {
                         $func = '.fail(function(result) {';
@@ -134,11 +136,11 @@ class HtmlActionProtocol extends ActionProtocol {
                         $func .= 'result = extractStyle(result);';
                         if (!$isJS) $func .= '(function(result) {' . $p["protocol"]->generate() . '})(result);';
                         else $func .= '(function(result) {' . 'result="";' . $p["protocol"]->generate() . '})(result);';
-                        $func .= 'sysTF(taskId);})';
+                        $func .= 'sysTF(taskId, TaskState.ERROR);})';
                         return $func;
                     } else {
                         return '.always(function(result) {result = extractStyle(result);(function(result) {' . $p["protocol"]->generate() . '})(result);' .
-                            'sysTF(taskId);})';
+                            'sysTF(taskId, TaskState.FINALLY);})';
                     }
                 }, $this->protocol)) . ';';
             return $code;

@@ -60,6 +60,13 @@ String.trim = String.trim || function (value) {
         return String(value).trim();
 };
 
+let TaskState = {
+    SUCCESS: 1,
+    FAIL: 2,
+    ERROR: 3,
+    FINALLY: 4
+}
+
 let isString = (s) => typeof s === "string";
 let isJson = function (item) {
     let value = typeof item !== "string" ? JSON.stringify(item) : item;
@@ -73,7 +80,7 @@ let isJson = function (item) {
 Array.prototype.unique = function () { return [...new Set(this)]; }
 
 let sysTask = (params) => {};
-let sysTF = (taskId) => {};
+let sysTF = (taskId, state) => {};
 
 let context = {
     currentTaskId: 0,
@@ -159,8 +166,7 @@ let request = function(
     isZIP = false,
     call = (params) => {},
     params = {}) {
-    call(params);
-    return $.ajax({
+    let x =  $.ajax({
         type: type,
         url: context["server"] + api + method,
         contentType: (!isCSV && !isPDF && !isZIP ? 'application/json; charset=utf-8' :
@@ -170,6 +176,9 @@ let request = function(
         xhrFields: { withCredentials: true },
         cache: false,
     });
+    params['_ajax'] = x;
+    call(params);
+    return x;
 };
 
 let gc = function () {
