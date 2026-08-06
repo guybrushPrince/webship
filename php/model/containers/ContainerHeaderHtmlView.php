@@ -11,6 +11,8 @@ use webship\WebshipTools;
  *  <p>A standard header within a container that <em>have not</em> to be used but can be used.</p>
  *  <p>You should use it from a {@link ContainerHtmlView} via the method [@link ContainerHtmlView::header()}.</p>
  *
+ * @name ContainerHeadHtmlView
+ * @category containers
  * @package webship
  * @subpackge php/model/containers
  *

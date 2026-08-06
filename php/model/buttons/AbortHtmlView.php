@@ -10,11 +10,13 @@ use webship\WebshipTools;
  * <p>Displays an abort button which is red by default.</p>
  *
  * <code>
- * AbortHtmlView::create('abort-1')->texts('Abort')
+ * AbortHtmlView::create('abort-1')->texts('Abort');
  * </code>
  *
  * <img src="http://localhost/coast/webship/modeldoc/abort.png" />
  *
+ * @name AbortHtmlView
+ * @category buttons
  * @package webship
  * @subpackge php/model/buttons
  *
@@ -24,7 +26,7 @@ use webship\WebshipTools;
  *
  * @view
  * @example
- *     AbortHtmlView::create('abort-1')->texts('Abort')
+ *     AbortHtmlView::create('abort-1')->texts('Abort');
  */
 class AbortHtmlView extends StandardButtonHtmlView {
 

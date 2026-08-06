@@ -17,6 +17,8 @@ use webship\WebshipTools;
  * There is no figure to show.
  *
  * @see SelectHtmlView, ContentSelectHtmlView, LabelledContentSelectHtmlView
+ * @name OptionHtmlView
+ * @category inputs
  * @package webship
  * @subpackge php/model/inputs
  *

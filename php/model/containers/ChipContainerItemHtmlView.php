@@ -8,6 +8,8 @@ use webship\WebshipTools;
 /**
  * Class ChipContainerItemHtmlView.
  *
+ * @name ChipContainerItemHtmlView
+ * @category containers
  * @package webship
  * @subpackage php/model/containers
  *

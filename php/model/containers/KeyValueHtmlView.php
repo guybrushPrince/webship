@@ -22,6 +22,8 @@ use webship\WebshipTools;
  * KeyValueHtmlView::createString('Key', 'Value', false);
  * </code>
  *
+ * @name KeyValueHtmlView
+ * @category containers
  * @package webship
  * @subpackge php/model/containers
  *

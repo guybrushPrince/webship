@@ -15,6 +15,8 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/labelledtextarea.png" />
  *
+ * @name LabelledTextAreaHtmlView
+ * @category inputs
  * @package webship
  * @subpackge php/model/inputs
  *

@@ -19,6 +19,8 @@ use webship\WebshipTools;
  * <img src="http://localhost/coast/webship/modeldoc/warning_2.png" /><br>
  * <img src="http://localhost/coast/webship/modeldoc/warning_3.png" />
  *
+ * @name WarningHtmlView
+ * @category alerts
  * @see AlertHtmlView
  * @package webship
  * @subpackge php/model/alerts

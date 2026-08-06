@@ -20,6 +20,8 @@ use webship\WebshipTools;
  * </code>
  * <img src="http://localhost/coast/webship/modeldoc/progress.png" />
  *
+ * @name ProgressStatusHtmlView
+ * @category charts
  * @package webship
  * @subpackge php/model/charts
  *

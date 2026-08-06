@@ -17,6 +17,8 @@ use webship\WebshipTools;
  * $container->add(CloserHtmlView::create('hello-world-3'))->plain();
  * </code>
  *
+ * @name CloserHtmlView
+ * @category buttons
  * @package webship
  * @subpackage php/model
  *

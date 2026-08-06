@@ -13,9 +13,11 @@ use webship\WebshipTools;
  * <img src="http://localhost/coast/webship/modeldoc/button.png" />
  *
  * <code>
- * (new ButtonHtmlView('example', 'button'))->texts('Press me!')
+ * (new ButtonHtmlView('example', 'button'))->texts('Press me!');
  * </code>
  *
+ * @name ButtonHtmlView
+ * @category buttons
  * @package webship
  * @subpackge php/model/buttons
  *
@@ -24,7 +26,7 @@ use webship\WebshipTools;
  *
  * @view
  * @examples
- *     (new ButtonHtmlView('example', 'button'))->texts('Press me!')
+ *     (new ButtonHtmlView('example', 'button'))->texts('Press me!');
  */
 class ButtonHtmlView extends HtmlView {
 

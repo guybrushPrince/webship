@@ -15,6 +15,8 @@ use webship\core\HtmlView;
  *
  * </code>
  *
+ * @name RefreshHtmlView
+ * @category buttons
  * @package webship
  * @subpackge php/model/buttons
  *

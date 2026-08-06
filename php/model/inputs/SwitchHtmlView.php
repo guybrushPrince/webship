@@ -18,6 +18,8 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/switch.png" />
  *
+ * @name SwitchHtmlView
+ * @category inputs
  * @package webship
  * @subpackge php/model/inputs
  *

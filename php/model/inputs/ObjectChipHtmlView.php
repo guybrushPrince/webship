@@ -20,6 +20,8 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/objectchip.png" />
  *
+ * @name ObjectChipHtmlView
+ * @category inputs
  * @package webship
  * @subpackge php/model/inputs
  *

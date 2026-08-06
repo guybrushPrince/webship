@@ -21,6 +21,8 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/dropdown.png" />
  *
+ * @name DropDownHtmlView
+ * @category inputs
  * @package webship
  * @subpackge php/model/inputs
  *

@@ -19,6 +19,8 @@ use webship\WebshipTools;
  * SectionHtmlView::create('Hello World!', true)->box()->add(AreaHtmlView::create());
  * </code>
  *
+ * @name SectionHtmlView
+ * @category containers
  * @package webship
  * @subpackge php/model/containers
  *

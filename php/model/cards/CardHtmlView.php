@@ -14,9 +14,11 @@ use webship\WebshipTools;
  *
  * <code>
  * $card = CardHtmlView::create('Hello World!');
- * $card->content()->texts('You are beautiful!')
+ * $card->content()->texts('You are beautiful!');
  * </code>
  *
+ * @name CardHtmlView
+ * @category cards
  * @package webship
  * @subpackge php/model/cards
  *
@@ -26,7 +28,7 @@ use webship\WebshipTools;
  * @view
  * @examples
  *     $card = CardHtmlView::create('Hello World!');
- *     $card->content()->texts('You are beautiful!')
+ *     $card->content()->texts('You are beautiful!');
  */
 class CardHtmlView extends HtmlView {
 

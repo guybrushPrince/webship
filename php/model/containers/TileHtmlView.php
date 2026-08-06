@@ -27,6 +27,8 @@ use webship\WebshipTools;
  * </code>
  * <img src="http://localhost/coast/webship/modeldoc/tiles.png" />
  *
+ * @name TileHtmlView
+ * @category containers
  * @package webship
  * @subpackge php/model/containers
  *

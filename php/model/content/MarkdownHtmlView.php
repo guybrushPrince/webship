@@ -16,6 +16,11 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/markdown.png" />
  *
+ * @name MarkdownHtmlView
+ * @category content
+ * @package webship
+ * @subpackge php/model/content
+ * 
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @author Franziska Lüder
  * @version 1.2.0

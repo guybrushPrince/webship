@@ -20,8 +20,10 @@ use webship\WebshipTools;
  *
  * <p>A basic <em>alert</em> view, which can be specialized for more specific cases.
  * It can cover the screen or view, can display an optional image, and can get (and set) parameters from the user
- * context.</p
+ * context.</p>
  *
+ * @name AlertHtmlView
+ * @category alerts
  * @package webship
  * @subpackge php/model/alerts
  *

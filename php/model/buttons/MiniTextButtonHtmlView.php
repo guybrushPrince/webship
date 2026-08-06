@@ -15,6 +15,8 @@ use webship\WebshipTools;
  * MiniTextButtonHtmlView::delete('example-2', 'Delete me!');
  * </code>
  *
+ * @name MiniTextButtonHtmlView
+ * @category buttons
  * @package webship
  * @subpackge php/model/buttons
  *

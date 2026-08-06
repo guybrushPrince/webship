@@ -31,6 +31,8 @@ use webship\WebshipTools;
  * $modal->item(ContainerHtmlView::createIt()->texts('Welcome to this modal!'));
  * </code>
  *
+ * @name ModalHtmlView
+ * @category dialogs
  * @package webship
  * @subpackge php/model
  *

@@ -8,6 +8,8 @@ use webship\WebshipTools;
 /**
  * Class SplitHtmlView.
  *
+ * @name SplitHtmlView
+ * @category containers
  * @package webship
  * @subpackge php/model/containers
  *

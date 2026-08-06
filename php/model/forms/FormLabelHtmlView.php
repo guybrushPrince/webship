@@ -22,6 +22,8 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/formlabel.png" />
  *
+ * @name FormLabelHtmlView
+ * @category forms
  * @package webship
  * @subpackge php/model/forms
  *

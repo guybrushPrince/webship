@@ -16,6 +16,8 @@ use ship\views\View;
  *
  * <img src="http://localhost/coast/webship/modeldoc/checkbox.png" />
  *
+ * @name CheckboxHtmlView
+ * @category inputs
  * @see InputHtmlView
  * @package webship
  * @subpackge php/model/inputs

@@ -14,6 +14,8 @@ use webship\WebshipTools;
  * HiddenPlaceHolderHtmlView::create();)
  * </code>
  *
+ * @name HiddenPlaceHolderHtmlView
+ * @category content
  * @package webship
  * @subpackge php/model/content
  *

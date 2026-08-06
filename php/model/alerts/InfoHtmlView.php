@@ -7,7 +7,7 @@ use webship\WebshipTools;
 /**
  * View InfoHtmlView.
  *
- * <p>A specialization of {@link AlertHtmlView} for presenting <em>information</em> to users.</p
+ * <p>A specialization of {@link AlertHtmlView} for presenting <em>information</em> to users.</p>
  *
  * <code>
  * InfoHtmlView::create('For your information.');
@@ -19,6 +19,8 @@ use webship\WebshipTools;
  * <img src="http://localhost/coast/webship/modeldoc/info_2.png" /><br>
  * <img src="http://localhost/coast/webship/modeldoc/info_3.png" />
  *
+ * @name InfoHtmlView
+ * @category alerts
  * @see AlertHtmlView
  * @package webship
  * @subpackge php/model/alerts

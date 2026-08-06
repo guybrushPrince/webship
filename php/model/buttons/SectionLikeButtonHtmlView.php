@@ -13,11 +13,13 @@ use webship\WebshipTools;
  * <img src="http://localhost/coast/webship/modeldoc/sectionlikebutton.png" />
  *
  * <code>
- * SectionLikeButtonHtmlView::create('example-1')->texts('Press me!')
+ * SectionLikeButtonHtmlView::create('example-1')->texts('Press me!');
  * SectionLikeButtonHtmlView::create('example-2', '/webship/pic/arrow-down.svg')->
- *     texts('Press me!')
+ *     texts('Press me!');
  * </code>
  *
+ * @name SectionLikeButtonHtmlView
+ * @category buttons
  * @package webship
  * @subpackage php/model/buttons
  *
@@ -26,9 +28,9 @@ use webship\WebshipTools;
  *
  * @view
  * @examples
- *     SectionLikeButtonHtmlView::create('example-1')->texts('Press me!')
+ *     SectionLikeButtonHtmlView::create('example-1')->texts('Press me!');
  *     SectionLikeButtonHtmlView::create('example-2', '/webship/pic/arrow-down.svg')->
- *         texts('Press me!')
+ *         texts('Press me!');
  */
 class SectionLikeButtonHtmlView extends ButtonHtmlView {
 

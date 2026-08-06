@@ -19,10 +19,12 @@ use webship\WebshipTools;
  * <img src="http://localhost/coast/webship/modeldoc/error_2.png" /><br>
  * <img src="http://localhost/coast/webship/modeldoc/error_3.png" />
  *
+ * @name ErrorHtmlView
+ * @category alerts
  * @see AlertHtmlView
  * @package webship
  * @subpackge php/model/alerts
- *
+ * 
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @author Mihailo Jovic
  * @version 1.3.0

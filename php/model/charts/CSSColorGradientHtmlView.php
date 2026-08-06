@@ -17,6 +17,8 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/colorgradient.png" />
  *
+ * @name CSSColorGradientHtmlView
+ * @category charts
  * @package webship
  * @subpackge php/model/charts
  *

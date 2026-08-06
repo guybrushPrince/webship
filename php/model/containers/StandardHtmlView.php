@@ -21,6 +21,8 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/standard.png" />
  *
+ * @name StandardHtmlView
+ * @category containers
  * @package webship
  * @subpackge php/model/containers
  *

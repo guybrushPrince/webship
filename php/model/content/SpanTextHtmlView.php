@@ -12,6 +12,8 @@ use webship\WebshipTools;
  *
  * <p></p>
  *
+ * @name SpanTextHtmlView
+ * @category content
  * @package webship
  * @subpackge php/model/content
  *

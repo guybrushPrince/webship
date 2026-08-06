@@ -16,6 +16,8 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/editable.png" />
  *
+ * @name EditableHtmlView
+ * @category inputs
  * @package webship
  * @subpackge php/models/inputs
  *

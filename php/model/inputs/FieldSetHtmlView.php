@@ -21,6 +21,8 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/fieldset.png" />
  *
+ * @name FieldSetHtmlView
+ * @category inputs
  * @package webship
  * @subpackage php/model
  *

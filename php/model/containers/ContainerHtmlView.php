@@ -21,6 +21,8 @@ use webship\WebshipTools;
  * $container->add(ColorHtmlView::createIt('#00FF00'))->texts('Green');
  * </code>
  *
+ * @name ContainerHtmlView
+ * @category containers
  * @package webship
  * @subpackge php/model
  *

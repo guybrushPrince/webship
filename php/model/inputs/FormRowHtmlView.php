@@ -17,6 +17,8 @@ use webship\WebshipTools;
  *
  * No figure is provided.
  *
+ * @name FormRowHtmlView
+ * @category inputs
  * @package webship
  * @subpackge php/model/inputs
  *

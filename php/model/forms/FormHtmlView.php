@@ -17,6 +17,8 @@ use webship\WebshipTools;
  *
  * There is nothing to present.
  *
+ * @name FormHtmlView
+ * @category forms
  * @package webship
  * @subpackge php/model/forms
  *

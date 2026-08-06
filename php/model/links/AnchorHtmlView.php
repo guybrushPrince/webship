@@ -11,6 +11,8 @@ use webship\core\HtmlView;
  * through its children.</p>
  * <code>AnchorHtmlView::create('link-to-me');</code>
  *
+ * @name AnchorHtmlView
+ * @category links
  * @package webship
  * @subpackge php/model/anchors
  *

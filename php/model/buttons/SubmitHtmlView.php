@@ -19,6 +19,8 @@ use webship\forms\FormHtmlView;
  *
  * <img src="http://localhost/coast/webship/modeldoc/submit.png" />
  *
+ * @name SubmitHtmlView
+ * @category buttons
  * @package webship
  * @subpackge php/model/buttons
  *

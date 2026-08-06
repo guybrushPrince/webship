@@ -15,6 +15,8 @@ use webship\core\HtmlView;
  * There is no figure available.
  *
  * @see MultipleSwitchInputHtmlView
+ * @name RadioOptionHtmlView
+ * @category inputs
  * @package webship
  * @subpackge php/model/inputs
  *

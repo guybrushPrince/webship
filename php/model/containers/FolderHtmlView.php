@@ -19,6 +19,8 @@ use webship\WebshipTools;
 /**
  * Class FolderHtmlView.
  *
+ * @name FolderHtmlView
+ * @category containers
  * @package webship
  * @subpackage php/model/containers
  *

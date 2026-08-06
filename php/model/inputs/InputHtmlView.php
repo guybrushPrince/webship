@@ -24,6 +24,8 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/input.png" />
  *
+ * @name InputHtmlView
+ * @category inputs
  * @package webship
  * @subpackge php/model/inputs
  *

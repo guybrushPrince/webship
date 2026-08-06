@@ -16,11 +16,13 @@ use webship\WebshipTools;
  * <p>A search bar that can be used, e.g., for searching things.</p>
  *
  * <code>
- * SearchHtmlView::create('Please search something.', 'You will search for it.')
+ * SearchHtmlView::create('Please search something.', 'You will search for it.');
  * </code>
  *
  * <img src="http://localhost/coast/webship/modeldoc/search.png" />
  *
+ * @name SearchHtmlView
+ * @category inputs
  * @package webship
  * @subpackage php/model/inputs
  *
@@ -29,7 +31,7 @@ use webship\WebshipTools;
  *
  * @view
  * @examples
- *     SearchHtmlView::create('Please search something.', 'You will search for it.')
+ *     SearchHtmlView::create('Please search something.', 'You will search for it.');
  */
 class SearchHtmlView extends ContainerHtmlView {
 

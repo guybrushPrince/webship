@@ -13,6 +13,8 @@ use webship\protocols\HtmlModifyProtocol;
 /**
  * Class OpeningCardHtmlView.
  *
+ * @name OpeningCardHtmlView
+ * @category cards
  * @package webship
  * @subpackge php/model/cards
  *

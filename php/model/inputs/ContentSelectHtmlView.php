@@ -29,6 +29,8 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/contentselect.png" />
  *
+ * @name ContentSelectHtmlView
+ * @category inputs
  * @see SelectHtmlView
  * @package webship
  * @subpackge php/model/inputs

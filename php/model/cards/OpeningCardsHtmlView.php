@@ -9,6 +9,8 @@ use webship\WebshipTools;
 /**
  * Class OpeningCardsHtmlView.
  *
+ * @name OpeningCardsHtmlView
+ * @category cards
  * @package webship
  * @subpackge php/model/cards
  *

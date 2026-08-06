@@ -21,6 +21,8 @@ use webship\WebshipTools;
  * </code>
  * <img src="http://localhost/coast/webship/modeldoc/link.png" />
  *
+ * @name LinkHtmlView
+ * @category links
  * @package webship
  * @subpackge php/model/anchors
  *

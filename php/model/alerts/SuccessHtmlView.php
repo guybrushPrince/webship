@@ -19,6 +19,8 @@ use webship\WebshipTools;
  * <img src="http://localhost/coast/webship/modeldoc/success_2.png" /><br>
  * <img src="http://localhost/coast/webship/modeldoc/success_3.png" />
  *
+ * @name SuccessHtmlView
+ * @category alerts
  * @see AlertHtmlView
  * @package webship
  * @subpackge php/model/alerts

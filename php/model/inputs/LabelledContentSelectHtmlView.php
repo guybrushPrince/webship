@@ -18,6 +18,8 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/labelledcontentselect.png" />
  *
+ * @name LabelledContentSelectHtmlView
+ * @category inputs
  * @package webship
  * @subpackge php/model/inputs
  *
