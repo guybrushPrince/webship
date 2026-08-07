@@ -109,5 +109,17 @@ class WebshipTools extends ShippingTools {
         if ($curChunk !== '') $chunks[] = $curChunk;
         return $chunks;
     }
+
+    /**
+     * Rearranges the code by splitting it up and giving it a depth.
+     * @param string $code The code.
+     * @param int $depth The depth.
+     * @return string
+     */
+    public static function rearrangeCode(string $code, int $depth = 0) : string {
+        return implode(PHP_EOL, array_map(function($c) use ($depth) {
+            return self::code($c, $depth);
+        }, explode(PHP_EOL, $code)));
+    }
 }
 ?>
