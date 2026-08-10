@@ -64,11 +64,14 @@ class TabContainerHtmlView extends ContainerHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('.tabbed', [], 'position: relative',
-            'width: 100%', 'height: 100%', 'overflow-y: clip'));
+        self::addStyle(WebshipTools::css('.tabbed', [],
+            '--ws-tab-hd-hgt: 27px',
+            'position: relative',
+            'width: 100%', 'height: 100%', 'overflow-y: clip',
+            'padding-top: var(--ws-tab-hd-hgt)', 'scroll-padding-top: var(--ws-tab-hd-hgt)'));
         self::addStyle(WebshipTools::css('.tabbed', [' > ', '.tab'], 'position: absolute',
-            'left: 0', 'top: 27px', 'width: 100%', 'box-sizing: border-box', 'overflow-y: visible', 'height: 100%',
-            'padding: 0'));
+            'left: 0', 'top: var(--ws-tab-hd-hgt)', 'width: 100%', 'box-sizing: border-box', 'overflow-y: visible',
+            'height: 100%', 'padding: 0'));
     }
 
     /**

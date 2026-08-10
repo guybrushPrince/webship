@@ -69,14 +69,15 @@ class EditorSplitHtmlView extends HtmlView {
             'flex-direction: row', 'flex-wrap: nowrap', 'width: 100%', 'height: 100%',
             'border-top: 2px solid var(--ws-app-brd)'));
         self::addStyle(WebshipTools::css('.editor-split', [' ', '.tab'],
-            'padding: 0', 'height: calc(100% - 27px)', 'border-left: 2px solid var(--ws-app-brd)',
+            'padding: 0', 'height: calc(100% - var(--ws-tab-hd-hgt))', 'border-left: 2px solid var(--ws-app-brd)',
             'border-right: 2px solid var(--ws-app-brd)', 'border-bottom: 2px solid var(--ws-app-brd)'));
         self::addStyle(WebshipTools::css('.editor-split', [' ', '.tab', ' > ', '.tab-content'],
-            'padding: 10px', 'width: 100%', 'height: 100%'));
+            'padding: 10px', 'width: 100%', 'height: 100%', 'scroll-padding-top: calc(var(--ws-tab-hd-hgt) - 2px)',
+            'scroll-behavior: smooth'));
         self::addStyle(WebshipTools::css('.editor-split', [' > ', '*'],
             'box-sizing: border-box', 'display: flex', 'flex-direction: column', 'overflow-y: hidden'));
         self::addStyle(WebshipTools::css('.editor-split', [' > ', '.tools'], 'width: var(--ws-tools-size)',
-            'padding: 10px', 'transition: width 0.5s'));
+            'padding: var(--ws-tab-hd-hgt) 10px 10px 10px', 'transition: width 0.5s'));
         self::addStyle(WebshipTools::css('.editor-split', [' > ', '.tools.closed'], 'width: 0', 'padding: 0'));
         self::addStyle(WebshipTools::css('.editor-split', [' > ', '.tools.closed', ' > ', '*'],
             'display: none'));
@@ -90,7 +91,7 @@ class EditorSplitHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.editor-split', [' > ', '.tools.closed', ' + ', '.separator', ':before'],
             'content: \'>\''));
         self::addStyle(WebshipTools::css('.editor-split', [' > ', '.editor'], 'width: var(--ws-editor-size)',
-            'padding: 15px', 'transition: width 0.5s'));
+            'padding: var(--ws-tab-hd-hgt) 15px 15px 15px', 'transition: width 0.5s'));
         self::addStyle(WebshipTools::css('.editor-split', [' > ', '.tools.closed', ' ~ ', '.editor'],
             'width: calc(100% - var(--ws-sep-size))'));
     }
