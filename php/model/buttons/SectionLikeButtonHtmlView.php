@@ -18,8 +18,9 @@ use webship\WebshipTools;
  *     texts('Press me!');
  * </code>
  *
- * @name SectionLikeButtonHtmlView
+ * @title SectionLikeButton
  * @category buttons
+ * 
  * @package webship
  * @subpackage php/model/buttons
  *

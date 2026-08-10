@@ -23,10 +23,11 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/labelledinput.png" />
  *
- * @name LabelledInputHtmlView
+ * @title LabelledInput
  * @category inputs
+ * 
  * @package webship
- * @subpackge php/model/inputs
+ * @subpackage php/model/inputs
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.2.0

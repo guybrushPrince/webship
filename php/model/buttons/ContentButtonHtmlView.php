@@ -23,10 +23,11 @@ use webship\WebshipTools;
  * $contentButton->content(TagHtmlView::create('Hello World!'));
  * </code>
  *
- * @name ContentButtonHtmlView
+ * @title ContentButton
  * @category buttons
+ * 
  * @package webship
- * @subpackge php/model/buttons
+ * @subpackage php/model/buttons
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.3.0

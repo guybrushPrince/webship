@@ -17,10 +17,11 @@ use webship\WebshipTools;
  * $card->content()->texts('You are beautiful!');
  * </code>
  *
- * @name CardHtmlView
+ * @title Card
  * @category cards
+ * 
  * @package webship
- * @subpackge php/model/cards
+ * @subpackage php/model/cards
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.3.0

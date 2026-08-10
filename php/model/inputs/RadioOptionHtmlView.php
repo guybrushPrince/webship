@@ -14,11 +14,12 @@ use webship\core\HtmlView;
  *
  * There is no figure available.
  *
- * @see MultipleSwitchInputHtmlView
- * @name RadioOptionHtmlView
+ * @name RadioOption
  * @category inputs
+ * 
+ * @see MultipleSwitchInputHtmlView
  * @package webship
- * @subpackge php/model/inputs
+ * @subpackage php/model/inputs
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.1.0

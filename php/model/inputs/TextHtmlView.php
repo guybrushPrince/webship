@@ -20,10 +20,11 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/text.png" />
  *
- * @name TextHtmlView
+ * @title Text
  * @category inputs
+ * 
  * @package webship
- * @subpackge php/model/inputs
+ * @subpackage php/model/inputs
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.3.0

@@ -15,10 +15,11 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/abort.png" />
  *
- * @name AbortHtmlView
+ * @title Abort
  * @category buttons
+ * 
  * @package webship
- * @subpackge php/model/buttons
+ * @subpackage php/model/buttons
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @author Franziska Lüder

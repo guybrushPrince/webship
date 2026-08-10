@@ -13,10 +13,11 @@ use webship\WebshipTools;
  *
  * <p>An editor view that separates the available space into three areas: a tool area, a separator, and an editor.</p>
  *
- * @name EditorSplitHtmlView
+ * @title EditorSplit
  * @category containers
+ * 
  * @package webship
- * @subpackge php/model/containers
+ * @subpackage php/model/containers
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0

@@ -21,8 +21,9 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/search.png" />
  *
- * @name SearchHtmlView
+ * @title Search
  * @category inputs
+ * 
  * @package webship
  * @subpackage php/model/inputs
  *

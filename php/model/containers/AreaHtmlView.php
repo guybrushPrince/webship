@@ -15,10 +15,11 @@ use webship\WebshipTools;
  *
  * <code>AreaHtmlView::create('Hello World!');</code>
  *
- * @name AreaHtmlView
+ * @title Area
  * @category containers
+ * 
  * @package webship
- * @subpackge php/model/containers
+ * @subpackage php/model/containers
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0

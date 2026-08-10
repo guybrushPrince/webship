@@ -19,11 +19,12 @@ use webship\WebshipTools;
  * <img src="http://localhost/coast/webship/modeldoc/info_2.png" /><br>
  * <img src="http://localhost/coast/webship/modeldoc/info_3.png" />
  *
- * @name InfoHtmlView
+ * @title Info
  * @category alerts
+ * 
  * @see AlertHtmlView
  * @package webship
- * @subpackge php/model/alerts
+ * @subpackage php/model/alerts
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @author Mihailo Jovic

@@ -22,10 +22,11 @@ use webship\WebshipTools;
  * It can cover the screen or view, can display an optional image, and can get (and set) parameters from the user
  * context.</p>
  *
- * @name AlertHtmlView
+ * @title Alert
  * @category alerts
+ * 
  * @package webship
- * @subpackge php/model/alerts
+ * @subpackage php/model/alerts
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0

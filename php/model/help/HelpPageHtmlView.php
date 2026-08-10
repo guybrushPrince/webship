@@ -23,8 +23,9 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/help.png" />
  *
- * @name HelpPageHtmlView
+ * @title HelpPage
  * @category help
+ * 
  * @package webship
  * @subpackage php/model/help
  *

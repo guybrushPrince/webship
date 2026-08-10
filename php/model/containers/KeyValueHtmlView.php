@@ -22,10 +22,11 @@ use webship\WebshipTools;
  * KeyValueHtmlView::createString('Key', 'Value', false);
  * </code>
  *
- * @name KeyValueHtmlView
+ * @title KeyValue
  * @category containers
+ * 
  * @package webship
- * @subpackge php/model/containers
+ * @subpackage php/model/containers
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0

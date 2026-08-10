@@ -16,11 +16,12 @@ use ship\views\View;
  *
  * <img src="http://localhost/coast/webship/modeldoc/checkbox.png" />
  *
- * @name CheckboxHtmlView
+ * @title Checkbox
  * @category inputs
+ * 
  * @see InputHtmlView
  * @package webship
- * @subpackge php/model/inputs
+ * @subpackage php/model/inputs
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.1.0

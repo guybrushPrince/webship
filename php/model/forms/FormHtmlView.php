@@ -17,10 +17,11 @@ use webship\WebshipTools;
  *
  * There is nothing to present.
  *
- * @name FormHtmlView
+ * @title Form
  * @category forms
+ * 
  * @package webship
- * @subpackge php/model/forms
+ * @subpackage php/model/forms
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.3.0

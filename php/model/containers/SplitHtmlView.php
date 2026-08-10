@@ -8,10 +8,11 @@ use webship\WebshipTools;
 /**
  * Class SplitHtmlView.
  *
- * @name SplitHtmlView
+ * @title Split
  * @category containers
+ * 
  * @package webship
- * @subpackge php/model/containers
+ * @subpackage php/model/containers
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0

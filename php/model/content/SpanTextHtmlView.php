@@ -12,10 +12,11 @@ use webship\WebshipTools;
  *
  * <p></p>
  *
- * @name SpanTextHtmlView
+ * @title SpanText
  * @category content
+ * 
  * @package webship
- * @subpackge php/model/content
+ * @subpackage php/model/content
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.3.0

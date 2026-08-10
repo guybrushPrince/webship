@@ -18,10 +18,11 @@ use webship\protocols\HtmlActionProtocol;
  * $app->css('helloworld.css');
  * </code>
  *
- * @name ApplicationHtmlView
+ * @title Application
  * @category core
+ * 
  * @package webship
- * @subpackge php/model/core
+ * @subpackage php/model/core
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.4.0

@@ -23,10 +23,11 @@ use webship\WebshipTools;
  * <img src="http://localhost/coast/webship/modeldoc/errorfilelist_1.png" /><br />
  * <img src="http://localhost/coast/webship/modeldoc/errorfilelist_2.png" />
  *
- * @name ErrorFileListHtmlView
+ * @title ErrorFileList
  * @category dialogs
+ * 
  * @package webship
- * @subpackge php/model/dialogs
+ * @subpackage php/model/dialogs
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.2.0

@@ -24,8 +24,9 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/emptycontent.png" />
  *
- * @name EmptyContentHtmlView
+ * @title EmptyContent
  * @category model
+ * 
  * @package webship
  * @subpackage php/model
  *

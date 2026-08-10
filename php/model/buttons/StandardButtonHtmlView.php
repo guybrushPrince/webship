@@ -20,10 +20,11 @@ use webship\WebshipTools;
  * </code>
  * <img src="http://localhost/coast/webship/modeldoc/standardbutton.png" />
  *
- * @name StandardButtonHtmlView
+ * @title StandardButton
  * @category buttons
+ * 
  * @package webship
- * @subpackge php/model/buttons
+ * @subpackage php/model/buttons
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.1.0
