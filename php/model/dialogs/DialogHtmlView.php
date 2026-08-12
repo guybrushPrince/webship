@@ -56,12 +56,15 @@ class DialogHtmlView extends HtmlView {
      */
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.dialog', [], 'position: fixed', 'top: 0', 'left: 0',
-            'width: 100%', 'height: 100%', 'background: var(--ws-dialog-overlay)', 'z-index: 10000000'));
+            'width: 100%', 'height: 100%',
+            '--ws-dialog-overlay: var(--ws-screen-overlay)', 'background: var(--ws-dialog-overlay)', 'z-index: 10000000',
+            '--ws-dialog-shadow: var(--ws-front-shadow)'));
         self::addStyle(WebshipTools::css('.dialog', [' > ', '.dialog-message'], 'position: absolute',
             'top: calc((100% - 150px) / 2)', 'left: calc((100% - 300px) / 2)',
             'width: 300px', 'height: 150px', 'border-color: var(--ws-border-error)',
             'color: var(--ws-font-error)', 'background-color: var(--ws-background-error)', 'border: 1px solid',
-            'border-radius: 5px'));
+            'border-radius: 5px', '-webkit-box-shadow: var(--ws-dialog-shadow)',
+            '-moz-box-shadow: var(--ws-dialog-shadow)', 'box-shadow: var--ws-dialog-shadow)'));
         self::addStyle(WebshipTools::css('.dialog', [' ', 'p'], 'margin: 0'));
         self::addStyle(WebshipTools::css('.dialog', [' > ', '.dialog-message', ' > ', '.d-title'],
             'padding: 10px', 'background-color: var(--ws-cbackground-error)', 'border-radius: 5px 5px 0 0',

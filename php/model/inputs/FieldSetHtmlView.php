@@ -70,6 +70,7 @@ class FieldSetHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('fieldset.gap25', [], 'gap: 25px'));
         self::addStyle(WebshipTools::css('fieldset', [' > ', '.entry'], 'display: flex', 'flex-wrap: nowrap',
             'flex-direction: row', 'align-items: center', 'justify-content: flex-start', 'margin: 5px', 'flex: 1 1 0px'));
+        self::addStyle(WebshipTools::css('fieldset.plain', [' > ', '.entry'], 'margin: 0'));
         self::addStyle(WebshipTools::css('fieldset', [' > ', '.entry', ' ', '[type="checkbox"]'],
             'min-width: 25px', 'max-width: 25px'));
         self::addStyle(WebshipTools::css('fieldset', [' > ', '.entry', ' ', 'label'], 'margin: 0', 'margin-left: 10px'));

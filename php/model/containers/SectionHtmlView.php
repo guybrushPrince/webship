@@ -64,7 +64,7 @@ class SectionHtmlView extends HtmlView {
         if (!is_array($section)) $section = [self::getLanguage() => $section];
         $this->section->texts($section);
 
-        $this->box = new HtmlView();
+        $this->box = ContainerHtmlView::createIt();
         $this->add($this->box);
         $this->ref('foldable');
         if (!$open) $this->addClass('closed');
