@@ -106,18 +106,18 @@ class LabelledInputHtmlView extends InputHtmlView {
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.linput', [], 'position: relative', 'width: fit-content',
             'box-sizing: border-box', 'width: -moz-fit-content', '--ws-li-height: 30px', '--ws-li-buffer: 10px',
-            'height: calc(var(--ws-li-height) + var(--ws-li-buffer))',
+            'height: calc(var(--ws-li-height) + var(--ws-li-buffer))', '--ws-li-in-width: 200px',
             'display: flex', 'flex-direction: row', 'align-items: flex-end', 'flex-wrap: nowrap'));
         self::addStyle(WebshipTools::css('.linput.bl', [], '--ws-li-buffer: 0'));
         self::addStyle(WebshipTools::css('.linput.ll', [], '--ws-li-buffer: 0'));
         self::addStyle(WebshipTools::css('.linput.ll', [' > ', 'input + label'], 'display: none'));
         self::addStyle(WebshipTools::css('.linput', [' > ', 'input'], 'height: var(--ws-li-height)',
-            'box-sizing: border-box'));
+            'box-sizing: border-box', 'width: var(--ws-li-in-width)'));
         self::addStyle(WebshipTools::css('.linput', [' > ', 'input:not([type=date]):not([type=checkbox]) + label'],
             'position: absolute', 'box-sizing: border-box', 'left: 0', 'color: var(--ws-std-bg-dark)',
             'transition: 0.5s'));
         self::addStyle(WebshipTools::css('.linput', [' > ', 'input:not(:focus):not([type=date]):not([type=checkbox]):placeholder-shown + label'],
-            'display: flex', 'top: var(--ws-li-buffer)', 'flex-direction: row', /*'width: 100%',*/
+            'display: flex', 'top: var(--ws-li-buffer)', 'flex-direction: row',
             'height: calc(100% - var(--ws-li-buffer))', 'align-items: center', 'cursor: text', 'padding-left: 8px',
             'font-size: 13px'));
         self::addStyle(WebshipTools::css('.linput', [' > ', 'input:focus:not([type=date]):not([type=checkbox]) + label'],
@@ -153,6 +153,7 @@ class LabelledInputHtmlView extends InputHtmlView {
         self::addStyle(WebshipTools::css('.linput.mini.out', [' > ', 'label:not(:empty):after'],
             'color: var(--ws-font-info)', 'font-size: 10px', 'content: ":"', 'display: block',
             'margin-right: 5px'));
+        self::addStyle(WebshipTools::css('.linput', [' > ', 'input.long'], '--ws-li-in-width: 400px'));
     }
 
     /**
@@ -413,6 +414,15 @@ class LabelledInputHtmlView extends InputHtmlView {
         $input->mini = true;
         $input->inside = false;
         return $input;
+    }
+
+    /**
+     * Set a longer input field.
+     * @return $this
+     */
+    public function long() : static {
+        $this->addClass('long');
+        return $this;
     }
 }
 ?>
