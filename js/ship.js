@@ -249,11 +249,12 @@ let clearPaste = (e) => {
     let val = '';
     if ('value' in i) val = i.value;
     else val = i.innerHTML;
+    let oldValue = val;
     val = val.substring(0, st) + paste + val.substring(en, val.length);
     if ('value' in i) i.value = val;
     else i.innerHTML = val;
     e.preventDefault();
-    $(i).trigger('change');
+    if (oldValue !== val) $(i).trigger('change');
 };
 let resizeHeight = function(e) {
     if ('target' in e) e = this;
