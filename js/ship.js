@@ -253,6 +253,7 @@ let clearPaste = (e) => {
     if ('value' in i) i.value = val;
     else i.innerHTML = val;
     e.preventDefault();
+    $(i).trigger('change');
 };
 let resizeHeight = function(e) {
     if ('target' in e) e = this;
