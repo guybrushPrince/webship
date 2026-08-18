@@ -18,8 +18,11 @@ use webship\WebshipTools;
  * $tableRow->cell()->texts("cell 3");
  * </code>
  *
+ * @title TableRow 
+ * @category tables
+ * 
  * @package webship
- * @subpackge php/model/tables
+ * @subpackage php/model/tables
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz, Franziska Lüder
  * @version 1.2.0

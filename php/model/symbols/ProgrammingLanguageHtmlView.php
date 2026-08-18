@@ -17,8 +17,11 @@ use webship\WebshipTools;
  * ProgrammingLanguageHtmlView::create(ProgrammingLanguage::PHP);
  * </code>
  *
+ * @title ProgrammingLanguage
+ * @category symbols
+ * 
  * @package webship
- * @subpackge php/model/symbols
+ * @subpackage php/model/symbols
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @author Franziska Lüder

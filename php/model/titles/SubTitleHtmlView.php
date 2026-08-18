@@ -11,8 +11,11 @@ use webship\WebshipTools;
  * <p>A standardized subtitle for any other view.</p>
  * <img src="http://localhost/coast/webship/modeldoc/subtitle.png" />
  *
- * <code>SubTitleHtmlView::create('Hello World!')</code>
+ * <code>SubTitleHtmlView::create('Hello World!');</code>
  *
+ * @title SubTitle
+ * @category titles
+ * 
  * @package webship
  * @subpackage php/model
  *
@@ -21,7 +24,7 @@ use webship\WebshipTools;
  *
  * @view
  * @examples
- *     SubTitleHtmlView::create('Hello World!')
+ *     SubTitleHtmlView::create('Hello World!');
  */
 class SubTitleHtmlView extends HtmlView {
 

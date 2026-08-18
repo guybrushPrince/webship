@@ -14,8 +14,11 @@ use webship\titles\TitleHtmlView;
  * $panel->header([], "Hello World");
  * </code>
  *
+ * @title PanelHeader
+ * @category panels
+ * 
  * @package webship
- * @subpackge php/model/panels
+ * @subpackage php/model/panels
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.3.0

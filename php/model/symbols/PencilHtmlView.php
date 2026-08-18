@@ -15,6 +15,9 @@ use webship\WebshipTools;
  *
  * <code>PencilHtmlView::_new();</code>
  *
+ * @title Pencil
+ * @category symbols
+ * 
  * @package webship
  * @subpackage php/model
  *

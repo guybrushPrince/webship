@@ -28,8 +28,11 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/table.png" />
  *
+ * @title Table 
+ * @category tables
+ * 
  * @package webship
- * @subpackge php/model/tables
+ * @subpackage php/model/tables
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz, Franziska Lüder
  * @version 1.2.0

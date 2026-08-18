@@ -17,8 +17,11 @@ use webship\WebshipTools;
  *         texts("Hallo Welt!");
  * </code>
  *
+ * @title Ribbon
+ * @category symbols
+ * 
  * @package webship
- * @subpackge php/model/symbols
+ * @subpackage php/model/symbols
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
