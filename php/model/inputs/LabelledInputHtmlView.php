@@ -193,7 +193,7 @@ class LabelledInputHtmlView extends InputHtmlView {
                                            ?string $value = null, ?int $min = null,
                                            ?int $max = null) : LabelledInputHtmlView {
         $input = new LabelledInputHtmlView($labels, $id, 'text', $min, $max, null, $classes);
-        if ($value) $input->texts()->text(self::getLanguage(), $value);
+        if ($value) $input->texts($value);
         return $input;
     }
 
@@ -291,13 +291,17 @@ class LabelledInputHtmlView extends InputHtmlView {
      * @param string|string[]|null $labels The label(s).
      * @param string $id The id.
      * @param string[]|string $classes Some classes.
+     * @param string|null $value The initial value.
      * @param int|null $min The minimum length.
      * @param int|null $max The maximum length.
      * @return LabelledInputHtmlView
      */
     public static function createPasswordField(string|array|null $labels, string $id, array|string $classes = [],
-                                               ?int $min = null, ?int $max = null) : LabelledInputHtmlView {
-        return new LabelledInputHtmlView($labels, $id, 'password', $min, $max, null, $classes);
+                                               string|null $value = null,
+                                               int|null $min = null, int|null $max = null) : LabelledInputHtmlView {
+        $input = new LabelledInputHtmlView($labels, $id, 'password', $min, $max, null, $classes);
+        if ($value) $input->texts($value);
+        return $input;
     }
 
     /**
