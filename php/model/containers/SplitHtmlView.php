@@ -6,7 +6,17 @@ use webship\core\HtmlView;
 use webship\WebshipTools;
 
 /**
- * Class SplitHtmlView.
+ * View SplitHtmlView.
+ *
+ * <p>A container view splitting space horizontally into left and right subviews separated by a divider.</p>
+ *
+ * <code>
+ * $split = SplitHtmlView::create(40, 60);
+ * $left = $split->getLeft();
+ * $right = $split->getRight();
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/split.png" />
  *
  * @title Split
  * @category containers
@@ -16,6 +26,12 @@ use webship\WebshipTools;
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $split = SplitHtmlView::create(40, 60);
+ *     $left = $split->getLeft();
+ *     $right = $split->getRight();
  */
 class SplitHtmlView extends HtmlView {
 

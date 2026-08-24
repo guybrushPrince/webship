@@ -11,7 +11,17 @@ use webship\menus\ControlPanelHtmlView;
 use webship\protocols\HtmlModifyProtocol;
 
 /**
- * Class OpeningCardHtmlView.
+ * View OpeningCardHtmlView.
+ *
+ * <p>A card view that can be toggled open or closed to reveal or hide detailed content.</p>
+ *
+ * <code>
+ * $card = new OpeningCardHtmlView(false, true);
+ * $card->setTitle('Card Title');
+ * $card->content()->texts('Card Content');
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/openingcard.png" />
  *
  * @title OpeningCard
  * @category cards
@@ -19,9 +29,14 @@ use webship\protocols\HtmlModifyProtocol;
  * @package webship
  * @subpackage php/model/cards
  *
- *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $card = new OpeningCardHtmlView(false, true);
+ *     $card->setTitle('Card Title');
+ *     $card->content()->texts('Card Content');
  */
 class OpeningCardHtmlView extends CardHtmlView {
 

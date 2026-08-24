@@ -32,7 +32,8 @@ use webship\WebshipTools;
  * @author Dr. Dipl.-Inf. Thomas M. Prinz, Franziska Lüder
  * @version 1.2.0
  *
- * @example
+ * @view
+ * @examples
  *     HelpPageHtmlView::createIt('sphinx', 'concepts', 'variable');
  */
 class HelpPageHtmlView extends StandardButtonHtmlView {

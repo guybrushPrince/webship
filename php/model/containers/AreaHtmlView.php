@@ -11,6 +11,7 @@ use webship\WebshipTools;
  * View AreaHtmlView.
  *
  * <p>This view describes a surrounded container area with an (optional) header/title.</p>
+ * 
  * <img src="http://localhost/coast/webship/modeldoc/area.png" />
  *
  * <code>AreaHtmlView::create('Hello World!');</code>

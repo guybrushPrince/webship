@@ -6,8 +6,18 @@ use webship\buttons\CloserHtmlView;
 use webship\WebshipTools;
 
 /**
- * Class ChipContainerItemHtmlView.
+ * View ChipContainerItemHtmlView.
  *
+ * <p>An individual chip item displayed within a {@link ChipContainerHtmlView}.</p>
+ *
+ * <code>
+ * $chip = new ChipContainerItemHtmlView();
+ * $chip->box()->texts('Chip Content');
+ * $chip->closer();
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/chipcontainer.png" />
+ * 
  * @title ChipContainerItem
  * @category containers
  * 
@@ -16,6 +26,12 @@ use webship\WebshipTools;
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.2.0
+ *
+ * @view
+ * @examples
+ *     $chip = new ChipContainerItemHtmlView();
+ *     $chip->box()->texts('Chip Content');
+ *     $chip->closer();
  */
 class ChipContainerItemHtmlView extends ContainerHtmlView {
 
@@ -33,17 +49,24 @@ class ChipContainerItemHtmlView extends ContainerHtmlView {
         $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['chip'], $classes));
 
-        $this->style(WebshipTools::css('.chip', [' > ', 'button.std-button.closer.mini'],
-            'min-height: 20px', 'height: 20px', 'padding: 2.5px', 'min-width: 20px', 'width: 20px',
-            'background: none'));
-        $this->style(WebshipTools::css('.chip', [' ', '.container'], 'height: auto', 'padding-top: 0',
-            'padding-bottom: 0'));
-        $this->style(WebshipTools::css('.chip', [' ', '.container-item'], 'height: auto', 'padding-top: 0',
-            'padding-bottom: 0'));
-        $this->style(WebshipTools::css('.chip', [' ', 'select'], 'height: auto'));
+        self::addCSS();
 
         $this->box = ContainerHtmlView::createIt();
         $this->add($this->box);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(WebshipTools::css('.chip', [' > ', 'button.std-button.closer.mini'],
+            'min-height: 20px', 'height: 20px', 'padding: 2.5px', 'min-width: 20px', 'width: 20px',
+            'background: none'));
+        self::addStyle(WebshipTools::css('.chip', [' ', '.container'], 'height: auto', 'padding-top: 0',
+            'padding-bottom: 0'));
+        self::addStyle(WebshipTools::css('.chip', [' ', '.container-item'], 'height: auto', 'padding-top: 0',
+            'padding-bottom: 0'));
+        self::addStyle(WebshipTools::css('.chip', [' ', 'select'], 'height: auto'));
     }
 
     /**

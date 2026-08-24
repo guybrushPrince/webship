@@ -11,7 +11,7 @@ use webship\protocols\HtmlActionProtocol;
  * View ApplicationHtmlView.
  *
  * <p>The most basic application view, which contains the HTML, HEAD, BODY, etc. tags. Each WebShip application
- * should start with this view as it also sets basic CSS and JS.</p> *
+ * should start with this view as it also sets basic CSS and JS.</p>
  *
  * <code>
  * $app = ApplicationHtmlView::create('Hello World', 'favicon.ico');

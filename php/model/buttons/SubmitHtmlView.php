@@ -28,8 +28,8 @@ use webship\forms\FormHtmlView;
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.5.0
  *
- * @version
- * @example
+ * @view
+ * @examples
  *     SubmitHtmlView::create()->texts('Submit');
  */
 class SubmitHtmlView extends StandardButtonHtmlView {

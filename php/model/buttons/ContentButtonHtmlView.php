@@ -15,13 +15,14 @@ use webship\WebshipTools;
  * <p>A button that allows for showing small configuration things by first press and accept those configurations by
  * a second press. The used button is a {@link StandardButtonHtmlView} and, therefore, all its possibilities are
  * available for this content button as well.</p>
- * <img src="http://localhost/coast/webship/modeldoc/contentbutton.png" />
  *
  * <code>
  * $contentButton = ContentButtonHtmlView::create('example-1');
  * $contentButton->button()->img('/webship/pic/help.svg')->texts('Press me!');
  * $contentButton->content(TagHtmlView::create('Hello World!'));
  * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/contentbutton.png" />
  *
  * @title ContentButton
  * @category buttons

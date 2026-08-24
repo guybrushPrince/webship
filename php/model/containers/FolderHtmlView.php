@@ -17,7 +17,13 @@ use webship\symbols\PencilHtmlView;
 use webship\WebshipTools;
 
 /**
- * Class FolderHtmlView.
+ * View FolderHtmlView.
+ *
+ * <p>A container view that renders folder groups with actions.</p>
+ *
+ * <code>
+ * $folder = FolderHtmlView::create($folderGroups);
+ * </code>
  *
  * @title Folder
  * @category containers
@@ -27,6 +33,10 @@ use webship\WebshipTools;
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.1.0
+ *
+ * @view
+ * @examples
+ *     $folder = FolderHtmlView::create($folderGroups);
  */
 class FolderHtmlView extends StandardHtmlView {
 
@@ -39,38 +49,45 @@ class FolderHtmlView extends StandardHtmlView {
         $classes[] = 'folders';
         parent::__construct($classes);
 
-        $this->style(WebshipTools::css('.folders', [' ', '.f-group'], 'padding: 0 5px', 'position: relative',
+        self::addCSS();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(WebshipTools::css('.folders', [' ', '.f-group'], 'padding: 0 5px', 'position: relative',
             'width: 100%', 'border: 1px solid var(--ws-std-brd-dark-trans)', 'margin-bottom: 20px', 'min-height: 30px',
             'margin-top: 10px', 'border-radius: 5px', '-webkit-box-shadow: var(--ws-haptic-shadow)',
             'box-shadow: var(--ws-haptic-shadow)'));
-        $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.folder-title'], 'position: absolute',
+        self::addStyle(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.folder-title'], 'position: absolute',
             'top: 5px', 'left: 10px', 'width: 90%',
             'padding-right: 10px', 'display: flex', 'flex-direction: row', 'flex-wrap: nowrap', 'height: 20px',
             'align-items: center', 'cursor: pointer'));
-        $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.folder-title', ' ',
+        self::addStyle(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.folder-title', ' ',
             'span[data-field]:first-child'], 'font-weight: bold', 'display: flex', 'flex-direction: row'));
-        $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.folder-title', ' ',
+        self::addStyle(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.folder-title', ' ',
             'span[data-field]:first-child:after'], 'content: \':\'', 'display: block', 'margin-right: 5px'));
-        $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.folder-title', ' > textarea'],
+        self::addStyle(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.folder-title', ' > textarea'],
             'width: 100%'));
-        $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.folder-title', ' > .pencil'],
+        self::addStyle(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.folder-title', ' > .pencil'],
             'display: none', 'margin-left: 10px'));
-        $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.folder-title:hover', ' > .pencil'],
+        self::addStyle(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.folder-title:hover', ' > .pencil'],
             'display: inherit'));
-        $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.box'], 'left: 0', 'top: 0',
+        self::addStyle(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.box'], 'left: 0', 'top: 0',
             'position: absolute', 'width: 100%', 'height: 30px', 'background: var(--ws-std-bg)',
             'border-radius: 5px 5px 0 0'));
-        $this->style(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.content'],
+        self::addStyle(WebshipTools::css('.folders', [' ', '.f-group', ' > ', '.content'],
             'margin: 40px 0 10px 0'));
 
-        $this->style(WebshipTools::css('.folders', [' ', '.f-group.folded', ' > ', '.content'], 'display: none'));
-        $this->style(WebshipTools::css('.folders', [' ', '.f-group:not(.folded)', ' ', '#toggle-group-min'],
+        self::addStyle(WebshipTools::css('.folders', [' ', '.f-group.folded', ' > ', '.content'], 'display: none'));
+        self::addStyle(WebshipTools::css('.folders', [' ', '.f-group:not(.folded)', ' ', '#toggle-group-min'],
             'display: inherit'));
-        $this->style(WebshipTools::css('.folders', [' ', '.f-group.folded', ' ', '#toggle-group-min'],
+        self::addStyle(WebshipTools::css('.folders', [' ', '.f-group.folded', ' ', '#toggle-group-min'],
             'display: none'));
-        $this->style(WebshipTools::css('.folders', [' ', '.f-group.folded', ' ', '#toggle-group-max'],
+        self::addStyle(WebshipTools::css('.folders', [' ', '.f-group.folded', ' ', '#toggle-group-max'],
             'display: inherit'));
-        $this->style(WebshipTools::css('.folders', [' ', '.f-group:not(.folded)', ' ', '#toggle-group-max'],
+        self::addStyle(WebshipTools::css('.folders', [' ', '.f-group:not(.folded)', ' ', '#toggle-group-max'],
             'display: none'));
     }
 

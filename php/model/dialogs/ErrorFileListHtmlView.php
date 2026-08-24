@@ -34,7 +34,7 @@ use webship\WebshipTools;
  *
  * @view
  * @examples
- *     ErrorFileListHtmlView::createIt('error-list', ['http://localhost/coast/cliff.ini'])
+ *     ErrorFileListHtmlView::createIt('error-list', ['http://localhost/coast/cliff.ini']);
  */
 class ErrorFileListHtmlView extends StandardButtonHtmlView {
 

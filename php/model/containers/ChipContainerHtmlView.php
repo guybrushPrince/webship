@@ -6,8 +6,18 @@ use webship\core\HtmlView;
 use webship\WebshipTools;
 
 /**
- * Class ChipContainerHtmlView
+ * View ChipContainerHtmlView.
  *
+ * <p>A container view for displaying chip items.</p>
+ *
+ * <code>
+ * $container = ChipContainerHtmlView::_new();
+ * $chip = $container->chip();
+ * $chip->closer();
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/chipcontainer.png" />
+ * 
  * @title ChipContainer
  * @category containers
  * 
@@ -16,6 +26,12 @@ use webship\WebshipTools;
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.1.0
+ *
+ * @view
+ * @examples
+ *     $container = ChipContainerHtmlView::_new();
+ *     $chip = $container->chip();
+ *     $chip->closer();
  */
 class ChipContainerHtmlView extends ContainerHtmlView {
 
@@ -27,13 +43,21 @@ class ChipContainerHtmlView extends ContainerHtmlView {
         $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['chip-container'], $classes));
 
-        $this->style(WebshipTools::css('.chip-container', '', 'align-items: center', 'gap: 5px'));
+        self::addCSS();
 
-        $this->style(WebshipTools::css('.chip-container', [' > ', '.chip'], 'align-items: center',
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(WebshipTools::css('.chip-container', '', 'align-items: center', 'gap: 5px'));
+
+        self::addStyle(WebshipTools::css('.chip-container', [' > ', '.chip'], 'align-items: center',
             'padding: 5px 5px 5px 10px', 'height: 45px', 'box-sizing: border-box', 'gap: 10px', 'width: auto',
             'flex-wrap: nowrap'));
 
-        $this->style(WebshipTools::css('.chip-container', [' > ', '.chip:not(.adder)', ' > ',
+        self::addStyle(WebshipTools::css('.chip-container', [' > ', '.chip:not(.adder)', ' > ',
             ':last-child:not(.closer)'], 'padding-right: 5px'));
     }
 

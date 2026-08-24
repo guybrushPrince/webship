@@ -10,11 +10,30 @@ use webship\WebshipTools;
  *
  * <p>A menu that is aligned (by default) on the upper border of the screen.</p>
  *
+ * <code>
+ * $menu = MenuHtmlView::create();
+ * $menu->entry()->texts('Home');
+ * $menu->entry()->texts('About');
+ * $menu->submenu('Services')->entry()->texts('Web Design');
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/menu.png"/>
+ *
+ * @title Menu
+ * @category menus
+ * 
  * @package webship
- * @subpackge php/model/menus
+ * @subpackage php/model/menus
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $menu = MenuHtmlView::create();
+ *     $menu->entry()->texts('Home');
+ *     $menu->entry()->texts('About');
+ *     $menu->submenu('Services')->entry()->texts('Web Design');
  */
 class MenuHtmlView extends HtmlView {
 

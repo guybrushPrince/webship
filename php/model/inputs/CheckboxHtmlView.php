@@ -27,7 +27,6 @@ use ship\views\View;
  * @version 1.1.0
  *
  * @view
- *
  * @examples
  *     CheckboxHtmlView::create('checkbox-1', false);
  *     CheckboxHtmlView::create('checkbox-2', true);

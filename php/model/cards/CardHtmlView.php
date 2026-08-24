@@ -10,12 +10,13 @@ use webship\WebshipTools;
  * View CardHtmlView.
  *
  * <p>A card is illustrated similarly to a polaroid photography. It usually has a title part and a content part.</p>
- * <img src="http://localhost/coast/webship/modeldoc/card.png" />
  *
  * <code>
  * $card = CardHtmlView::create('Hello World!');
  * $card->content()->texts('You are beautiful!');
  * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/card.png" />
  *
  * @title Card
  * @category cards

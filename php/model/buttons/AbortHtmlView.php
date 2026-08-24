@@ -26,7 +26,7 @@ use webship\WebshipTools;
  * @version 1.5.0
  *
  * @view
- * @example
+ * @examples
  *     AbortHtmlView::create('abort-1')->texts('Abort');
  */
 class AbortHtmlView extends StandardButtonHtmlView {

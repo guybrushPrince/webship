@@ -8,8 +8,32 @@ use webship\core\HtmlView;
 use webship\WebshipTools;
 
 /**
- * Class DescribedHtmlView
+ * View DescribedHtmlView.
+ *
+ * <p>A view that presents content alongside a description or label text.</p>
+ *
+ * <code>
+ * $described = new DescribedHtmlView([], 'input');
+ * $described->text(Language::ENGLISH, 'Described Field Label');
+ * $described->content(LabelledInputHtmlView::createTextField([SLanguage::ENGLISH => 'Input'], 'input'));
+ * </code>
+ * 
+ * <img src="http://localhost/coast/webship/modeldoc/described.png" />
+ *
+ * @title Described
+ * @category content
+ * 
+ * @package webship
+ * @subpackage php/model/content
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $described = new DescribedHtmlView([], 'input');
+ *     $described->text(Language::ENGLISH, 'Described Field Label');
+ *     $described->content(LabelledInputHtmlView::createTextField([SLanguage::ENGLISH => 'Input'], 'input'));
  */
 class DescribedHtmlView extends HtmlView {
 
@@ -24,6 +48,12 @@ class DescribedHtmlView extends HtmlView {
      * @var string|null
      */
     protected string|null $labelFor;
+    
+    /**
+     * Core selector for CSS.
+     * @var string
+     */
+    protected static string $coreSelector;
 
     /**
      * DescribedHtmlView constructor.
@@ -37,15 +67,22 @@ class DescribedHtmlView extends HtmlView {
         $this->labelFor = $labelFor;
 
         $coreClasses = array_diff($this->classes, $classes);
-        $coreSelector = '.' . implode('.', $coreClasses);
+        self::$coreSelector = '.' . implode('.', $coreClasses);
 
-        $this->style(WebshipTools::css($coreSelector, '',
+        self::addCSS();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(WebshipTools::css(self::$coreSelector, '',
             'display: flex', 'flex-wrap: nowrap', 'flex-direction: column', 'padding-top: 20px',
             'align-items: flex-start', 'justify-content: flex-start', 'box-sizing: border-box'));
-        $this->style(WebshipTools::css($coreSelector, ' > .described-description', 'width: 100%', 'color: var(--ws-std-bg)',
+        self::addStyle(WebshipTools::css(self::$coreSelector, ' > .described-description', 'width: 100%', 'color: var(--ws-std-bg)',
             'font-size: 10px', 'font-weight: 600', 'box-sizing: border-box'));
-        $this->style(WebshipTools::css($coreSelector, ' > .described-content', 'width: 100%',
-            'box-sizing: border-box'));
+        self::addStyle(WebshipTools::css(self::$coreSelector, ' > .described-content', 'width: 100%',
+            'box-sizing: border-box'));    
     }
 
     /**

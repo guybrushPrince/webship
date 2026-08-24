@@ -11,11 +11,30 @@ use webship\WebshipTools;
  *
  * <p>A menu in an editor.</p>
  *
+ * <code>
+ * $menu = EditorMenuHtmlView::create();
+ * $menu->entry('File');
+ * $menu->entry('Edit');
+ * $menu->entry('View');
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/editormenu.png" />
+ *
+ * @title EditorMenu
+ * @category menus
+ * 
  * @package webship
- * @subpackge php/model/menus
+ * @subpackage php/model/menus
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $menu = EditorMenuHtmlView::create();
+ *     $menu->entry('File');
+ *     $menu->entry('Edit');
+ *     $menu->entry('View');
  */
 class EditorMenuHtmlView extends HtmlView {
 

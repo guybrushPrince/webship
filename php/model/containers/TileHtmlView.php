@@ -25,6 +25,7 @@ use webship\WebshipTools;
  * $tilesView->tile()->container(['hor', 'vcent', 'hcent', 'h100'])->texts('Tile 2');
  * $tilesView->tile()->container(['hor', 'vcent', 'hcent', 'h100'])->texts('Tile 3');
  * </code>
+ * 
  * <img src="http://localhost/coast/webship/modeldoc/tiles.png" />
  *
  * @title Tile

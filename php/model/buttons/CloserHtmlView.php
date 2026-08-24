@@ -9,13 +9,14 @@ use webship\WebshipTools;
  *
  * <p>A <em>closer</em> is just a special button that has a cross as sign.</p>
  *
- * <img src="http://localhost/coast/webship/modeldoc/closer.png" />
  * <code>
  * $container = ContainerHtmlView::createIt(['hor', 'gap20', 'vcent']);
  * $container->add(CloserHtmlView::create('hello-world-1'));
  * $container->add(CloserHtmlView::create('hello-world-2'))->mini();
  * $container->add(CloserHtmlView::create('hello-world-3'))->plain();
  * </code>
+ * 
+ * <img src="http://localhost/coast/webship/modeldoc/closer.png" />
  *
  * @title Closer
  * @category buttons

@@ -13,6 +13,7 @@ use webship\WebshipTools;
  * <code>
  * ProgressStatusHtmlView::create(["not yet worked on", "in progress", "done"], 'done', [], 'red');
  * </code>
+ * 
  * <img src="http://localhost/coast/webship/modeldoc/progressred.png" />
  *
  * <code>

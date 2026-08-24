@@ -8,14 +8,32 @@ use webship\links\LinkHtmlView;
 use webship\WebshipTools;
 
 /**
- * Class ControlPanelHtmlView.
+ * View ControlPanelHtmlView.
  *
+ * <p> A grid based layout container for arranging interactive elements, such as buttons, in a control panel</p>
+ *
+ * <code>
+ * $panel = ControlPanelHtmlView::create(4, 2);
+ * $panel->button('edit', '/webship/pic/edit.svg');
+ * $panel->button('delete', '/webship/pic/trash.svg');
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/controlpanel.png" />
+ *
+ * @title ControlPanel
+ * @category menus
+ * 
  * @package webship
- * @subpackge php/model/symbols
- *
+ * @subpackage php/model/symbols
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $panel = ControlPanelHtmlView::create(4, 2);
+ *     $panel->button('edit', '/webship/pic/edit.svg');
+ *     $panel->button('delete', '/webship/pic/trash.svg');
  */
 class ControlPanelHtmlView extends HtmlView {
 

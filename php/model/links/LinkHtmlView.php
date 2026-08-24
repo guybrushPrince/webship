@@ -19,6 +19,7 @@ use webship\WebshipTools;
  * $button->texts("Press me");
  * LinkHtmlView::create($anchor, LinkHtmlView::TARGET_SAME_PAGE)->add($button);
  * </code>
+ * 
  * <img src="http://localhost/coast/webship/modeldoc/link.png" />
  *
  * @title Link

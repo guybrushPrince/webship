@@ -18,6 +18,7 @@ use webship\WebshipTools;
  * StandardButtonHtmlView::create('example-5')->long()->img('/webship/pic/help.svg')->texts('Press me!');
  * StandardButtonHtmlView::create('example-6')->list()->img('/webship/pic/help.svg')->texts('Press me!');
  * </code>
+ * 
  * <img src="http://localhost/coast/webship/modeldoc/standardbutton.png" />
  *
  * @title StandardButton

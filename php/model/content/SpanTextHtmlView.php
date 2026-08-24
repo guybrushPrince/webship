@@ -10,7 +10,13 @@ use webship\WebshipTools;
 /**
  * View SpanTextHtmlView.
  *
- * <p></p>
+ * <p>Presents an associative array of simple text elements within a <span> element.</p>
+ *
+ * <code>
+ * $span = SpanTextHtmlView::create()->texts('Hello World')->bold();
+ * </code>
+ * 
+ * <img src="http://localhost/coast/webship/modeldoc/spantext.png" />
  *
  * @title SpanText
  * @category content
@@ -22,6 +28,8 @@ use webship\WebshipTools;
  * @version 1.3.0
  *
  * @view
+ * @examples
+ *     $span = SpanTextHtmlView::create()->texts('Hello World')->bold();
  */
 class SpanTextHtmlView extends HtmlView {
 

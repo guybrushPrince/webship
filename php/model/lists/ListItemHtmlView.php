@@ -5,8 +5,30 @@ namespace webship\lists;
 use webship\core\HtmlView;
 
 /**
- * Class ListItemHtmlView
+ * View ListItemHtmlView.
+ *
+ * <p>An individual list item element within a {@link ListHtmlView}.</p>
+ *
+ * <code>
+ * $item = new ListItemHtmlView();
+ * $item->texts('List item content');
+ * </code>
+ * 
+ * <img src="http://localhost/coast/webship/modeldoc/list.png" />
+ *
+ * @title ListItem
+ * @category lists
+ * 
+ * @package webship
+ * @subpackage php/model/lists
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $item = new ListItemHtmlView();
+ *     $item->texts('List item content');
  */
 class ListItemHtmlView extends HtmlView {
 

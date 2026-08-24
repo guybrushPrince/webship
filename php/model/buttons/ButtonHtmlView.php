@@ -10,11 +10,12 @@ use webship\WebshipTools;
  * View ButtonHtmlView.
  *
  * <p>A very basic button that can be specialized by more fancy buttons.</p>
- * <img src="http://localhost/coast/webship/modeldoc/button.png" />
  *
  * <code>
  * (new ButtonHtmlView('example', 'button'))->texts('Press me!');
  * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/button.png" />
  *
  * @title Button
  * @category buttons

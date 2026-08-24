@@ -9,11 +9,30 @@ use webship\WebshipTools;
  *
  * <p>A context menu that is usually opened with a right mouse click.</p>
  *
+ * <code>
+ * $menu = ContextMenuHtmlView::create();
+ * $menu->entry()->texts('Open');
+ * $menu->entry()->texts('Save');
+ * $menu->submenu()->texts('More Options')->entry()->texts('Properties');
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/contextmenu.png" />
+ *
+ * @title ContextMenu
+ * @category menus 
+ * 
  * @package webship
- * @subpackge php/model/menus
+ * @subpackage php/model/menus
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $menu = ContextMenuHtmlView::create();
+ *     $menu->entry()->texts('Open');
+ *     $menu->entry()->texts('Save');
+ *     $menu->submenu()->texts('More Options')->entry()->texts('Properties');
  */
 class ContextMenuHtmlView extends MenuHtmlView {
 

@@ -20,7 +20,7 @@ use webship\WebshipTools;
  * <img src="http://localhost/coast/webship/modeldoc/palettepanel.png" />
  *
  * @package webship
- * @subpackge php/model/menus
+ * @subpackage php/model/menus
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0

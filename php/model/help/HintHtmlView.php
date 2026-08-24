@@ -9,8 +9,34 @@ use webship\symbols\ImageHtmlView;
 use webship\WebshipTools;
 
 /**
- * Class HintHtmlView
+ * View HintHtmlView.
+ *
+ * <p>Displays hints for user guidance in views.</p>
+ *
+ * <code>
+ * $hint = HintHtmlView::create();
+ * $pic = new HtmlView('pic');
+ * $pic->add(new ImageHtmlView('/webship/pic/light-bulb.svg', 'bulb'));
+ * $hint->add($pic);
+ * </code>
+ * 
+ * <img src="http://localhost/coast/webship/modeldoc/hint.png" />
+ *
+ * @title Hint
+ * @category help
+ * 
+ * @package webship
+ * @subpackage php/model/help
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $hint = HintHtmlView::create();
+ *     $pic = new HtmlView('pic');
+ *     $pic->add(new ImageHtmlView('/webship/pic/light-bulb.svg', 'bulb'));
+ *     $hint->add($pic);
  */
 class HintHtmlView extends HtmlView {
 
