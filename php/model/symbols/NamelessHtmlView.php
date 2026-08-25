@@ -3,10 +3,10 @@
 namespace webship\symbols;
 
 use Exception;
+use ship\interoperability\ITextEditable;
 use ship\interoperability\SLanguage as Language;
 use webship\contents\PlainHtmlView;
 use webship\core\HtmlView;
-use webship\interoperability\ITextEditable;
 use webship\WebshipTools;
 
 /**

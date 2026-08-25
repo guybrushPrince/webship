@@ -3,10 +3,10 @@
 namespace webship\containers;
 
 use Closure;
-use webship\interoperability\ITextEditable;
 use webship\interoperability\WEvent;
 use ship\interoperability\SLanguage as Language;
 use ship\interoperability\IShippable;
+use ship\interoperability\ITextEditable;
 use ship\interoperability\ShipperRegister;
 use webship\core\HtmlView;
 use webship\IFolderGroup;
