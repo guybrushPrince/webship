@@ -17,6 +17,10 @@ use webship\WebshipTools;
  *
  * <p>A single tab of a {@link TabContainerHtmlView}.</p>
  *
+ * <code>
+ * $view = TabContainerItemHtmlView::create($classes, true, $img, $type);
+ * </code>
+ *
  * <img src="http://localhost/coast/webship/modeldoc/tabcontaineritem.png" />
  *
  * @title TabContainerItem 

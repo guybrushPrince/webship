@@ -39,7 +39,7 @@ class ChipContainerHtmlView extends ContainerHtmlView {
      * ChipContainerHtmlView constructor.
      * @param string[]|string $classes An array of additional classes.
      */
-    public function __construct(array|string $classes = []) {
+    private function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['chip-container'], $classes));
 

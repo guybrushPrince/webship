@@ -61,8 +61,8 @@ class SplitHtmlView extends HtmlView {
      * @param int|null $rightGap The gap between the right view and the separator (if null, it is equal to $leftGap.
      * @param string[]|string $classes Some classes.
      */
-    public function __construct(int $leftSize = 50, ?int $rightSize = null, int $leftGap = 0, ?int $rightGap = null,
-                                array|string $classes = []) {
+    private function __construct(int $leftSize = 50, ?int $rightSize = null, int $leftGap = 0, ?int $rightGap = null,
+                                 array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [$classes];
         $classes[] = 'std-split';
         parent::__construct($classes);

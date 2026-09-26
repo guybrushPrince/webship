@@ -14,7 +14,7 @@ use webship\core\HtmlView;
  *
  * There is no figure available.
  *
- * @name RadioOption
+ * @title RadioOption
  * @category inputs
  * 
  * @see MultipleSwitchInputHtmlView

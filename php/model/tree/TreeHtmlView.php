@@ -7,9 +7,52 @@ use webship\core\HtmlView;
 use webship\WebshipTools;
 
 /**
- * View TreeHtmlView
- * <p>Displays a tree with entries and subtrees.</p>
+ * View TreeHtmlView.
+ *
+ * <p>Displays a tree with entries and collapsable subtrees.</p>
+ *
+ * <code>
+ * $tree = TreeHtmlView::create(['open']);
+ *
+ * $readme = $tree->entryLeaf(['selectable']);
+ * $readme->texts('README.md');
+ *
+ * $srcTree = TreeHtmlView::create();
+ * $srcHeader = $srcTree->subtree();
+ * $srcHeader->texts('src/');
+ * $ctrl = $srcTree->entryLeaf(['selectable']);
+ * $ctrl->texts('Controller.php');
+ * $model = $srcTree->entryLeaf(['selectable']);
+ * $model->texts('Model.php');
+ * $leafSrc = $tree->leaf();
+ * $leafSrc->add($srcTree);
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/tree.png" />
+ *
+ * @title Tree
+ * @category tree
+ *
+ * @package webship
+ * @subpackage php/model/tree
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $tree = TreeHtmlView::create(['open']);
+ *     $readme = $tree->entryLeaf(['selectable']);
+ *     $readme->texts('README.md');
+ *     $srcTree = TreeHtmlView::create();
+ *     $srcHeader = $srcTree->subtree();
+ *     $srcHeader->texts('src/');
+ *     $ctrl = $srcTree->entryLeaf(['selectable']);
+ *     $ctrl->texts('Controller.php');
+ *     $model = $srcTree->entryLeaf(['selectable']);
+ *     $model->texts('Model.php');
+ *     $leafSrc = $tree->leaf();
+ *     $leafSrc->add($srcTree);
  */
 class TreeHtmlView extends HtmlView {
 
@@ -22,7 +65,7 @@ class TreeHtmlView extends HtmlView {
         parent::__construct(array_merge(['tree'], $classes));
         $this->ref('tree');
 
-        self::addCss();
+        self::addCSS();
 
     }
 

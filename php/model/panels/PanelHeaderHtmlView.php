@@ -14,6 +14,8 @@ use webship\titles\TitleHtmlView;
  * $panel->header([], "Hello World");
  * </code>
  *
+ * <img src="http://localhost/coast/webship/modeldoc/panelheader.png" />
+ *
  * @title PanelHeader
  * @category panels
  * 
@@ -25,6 +27,8 @@ use webship\titles\TitleHtmlView;
  *
  * @view
  * @examples
+ *     $panel = PanelHtmlView::createIt();
+ *     $panel->header([], "Hello World");
  */
 class PanelHeaderHtmlView extends TitleHtmlView {
 

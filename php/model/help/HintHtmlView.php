@@ -49,6 +49,8 @@ class HintHtmlView extends HtmlView {
         $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['hints'], $classes));
 
+        self::addCSS();
+
         $this->js('$("' . $this->idc() . '").on("' . WEvent::SHOW_HINT . '", function(event, el, content, hint) {' .
             'let c = $(\'' . HintHtmlView::createHint()->generateSafe() . '\');' .
             '$(c).append(content);' .

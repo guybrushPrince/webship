@@ -13,8 +13,10 @@ use webship\WebshipTools;
  * <p>An initializable dash-grid-based dashboard view that organizes items in columns and rows.</p>
  *
  * <code>
- * $grid = new DashGridHtmlView();
+ * $grid = DashGridHtmlView::create(null, 6, 4);
  * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/dashgridcontainer.png" />
  *
  * @title DashGrid
  * @category dashboard
@@ -27,7 +29,7 @@ use webship\WebshipTools;
  *
  * @view
  * @examples
- *     $grid = new DashGridHtmlView();
+ *     $grid = DashGridHtmlView::create(null, 6, 4);
  */
 class DashGridHtmlView extends HtmlView {
 

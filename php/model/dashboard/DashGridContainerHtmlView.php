@@ -13,8 +13,10 @@ use webship\WebshipTools;
  * <p>A container view for dash-grid-based dashboard layouts.</p>
  *
  * <code>
- * $container = new DashGridContainerHtmlView();
+ * $container = DashGridContainerHtmlView::create(null, 6, 4, true);
  * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/dashgridcontainer.png" />
  *
  * @title DashGridContainer
  * @category dashboard
@@ -27,7 +29,7 @@ use webship\WebshipTools;
  *
  * @view
  * @examples
- *     $container = new DashGridContainerHtmlView();
+ *     $container = DashGridContainerHtmlView::create(null, 6, 4, true);
  */
 class DashGridContainerHtmlView extends HtmlView {
 

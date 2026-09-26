@@ -9,15 +9,16 @@ use webship\WebshipTools;
  * View SubTitleHtmlView.
  *
  * <p>A standardized subtitle for any other view.</p>
- * <img src="http://localhost/coast/webship/modeldoc/subtitle.png" />
- *
+ * 
  * <code>SubTitleHtmlView::create('Hello World!');</code>
+ * 
+ * <img src="http://localhost/coast/webship/modeldoc/subtitle.png" />
  *
  * @title SubTitle
  * @category titles
  * 
  * @package webship
- * @subpackage php/model
+ * @subpackage php/model/titles
  *
  * @version 1.1.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz

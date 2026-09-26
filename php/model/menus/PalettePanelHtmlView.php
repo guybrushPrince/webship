@@ -19,6 +19,9 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/palettepanel.png" />
  *
+ * @title PalettePanel 
+ * @category menus
+ * 
  * @package webship
  * @subpackage php/model/menus
  *

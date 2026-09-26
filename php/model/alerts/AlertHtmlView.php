@@ -22,6 +22,14 @@ use webship\WebshipTools;
  * It can cover the screen or view, can display an optional image, and can get (and set) parameters from the user
  * context.</p>
  *
+ * <code>
+ * AlertHtmlView::create('This is a basic alert message.');
+ * AlertHtmlView::create('This is a screen alert message.', true);
+ * AlertHtmlView::create('This is a full view alert message.', false, true);
+ * </code>
+ * 
+ * <img src="http://localhost/coast/webship/modeldoc/alert.png" />
+ *
  * @title Alert
  * @category alerts
  * 
@@ -32,6 +40,10 @@ use webship\WebshipTools;
  * @version 1.0.0
  *
  * @view
+ * @examples
+ *     AlertHtmlView::create('This is a basic alert message.');
+ *     AlertHtmlView::create('This is a screen alert message.', true);
+ *     AlertHtmlView::create('This is a full view alert message.', false, true);
  */
 class AlertHtmlView extends HtmlView {
 

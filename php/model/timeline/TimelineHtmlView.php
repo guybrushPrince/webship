@@ -7,13 +7,30 @@ use webship\core\HtmlView;
 use webship\WebshipTools;
 
 /**
- * Class TimelineHtmlView.
+ * View TimelineHtmlView.
  *
+ * <p>Presents a timeline view which can display events chronologically with points and branches.</p>
+ *
+ * <code>
+ * $timeline = TimelineHtmlView::create(true);
+ * $point = $timeline->point();
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/timeline.png" />
+ * 
+ * @title Timeline
+ * @category timeline
+ * 
  * @package webship
- * @subpackage php/model
+ * @subpackage php/model/timeline
  *
- * @version 1.0.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $timeline = TimelineHtmlView::create(true);
+ *     $point = $timeline->point();
  */
 class TimelineHtmlView extends HtmlView {
 
@@ -27,7 +44,7 @@ class TimelineHtmlView extends HtmlView {
      * Constructor.
      * @param string[]|string $classes Some classes.
      */
-    public function __construct(string|array $classes = []) {
+    private function __construct(string|array $classes = []) {
         if (!is_array($classes)) $classes = [$classes];
         $classes[] = 'timeline';
         parent::__construct($classes);

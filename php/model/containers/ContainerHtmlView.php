@@ -12,14 +12,14 @@ use webship\WebshipTools;
  * <p>A <em>container</em> represents the simplest but also one of the most powerful Webship views.
  * It is able to arrange many things, place a gap in between views, vertical align texts, etc.</p>
  *
- * <img src="http://localhost/coast/webship/modeldoc/container.png" />
- *
  * <code>
  * $container = ContainerHtmlView::createIt(['hor', 'vcent', 'gap10']);
  * $container->add(ColorHtmlView::createIt('#0000FF'))->texts('Blue');
  * $container->add(ColorHtmlView::createIt('#FF0000'))->texts('Red');
  * $container->add(ColorHtmlView::createIt('#00FF00'))->texts('Green');
  * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/container.png" />
  *
  * @title Container
  * @category containers

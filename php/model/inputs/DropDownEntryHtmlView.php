@@ -15,6 +15,8 @@ use webship\WebshipTools;
  * DropDownEntryHtmlView::create()->texts('Entry');
  * </code>
  *
+ * <img src="http://localhost/coast/webship/modeldoc/dropdown.png" />
+ *
  * @title DropDownEntry
  * @category inputs
  * 

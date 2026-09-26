@@ -25,6 +25,8 @@ use webship\WebshipTools;
  * $folder = FolderHtmlView::create($folderGroups);
  * </code>
  *
+ * <img src="http://localhost/coast/webship/modeldoc/folder.png" />
+ *
  * @title Folder
  * @category containers
  * 

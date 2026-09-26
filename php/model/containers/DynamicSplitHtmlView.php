@@ -16,6 +16,8 @@ use webship\WebshipTools;
  * $right = $split->getRightColumn();
  * </code>
  *
+ * <img src="http://localhost/coast/webship/modeldoc/dynamicsplit.png" />
+ *
  * @title DynamicSplit
  * @category containers
  * 

@@ -9,13 +9,14 @@ use webship\WebshipTools;
  * View RibbonHtmlView.
  *
  * <p>Adds a ribbon to a view.</p>
- * <img src="http://localhost/coast/webship/modeldoc/ribbon.png" />
  *
  * <code>
  * ContainerHtmlView::create(['rel'])->
  *     add(RibbonHtmlView::create())->
  *         texts("Hallo Welt!");
  * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/ribbon.png" />
  *
  * @title Ribbon
  * @category symbols

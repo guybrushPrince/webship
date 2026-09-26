@@ -42,7 +42,7 @@ class SuccessHtmlView extends AlertHtmlView {
      * Constructor.
      * @param string[]|string $classes Some classes.
      */
-    public function __construct(array|string $classes = []) {
+    private function __construct(array|string $classes = []) {
         parent::__construct(array_merge([ 'success' ], is_array($classes) ? $classes : [ $classes ]));
 
         self::addCSS();

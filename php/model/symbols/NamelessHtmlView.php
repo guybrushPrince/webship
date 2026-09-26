@@ -10,13 +10,28 @@ use webship\core\HtmlView;
 use webship\WebshipTools;
 
 /**
- * Class NamelessHtmlView.
+ * View NamelessHtmlView.
  *
+ * <p>Displays a placeholder text for an editable object without a name or title.</p>
+ *
+ * <code>
+ * $nameless = new NamelessHtmlView($target);
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/nameless.png" />
+ * 
+ * @title Nameless
+ * @category symbols
+ * 
  * @package webship
  * @subpackage php/model/symbols
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $nameless = new NamelessHtmlView($target);
  */
 class NamelessHtmlView extends HtmlView {
 

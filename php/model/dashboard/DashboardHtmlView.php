@@ -63,7 +63,7 @@ class DashboardHtmlView extends HtmlView {
      * @param int $cols The number of columns.
      * @param int $rows The number of rows.
      */
-    public function __construct(array|string $classes = [], int $cols = 6, int $rows = 4) {
+    private function __construct(array|string $classes = [], int $cols = 6, int $rows = 4) {
         $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['dashboard'], $classes));
         $this->cols = $cols;

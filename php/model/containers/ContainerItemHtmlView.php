@@ -9,15 +9,15 @@ use webship\WebshipTools;
  * View ContainerItemHtmlView.
  *
  * <p>A standard subpart within a container that <em>have not</em> to be used but can be used for containers.</p>
- * <p>You should use it from a {@link ContainerHtmlView} via the method {@link ContainerHtmlView::item()}.</p>
- * 
- * <img src="http://localhost/coast/webship/modeldoc/containerheader.png" />
+ * <p>You should use it from a {@link ContainerHtmlView} via the method {@link ContainerHtmlView::item()}.</p> 
  *
  * <code>
  * $container = new ContainerHtmlView();
  * $item = $container->item();
  * $item->texts('Container Item Content');
  * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/containerheader.png" />
  *
  * @title ContainerItem
  * @category containers
