@@ -17,8 +17,11 @@ use webship\WebshipTools;
  *
  * No figure is provided.
  *
+ * @title FormRow
+ * @category inputs
+ * 
  * @package webship
- * @subpackge php/model/inputs
+ * @subpackage php/model/inputs
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.1.0

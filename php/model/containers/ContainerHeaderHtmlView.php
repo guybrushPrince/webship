@@ -9,15 +9,28 @@ use webship\WebshipTools;
  * View ContainerHeaderHtmlView.
  *
  *  <p>A standard header within a container that <em>have not</em> to be used but can be used.</p>
- *  <p>You should use it from a {@link ContainerHtmlView} via the method [@link ContainerHtmlView::header()}.</p>
+ *  <p>You should use it from a {@link ContainerHtmlView} via the method {@link ContainerHtmlView::header()}.</p>
  *
+ * <code>
+ * $header = new ContainerHeaderHtmlView();
+ * $header->texts('Header Title');
+ * </code>
+ * 
+ * <img src="http://localhost/coast/webship/modeldoc/containerheader.png" />
+ *
+ * @title ContainerHead
+ * @category containers
+ * 
  * @package webship
- * @subpackge php/model/containers
+ * @subpackage php/model/containers
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
  *
  * @view
+ * @examples
+ *     $header = new ContainerHeaderHtmlView();
+ *     $header->texts('Header Title');
  */
 class ContainerHeaderHtmlView extends HtmlView {
 

@@ -14,8 +14,29 @@ use webship\symbols\ImageHtmlView;
 use webship\WebshipTools;
 
 /**
- * Class WizardMagicHtmlView.
+ * View WizardMagicHtmlView.
+ *
+ * <p>A wizard manager view that stacks multiple multiple {@link WizardHtmlView} views,
+ * step by step until the final wizard is closed.</p>
+ *
+ * <code>
+ * $magic = WizardMagicHtmlView::create([$wizardStep1, $wizardStep2]);
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/wizard.png" />
+ * 
+ * @title WizardMagic
+ * @category wizards
+ * 
+ * @package webship
+ * @subpackage php/model/wizards
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $magic = WizardMagicHtmlView::create([$wizardStep1, $wizardStep2]);
  */
 class WizardMagicHtmlView extends HtmlView {
 
@@ -23,13 +44,21 @@ class WizardMagicHtmlView extends HtmlView {
      * Constructor.
      * @param string|string[] $classes Additional classes.
      */
-    public function __construct(array|string $classes = []) {
+    private function __construct(array|string $classes = []) {
         parent::__construct(array_merge(['magic'], is_array($classes) ? $classes : [$classes]));
 
-        $this->style(WebshipTools::css('.magic', [], 'width: 100%', 'position: relative'));
-        $this->style(WebshipTools::css('.magic', [' ', '.invisible'], 'display: none'));
-        $this->style(WebshipTools::css('.magic', [' > ', '.ctr'], 'background: var(--ws-wizard-ctr-bg)',
-            'border-radius: 0 0 0 5px'));
+        self::addCSS();
+
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(WebshipTools::css('.magic', [], 'width: 100%', 'position: relative'));
+        self::addStyle(WebshipTools::css('.magic', [' ', '.invisible'], 'display: none'));
+        self::addStyle(WebshipTools::css('.magic', [' > ', '.ctr'], 'background: var(--ws-wizard-ctr-bg)',
+            'border-radius: 0 0 0 5px'));  
     }
 
     /**

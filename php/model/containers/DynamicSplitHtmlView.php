@@ -5,6 +5,34 @@ namespace webship\containers;
 use webship\core\HtmlView;
 use webship\WebshipTools;
 
+/**
+ * View DynamicSplitHtmlView.
+ *
+ * <p>A container view that splits content dynamically into left and right columns.</p>
+ *
+ * <code>
+ * $split = DynamicSplitHtmlView::create(20, 20);
+ * $left = $split->getLeftColumn();
+ * $right = $split->getRightColumn();
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/dynamicsplit.png" />
+ *
+ * @title DynamicSplit
+ * @category containers
+ * 
+ * @package webship
+ * @subpackage php/model/containers
+ *
+ * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $split = DynamicSplitHtmlView::create(20, 20);
+ *     $left = $split->getLeftColumn();
+ *     $right = $split->getRightColumn();
+ */
 class DynamicSplitHtmlView extends ContainerHtmlView {
 
     private HtmlView $leftColumn;

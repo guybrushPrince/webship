@@ -16,6 +16,9 @@ use webship\core\HtmlView;
  *
  * <img src="http://localhost/coast/webship/modeldoc/plain.png" />
  *
+ * @title Plain
+ * @category content
+ * 
  * @package webship
  * @subpackage php/model
  *

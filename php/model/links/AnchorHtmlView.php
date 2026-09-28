@@ -9,10 +9,15 @@ use webship\core\HtmlView;
  *
  * <p>A textual anchor to which it can be referred within a {@link LinkHtmlView}. This view is usually only visible
  * through its children.</p>
- * <code>AnchorHtmlView::create('link-to-me');</code>
+ * <code>
+ * AnchorHtmlView::create('link-to-me');
+ * </code>
  *
+ * @title Anchor
+ * @category links
+ * 
  * @package webship
- * @subpackge php/model/anchors
+ * @subpackage php/model/anchors
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.2.0

@@ -8,13 +8,28 @@ use webship\symbols\ImageHtmlView;
 use webship\WebshipTools;
 
 /**
- * Class TitleHtmlView.
+ * View TitleHtmlView.
  *
+ * <p>A standardized title for any other view.</p>
+ *
+ * <code>
+ * $title = TitleHtmlView::create('Main Title');
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/title.png" />
+ *
+ * @title Title
+ * @category titles
+ * 
  * @package webship
- * @subpackage php/model
+ * @subpackage php/model/titles
  *
- * @version 1.0.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $title = TitleHtmlView::create('Main Title');
  */
 class TitleHtmlView extends HtmlView {
 

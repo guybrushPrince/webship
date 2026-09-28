@@ -5,8 +5,32 @@ namespace webship\lists;
 use webship\core\HtmlView;
 
 /**
- * Class ListHtmlView
+ * View ListHtmlView.
+ *
+ * <p>A list view that supports numbered lists.</p>
+ *
+ * <code>
+ * $list = new ListHtmlView(false);
+ * $item = new ListItemHtmlView();
+ * $list->add($item);
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/list.png" />
+ * 
+ * @title List
+ * @category lists
+ * 
+ * @package webship
+ * @subpackage php/model/lists
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $list = new ListHtmlView(false);
+ *     $item = new ListItemHtmlView();
+ *     $list->add($item);
  */
 class ListHtmlView extends HtmlView {
 

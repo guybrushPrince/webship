@@ -14,8 +14,11 @@ use webship\core\HtmlView;
  *
  * <p>The *Representer* is a central place to register visualizations of objects.</p>
  *
+ * @title WebResenter
+ * @category util
+ * 
  * @package progressionui
- * @subpackge php/tools
+ * @subpackage php/tools
  *
  * @version 1.0.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz

@@ -30,8 +30,11 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/movepanel.png" />
  *
+ * @title MovePanel
+ * @category panels
+ * 
  * @package webship
- * @subpackge php/model/panels
+ * @subpackage php/model/panels
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.4.0

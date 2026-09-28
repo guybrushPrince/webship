@@ -10,8 +10,11 @@ use webship\core\HtmlView;
  *
  * <p>Provides reused functions in most {@link HtmlView} of Webship.</p>
  *
+ * @title WebshipTools
+ * @category util
+ * 
  * @package webship
- * @subpackge php/util
+ * @subpackage php/util
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0

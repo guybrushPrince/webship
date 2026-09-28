@@ -7,8 +7,28 @@ use ship\interoperability\SProgrammingLanguage;
 use webship\WebshipTools;
 
 /**
- * Class CodeEditorHtmlView
+ * View CodeEditorHtmlView.
+ *
+ * <p>An interactive code editor view for programming languages.</p>
+ *
+ * <code>
+ * $editor = CodeEditorHtmlView::createIt('java', SProgrammingLanguage::JAVA);
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/codeeditor.png" />
+ * 
+ * @title CodeEditor
+ * @category inputs
+ * 
+ * @package webship
+ * @subpackage php/model/inputs
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $editor = CodeEditorHtmlView::createIt('java', SProgrammingLanguage::JAVA);
  */
 class CodeEditorHtmlView extends TextHtmlView {
 

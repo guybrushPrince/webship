@@ -16,14 +16,18 @@ use webship\WebshipTools;
  * <p>Presents the key and a view with the corresponding value in one line.
  * There is a column on the left for the key and a column on the right for the value. Both use 100 % width.
  * You have the option to show a frame or not and to change the size of the key and value fields.</p>
- * <img src="http://localhost/coast/webship/modeldoc/keyvalue.png" />
  *
  * <code>
  * KeyValueHtmlView::createString('Key', 'Value', false);
  * </code>
  *
+ * <img src="http://localhost/coast/webship/modeldoc/keyvalue.png" />
+ *
+ * @title KeyValue
+ * @category containers
+ * 
  * @package webship
- * @subpackge php/model/containers
+ * @subpackage php/model/containers
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0

@@ -8,8 +8,36 @@ use webship\core\HtmlView;
 use webship\WebshipTools;
 
 /**
- * Class DialogHtmlView
+ * View DialogHtmlView.
+ *
+ * <p>Presents a dialog view that displays a message and selectable user choices.</p>
+ *
+ * <code>
+ * $dialog = new DialogHtmlView([
+ *     SLanguage::ENGLISH => 'Are you sure you want to proceed?'
+ * ]);
+ * $dialog->choice(1, [SLanguage::ENGLISH => 'Confirm']);
+ * $dialog->choice(2, [SLanguage::ENGLISH => 'Cancel']);
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/dashboard.png" />
+ * 
+ * @title Dialog
+ * @category dialogs
+ * 
+ * @package webship
+ * @subpackage php/model/dialogs
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $dialog = new DialogHtmlView([
+ *         SLanguage::ENGLISH => 'Are you sure you want to proceed?'
+ *     ]);
+ *     $dialog->choice(1, [SLanguage::ENGLISH => 'Confirm']);
+ *     $dialog->choice(2, [SLanguage::ENGLISH => 'Cancel']);
  */
 class DialogHtmlView extends HtmlView {
 

@@ -25,6 +25,9 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/tabcontainer.png" />
  *
+ * @title TabContainer
+ * @category tabs
+ * 
  * @package webship
  * @subpackage php/model
  *

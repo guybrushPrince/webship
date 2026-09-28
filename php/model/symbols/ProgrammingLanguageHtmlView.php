@@ -11,14 +11,17 @@ use webship\WebshipTools;
  * <p>Creates colored label for a given programming language of enumeration {@link SProgrammingLanguage}. The view
  * is a specialization of the {@link ColorHtmlView} and, thus, provides its functionality.</p>
  *
- * <img src="http://localhost/coast/webship/modeldoc/programminglanguage.png" />
- *
  * <code>
  * ProgrammingLanguageHtmlView::create(ProgrammingLanguage::PHP);
  * </code>
  *
+ * <img src="http://localhost/coast/webship/modeldoc/programminglanguage.png" />
+ *
+ * @title ProgrammingLanguage
+ * @category symbols
+ * 
  * @package webship
- * @subpackge php/model/symbols
+ * @subpackage php/model/symbols
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @author Franziska Lüder

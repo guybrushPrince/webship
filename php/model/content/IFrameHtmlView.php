@@ -8,8 +8,28 @@ use webship\core\HtmlView;
 use webship\WebshipTools;
 
 /**
- * Class IFrameHtmlView.
+ * View IFrameHtmlView.
+ *
+ * <p>Presents an HTML iframe element with external URL for embedded HTML content.</p>
+ *
+ * <code>
+ * $iframe = new IFrameHtmlView(null, 'https://example.com');
+ * </code>
+ * 
+ * <img src="http://localhost/coast/webship/modeldoc/iframe.png" />
+ *
+ * @title IFrame
+ * @category content
+ * 
+ * @package webship
+ * @subpackage php/model/content
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $iframe = new IFrameHtmlView(null, 'https://example.com');
  */
 class IFrameHtmlView extends HtmlView {
 
@@ -37,8 +57,15 @@ class IFrameHtmlView extends HtmlView {
         parent::__construct(array_merge(['iframe'], $classes));
         $this->content = $content;
         $this->url = $url;
+    
+        self::addCSS();
+    }
 
-        $this->style(WebshipTools::css('iframe', [], 'border: none', 'box-sizing: border-box',
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void {
+        self::addStyle(WebshipTools::css('iframe', [], 'border: none', 'box-sizing: border-box',
             'width: 100%', 'height: 100%'));
     }
 

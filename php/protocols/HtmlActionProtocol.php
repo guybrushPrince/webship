@@ -18,8 +18,11 @@ use webship\WebshipTools;
  *
  * @see ActionProtocol
  *
+ * @title HtmlAction
+ * @category protocols
+ * 
  * @package webship
- * @subpackge php/controller
+ * @subpackage php/controller
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0

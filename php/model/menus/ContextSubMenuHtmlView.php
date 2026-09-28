@@ -9,11 +9,28 @@ use webship\WebshipTools;
  *
  * <p>A submenu of a context menu.</p>
  *
+ * <code>
+ * $submenu = ContextSubMenuHtmlView::create('Export As...');
+ * $submenu->entry()->texts('PDF Document');
+ * $submenu->entry()->texts('PNG Image');
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/contextsubmenu.png" />
+ *
+ * @title ContextSubMenu
+ * @category menus
+ * 
  * @package webship
- * @subpackge php/model/menus
+ * @subpackage php/model/menus
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $submenu = ContextSubMenuHtmlView::create('Export As...');
+ *     $submenu->entry()->texts('PDF Document');
+ *     $submenu->entry()->texts('PNG Image');
  */
 class ContextSubMenuHtmlView extends SubMenuHtmlView {
 

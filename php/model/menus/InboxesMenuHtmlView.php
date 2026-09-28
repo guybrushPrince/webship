@@ -22,8 +22,11 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/inboxesmenu.png" />
  *
+ * @title InboxesMenu
+ * @category menus
+ * 
  * @package webship
- * @subpackge php/mode/menus
+ * @subpackage php/mode/menus
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0

@@ -17,6 +17,9 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/loading.png" />
  *
+ * @title Loading
+ * @category dialogs
+ * 
  * @package webship
  * @subpackage php/model/dialogs
  *

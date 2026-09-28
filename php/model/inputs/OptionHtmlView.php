@@ -16,9 +16,12 @@ use webship\WebshipTools;
  *
  * There is no figure to show.
  *
+ * @title Option
+ * @category inputs
+ * 
  * @see SelectHtmlView, ContentSelectHtmlView, LabelledContentSelectHtmlView
  * @package webship
- * @subpackge php/model/inputs
+ * @subpackage php/model/inputs
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.5.0

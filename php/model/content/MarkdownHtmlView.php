@@ -10,17 +10,24 @@ use webship\WebshipTools;
  * View MarkdownHtmlView
  *
  * <p>Displays the contents of a markdown file or directly displays markdown content.</p>
+ * 
  * <code>
  * MarkdownHtmlView::create('# Markdown Heading' . PHP_EOL . PHP_EOL . 'This is text in a markdown file');
  * </code>
  *
  * <img src="http://localhost/coast/webship/modeldoc/markdown.png" />
  *
+ * @title Markdown
+ * @category content
+ * 
+ * @package webship
+ * @subpackage php/model/content
+ * 
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @author Franziska Lüder
  * @version 1.2.0
- * @view
  *
+ * @view
  * @examples
  *      MarkdownHtmlView::create('# Markdown Heading' . PHP_EOL . PHP_EOL . 'This is text in a markdown file');
  */

@@ -22,6 +22,7 @@ use webship\WebshipTools;
  * <p>A <em>modal</em> is a kind of sub window that is opened and placed over all other elements demanding
  * users to concentrate and react to the modal instead of the rest of the application. Modals are usually used to
  * request information from a user.</p>
+ * 
  * <img src="http://localhost/coast/webship/modeldoc/modal.png" />
  *
  * <code>
@@ -31,8 +32,11 @@ use webship\WebshipTools;
  * $modal->item(ContainerHtmlView::createIt()->texts('Welcome to this modal!'));
  * </code>
  *
+ * @title Modal
+ * @category dialogs
+ * 
  * @package webship
- * @subpackge php/model
+ * @subpackage php/model
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.2.0

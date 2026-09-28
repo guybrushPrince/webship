@@ -22,8 +22,11 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/color.png" />
  *
+ * @title Color
+ * @category symbols
+ * 
  * @package webship
- * @subpackge php/model
+ * @subpackage php/model
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.2.0

@@ -23,13 +23,17 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/help.png" />
  *
+ * @title HelpPage
+ * @category help
+ * 
  * @package webship
  * @subpackage php/model/help
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz, Franziska Lüder
  * @version 1.2.0
  *
- * @example
+ * @view
+ * @examples
  *     HelpPageHtmlView::createIt('sphinx', 'concepts', 'variable');
  */
 class HelpPageHtmlView extends StandardButtonHtmlView {
