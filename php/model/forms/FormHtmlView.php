@@ -64,6 +64,8 @@ class FormHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('form', [], 'display: inherit',
             'flex-wrap: inherit', 'margin: inherit', 'width: inherit', 'align-items: inherit',
             'flex-direction: inherit'));
+        self::addStyle(WebshipTools::css('form', ['.fit'], 'width: -moz-fit-content',
+            'width: fit-content', 'height: -moz-fit-content', 'height: fit-content'));
     }
 
     /**
@@ -102,6 +104,15 @@ class FormHtmlView extends HtmlView {
      */
     public static function create(array|string $classes = [], string $action = '', string $method = '') : FormHtmlView {
         return new FormHtmlView($action, $method, $classes);
+    }
+
+    /**
+     * Made that the width and height fit its content.
+     * @return $this
+     */
+    public function fit() : static {
+        $this->addClass('fit');
+        return $this;
     }
 }
 ?>

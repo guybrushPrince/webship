@@ -59,10 +59,10 @@ class ErrorHtmlView extends AlertHtmlView {
     /**
      * @inheritDoc
      */
-    public static function create(array|string   $message = [], bool $screen = false, bool $fullView = false,
+    public static function create(array|string $message = [], bool $screen = false, bool $fullView = false,
                                   ?AlertHtmlView $v = null, ?string $alertId = null,
-                                  ?string        $image = '/webship/pic/alert-error.svg',
-                                  array|string   $classes = []) : AlertHtmlView {
+                                  ?string $image = '/webship/pic/alert-error.svg',
+                                  array|string $classes = []) : AlertHtmlView {
         return parent::create($message, $screen, $fullView, $v ?: new ErrorHtmlView($classes), $alertId,
             $image ? $image : '/webship/pic/alert-error.svg');
     }

@@ -104,7 +104,8 @@ class DashboardHtmlView extends HtmlView {
             'cols' => $cols,
             'rows' => $rows,
             'init' => false,
-            'replace' => $view
+            'replace' => $view,
+            'error' => 'main-app'
         ], DashboardFunctions::environment());
         $isSafe = !is_null(self::$dashboardHandler) && self::$dashboardHandler->isSafe();
         if ($init) {
@@ -113,14 +114,16 @@ class DashboardHtmlView extends HtmlView {
                     'cols' => $cols,
                     'rows' => $rows,
                     'init' => false,
-                    'replace' => $view
+                    'replace' => $view,
+                    'error' => 'main-app'
                 ], DashboardFunctions::environment());
             } else {
                 $view->protocol(WEvent::ONLOADCONTENT)->doIt(DashboardFunctions::LoadDashboardUnsafe, [
                     'cols' => $cols,
                     'rows' => $rows,
                     'init' => false,
-                    'replace' => $view
+                    'replace' => $view,
+                    'error' => 'main-app'
                 ], DashboardFunctions::environment());
             }
         }

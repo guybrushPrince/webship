@@ -47,6 +47,7 @@ class LoadingHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.loading', [], 'width: 100%', 'height: 100%',
             'background: var(--ws-std-bg-dark)', 'animation: pulse 2s infinite', 'border-radius: 6px',
             'display: flex', 'flex-direction: row', 'justify-content: center', 'align-items: center'));
+        self::addStyle(WebshipTools::css('.loading.min-height', [], 'height: 200px'));
         self::addStyle(WebshipTools::css('@-webkit-keyframes pulse', [],
             '0% { background: var(--ws-loading-start); } ' .
             '70% { background: var(--ws-loading-end); } ' .
@@ -64,6 +65,15 @@ class LoadingHtmlView extends HtmlView {
      */
     public static function create(array|string $classes = []) : LoadingHtmlView {
         return new LoadingHtmlView($classes);
+    }
+
+    /**
+     * Set a minimum height.
+     * @return $this
+     */
+    public function minHeight() : static {
+        $this->addClass('min-height');
+        return $this;
     }
 }
 

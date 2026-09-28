@@ -193,7 +193,7 @@ class AlertHtmlView extends HtmlView {
         } else $textView = $con;
 
         $textView->texts((array_key_exists(self::getLanguage(), $message) ?
-            ParsedownExtra::instance()->text($message[self::getLanguage()]) : ''));
+            ParsedownExtra::instance()->text('<div>' . $message[self::getLanguage()] . '</div>') : ''));
 
         if ($screen || $fullView || $alertId !== null) {
             $con->ref('alert-view');
