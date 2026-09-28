@@ -11,10 +11,15 @@ use webship\WebshipTools;
  *
  * <p>Presents a {@link StandardButtonHtmlView} with a pencil icon, especially for {@link ControlPanelHtmlView}.</p>
  *
+ * <code>
+ * PencilHtmlView::_new();
+ * </code>
+ *
  * <img src="http://localhost/coast/webship/modeldoc/pencil.png" />
  *
- * <code>PencilHtmlView::_new();</code>
- *
+ * @title Pencil
+ * @category symbols
+ * 
  * @package webship
  * @subpackage php/model
  *

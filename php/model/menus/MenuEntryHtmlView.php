@@ -10,11 +10,26 @@ use webship\WebshipTools;
  *
  * <p>A single menu entry in a menu.</p>
  *
+ * <code>
+ * $entry = MenuEntryHtmlView::create('Example Entry');
+ * $entry->entry()->texts('Nested Entry');
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/menuentry.png" />
+ *
+ * @title MenuEntry
+ * @category menus
+ * 
  * @package webship
- * @subpackge php/model/menus
+ * @subpackage php/model/menus
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $entry = MenuEntryHtmlView::create('Example Entry');
+ *     $entry->entry()->texts('Nested Entry');
  */
 class MenuEntryHtmlView extends HtmlView {
 

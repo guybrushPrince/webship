@@ -9,7 +9,6 @@ use webship\WebshipTools;
  * View RibbonHtmlView.
  *
  * <p>Adds a ribbon to a view.</p>
- * <img src="http://localhost/coast/webship/modeldoc/ribbon.png" />
  *
  * <code>
  * ContainerHtmlView::create(['rel'])->
@@ -17,8 +16,13 @@ use webship\WebshipTools;
  *         texts("Hallo Welt!");
  * </code>
  *
+ * <img src="http://localhost/coast/webship/modeldoc/ribbon.png" />
+ *
+ * @title Ribbon
+ * @category symbols
+ * 
  * @package webship
- * @subpackge php/model/symbols
+ * @subpackage php/model/symbols
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0

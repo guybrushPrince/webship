@@ -13,6 +13,7 @@ use webship\WebshipTools;
  * <code>
  * ProgressStatusHtmlView::create(["not yet worked on", "in progress", "done"], 'done', [], 'red');
  * </code>
+ * 
  * <img src="http://localhost/coast/webship/modeldoc/progressred.png" />
  *
  * <code>
@@ -20,8 +21,11 @@ use webship\WebshipTools;
  * </code>
  * <img src="http://localhost/coast/webship/modeldoc/progress.png" />
  *
+ * @title ProgressStatus
+ * @category charts
+ * 
  * @package webship
- * @subpackge php/model/charts
+ * @subpackage php/model/charts
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz, Franziska Lüder
  * @version 1.1.0

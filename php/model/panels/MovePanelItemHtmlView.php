@@ -24,10 +24,13 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/movepanelitem.png" />
  *
+ * @title MovePanelItem
+ * @category panels
+ * 
  * @see MovePanelHtmlView
  *
  * @package webship
- * @subpackge php/model/panels
+ * @subpackage php/model/panels
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.4.0

@@ -11,11 +11,16 @@ use webship\WebshipTools;
  * <p>An invisible view whose aim is to be present for missing information.</p>
  *
  * <code>
- * HiddenPlaceHolderHtmlView::create();)
+ * HiddenPlaceHolderHtmlView::create();
  * </code>
  *
+ * <img src="http://localhost/coast/webship/modeldoc/hiddenplaceholder.png" />
+ *
+ * @title HiddenPlaceHolder
+ * @category content
+ * 
  * @package webship
- * @subpackge php/model/content
+ * @subpackage php/model/content
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0

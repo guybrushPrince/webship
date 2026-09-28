@@ -10,21 +10,25 @@ use webship\WebshipTools;
  * View ButtonHtmlView.
  *
  * <p>A very basic button that can be specialized by more fancy buttons.</p>
- * <img src="http://localhost/coast/webship/modeldoc/button.png" />
  *
  * <code>
- * (new ButtonHtmlView('example', 'button'))->texts('Press me!')
+ * (new ButtonHtmlView('example', 'button'))->texts('Press me!');
  * </code>
  *
+ * <img src="http://localhost/coast/webship/modeldoc/button.png" />
+ *
+ * @title Button
+ * @category buttons
+ * 
  * @package webship
- * @subpackge php/model/buttons
+ * @subpackage php/model/buttons
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.3.0
  *
  * @view
  * @examples
- *     (new ButtonHtmlView('example', 'button'))->texts('Press me!')
+ *     (new ButtonHtmlView('example', 'button'))->texts('Press me!');
  */
 class ButtonHtmlView extends HtmlView {
 

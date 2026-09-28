@@ -8,15 +8,19 @@ use webship\WebshipTools;
  * View MiniTextButtonHtmlView.
  *
  * <p>A mini textual button that gets a color inversion when hovering.</p>
- * <img src="http://localhost/coast/webship/modeldoc/minitextbutton.png" />
  *
  * <code>
  * MiniTextButtonHtmlView::create('example-1', 'Press me!');
  * MiniTextButtonHtmlView::delete('example-2', 'Delete me!');
  * </code>
  *
+ * <img src="http://localhost/coast/webship/modeldoc/minitextbutton.png" />
+ *
+ * @title MiniTextButton
+ * @category buttons
+ * 
  * @package webship
- * @subpackge php/model/buttons
+ * @subpackage php/model/buttons
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.1.0

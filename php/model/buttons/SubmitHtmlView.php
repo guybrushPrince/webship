@@ -19,14 +19,17 @@ use webship\forms\FormHtmlView;
  *
  * <img src="http://localhost/coast/webship/modeldoc/submit.png" />
  *
+ * @title Submit
+ * @category buttons
+ * 
  * @package webship
- * @subpackge php/model/buttons
+ * @subpackage php/model/buttons
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.5.0
  *
- * @version
- * @example
+ * @view
+ * @examples
  *     SubmitHtmlView::create()->texts('Submit');
  */
 class SubmitHtmlView extends StandardButtonHtmlView {

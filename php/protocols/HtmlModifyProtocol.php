@@ -24,8 +24,11 @@ use webship\WebshipTools;
  * <p>{@link HtmlModifyProtocol} is an implementation of the {@link ModifyProtocol} that generates HTML, JS, and CSS
  * code for dynamic websites.</p>
  *
+ * @title HtmlAction
+ * @category protocols
+ * 
  * @package webship
- * @subpackge php\controller
+ * @subpackage php\controller
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0

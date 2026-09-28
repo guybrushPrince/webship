@@ -11,8 +11,30 @@ use webship\symbols\PencilHtmlView;
 use webship\WebshipTools;
 
 /**
- * Class DashboardItemHtmlView
+ * View DashboardItemHtmlView.
+ *
+ * <p>An individual item positioned within a {@link DashboardHtmlView}.</p>
+ *
+ * <code>
+ * $dashboard = DashboardHtmlView::create(6, 4);
+ * $dashboard->item([], 1, 2, 2, 2)->texts('Dashboard Item');
+ * </code>
+ * 
+ * <img src="http://localhost/coast/webship/modeldoc/dashboard.png" />
+ *
+ * @title DashboardItem
+ * @category dashboard
+ * 
+ * @package webship
+ * @subpackage php/model/dashboard
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $dashboard = DashboardHtmlView::create(6, 4);
+ *     $dashboard->item([], 1, 2, 2, 2)->texts('Dashboard Item');
  */
 class DashboardItemHtmlView extends HtmlView {
 
@@ -40,9 +62,16 @@ class DashboardItemHtmlView extends HtmlView {
         $this->rowPos = $rowPos;
         $this->rowSpan = $rowSpan;
 
-        $this->style(WebshipTools::css('.dashboard', [' > ', '.dashboard-item', ' > ', '.box'],
+        self::addCSS();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void  {
+        self::addStyle(WebshipTools::css('.dashboard', [' > ', '.dashboard-item', ' > ', '.box'],
             /*'overflow-y: auto', */ 'padding: 5px', 'box-sizing: border-box', 'width: 100%', 'height: 100%'));
-        $this->style(WebshipTools::css('.dashboard', [' > ', '.dashboard-item', ' > ', '.box', ' > ', 'img'],
+        self::addStyle(WebshipTools::css('.dashboard', [' > ', '.dashboard-item', ' > ', '.box', ' > ', 'img'],
             'width: 100%'));
     }
 

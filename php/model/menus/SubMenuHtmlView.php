@@ -12,11 +12,28 @@ use webship\WebshipTools;
  *
  * <p>A submenu within a menu.</p>
  *
+ * <code>
+ * $submenu = SubMenuHtmlView::create('Services');
+ * $submenu->entry()->texts('Web Design');
+ * $submenu->entry()->texts('Hosting');
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/submenu.png"/>
+ *
+ * @title SubMenu
+ * @category menus
+ * 
  * @package webship
- * @subpackge php/model/menus
+ * @subpackage php/model/menus
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $submenu = SubMenuHtmlView::create('Services');
+ *     $submenu->entry()->texts('Web Design');
+ *     $submenu->entry()->texts('Hosting');
  */
 class SubMenuHtmlView extends MenuEntryHtmlView {
 

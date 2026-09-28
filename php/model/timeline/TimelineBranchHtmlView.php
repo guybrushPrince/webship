@@ -6,13 +6,30 @@ use webship\core\HtmlView;
 use webship\WebshipTools;
 
 /**
- * Class TimelineBranchHtmlView.
+ * View TimelineBranchHtmlView.
  *
+ * <p>A branch within a {@link TimelineHtmlView}.</p>
+ *
+ * <code>
+ * $timeline = TimelineHtmlView::create(true);
+ * $branch = $timeline->branch();
+ * </code>
+ * 
+ * <img src="http://localhost/coast/webship/modeldoc/timeline.png" />
+ *
+ * @title TimelineBranch
+ * @category timeline
+ * 
  * @package webship
- * @subpackage php/model
+ * @subpackage php/model/timeline
  *
- * @version 1.0.0
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $timeline = TimelineHtmlView::create(true);
+ *     $branch = TimelineBranchHtmlView::create();
  */
 class TimelineBranchHtmlView extends HtmlView {
 

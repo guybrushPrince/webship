@@ -7,13 +7,28 @@ use webship\WebshipTools;
 /**
  * View ContextMenuEntryHtmlView.
  *
- * <p>A single menu entry in a context menu.</p>
+ * <p>A single <em>menu<\em> entry in a context menu.</p>
  *
+ * <code>
+ * $entry = ContextMenuEntryHtmlView::create('Open');
+ * $entry->entry()->texts('Open in New Tab');
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/contextmenuentry.png" />
+ *
+ * @title ContextMenuEntry
+ * @category menus
+ * 
  * @package webship
- * @subpackge php/model/menus
+ * @subpackage php/model/menus
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $entry = ContextMenuEntryHtmlView::create('Open');
+ *     $entry->entry()->texts('Open in New Tab');
  */
 class ContextMenuEntryHtmlView extends MenuEntryHtmlView {
 

@@ -8,8 +8,28 @@ use webship\interoperability\IDashboardItem;
 use webship\WebshipTools;
 
 /**
- * Class DashGridHtmlView
+ * View DashGridHtmlView.
+ *
+ * <p>An initializable dash-grid-based dashboard view that organizes items in columns and rows.</p>
+ *
+ * <code>
+ * $grid = DashGridHtmlView::create(null, 6, 4);
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/dashgridcontainer.png" />
+ *
+ * @title DashGrid
+ * @category dashboard
+ * 
+ * @package webship
+ * @subpackage php/model/dashboard
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $grid = DashGridHtmlView::create(null, 6, 4);
  */
 class DashGridHtmlView extends HtmlView {
 
@@ -34,32 +54,39 @@ class DashGridHtmlView extends HtmlView {
 
         $this->localStyle(['--ws-dg-cols: ' . $cols, '--ws-dg-rows: ' . $rows]);
 
-        $this->style(WebshipTools::css('.dash-grid', [], 'display: grid',
+        self::addCSS();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void  {
+        self::addStyle(WebshipTools::css('.dash-grid', [], 'display: grid',
             'grid-template-columns: repeat(var(--ws-dg-cols), 1fr)', 'grid-template-rows: repeat(var(--ws-dg-rows), 1fr)',
             'max-height: calc(100% - 20px)', 'column-gap: 10px', 'row-gap: 10px', 'padding: 10px 10px 10px 5px',
             'grid-auto-rows: 0', 'overflow-y: hidden', 'height: calc(100% - 20px)'));
-        $this->style(WebshipTools::css('.dash-grid', [' > ', '*'], 'justify-self: stretch',
+        self::addStyle(WebshipTools::css('.dash-grid', [' > ', '*'], 'justify-self: stretch',
             'box-sizing: border-box', 'align-self: stretch', 'background: var(--ws-neutral)',
             'border-radius: 5px', 'outline: 1px solid var(--ws-dashboard-free-brd)', 'outline-offset: 1px'));
-        $this->style(WebshipTools::css('.dash-grid', [' > ', '.filled'],
+        self::addStyle(WebshipTools::css('.dash-grid', [' > ', '.filled'],
             'background: var(--ws-dashboard-filled)', 'cursor: not-allowed', 'transition: opacity 1.0s'));
-        $this->style(WebshipTools::css('.dash-grid.progress', [' > ', '.free:not(.selectable)'],
+        self::addStyle(WebshipTools::css('.dash-grid.progress', [' > ', '.free:not(.selectable)'],
             'cursor: not-allowed', 'opacity: 0.3'));
-        $this->style(WebshipTools::css('.dash-grid.progress', [' > ', '.filled'],
+        self::addStyle(WebshipTools::css('.dash-grid.progress', [' > ', '.filled'],
             'opacity: 0.3'));
-        $this->style(WebshipTools::css('.dash-grid', [' > ', '.free'], 'cursor: pointer',
+        self::addStyle(WebshipTools::css('.dash-grid', [' > ', '.free'], 'cursor: pointer',
             'transition: opacity 1.0s'));
-        $this->style(WebshipTools::css('.dash-grid', [' > ', '.free', ':hover'],
+        self::addStyle(WebshipTools::css('.dash-grid', [' > ', '.free', ':hover'],
             'outline-width: 5px', 'outline-color: var(--ws-dashboard-free-chosen)'));
-        $this->style(WebshipTools::css('.dash-grid', [' > ', '.free.chosen', ':hover'],
+        self::addStyle(WebshipTools::css('.dash-grid', [' > ', '.free.chosen', ':hover'],
             'outline-width: 5px'));
-        $this->style(WebshipTools::css('.dash-grid', [' > ', '.free', '.selected'],
+        self::addStyle(WebshipTools::css('.dash-grid', [' > ', '.free', '.selected'],
             'background: var(--ws-dashboard-free-chosen)'));
-        $this->style(WebshipTools::css('.dash-grid', [' > ', '.free', '.selectable'],
+        self::addStyle(WebshipTools::css('.dash-grid', [' > ', '.free', '.selectable'],
             'outline-width: 3px'));
-        $this->style(WebshipTools::css('.dash-grid', [' > ', '.free', '.selectable', ':hover'],
+        self::addStyle(WebshipTools::css('.dash-grid', [' > ', '.free', '.selectable', ':hover'],
             'outline-width: 5px'));
-        $this->style(WebshipTools::css('.dash-grid', [' > ', '.free', '.chosen'],
+        self::addStyle(WebshipTools::css('.dash-grid', [' > ', '.free', '.chosen'],
             'background: var(--ws-dashboard-free-chosen)', 'outline-width: 3px',
             'outline-color: var(--ws-dashboard-free-chosen)'));
     }

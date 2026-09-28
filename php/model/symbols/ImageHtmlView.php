@@ -23,8 +23,11 @@ use webship\WebshipTools;
  *
  * <img src="http://localhost/coast/webship/modeldoc/image.png" />
  *
+ * @title Image
+ * @category symbols
+ * 
  * @package webship
- * @subpackge php/model/symbols
+ * @subpackage php/model/symbols
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.5.0

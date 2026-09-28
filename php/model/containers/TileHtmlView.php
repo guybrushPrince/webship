@@ -25,10 +25,14 @@ use webship\WebshipTools;
  * $tilesView->tile()->container(['hor', 'vcent', 'hcent', 'h100'])->texts('Tile 2');
  * $tilesView->tile()->container(['hor', 'vcent', 'hcent', 'h100'])->texts('Tile 3');
  * </code>
+ * 
  * <img src="http://localhost/coast/webship/modeldoc/tiles.png" />
  *
+ * @title Tile
+ * @category containers
+ * 
  * @package webship
- * @subpackge php/model/containers
+ * @subpackage php/model/containers
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @author Mihailo Jovic

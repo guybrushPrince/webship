@@ -19,9 +19,12 @@ use webship\WebshipTools;
  * <img src="http://localhost/coast/webship/modeldoc/warning_2.png" /><br>
  * <img src="http://localhost/coast/webship/modeldoc/warning_3.png" />
  *
+ * @title Warning
+ * @category alerts
+ * 
  * @see AlertHtmlView
  * @package webship
- * @subpackge php/model/alerts
+ * @subpackage php/model/alerts
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @author Mihailo Jovic
@@ -39,7 +42,7 @@ class WarningHtmlView extends AlertHtmlView {
      * Constructor.
      * @param string[]|string $classes Some classes.
      */
-    public function __construct(array|string $classes = []) {
+    private function __construct(array|string $classes = []) {
         parent::__construct(array_merge(['warning'], $classes));
 
         self::addCSS();

@@ -6,7 +6,31 @@ use webship\core\HtmlView;
 use webship\symbols\ImageHtmlView;
 use webship\WebshipTools;
 
-class TimelinePointHtmlView extends HtmlView{
+/**
+ * View TimelinePointHtmlView.
+ *
+ * <p>An individual event point along a {@link TimelineHtmlView}.</p>
+ *
+ * <code>
+ * $point = TimelinePointHtmlView::create('/webship/pic/point.svg');
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/timeline.png" />
+ * 
+ * @title TimelinePoint
+ * @category timeline
+ * 
+ * @package webship
+ * @subpackage php/model/timeline
+ *
+ * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $point = TimelinePointHtmlView::create('/webship/pic/point.svg');
+ */
+class TimelinePointHtmlView extends HtmlView {
 
     private HtmlView $left;
     private HtmlView $right;
@@ -110,7 +134,7 @@ class TimelinePointHtmlView extends HtmlView{
         return self::create($img, !$waiting ? ['loading'] : ['loading', 'waiting']);
     }
 
-    public function left(?HtmlView $view) : HtmlView {
+    public function left(?HtmlView $view = null) : HtmlView {
         $box = $this->left->add(new HtmlView('box'));
         $this->left->add(new HtmlView('h-line'));
         if ($view) {
@@ -119,7 +143,7 @@ class TimelinePointHtmlView extends HtmlView{
         } else return $box;
     }
 
-    public function right(?HtmlView $view) : HtmlView {
+    public function right(?HtmlView $view = null) : HtmlView {
         $this->right->add(new HtmlView('h-line'));
         $box = $this->right->add(new HtmlView('box'));
         if ($view) {

@@ -6,8 +6,26 @@ use ship\views\View;
 use webship\core\HtmlView;
 
 /**
- * Class TreeLeafHtmlView
+ * View TreeLeafHtmlView.
+ *
+ * <p>A single leaf entry node within a {@link TreeHtmlView}.</p>
+ *
+ * <code>
+ * $leaf = TreeLeafHtmlView::create();
+ * </code>
+ *
+ * @title TreeLeaf
+ * @category tree
+ * 
+ * @package webship
+ * @subpackage php/model/tree
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $leaf = TreeLeafHtmlView::create();
  */
 class TreeLeafHtmlView extends HtmlView {
 

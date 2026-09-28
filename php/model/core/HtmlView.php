@@ -21,9 +21,28 @@ use webship\protocols\HtmlEventProtocol;
 use webship\WebshipTools;
 
 /**
- * View HtmlView
+ * View HtmlView.
+ *
+ * <p>The base component for all HTML views in Webship.</p>
+ *
+ * <code>
+ * $view = new HtmlView();
+ * $view->texts("text");
+ * </code>
+ *
+ * @title HtmlView
+ * @category core
+ * 
+ * @package webship
+ * @subpackage php/model/core
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $view = new HtmlView();
+ *     $view->texts("text");
  */
 class HtmlView extends View {
 

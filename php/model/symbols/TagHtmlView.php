@@ -9,13 +9,17 @@ use webship\WebshipTools;
  * View TagHtmlView.
  *
  * <p>Presents a colored tag where the color is detected automatically or can be defined.</p>
- * <img src="http://localhost/coast/webship/modeldoc/tag.png" />
  *
  * <code>TagHtmlView::create("Hallo Welt");</code>
  * <code>TagHtmlView::create([Language::ENGLISH => 'Hello World', Language::GERMAN => 'Hallo Welt']);</code>
  *
+ * <img src="http://localhost/coast/webship/modeldoc/tag.png" />
+ * 
+ * @title Tag 
+ * @category symbols
+ * 
  * @package webship
- * @subpackge php/model/symbols
+ * @subpackage php/model/symbols
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0

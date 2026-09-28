@@ -8,8 +8,28 @@ use webship\interoperability\IDashboardItem;
 use webship\WebshipTools;
 
 /**
- * Class DashGridContainerHtmlView
+ * View DashGridContainerHtmlView.
+ *
+ * <p>A container view for dash-grid-based dashboard layouts.</p>
+ *
+ * <code>
+ * $container = DashGridContainerHtmlView::create(null, 6, 4, true);
+ * </code>
+ *
+ * <img src="http://localhost/coast/webship/modeldoc/dashgridcontainer.png" />
+ *
+ * @title DashGridContainer
+ * @category dashboard
+ * 
+ * @package webship
+ * @subpackage php/model/dashboard
+ *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
+ * @version 1.0.0
+ *
+ * @view
+ * @examples
+ *     $container = DashGridContainerHtmlView::create(null, 6, 4, true);
  */
 class DashGridContainerHtmlView extends HtmlView {
 
@@ -27,11 +47,19 @@ class DashGridContainerHtmlView extends HtmlView {
         $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['dash-grid-container'], $classes));
 
-        $this->style(WebshipTools::css('.dash-grid-container', [], 'display: flex', 'width: 100%',
+        self::addCSS();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function addCSS() : void  {
+        self::addStyle(WebshipTools::css('.dash-grid-container', [], 'display: flex', 'width: 100%',
             'flex-direction: row', 'align-items: center', 'justify-content: center', 'flex-wrap: wrap-reverse',
             'margin-top: 10px'));
-        $this->style(WebshipTools::css('.dash-grid-container', [' > ', ':nth-child(2)'], 'min-width: 150px',
+        self::addStyle(WebshipTools::css('.dash-grid-container', [' > ', ':nth-child(2)'], 'min-width: 150px',
             'width: 50%'));
+        
     }
 
     /**
