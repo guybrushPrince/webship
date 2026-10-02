@@ -140,7 +140,7 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
      * @return SubMenuHtmlView
      */
     public function submenu(array|string $classes = [], array|string|null $texts = null) : SubMenuHtmlView {
-        $entry = SubMenuHtmlView::create($texts, $classes);
+        $entry = SubMenuHtmlView::create($texts, null, $classes);
         $this->add($entry);
         return $entry;
     }

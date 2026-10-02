@@ -94,7 +94,7 @@ class ContextMenuHtmlView extends MenuHtmlView {
      * @return ContextSubMenuHtmlView
      */
     public function submenu(array|string $classes = [], array|string|null $texts = null) : ContextSubMenuHtmlView {
-        $entry = ContextSubMenuHtmlView::create($texts, $classes);
+        $entry = ContextSubMenuHtmlView::create($texts, null, $classes);
         $this->add($entry);
         return $entry;
     }
