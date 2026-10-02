@@ -38,7 +38,7 @@ class PanelHeaderHtmlView extends TitleHtmlView {
      * @param string|null $img The name of an image.
      * @param string|string[] $classes Some classes.
      */
-    private function __construct(?string $dataType = null, ?string $img = null,
+    private function __construct(string|null $dataType = null, string|null $img = null,
                                  array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [$classes];
         $classes[] = 'panel-header';
@@ -57,11 +57,10 @@ class PanelHeaderHtmlView extends TitleHtmlView {
      * @inheritDoc
      * @return PanelHeaderHtmlView
      */
-    public static function create(string|array|null $title, ?string $dataType = null, ?string $img = null,
+    public static function create(string|array|null $title, string|null $dataType = null, string|null $img = null,
                                   string|array $classes = []) : PanelHeaderHtmlView {
         $view = new PanelHeaderHtmlView($dataType, $img, $classes);
         if (!is_null($title)) {
-            if (!is_array($title)) $title = [self::getLanguage() => $title];
             $view->texts($title);
         }
         return $view;

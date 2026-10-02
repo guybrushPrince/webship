@@ -57,10 +57,10 @@ use webship\WebshipTools;
 class TreeHtmlView extends HtmlView {
 
     /**
-     * MenuHtmlView constructor.
+     * Constructor.
      * @param string[]|string $classes
      */
-    public function __construct(array|string $classes = []) {
+    private function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['tree'], $classes));
         $this->ref('tree');
@@ -146,7 +146,7 @@ class TreeHtmlView extends HtmlView {
      * @return TreeLeafHtmlView
      */
     public function leaf(array|string $classes = []) : TreeLeafHtmlView {
-        $leaf = new TreeLeafHtmlView($classes);
+        $leaf = TreeLeafHtmlView::create($classes);
         $this->add($leaf);
         return $leaf;
     }

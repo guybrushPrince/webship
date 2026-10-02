@@ -409,7 +409,7 @@ class HtmlView extends View {
      * @return MenuHtmlView
      */
     public function menu(array|string $classes = []) : MenuHtmlView {
-        $menuView = new MenuHtmlView($classes);
+        $menuView = MenuHtmlView::create($classes);
         $this->add($menuView);
         return $menuView;
     }

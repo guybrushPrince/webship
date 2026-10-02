@@ -245,7 +245,7 @@ class FolderHtmlView extends StandardHtmlView {
             });
 
             if (!$folderGroup->isFolded() && !WebshipTools::isEmpty($posItems)) {
-                $menu = new ContextMenuHtmlView();
+                $menu = ContextMenuHtmlView::create();
                 $menu->ref('add-to-folder-group-menu');
                 $menu->each($posItems, function (ContextMenuHtmlView $menu, IShippable $item) use ($folderGroup, $addFunction, $view) {
                     $name = $folderGroup->getItemTitle($item, self::getLanguage());

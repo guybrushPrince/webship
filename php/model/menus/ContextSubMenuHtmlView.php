@@ -38,7 +38,7 @@ class ContextSubMenuHtmlView extends SubMenuHtmlView {
      * ContextSubMenuHtmlView constructor.
      * @param string[]|string $classes Some classes.
      */
-    public function __construct(array|string $classes = []) {
+    protected function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['context'], $classes));
 
@@ -66,7 +66,8 @@ class ContextSubMenuHtmlView extends SubMenuHtmlView {
     /**
      * @inheritDoc
      */
-    public static function create(array|string|null $texts = null, array|string $classes = []) : ContextSubMenuHtmlView {
+    public static function create(array|string|null $texts = null, string|null $img = null,
+                                  array|string $classes = []) : self {
         $entry = self::_new($classes);
         if (!is_null($texts)) $entry->texts($texts);
         return $entry;
@@ -79,10 +80,11 @@ class ContextSubMenuHtmlView extends SubMenuHtmlView {
     /**
      * Create a context menu entry.
      * @param string[]|string $classes A set of classes.
+     * @param string[]|string|null $texts Optional texts.
      * @return ContextMenuEntryHtmlView
      */
-    public function entry(array|string $classes = []) : ContextMenuEntryHtmlView {
-        $entry = new ContextMenuEntryHtmlView($classes);
+    public function entry(array|string $classes = [], array|string|null $texts = null) : ContextMenuEntryHtmlView {
+        $entry = ContextMenuEntryHtmlView::create($texts, null, $classes);
         $this->add($entry);
         return $entry;
     }
@@ -90,10 +92,11 @@ class ContextSubMenuHtmlView extends SubMenuHtmlView {
     /**
      * Create a context sub menu entry.
      * @param string[]|string $classes A set of classes.
+     * @param string[]|string|null $texts Optional texts.
      * @return ContextSubMenuHtmlView
      */
-    public function submenu(array|string $classes = []) : ContextSubMenuHtmlView {
-        $entry = new ContextSubMenuHtmlView($classes);
+    public function submenu(array|string $classes = [], array|string|null $texts = null) : ContextSubMenuHtmlView {
+        $entry = ContextSubMenuHtmlView::create($texts, $classes);
         $this->add($entry);
         return $entry;
     }

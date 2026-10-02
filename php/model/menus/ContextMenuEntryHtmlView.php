@@ -33,10 +33,10 @@ use webship\WebshipTools;
 class ContextMenuEntryHtmlView extends MenuEntryHtmlView {
 
     /**
-     * ContextMenuEntryHtmlView constructor.
+     * Constructor.
      * @param string[]|string $classes Some classes.
      */
-    public function __construct(array|string $classes = []) {
+    protected function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['context'], $classes));
 
@@ -59,8 +59,8 @@ class ContextMenuEntryHtmlView extends MenuEntryHtmlView {
     /**
      * @inheritDoc
      */
-    public static function create(array|string|null $texts = null,
-                                  array|string      $classes = []) : ContextMenuEntryHtmlView {
+    public static function create(array|string|null $texts = null, string|null $img = null,
+                                  array|string $classes = []) : ContextMenuEntryHtmlView {
         $entry = self::_new($classes);
         if (!is_null($texts)) $entry->texts($texts);
         return $entry;
@@ -73,10 +73,11 @@ class ContextMenuEntryHtmlView extends MenuEntryHtmlView {
     /**
      * Create a context menu entry.
      * @param string[]|string $classes A set of classes.
+     * @param string[]|string|null $texts Optional texts.
      * @return ContextMenuEntryHtmlView
      */
-    public function entry(array|string $classes = []) : ContextMenuEntryHtmlView {
-        $entry = new ContextMenuEntryHtmlView($classes);
+    public function entry(array|string $classes = [], array|string|null $texts = null) : ContextMenuEntryHtmlView {
+        $entry = ContextMenuEntryHtmlView::create($texts, null, $classes);
         $this->add($entry);
         return $entry;
     }

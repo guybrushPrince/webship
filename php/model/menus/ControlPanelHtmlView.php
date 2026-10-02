@@ -52,9 +52,9 @@ class ControlPanelHtmlView extends HtmlView {
 
     /**
      * The top distance (if any and fixed).
-     * @var int|null
+     * @var string|int|null
      */
-    private ?int $top = null;
+    private string|int|null $top = null;
 
     /**
      * Constructor.
@@ -167,7 +167,7 @@ class ControlPanelHtmlView extends HtmlView {
         $tag = substr(parent::generateOpeningTag(), 0, -1);
         if ($this->xDim === null) $this->xDim = 1;
         $tag .= ' style="--ws-ctr-cols: ' . $this->xDim . ';' . '--ws-ctr-rows: ' . $this->yDim . ';' .
-            ($this->top !== null ? '--ws-ctr-top-dist: ' . $this->top . ';' : '--ws-ctr-top-dist: 0;') . '">';
+            (!is_null($this->top) ? '--ws-ctr-top-dist: ' . $this->top . ';' : '--ws-ctr-top-dist: 0;') . '">';
         return $tag;
     }
 
@@ -289,12 +289,15 @@ class ControlPanelHtmlView extends HtmlView {
      * @param bool $right If it is located in the right.
      * @return $this
      */
-    public function fix(bool $top = true, bool $right = true, ?int $vDist = null) : static {
+    public function fix(bool $top = true, bool $right = true, string|int|null $vDist = null) : static {
         $this->addClass('fix');
         if ($top) {
             if ($right) $this->addClass('tr');
             else $this->addClass('tl');
-            if ($vDist !== null) $this->top = $vDist;
+            if (!is_null($vDist)) {
+                if (is_int($vDist)) $vDist = $vDist . 'px';
+                $this->top = $vDist;
+            }
         } else {
             if ($right) $this->addClass('br');
             else $this->addClass('bl');

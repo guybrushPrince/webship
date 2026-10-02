@@ -38,10 +38,10 @@ use webship\WebshipTools;
 class SubMenuHtmlView extends MenuEntryHtmlView {
 
     /**
-     * SubMenuHtmlView constructor.
+     * Constructor.
      * @param string[]|string $classes Some classes.
      */
-    public function __construct(array|string $classes = []) {
+    protected function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['sub-menu-entry'], $classes));
 
@@ -83,7 +83,8 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
     /**
      * @inheritDoc
      */
-    public static function create(array|string|null $texts = null, array|string $classes = []) : MenuEntryHtmlView {
+    public static function create(array|string|null $texts = null, string|null $img = null,
+                                  array|string $classes = []) : self {
         $entry = self::_new($classes);
         if (!is_null($texts)) $entry->texts($texts);
         return $entry;
@@ -123,10 +124,11 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
     /**
      * Create a menu entry.
      * @param string[]|string $classes A set of classes.
+     * @param string[]|string|null $texts Optional texts.
      * @return MenuEntryHtmlView
      */
-    public function entry(array|string $classes = []) : MenuEntryHtmlView {
-        $entry = new MenuEntryHtmlView($classes);
+    public function entry(array|string $classes = [], array|string|null $texts = null) : MenuEntryHtmlView {
+        $entry = MenuEntryHtmlView::create($texts, null, $classes);
         $this->add($entry);
         return $entry;
     }
@@ -134,10 +136,11 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
     /**
      * Create a sub menu entry.
      * @param string[]|string $classes A set of classes.
+     * @param string[]|string|null $texts Optional texts.
      * @return SubMenuHtmlView
      */
-    public function submenu(array|string $classes = []) : SubMenuHtmlView {
-        $entry = new SubMenuHtmlView($classes);
+    public function submenu(array|string $classes = [], array|string|null $texts = null) : SubMenuHtmlView {
+        $entry = SubMenuHtmlView::create($texts, $classes);
         $this->add($entry);
         return $entry;
     }

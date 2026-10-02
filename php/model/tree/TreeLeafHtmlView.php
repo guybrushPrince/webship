@@ -33,7 +33,7 @@ class TreeLeafHtmlView extends HtmlView {
      * MenuHtmlView constructor.
      * @param string[]|string $classes
      */
-    public function __construct(array|string $classes = []) {
+    private function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['leaf'], $classes));
     }

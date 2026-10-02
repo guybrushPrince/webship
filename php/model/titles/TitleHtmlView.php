@@ -39,7 +39,7 @@ class TitleHtmlView extends HtmlView {
      * @param string|null $img The name of an image.
      * @param string|string[] $classes Some classes.
      */
-    public function __construct(?string $dataType = null, ?string $img = null, string|array $classes = []) {
+    protected function __construct(string|null $dataType = null, string|null $img = null, string|array $classes = []) {
         parent::__construct($classes);
         $this->classes[] = 'title';
 
@@ -76,9 +76,8 @@ class TitleHtmlView extends HtmlView {
      * @param string|string[] $classes Some classes.
      * @return TitleHtmlView
      */
-    public static function create(string|array $title, ?string $dataType = null, ?string $img = null,
+    public static function create(string|array $title, string|null $dataType = null, string|null $img = null,
                                   string|array $classes = []) : TitleHtmlView {
-        if (!is_array($title)) $title = [self::getLanguage() => $title];
         $view = new TitleHtmlView($dataType, $img, $classes);
         $view->texts($title);
         return $view;

@@ -40,7 +40,7 @@ class ContextMenuHtmlView extends MenuHtmlView {
      * ContextMenuHtmlView constructor.
      * @param string[]|string $classes Some classes.
      */
-    public function __construct($classes = array()) {
+    protected function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['context'], $classes));
 
@@ -78,10 +78,11 @@ class ContextMenuHtmlView extends MenuHtmlView {
     /**
      * Create a menu entry.
      * @param string[]|string $classes A set of classes.
+     * @param string[]|string|null $texts Optional texts.
      * @return ContextMenuEntryHtmlView
      */
-    public function entry(array|string $classes = []) : MenuEntryHtmlView {
-        $entry = new ContextMenuEntryHtmlView($classes);
+    public function entry(array|string $classes = [], array|string|null $texts = null) : ContextMenuEntryHtmlView {
+        $entry = ContextMenuEntryHtmlView::create($texts, null, $classes);
         $this->add($entry);
         return $entry;
     }
@@ -89,10 +90,11 @@ class ContextMenuHtmlView extends MenuHtmlView {
     /**
      * Create a sub menu entry.
      * @param string[]|string $classes A set of classes.
+     * @param string[]|string|null $texts Optional texts.
      * @return ContextSubMenuHtmlView
      */
-    public function submenu(array|string $classes = []) : SubMenuHtmlView {
-        $entry = new ContextSubMenuHtmlView($classes);
+    public function submenu(array|string $classes = [], array|string|null $texts = null) : ContextSubMenuHtmlView {
+        $entry = ContextSubMenuHtmlView::create($texts, $classes);
         $this->add($entry);
         return $entry;
     }

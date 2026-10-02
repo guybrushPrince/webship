@@ -34,10 +34,10 @@ use webship\WebshipTools;
 class MenuEntryHtmlView extends HtmlView {
 
     /**
-     * MenuEntryHtmlView constructor.
+     * Constructor.
      * @param string[]|string $classes Some classes.
      */
-    public function __construct(array|string $classes = []) {
+    protected function __construct(array|string $classes = []) {
         $classes = is_array($classes) ? $classes : [$classes];
         parent::__construct(array_merge(['menu-entry'], $classes));
 
@@ -59,10 +59,12 @@ class MenuEntryHtmlView extends HtmlView {
     /**
      * Create a new menu entry.
      * @param string[]|string|null $texts The text of the menu entry (possibly in different languages).
+     * @param string|null $img An optional image.
      * @param string[]|string $classes Some classes.
      * @return MenuEntryHtmlView
      */
-    public static function create(array|string|null $texts = null, array|string $classes = []) : MenuEntryHtmlView {
+    public static function create(array|string|null $texts = null, string|null $img = null,
+                                  array|string $classes = []) : self {
         $entry = self::_new($classes);
         if (!is_null($texts)) $entry->texts($texts);
         return $entry;
@@ -90,10 +92,11 @@ class MenuEntryHtmlView extends HtmlView {
     /**
      * Create a menu entry.
      * @param string[]|string $classes A set of classes.
+     * @param array|string|null $texts Optional texts.
      * @return MenuEntryHtmlView
      */
-    public function entry(array|string $classes = []) : MenuEntryHtmlView {
-        $entry = new MenuEntryHtmlView($classes);
+    public function entry(array|string $classes = [], array|string|null $texts = null) : MenuEntryHtmlView {
+        $entry = MenuEntryHtmlView::create($texts, null, $classes);
         $this->add($entry);
         return $entry;
     }

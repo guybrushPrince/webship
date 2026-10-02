@@ -13,14 +13,12 @@ use webship\WebshipTools;
  * <p>Presents a dialog view that displays a message and selectable user choices.</p>
  *
  * <code>
- * $dialog = new DialogHtmlView([
- *     SLanguage::ENGLISH => 'Are you sure you want to proceed?'
- * ]);
- * $dialog->choice(1, [SLanguage::ENGLISH => 'Confirm']);
- * $dialog->choice(2, [SLanguage::ENGLISH => 'Cancel']);
+ * $dialog = DialogHtmlView::create('Are you sure you want to proceed?');
+ * $dialog->choice(1, 'Confirm');
+ * $dialog->choice(2, 'Cancel');
  * </code>
  *
- * <img src="http://localhost/coast/webship/modeldoc/dashboard.png" />
+ * <img src="http://localhost/coast/webship/modeldoc/dialog.png" />
  * 
  * @title Dialog
  * @category dialogs
@@ -33,11 +31,9 @@ use webship\WebshipTools;
  *
  * @view
  * @examples
- *     $dialog = new DialogHtmlView([
- *         SLanguage::ENGLISH => 'Are you sure you want to proceed?'
- *     ]);
- *     $dialog->choice(1, [SLanguage::ENGLISH => 'Confirm']);
- *     $dialog->choice(2, [SLanguage::ENGLISH => 'Cancel']);
+ *     $dialog = DialogHtmlView::create('Are you sure you want to proceed?');
+ *     $dialog->choice(1, 'Confirm');
+ *     $dialog->choice(2, 'Cancel');
  */
 class DialogHtmlView extends HtmlView {
 
@@ -54,21 +50,24 @@ class DialogHtmlView extends HtmlView {
     private array $choices;
 
     /**
-     * DialogHtmlView constructor.
-     * @param string[] $texts The texts.
+     * Constructor.
+     * @param string[]|string $texts The texts.
+     * @param string[]|string|null $titleTexts The title of the dialog.
      * @param string[]|string $classes Some classes.
      */
-    public function __construct(array $texts, array|string $classes = []) {
+    private function __construct(array|string $texts, array|string|null $titleTexts = null, array|string $classes = []) {
         parent::__construct(array_merge(['dialog'], is_array($classes) ? $classes : []));
 
         $message = new HtmlView('dialog-message');
         $this->add($message);
         $title = new HtmlView('d-title');
         $message->add($title);
-        $title->texts([
-            Language::ENGLISH => 'Note',
-            Language::GERMAN  => 'Hinweis'
-        ]);
+        if (is_null($titleTexts)) {
+            $title->texts([
+                Language::ENGLISH => 'Note',
+                Language::GERMAN => 'Hinweis'
+            ]);
+        } else $title->texts($titleTexts);
         $textView = new HtmlView('text');
         $message->add($textView);
         $parseDown = new ParsedownExtra();
@@ -118,12 +117,23 @@ class DialogHtmlView extends HtmlView {
     }
 
     /**
+     * Create a dialog.
+     * @param string[]|string $texts The texts.
+     * @param string[]|string|null $titleTexts The title of the dialog.
+     * @param string[]|string $classes Some classes.
+     */
+    public static function create(array|string $texts, array|string|null $titleTexts = null,
+                                  array|string $classes = []) : DialogHtmlView {
+        return new DialogHtmlView($texts, $titleTexts, $classes);
+    }
+
+    /**
      * Generates a new option.
      * @param int $nr The number of the option.
-     * @param array $texts The texts of the option.
+     * @param array|string $texts The texts of the option.
      * @return HtmlView
      */
-    public function choice(int $nr, array $texts) : HtmlView {
+    public function choice(int $nr, array|string $texts) : HtmlView {
         $v = new HtmlView(['choice', 'c-' . $nr]);
         $this->choicesBox->add($v);
         $this->choices[$nr] = $v;

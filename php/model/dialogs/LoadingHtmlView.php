@@ -12,7 +12,7 @@ use webship\WebshipTools;
  * <p>Be aware that the view takes full-width and full-height.</p>
  *
  * <code>
- * $loadingView = new LoadingHtmlView();
+ * $loadingView = LoadingHtmlView::create();
  * </code>
  *
  * <img src="http://localhost/coast/webship/modeldoc/loading.png" />
@@ -29,7 +29,7 @@ use webship\WebshipTools;
  *
  * @view
  * @examples
- *     $loadingView = new LoadingHtmlView();
+ *     $loadingView = LoadingHtmlView::create();
  */
 class LoadingHtmlView extends HtmlView {
 
@@ -37,7 +37,7 @@ class LoadingHtmlView extends HtmlView {
      * Constructor.
      * @param string[]|string $classes Some additional classes.
      */
-    public function __construct(array|string $classes = []) {
+    private function __construct(array|string $classes = []) {
         parent::__construct(array_merge(['loading'], is_array($classes) ? $classes : [$classes]));
 
         self::addCSS();

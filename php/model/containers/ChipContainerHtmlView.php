@@ -62,6 +62,15 @@ class ChipContainerHtmlView extends ContainerHtmlView {
     }
 
     /**
+     * Create a new chip container.
+     * @param string[]|string $classes Some classes.
+     * @return ChipContainerHtmlView
+     */
+    public static function create(array|string $classes = []) : ChipContainerHtmlView {
+        return new ChipContainerHtmlView($classes);
+    }
+
+    /**
      * Create a new chip.
      * @param string[]|string $classes An array of additional classes.
      * @return ChipContainerItemHtmlView

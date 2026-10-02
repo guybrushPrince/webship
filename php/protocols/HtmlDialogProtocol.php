@@ -26,7 +26,7 @@ class HtmlDialogProtocol extends DialogProtocol {
         $texts = $this->texts;
         $options = $this->options;
 
-        $v = new DialogHtmlView($texts);
+        $v = DialogHtmlView::create($texts);
         $v->ref('dialog');
         foreach ($options as $key => $texts) {
             $v->choice($key, $texts);
