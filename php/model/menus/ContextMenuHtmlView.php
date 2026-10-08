@@ -54,7 +54,9 @@ class ContextMenuHtmlView extends MenuHtmlView {
         self::addStyle(WebshipTools::css('nav.menu.context', [], 'position: fixed', 'left: 0',
             'top: 0', 'width: fit-content', 'display: none', 'flex-direction: column',
             'background: var(--ws-context-menu-bg)',
-            'z-index: 100', 'border: 1px solid var(--ws-context-menu-brd)', 'width: -moz-fit-content'));
+            'z-index: 100', 'border: 1px solid var(--ws-context-menu-brd)', 'width: -moz-fit-content',
+            '-webkit-box-shadow: var(--ws-front-shadow)', '-moz-box-shadow: var(--ws-front-shadow)',
+            'box-shadow: var(--ws-front-shadow)', 'border-radius: var(--ws-main-menu-br)'));
         self::addStyle(WebshipTools::css('nav.menu.context', ['.active'], 'display: flex'));
         self::addStyle(WebshipTools::css('nav.menu.context', [' ', 'ul'], 'list-style-type: none',
             'display: flex', 'margin: 0', 'flex-wrap: nowrap', 'padding: 0', 'flex-direction: column'));

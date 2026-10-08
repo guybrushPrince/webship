@@ -73,6 +73,7 @@ class ImageHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.container.min-img', [], 'width: 20px', 'height: 20px'));
         self::addStyle(WebshipTools::css('.min-img', [' > ', 'img'], 'width: 100%'));
         self::addStyle(WebshipTools::css('img.image.cover', [], 'object-fit: cover'));
+        self::addStyle(WebshipTools::css('img.image.circle', [], 'border-radius: 50%'));
     }
 
     /**
@@ -116,12 +117,25 @@ class ImageHtmlView extends HtmlView {
      * @param string $src The source of the image.
      * @param string[]|string|null $alt An alternative text.
      * @param string|string[] $classes Some classes.
+     * @param bool $asCircle Whether the image shall be represented as circle, or not.
      * @return HtmlView
      */
-    public static function mini(string $src, array|string|null $alt = null, string|array $classes = []) : HtmlView {
+    public static function mini(string $src, array|string|null $alt = null, string|array $classes = [],
+                                bool $asCircle = false) : HtmlView {
         $mini = new ContainerHtmlView(['hor', 'vcent', 'min-img']);
-        $mini->add(ImageHtmlView::create($src, $alt, $classes));
+        $img = ImageHtmlView::create($src, $alt, $classes);
+        if ($asCircle) $img->circle();
+        $mini->add($img);
         return $mini;
+    }
+
+    /**
+     * Makes a circle out of the image.
+     * @return $this
+     */
+    public function circle() : static {
+        $this->addClass('circle');
+        return $this;
     }
 }
 ?>

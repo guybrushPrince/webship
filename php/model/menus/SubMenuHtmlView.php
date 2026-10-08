@@ -52,8 +52,6 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        // <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from
-        // <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
         self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.sub-menu-entry', ':after'],
             'content: ""', 'margin-left: 5px', 'background-image: url("' .
             HtmlActionProtocol::getServerURL() . '/webship/pic/arrow-down.svg")',
@@ -64,7 +62,8 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
             'display: none', 'list-style-type: none', 'margin: 0', 'background: var(--ws-main-menu-hvr)',
             'padding: 0',
             '-webkit-box-shadow: var(--ws-front-shadow)', '-moz-box-shadow: var(--ws-front-shadow)',
-            'box-shadow: var(--ws-front-shadow)', 'border-radius: 0 6px 6px 6px'));
+            'box-shadow: var(--ws-front-shadow)',
+            'border-radius: 0 var(--ws-main-menu-br) var(--ws-main-menu-br) var(--ws-main-menu-br)'));
 
         self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li'],
             'width: fit-content',
@@ -75,9 +74,9 @@ class SubMenuHtmlView extends MenuEntryHtmlView {
             'background: var(--ws-main-menu)'));
 
         self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li:first-child'],
-            'border-radius: 0 6px 0 0'));
+            'border-radius: 0 var(--ws-main-menu-br) 0 0'));
         self::addStyle(WebshipTools::css('nav.menu', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li:last-child'],
-            'border-radius: 0 0 6px 6px'));
+            'border-radius: 0 0 var(--ws-main-menu-br) var(--ws-main-menu-br)'));
     }
 
     /**

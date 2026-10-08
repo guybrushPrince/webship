@@ -68,6 +68,10 @@ class TagHtmlView extends ColorHtmlView {
         self::addStyle(WebshipTools::css('.ctag.clickable:hover', [], 'opacity: 0.8'));
         self::addStyle(WebshipTools::css('.ctag.nf', [], 'font-weight: normal',
             'letter-spacing: normal'));
+        self::addStyle(WebshipTools::css('.ctag.image-circle', [], 'padding-left: 0',
+            'border-radius: 10px 5px 5px 10px'));
+        self::addStyle(WebshipTools::css('.ctag.small.image-circle', [],
+            'border-radius: 10px 3px 3px 10px'));
     }
 
     /**
@@ -108,6 +112,15 @@ class TagHtmlView extends ColorHtmlView {
      */
     public function normalFont() : static {
         $this->addClass('nf');
+        return $this;
+    }
+
+    /**
+     * Set this tag as an image circle on its left.
+     * @return $this
+     */
+    public function imageCircle() : static {
+        $this->addClass('image-circle');
         return $this;
     }
 }

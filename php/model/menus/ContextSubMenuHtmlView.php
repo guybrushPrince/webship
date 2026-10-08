@@ -53,7 +53,8 @@ class ContextSubMenuHtmlView extends SubMenuHtmlView {
             'content: ""', 'padding-left: 5px'));
         self::addStyle(WebshipTools::css('nav.menu.context', [' ', 'li.sub-menu-entry', ' > ', 'ul'],
             'display: none', 'list-style-type: none', 'margin: 0', 'background: var(--ws-context-menu-bg)',
-            'border: 1px solid var(--ws-context-menu-brd)', 'padding: 0'));
+            'border: 1px solid var(--ws-context-menu-brd)', 'padding: 0',
+            'border-radius: var(--ws-main-menu-br)'));
         self::addStyle(WebshipTools::css('nav.menu.context', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li'],
             'width: fit-content',
             'min-height: 30px', 'height: auto', 'padding: 5px 20px', 'box-sizing: border-box', 'position: relative',
@@ -61,6 +62,8 @@ class ContextSubMenuHtmlView extends SubMenuHtmlView {
         self::addStyle(WebshipTools::css('nav.menu.context', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ', 'li',
             ':hover'],
             'background: var(--ws-context-menu-brd)'));
+        self::addStyle(WebshipTools::css('nav.menu.context', [' ', 'li.sub-menu-entry', ' > ', 'ul', ' > ',
+            'li:first-child'], 'border-radius: var(--ws-main-menu-br) var(--ws-main-menu-br) 0 0'));
     }
 
     /**

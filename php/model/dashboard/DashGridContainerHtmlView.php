@@ -37,7 +37,7 @@ class DashGridContainerHtmlView extends HtmlView {
      * The dash view to redirect methods.
      * @var DashGridHtmlView|null
      */
-    private ?DashGridHtmlView $dashView = null;
+    private DashGridHtmlView|null $dashView = null;
 
     /**
      * DashGridContainerHtmlView constructor.
@@ -56,7 +56,7 @@ class DashGridContainerHtmlView extends HtmlView {
     public static function addCSS() : void  {
         self::addStyle(WebshipTools::css('.dash-grid-container', [], 'display: flex', 'width: 100%',
             'flex-direction: row', 'align-items: center', 'justify-content: center', 'flex-wrap: wrap-reverse',
-            'margin-top: 10px'));
+            'margin-top: 10px', 'gap: 10px'));
         self::addStyle(WebshipTools::css('.dash-grid-container', [' > ', ':nth-child(2)'], 'min-width: 150px',
             'width: 50%'));
         
@@ -77,22 +77,24 @@ class DashGridContainerHtmlView extends HtmlView {
         }
 
         $view = new DashGridContainerHtmlView();
-        $left = $view->add(new HtmlView());
-        $right = $view->add(new HtmlView());
+        $left = $view->view();
+        $right = $view->view();
 
-        $instruction1 = $right->add(new HtmlView());
+        $instruction1 = $right->view();
         $instruction1->ref('instruction1');
-        $instruction1->texts()->
-        text(Language::ENGLISH, 'To change the position and size, please select the desired position of the upper left corner of your dashboard item in the grid.')->
-        text(Language::GERMAN, 'Du kannst die Position und Größe deines Elements auf dem Dashboard verändern. Dein Element befindet sich gerade an den Plätzen der dick-umrandeten Kästchen. 
-            Um die Position und Größe zu verändern, musst du zunächst die gewünschte obere linke Ecke auswählen, an der dein Element beginnen soll. Dazu klickst du auf ein freies, ungefülltes Kästchen.');
+        $instruction1->texts([
+            Language::ENGLISH => 'To change the position and size, please select the desired position of the upper left corner of your dashboard item in the grid.',
+            Language::GERMAN  => 'Du kannst die Position und Größe deines Elements auf dem Dashboard verändern. Dein Element befindet sich gerade an den Plätzen der dick-umrandeten Kästchen. 
+            Um die Position und Größe zu verändern, musst du zunächst die gewünschte obere linke Ecke auswählen, an der dein Element beginnen soll. Dazu klickst du auf ein freies, ungefülltes Kästchen.'
+        ]);
 
-        $instruction2 = $right->add(new HtmlView('hidden'));
+        $instruction2 = $right->view('hidden');
         $instruction2->ref('instruction2');
-        $instruction2->texts()->
-        text(Language::ENGLISH, 'Please select the desired lower right corner of your dashboard item to set its dimensions.')->
-        text(Language::GERMAN, 'Bitte wähle nun die gewünschte untere rechte Ecke deines Elements, um seine Dimensionen festzulegen. Die möglichen Kästchen werden dir mit dickeren Rahmen angezeigt. 
-            Du kannst auch auf deine obere linke Ecke klicken, um dein Element so klein wie möglich zu halten.');
+        $instruction2->texts([
+            Language::ENGLISH => 'Please select the desired lower right corner of your dashboard item to set its dimensions.',
+            Language::GERMAN  => 'Bitte wähle nun die gewünschte untere rechte Ecke deines Elements, um seine Dimensionen festzulegen. Die möglichen Kästchen werden dir mit dickeren Rahmen angezeigt. 
+            Du kannst auch auf deine obere linke Ecke klicken, um dein Element so klein wie möglich zu halten.'
+        ]);
 
         $view->dashView = DashGridHtmlView::create($dashItem, $cols, $rows, $instruction1, $instruction2, $view);
         $left->add($view->dashView);

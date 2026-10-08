@@ -47,8 +47,8 @@ class ContextMenuEntryHtmlView extends MenuEntryHtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('nav.menu.context', [' ', 'li'], '', 'display: flex', 'flex-wrap: wrap',
-            'cursor: pointer', 'font-size: 15px', 'text-transform: none', 'font-weight: normal',
+        self::addStyle(WebshipTools::css('nav.menu.context', [' ', 'li'], 'display: flex',
+            'flex-wrap: wrap', 'cursor: pointer', 'font-size: 15px', 'text-transform: none', 'font-weight: normal',
             'align-items: center'));
         self::addStyle(WebshipTools::css('nav.menu.context', [' ', 'li', ':hover'],
             'background: var(--ws-std-bg)'));

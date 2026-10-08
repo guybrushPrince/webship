@@ -112,7 +112,7 @@ class AlertHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.alert', [' ', '.ctr', ' > ', 'button.std-button.closer:hover', ' > ', 'img'],
             'filter: var(--ws-alert-img-filter-hover)'));
 
-        self::addStyle(WebshipTools::css('.alert.cover', [' ', 'iframe'], 'width: 100%', 'border: 0',
+        self::addStyle(WebshipTools::css('.alert', [' ', 'iframe'], 'width: 100%', 'border: 0',
             'background: var(--ws-neutral)', 'border-radius: 10px', 'min-height: 250px',
             'max-height: 500px'));
 
@@ -192,11 +192,11 @@ class AlertHtmlView extends HtmlView {
         $con = $v;
         if ($screen || $fullView) {
             $v->ref('alert');
-            $overlay = $v->add(new HtmlView('overlay'));
+            $overlay = $v->view('overlay');
             $overlay->protocol(WEvent::CLICK)->doIt(BasicEvents::Delete, [
                 'view' => $v
             ], BasicEvents::environment());
-            $con = $v->add(new HtmlView('a-message'));
+            $con = $v->view('a-message');
             $con->ref('alert-content');
         }
         $v->box = $con;

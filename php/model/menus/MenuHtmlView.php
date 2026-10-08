@@ -52,9 +52,9 @@ class MenuHtmlView extends HtmlView {
      * @inheritDoc
      */
     public static function addCSS() : void {
-        self::addStyle(WebshipTools::css('nav.menu', '', 'position: fixed', 'left: 0',
+        self::addStyle(WebshipTools::css('nav.menu', [], 'position: fixed', 'left: 0',
             'top: 0', 'width: 100%', 'display: flex', 'flex-direction: column', 'background: var(--ws-main-menu)',
-            'z-index: 100'));
+            'z-index: 100', '--ws-main-menu-br: 6px'));
         self::addStyle(WebshipTools::css('nav.menu', [' ', 'ul'], '', 'list-style-type: none',
             'display: flex', 'margin: 0', 'flex-wrap: nowrap', 'padding: 0'));
         self::addStyle(WebshipTools::css('nav.menu', [' ', 'ul', ' > ', 'li'], 'width: fit-content',

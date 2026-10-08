@@ -44,7 +44,7 @@ class PlusHtmlView extends HtmlView {
      * @param string[]|string $classes Classes.
      * @return PlusHtmlView
      */
-    public static function _new(array|string $classes = []) : PlusHtmlView {
+    public static function create(array|string $classes = []) : PlusHtmlView {
         return new PlusHtmlView($classes);
     }
 }

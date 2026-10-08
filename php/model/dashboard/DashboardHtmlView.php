@@ -167,7 +167,10 @@ class DashboardHtmlView extends HtmlView {
                     try {
                         $view->add($item->createView());
                     } catch (Error $error) {
-
+                        $dummy = new DashboardItemHtmlView([], $item->getXPosition(), $item->getXDimension(),
+                            $item->getYPosition(), $item->getYDimension());
+                        $view->add($dummy);
+                        $dummy->texts($error->getMessage() . $error->getTraceAsString());
                     }
                 });
             } else if (!is_null(self::$dashboardHandler)) {
@@ -233,7 +236,7 @@ class DashboardHtmlView extends HtmlView {
      */
     public function plus(array|string $classes = []): DashboardItemHtmlView {
         $itemView = new DashboardItemHtmlView(['plus'] + $classes);
-        $itemView->add(new PlusHtmlView());
+        $itemView->add(PlusHtmlView::create());
         $this->add($itemView);
         return $itemView;
     }
