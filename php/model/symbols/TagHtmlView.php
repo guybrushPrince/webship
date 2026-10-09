@@ -61,8 +61,8 @@ class TagHtmlView extends ColorHtmlView {
             'box-sizing: border-box', 'height: 30px', 'display: flex', 'flex-direction: row',
             'align-items: center'));
         self::addStyle(WebshipTools::css('.ctag.small', [], 'border-radius: 3px',
-            'width: fit-content', 'width: -moz-fit-content', 'font-weight: normal', 'letter-spacing: normal',
-            'height: 20px'));
+            'font-weight: normal', 'letter-spacing: normal', 'height: 20px'));
+        self::addStyle(WebshipTools::css('.ctag.medium', [],'height: 25px'));
         self::addStyle(WebshipTools::css('.ctag.clickable', [], 'cursor: pointer',
             'transition: 0.5s opacity'));
         self::addStyle(WebshipTools::css('.ctag.clickable:hover', [], 'opacity: 0.8'));
@@ -72,6 +72,8 @@ class TagHtmlView extends ColorHtmlView {
             'border-radius: 10px 5px 5px 10px'));
         self::addStyle(WebshipTools::css('.ctag.small.image-circle', [],
             'border-radius: 10px 3px 3px 10px'));
+        self::addStyle(WebshipTools::css('.ctag.medium.image-circle', [],
+            'border-radius: 12.5px 5px 5px 12.5px'));
     }
 
     /**
@@ -94,6 +96,15 @@ class TagHtmlView extends ColorHtmlView {
      */
     public function small() : static {
         $this->addClass('small');
+        return $this;
+    }
+
+    /**
+     * Set the tag medium.
+     * @return $this
+     */
+    public function medium() : static {
+        $this->addClass('medium');
         return $this;
     }
 
