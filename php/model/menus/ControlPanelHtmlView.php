@@ -137,14 +137,14 @@ class ControlPanelHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.ctr.fix', [' ', 'button.std-button'], 'box-shadow: none',
             '-webkit-box-shadow: none', '-moz-box-shadow: none', 'background: none', 'border-color: var(--ws-font-info)',
             'width: 20px', 'height: 20px', 'min-width: 20px', 'min-height: 20px', 'padding: 3px'));
-        self::addStyle(WebshipTools::css('.ctr.fix', [' ', 'button.std-button', ':hover'],
+        self::addStyle(WebshipTools::css('.ctr.fix:not(.org)', [' ', 'button.std-button', ':hover'],
             'background: var(--ws-font-info)'));
-        self::addStyle(WebshipTools::css('.ctr.fix', [' ', 'button.std-button', ' > ', 'img'],
+        self::addStyle(WebshipTools::css('.ctr.fix:not(.org)', [' ', 'button.std-button', ' > ', 'img'],
             'filter: brightness(0) saturate(100%) invert(39%) sepia(18%) saturate(1267%) hue-rotate(155deg) brightness(97%) contrast(98%)',
             'transition: filter 0.25s'));
-        self::addStyle(WebshipTools::css('.ctr.fix', [' ', 'button.std-button', ':hover', ' > ', 'img'],
+        self::addStyle(WebshipTools::css('.ctr.fix:not(.org)', [' ', 'button.std-button', ':hover', ' > ', 'img'],
             'filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(241deg) brightness(110%) contrast(106%)'));
-        self::addStyle(WebshipTools::css('.ctr.fix', [' ', 'button.std-button.del', ':hover'],
+        self::addStyle(WebshipTools::css('.ctr.fix:not(.org)', [' ', 'button.std-button.del', ':hover'],
             'background: var(--ws-del-tr)', 'border-color: var(--ws-neutral)'));
 
         self::addStyle(WebshipTools::css('.ctr.small', [], 'min-height: 20px', 'height: 20px',
@@ -287,9 +287,12 @@ class ControlPanelHtmlView extends HtmlView {
      * Fixes the control panel within aview.
      * @param bool $top If it is located in the top.
      * @param bool $right If it is located in the right.
+     * @param string|int|null $vDist A distance to the top.
+     * @param bool $originalColors Whether original colors shall be used, or not.
      * @return $this
      */
-    public function fix(bool $top = true, bool $right = true, string|int|null $vDist = null) : static {
+    public function fix(bool $top = true, bool $right = true, string|int|null $vDist = null,
+                        bool $originalColors = false) : static {
         $this->addClass('fix');
         if ($top) {
             if ($right) $this->addClass('tr');
@@ -302,6 +305,7 @@ class ControlPanelHtmlView extends HtmlView {
             if ($right) $this->addClass('br');
             else $this->addClass('bl');
         }
+        if ($originalColors) $this->addClass('org');
         return $this;
     }
 

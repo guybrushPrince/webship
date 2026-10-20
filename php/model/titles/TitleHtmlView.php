@@ -2,6 +2,7 @@
 
 namespace webship\titles;
 
+use webship\containers\ContainerHtmlView;
 use webship\contents\SpanTextHtmlView;
 use webship\core\HtmlView;
 use webship\symbols\ImageHtmlView;
@@ -60,12 +61,17 @@ class TitleHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.title', [],
             'font-family: Roboto, sans-serif', 'text-transform: none', 'padding: 0 0 16px 0',
             'font-size: 1.75em', 'font-weight: lighter', 'border: none', 'display: flex', 'flex-direction: row',
-            'align-items: center', 'gap: 10px'));
+            'align-items: center', 'gap: 10px', '--ws-ti-height: 46px'));
         self::addStyle(WebshipTools::css('.title.small', [], 'padding: 5px 0 5px 5px', 'font-size: 1.25em'));
         self::addStyle(WebshipTools::css('.title', [' > ', '.title-circle'], 'display: inline-block',
             'border-radius: 50%', 'width: 20px', 'height: 20px'));
         self::addStyle(WebshipTools::css('.title', [' > ', 'img'], 'display: inline-block',
             'border-radius: 50%', 'width: 20px', 'height: 20px'));
+
+        self::addStyle(WebshipTools::css('.container.title-container', [' > ', 'nth-child(2)'],
+            'height: calc(100% - var(--ws-ti-height))'));
+        self::addStyle(WebshipTools::css('.title.title-container', [],
+            'height: var(--ws-ti-height)'));
     }
 
     /**
@@ -90,6 +96,25 @@ class TitleHtmlView extends HtmlView {
     public function small() : static {
         $this->classes[] = 'small';
         return $this;
+    }
+
+    /**
+     * Creates a container with the given title that sets the second element to full height.
+     * @param string|string[] $title The title (possibly separated by language).
+     * @param string|null $dataType The type of the title if desired.
+     * @param string|null $img The name of an image.
+     * @param string|string[] $classes Some classes.
+     * @return ContainerHtmlView
+     */
+    public static function createTitleContainer(string|array $title, string|null $dataType = null,
+                                                string|null $img = null,
+                                                string|array $classes = []) : ContainerHtmlView {
+        $container = ContainerHtmlView::createIt(['h100', 'title-container']);
+        if (!is_array($classes)) $classes = [ $classes ];
+        $classes[] = 'title-container';
+        $container->add(TitleHtmlView::create($title, $dataType, $img, $classes));
+
+        return $container;
     }
 
 }

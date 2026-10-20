@@ -129,8 +129,11 @@ class CodeEditorHtmlView extends TextHtmlView {
      * @param int|null $language The programming language.
      * @param string[]|string $classes Some classes.
      */
-    public static function createIt(string $id, ?int $language = null, array|string $classes = []) : CodeEditorHtmlView {
-        return new CodeEditorHtmlView($id, $language, $classes);
+    public static function createIt(string $id, ?int $language = null, string|null $value = null,
+                                    array|string $classes = []) : CodeEditorHtmlView {
+        $editor = new CodeEditorHtmlView($id, $language, $classes);
+        if (!is_null($value)) $editor->texts($value);
+        return $editor;
     }
 }
 ?>

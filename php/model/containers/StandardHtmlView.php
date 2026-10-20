@@ -59,6 +59,7 @@ class StandardHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.std', ['.p5'], 'padding: 5px'));
         self::addStyle(WebshipTools::css('.std', ['.p10'], 'padding: 10px'));
         self::addStyle(WebshipTools::css('.std', ['.p15'], 'padding: 15px'));
+        self::addStyle(WebshipTools::css('.std', ['.h100'], 'height: 100%'));
     }
 
     /**
