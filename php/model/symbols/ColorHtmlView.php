@@ -13,7 +13,7 @@ use webship\WebshipTools;
  *
  * <p>A special color is <em>none</em> that omits the color.</p>
  *
- * <p>Prominent specializations are {@link TagHtmlView} and {@link UserChipHtmlView}.</p>
+ * <p>Prominent specialization is {@link TagHtmlView}.</p>
  *
  * <code>
  * ColorHtmlView::createIt("#123456", 'Hello World')->texts('Hello World');
