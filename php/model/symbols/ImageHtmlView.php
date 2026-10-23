@@ -71,6 +71,8 @@ class ImageHtmlView extends HtmlView {
      */
     public static function addCSS() : void {
         self::addStyle(WebshipTools::css('.container.min-img', [], 'width: 20px', 'height: 20px'));
+        self::addStyle(WebshipTools::css('.container.min-img.medium-img', [], 'width: 25px',
+            'height: 25px'));
         self::addStyle(WebshipTools::css('.min-img', [' > ', 'img'], 'width: 100%'));
         self::addStyle(WebshipTools::css('img.image.cover', [], 'object-fit: cover'));
         self::addStyle(WebshipTools::css('img.image.circle', [], 'border-radius: 50%'));
@@ -118,11 +120,13 @@ class ImageHtmlView extends HtmlView {
      * @param string[]|string|null $alt An alternative text.
      * @param string|string[] $classes Some classes.
      * @param bool $asCircle Whether the image shall be represented as circle, or not.
+     * @param bool $mediumSized If the image shall be sized medium.
      * @return HtmlView
      */
     public static function mini(string $src, array|string|null $alt = null, string|array $classes = [],
-                                bool $asCircle = false) : HtmlView {
+                                bool $asCircle = false, bool $mediumSized = false) : HtmlView {
         $mini = new ContainerHtmlView(['hor', 'vcent', 'min-img']);
+        if ($mediumSized) $mini->addClass('medium-img');
         $img = ImageHtmlView::create($src, $alt, $classes);
         if ($asCircle) $img->circle();
         $mini->add($img);
