@@ -166,8 +166,8 @@ class AlertHtmlView extends HtmlView {
      * @throws Exception
      */
     protected static function create(array|string $message = [], bool $screen = false, bool $fullView = false,
-                                  ?AlertHtmlView $v = null, ?string $alertId = null,
-                                  ?string $image = null, array|string $classes = []) : AlertHtmlView {
+                                     AlertHtmlView|null $v = null, string|null $alertId = null,
+                                     string|null $image = null, array|string $classes = []) : AlertHtmlView {
         $classes = is_array($classes) ? $classes : [ $classes ];
         if (!is_array($message)) $message = [ View::getLanguage() => $message ];
 
@@ -208,7 +208,7 @@ class AlertHtmlView extends HtmlView {
         } else $textView = $con;
 
         $textView->texts((array_key_exists(self::getLanguage(), $message) ?
-            ParsedownExtra::instance()->text('<div>' . $message[self::getLanguage()] . '</div>') : ''));
+            ('<div>' . ParsedownExtra::instance()->text($message[self::getLanguage()]) . '</div>') : ''));
 
         if ($screen || $fullView || $alertId !== null) {
             $con->ref('alert-view');
