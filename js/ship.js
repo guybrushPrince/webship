@@ -220,7 +220,7 @@ let ms = (s,e) => {
         let l = $(e.target).is("textarea") || $(e.target).is("iframe") ? 0 : $(e.target).scrollLeft();
         if (e.pageX !== undefined) l += e.pageX;
         else l += $(e.target).offset().left + 50;
-        l = (l + w > d ? d - w : l);
+        l = (l + w > d ? d - w - 5 : l);
         let ta = $(e.target).is("textarea") || $(e.target).is("iframe") ? 0 : $(e.target).scrollTop();
         s.css("top", (e.pageY !== undefined ? e.pageY : $(e.target).offset().top + 50) + ta).css("left", l);
     } catch (e) {}

@@ -72,7 +72,7 @@ class StandardButtonHtmlView extends ButtonHtmlView {
             '-webkit-transition: -webkit-box-shadow .25s', 'transition: box-shadow .25s',
             '-webkit-box-shadow: var(--ws-haptic-shadow)', 'box-shadow: var(--ws-haptic-shadow)',
             'transition: background 0.5s', 'border-radius: 5px', 'box-sizing: border-box', 'gap: 10px',
-            '--ws-hover: var(--ws-std-bg-dark)'));
+            '--ws-hover: var(--ws-std-bg-dark)', '--ws-but-small: 30px', '--ws-but-tiny: 20px', '--ws-but-list: 40px'));
         self::addStyle(WebshipTools::css('button.std-button', [':hover'],
             'background: var(--ws-hover)'));
         self::addStyle(WebshipTools::css('button.std-button', [' > ', 'img'], 'height: 100%'));
@@ -80,10 +80,16 @@ class StandardButtonHtmlView extends ButtonHtmlView {
         self::addStyle(WebshipTools::css('button.std-button.plain', [], 'background: none',
             '-webkit-box-shadow: none', 'box-shadow: none'));
 
-        self::addStyle(WebshipTools::css('button.std-button.small', [], 'margin: 0', 'height: 30px',
-            'max-height: 30px', 'width: auto', 'min-height: auto'));
+        self::addStyle(WebshipTools::css('button.std-button.small', [], 'margin: 0',
+            'height: var(--ws-but-small)', 'max-height: var(--ws-but-small)', 'width: auto', 'min-height: auto'));
         self::addStyle(WebshipTools::css('button.std-button.small', [' > ', 'img'], 'height: 50%'));
         self::addStyle(WebshipTools::css('button.std-button.sm-img', [' > ', 'img'], 'height: 50%',
+            'margin: 5px'));
+
+        self::addStyle(WebshipTools::css('button.std-button.tiny', [], 'margin: 0',
+            'height: var(--ws-but-tiny)', 'max-height: var(--ws-but-tiny)', 'width: auto', 'min-height: auto'));
+        self::addStyle(WebshipTools::css('button.std-button.tiny', [' > ', 'img'], 'height: 50%'));
+        self::addStyle(WebshipTools::css('button.std-button.tiny-img', [' > ', 'img'], 'height: 50%',
             'margin: 5px'));
 
         self::addStyle(WebshipTools::css('button.std-button.w25', [], 'width: 25%'));
@@ -94,8 +100,9 @@ class StandardButtonHtmlView extends ButtonHtmlView {
         self::addStyle(WebshipTools::css('button.std-button.long', [], 'width: 250px'));
         self::addStyle(WebshipTools::css('button.std-button.sl', [], 'margin: 0'));
 
-        self::addStyle(WebshipTools::css('button.std-button.only-img', [], 'width: 30px', 'height: 30px',
-            'padding: 5px', 'margin: 0', 'min-height: 30px', 'max-height: 30px', 'min-width: 30px', 'max-width: 30px'));
+        self::addStyle(WebshipTools::css('button.std-button.only-img', [], 'width: var(--ws-but-small)',
+            'height: var(--ws-but-small)', 'padding: 5px', 'margin: 0', 'min-height: var(--ws-but-small)',
+            'max-height: var(--ws-but-small)', 'min-width: var(--ws-but-small)', 'max-width: var(--ws-but-small)'));
         self::addStyle(WebshipTools::css('button.std-button.long.only-img', [], 'width: var(--ws-common-height)',
             'height: var(--ws-common-height)', 'padding: 5px', 'margin: var(--ws-common-margin)',
             'min-height: var(--ws-common-height)', 'max-height: var(--ws-common-height)', 'min-width: var(--ws-common-height)',
@@ -103,8 +110,8 @@ class StandardButtonHtmlView extends ButtonHtmlView {
         self::addStyle(WebshipTools::css('button.std-button:disabled', [], 'opacity: 0.25', 'cursor: not-allowed'));
 
         self::addStyle(WebshipTools::css('button.std-button.list-b', [], 'margin: 0',
-            'justify-content: flex-start', 'text-align: left', 'min-height: 40px', 'height: 40px', 'font-size: 14px',
-            'border-radius: 0', 'width: 100%'));
+            'justify-content: flex-start', 'text-align: left', 'min-height: var(--ws-but-list)',
+            'height: var(--ws-but-list)', 'font-size: 14px', 'border-radius: 0', 'width: 100%'));
         self::addStyle(WebshipTools::css('button.std-button.list-b', [' > ', 'img'], 'height: 50%'));
         self::addStyle(WebshipTools::css('button.std-button.list-b', [' > ', 'img.invisible'],
             'visibility: hidden'));
@@ -165,6 +172,15 @@ class StandardButtonHtmlView extends ButtonHtmlView {
      */
     public function small() : static {
         $this->addClass('small');
+        return $this;
+    }
+
+    /**
+     * Sets the button tiny.
+     * @return $this
+     */
+    public function tiny() : static {
+        $this->addClass('tiny');
         return $this;
     }
 
