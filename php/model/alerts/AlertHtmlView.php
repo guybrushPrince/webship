@@ -207,8 +207,18 @@ class AlertHtmlView extends HtmlView {
             $v->box = $textView;
         } else $textView = $con;
 
-        $textView->texts((array_key_exists(self::getLanguage(), $message) ?
-            ('<div>' . ParsedownExtra::instance()->text($message[self::getLanguage()]) . '</div>') : ''));
+
+        if (array_key_exists(self::getLanguage(), $message)) {
+            $text = $message[self::getLanguage()];
+            $extend = true;
+            if (WebshipTools::startsWith('<', $text)) {
+                $text = '<div>' . $text . '</div>';
+                $extend = false;
+            }
+            $text = ParsedownExtra::instance()->text($text);
+            if ($extend) $text = '<div>' . $text . '</div>';
+        } else $text = '';
+        $textView->texts($text);
 
         if ($screen || $fullView || $alertId !== null) {
             $con->ref('alert-view');
