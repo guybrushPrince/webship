@@ -82,41 +82,40 @@ class ContainerHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.container', '.scroll-x', 'overflow-x: auto'));
         self::addStyle(WebshipTools::css('.container', '.scroll-y', 'overflow-y: auto'));
 
-        self::addStyle(WebshipTools::css('.container', '.gap', 'gap: 5px'));
-        self::addStyle(WebshipTools::css('.container', '.gap5', 'gap: 5px'));
-        self::addStyle(WebshipTools::css('.container', '.gap10', 'gap: 10px'));
-        self::addStyle(WebshipTools::css('.container', '.gap15', 'gap: 15px'));
-        self::addStyle(WebshipTools::css('.container', '.gap20', 'gap: 20px'));
+        foreach (['' => 5, 0 => 0, 5 => 5, 10 => 10, 15 => 15, 20 => 20, 25 => 25] as $name => $space) {
+            $spaceBase = $space;
+            if ($space !== 0) $space .= 'px';
+            self::addStyle(WebshipTools::css('.container', '.gap' . $name,
+                'gap: ' . $space));
+            self::addStyle(WebshipTools::css('.container', '.p' . $name,
+                'padding: ' . $space));
+            self::addStyle(WebshipTools::css('.container', '.p' . $name . 'i',
+                'padding: ' . $space . ' !important'));
+            self::addStyle(WebshipTools::css('.container', '.ptlr' . $name,
+                'padding-top: ' . $space, 'padding-left: ' . $space, 'padding-right: ' . $space));
+            self::addStyle(WebshipTools::css('.container', '.ptb' . $name,
+                'padding-top: ' . $space, 'padding-bottom: ' . $space));
+            self::addStyle(WebshipTools::css('.container', '.plr' . $name,
+                'padding-left: ' . $space, 'padding-right: ' . $space));
+            self::addStyle(WebshipTools::css('.container', '.m' . $name,
+                'margin: ' . $space));
+            self::addStyle(WebshipTools::css('.container', '.m' . $name . 'i',
+                'margin: ' . $space . ' !important'));
 
-        self::addStyle(WebshipTools::css('.container', '.p', 'padding: 5px'));
-        self::addStyle(WebshipTools::css('.container', '.p0', 'padding: 0'));
-        self::addStyle(WebshipTools::css('.container', '.p0i', 'padding: 0 !important'));
-        self::addStyle(WebshipTools::css('.container', '.p5', 'padding: 5px'));
-        self::addStyle(WebshipTools::css('.container', '.p10', 'padding: 10px'));
-        self::addStyle(WebshipTools::css('.container', '.p15', 'padding: 15px'));
-        self::addStyle(WebshipTools::css('.container', '.p20', 'padding: 20px'));
+            self::addStyle(WebshipTools::css('.container', '.br' . $name,
+                'border-radius: ' . $space));
+            self::addStyle(WebshipTools::css('.container', '.tbr' . $name,
+                'border-radius: ' . $space . ' ' . $space . ' 0 0'));
+            self::addStyle(WebshipTools::css('.container', '.bbr' . $name,
+                'border-radius: 0 0 ' . $space . ' ' . $space));
+
+            self::addStyle(WebshipTools::css('.container.gap' . $name, [' > ', '.container.w50'],
+                'width: calc(50% - ' . ($spaceBase / 2) . 'px)'));
+        }
 
         self::addStyle(WebshipTools::css('.container', '.pb5i', 'padding-bottom: 5px !important'));
         self::addStyle(WebshipTools::css('.container', '.ptb5i', 'padding-top: 5px !important',
             'padding-bottom: 5px !important'));
-
-        self::addStyle(WebshipTools::css('.container', '.ptb', 'padding-top: 5px',
-            'padding-bottom: 5px'));
-        self::addStyle(WebshipTools::css('.container', '.ptb5', 'padding-top: 5px',
-            'padding-bottom: 5px'));
-        self::addStyle(WebshipTools::css('.container', '.ptb10', 'padding-top: 10px',
-            'padding-bottom: 10px'));
-        self::addStyle(WebshipTools::css('.container', '.ptb15', 'padding-top: 15px',
-            'padding-bottom: 15px'));
-        self::addStyle(WebshipTools::css('.container', '.ptb20', 'padding-top: 20px',
-            'padding-bottom: 20px'));
-
-        self::addStyle(WebshipTools::css('.container', '.m0', 'margin: 0'));
-        self::addStyle(WebshipTools::css('.container', '.m0i', 'margin: 0 !important'));
-        self::addStyle(WebshipTools::css('.container', '.m5', 'margin: 5px'));
-        self::addStyle(WebshipTools::css('.container', '.m10', 'margin: 10px'));
-        self::addStyle(WebshipTools::css('.container', '.m15', 'margin: 15px'));
-        self::addStyle(WebshipTools::css('.container', '.m20', 'margin: 20px'));
 
         self::addStyle(WebshipTools::css('.container', '.hcent', 'justify-content: center',
             'justify-items: center'));
@@ -148,32 +147,6 @@ class ContainerHtmlView extends HtmlView {
             'display: inherit'));
         self::addStyle(WebshipTools::css('.container.with-default', [' > ', '.default'],
             'display: none'));
-
-        self::addStyle(WebshipTools::css('.container.gap5', [' > ', '.container.w50'],
-            'width: calc(50% - 2.5px)'));
-        self::addStyle(WebshipTools::css('.container.gap10', [' > ', '.container.w50'],
-            'width: calc(50% - 5px)'));
-        self::addStyle(WebshipTools::css('.container.gap15', [' > ', '.container.w50'],
-            'width: calc(50% - 7.5px)'));
-        self::addStyle(WebshipTools::css('.container.gap20', [' > ', '.container.w50'],
-            'width: calc(50% - 10px)'));
-
-        self::addStyle(WebshipTools::css('.container', '.br0', 'border-radius: 0'));
-        self::addStyle(WebshipTools::css('.container', '.br5', 'border-radius: 5px'));
-        self::addStyle(WebshipTools::css('.container', '.br10', 'border-radius: 10px'));
-        self::addStyle(WebshipTools::css('.container', '.br15', 'border-radius: 15px'));
-        self::addStyle(WebshipTools::css('.container', '.br20', 'border-radius: 20px'));
-
-        self::addStyle(WebshipTools::css('.container', '.tbr0', 'border-radius: 0'));
-        self::addStyle(WebshipTools::css('.container', '.tbr5', 'border-radius: 5px 5px 0 0'));
-        self::addStyle(WebshipTools::css('.container', '.tbr10', 'border-radius: 10px 10px 0 0'));
-        self::addStyle(WebshipTools::css('.container', '.tbr15', 'border-radius: 15px 15px 0 0'));
-        self::addStyle(WebshipTools::css('.container', '.tbr20', 'border-radius: 20px 20px 0 0'));
-        self::addStyle(WebshipTools::css('.container', '.bbr0', 'border-radius:  0'));
-        self::addStyle(WebshipTools::css('.container', '.bbr5', 'border-radius:  0 0 5px 5px'));
-        self::addStyle(WebshipTools::css('.container', '.bbr10', 'border-radius: 0 0 10px 10px'));
-        self::addStyle(WebshipTools::css('.container', '.bbr15', 'border-radius: 0 0 15px 15px'));
-        self::addStyle(WebshipTools::css('.container', '.bbr20', 'border-radius: 0 0 20px 20px'));
     }
 
     /**
