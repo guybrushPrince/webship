@@ -92,7 +92,7 @@ class ContainerHtmlView extends HtmlView {
             self::addStyle(WebshipTools::css('.container', '.p' . $name . 'i',
                 'padding: ' . $space . ' !important'));
             self::addStyle(WebshipTools::css('.container', '.ptlr' . $name,
-                'padding-top: ' . $space, 'padding-left: ' . $space, 'padding-right: ' . $space));
+                'padding: ' . $space . ' ' . $space . ' 0 ' . $space));
             self::addStyle(WebshipTools::css('.container', '.ptb' . $name,
                 'padding-top: ' . $space, 'padding-bottom: ' . $space));
             self::addStyle(WebshipTools::css('.container', '.plr' . $name,
