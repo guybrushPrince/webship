@@ -46,7 +46,7 @@ class TitleHtmlView extends HtmlView {
 
         if (!is_null($img) && is_null($dataType)) $this->add(new ImageHtmlView($img));
         if ($dataType) {
-            $span = $this->view('title-circle');
+            $span = $this->container(['title-circle', 'hor', 'vcent', 'hcent']);
             $span->data($dataType);
             if (!is_null($img)) $span->add(new ImageHtmlView($img));
         }
@@ -63,8 +63,10 @@ class TitleHtmlView extends HtmlView {
             'font-size: 1.75em', 'font-weight: lighter', 'border: none', 'display: flex', 'flex-direction: row',
             'align-items: center', 'gap: 10px', '--ws-ti-height: 46px'));
         self::addStyle(WebshipTools::css('.title.small', [], 'padding: 5px 0 5px 5px', 'font-size: 1.25em'));
-        self::addStyle(WebshipTools::css('.title', [' > ', '.title-circle'], 'display: inline-block',
+        self::addStyle(WebshipTools::css('.title', [' > ', '.title-circle'], 'display: inline-flex',
             'border-radius: 50%', 'width: 20px', 'height: 20px'));
+        self::addStyle(WebshipTools::css('.title', [' > ', '.title-circle', ' > ', 'img'],
+            'width: 75%'));
         self::addStyle(WebshipTools::css('.title', [' > ', 'img'], 'display: inline-block',
             'border-radius: 50%', 'width: 20px', 'height: 20px'));
 
