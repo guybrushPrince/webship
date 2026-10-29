@@ -85,10 +85,10 @@ class DialogHtmlView extends HtmlView {
         self::addStyle(WebshipTools::css('.dialog', [], 'position: fixed', 'top: 0', 'left: 0',
             'width: 100%', 'height: 100%',
             '--ws-dialog-overlay: var(--ws-screen-overlay)', 'background: var(--ws-dialog-overlay)', 'z-index: 10000000',
-            '--ws-dialog-shadow: var(--ws-front-shadow)', 'display: flex', 'flex-direction: row', 'justify-content: center', 'align-items: center'));
-        self::addStyle(WebshipTools::css('.dialog', [' > ', '.dialog-message'], /*'position: absolute',
-            'top: calc((100% - 150px) / 2)', 'left: calc((100% - 300px) / 2)',*/
-            'width: 300px', 'min-height: 150px', 'border-color: var(--ws-border-error)',
+            '--ws-dialog-shadow: var(--ws-front-shadow)', 'display: flex', 'flex-direction: row',
+            'justify-content: center', 'align-items: center'));
+        self::addStyle(WebshipTools::css('.dialog', [' > ', '.dialog-message'],
+            'width: 300px', 'border-color: var(--ws-border-error)',
             'color: var(--ws-font-error)', 'background-color: var(--ws-background-error)', 'border: 1px solid',
             'border-radius: 5px', '-webkit-box-shadow: var(--ws-dialog-shadow)',
             '-moz-box-shadow: var(--ws-dialog-shadow)', 'box-shadow: var--ws-dialog-shadow)'));
