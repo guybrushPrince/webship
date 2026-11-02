@@ -84,13 +84,16 @@ class FormLabelHtmlView extends HtmlView {
      * Create a new form label.
      * @param IShippable|SelectHtmlView|InputHtmlView|string|null $for The reference to the input for which this label is for.
      * @param string[]|string $classes Some classes.
+     * @param string[]|string|null $label The label.
      * @return FormLabelHtmlView
      */
     public static function create(IShippable|SelectHtmlView|InputHtmlView|string|null $for = null,
-                                  array|string $classes = []) : FormLabelHtmlView {
+                                  array|string $classes = [], array|string|null $label = null) : FormLabelHtmlView {
         if ($for instanceof IShippable) $for = ShipperRegister::getObjectString($for);
         else if ($for instanceof InputHtmlView || $for instanceof SelectHtmlView) $for = $for->getId();
-        return new FormLabelHtmlView($for, $classes);
+        $view = new FormLabelHtmlView($for, $classes);
+        if (!is_null($label)) $view->texts($label);
+        return $view;
     }
 }
 ?>
