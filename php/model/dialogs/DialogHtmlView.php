@@ -91,7 +91,7 @@ class DialogHtmlView extends HtmlView {
             'width: 300px', 'border-color: var(--ws-border-error)',
             'color: var(--ws-font-error)', 'background-color: var(--ws-background-error)', 'border: 1px solid',
             'border-radius: 5px', '-webkit-box-shadow: var(--ws-dialog-shadow)',
-            '-moz-box-shadow: var(--ws-dialog-shadow)', 'box-shadow: var--ws-dialog-shadow)'));
+            '-moz-box-shadow: var(--ws-dialog-shadow)', 'box-shadow: var(--ws-dialog-shadow)'));
         self::addStyle(WebshipTools::css('.dialog', [' ', 'p'], 'margin: 0'));
         self::addStyle(WebshipTools::css('.dialog', [' > ', '.dialog-message', ' > ', '.d-title'],
             'padding: 10px', 'background-color: var(--ws-cbackground-error)', 'border-radius: 5px 5px 0 0',
