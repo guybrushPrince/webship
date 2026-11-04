@@ -3,6 +3,7 @@
 namespace webship\containers;
 
 use Closure;
+use ship\views\DirectView;
 use webship\interoperability\WEvent;
 use ship\interoperability\SLanguage as Language;
 use ship\interoperability\IShippable;
@@ -196,7 +197,7 @@ class FolderHtmlView extends StandardHtmlView {
         if ($folderGroup instanceof ITextEditable) {
             $titleView = EditableHtmlView::create();
             $title->add($titleView);
-            $titleView->ref('text', 'value');
+            $titleView->ref('text', DirectView::VALUE_SCOPE);
             $titleView->texts($folderGroup->getTitle(self::getLanguage()));
             $titleView->protocol(WEvent::ONFOCUSOUT)->
                 append($folderGroup->getChangeProtocol('header', self::getLanguage(), $titleView));

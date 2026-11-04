@@ -463,7 +463,16 @@ the name.
 
 ### Creating Protocol Functions
 
+**TODO:**
+
+
+
 ### Binding Objects to Views
+
+**TODO**
+
+
+
 
 ### HtmlView.php
 

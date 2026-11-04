@@ -4,6 +4,7 @@ namespace webship\inputs;
 
 use Exception;
 use ship\interoperability\SLanguage as Language;
+use ship\views\DirectView;
 use webship\buttons\SubmitHtmlView;
 use webship\containers\ContainerHtmlView;
 use webship\core\HtmlView;
@@ -63,7 +64,7 @@ class SearchHtmlView extends ContainerHtmlView {
         $search = $form->add(new ContainerHtmlView(['hor', 'single', 'vcent']));
         $searchField = InputHtmlView::createIt('search-field', 'text');
         $search->add($searchField);
-        $searchField->ref('search', 'value');
+        $searchField->ref('search', DirectView::VALUE_SCOPE);
 
         if ($instructions) {
             // It is already an array if there is any instruction.
