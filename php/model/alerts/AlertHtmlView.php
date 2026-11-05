@@ -3,7 +3,7 @@
 namespace webship\alerts;
 
 use Exception;
-use webship\controller\BasicEvents;
+use webship\controller\BasicFunctions;
 use webship\interoperability\IClickAway;
 use webship\interoperability\WEvent;
 use ParsedownExtra;
@@ -193,9 +193,9 @@ class AlertHtmlView extends HtmlView {
         if ($screen || $fullView) {
             $v->ref('alert');
             $overlay = $v->view('overlay');
-            $overlay->protocol(WEvent::CLICK)->doIt(BasicEvents::Delete, [
+            $overlay->protocol(WEvent::CLICK)->doIt(BasicFunctions::Delete, [
                 'view' => $v
-            ], BasicEvents::environment());
+            ], BasicFunctions::environment());
             $con = $v->view('a-message');
             $con->ref('alert-content');
         }
@@ -233,9 +233,9 @@ class AlertHtmlView extends HtmlView {
                 ]);
                 $closer->protocol(WEvent::CLICK)->
                     append(self::$clickAwayEffect->doNotShowAnymore($alertId, $closer))->
-                    doIt(BasicEvents::Delete, ['view' => $v], BasicEvents::environment());
+                    doIt(BasicFunctions::Delete, ['view' => $v], BasicFunctions::environment());
             } else {
-                $closer->protocol(WEvent::CLICK)->doIt(BasicEvents::Delete, ['view' => $v], BasicEvents::environment());
+                $closer->protocol(WEvent::CLICK)->doIt(BasicFunctions::Delete, ['view' => $v], BasicFunctions::environment());
             }
         }
 

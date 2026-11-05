@@ -6,7 +6,7 @@ use ship\interoperability\SLanguage as Language;
 use ship\protocols\Protocol;
 use webship\buttons\ButtonHtmlView;
 use webship\buttons\CloserHtmlView;
-use webship\controller\BasicEvents;
+use webship\controller\BasicFunctions;
 use webship\core\HtmlView;
 use webship\interoperability\WEvent;
 use webship\menus\ControlPanelHtmlView;
@@ -75,9 +75,9 @@ class WizardMagicHtmlView extends HtmlView {
         $control = ControlPanelHtmlView::createUnbounded(false)->fix()->reverse();
         $view->add($control);
         $abortButton = $control->addMini(CloserHtmlView::create());
-        $abortButton->protocol(WEvent::CLICK)->doIt(BasicEvents::Delete, [
+        $abortButton->protocol(WEvent::CLICK)->doIt(BasicFunctions::Delete, [
             'view' => $view
-        ], BasicEvents::environment())->
+        ], BasicFunctions::environment())->
         append($finishProtocol);
 
         $view->each($wizards, function (WizardMagicHtmlView $view, WizardHtmlView $wizard, int $key) use ($wizards, $finishProtocol) {
@@ -93,8 +93,8 @@ class WizardMagicHtmlView extends HtmlView {
                             text(Language::GERMAN, 'Zurück')->
                         parent()->
                         protocol(WEvent::CLICK)->
-                            doIt(BasicEvents::ToggleClass, ['view' => $wizard, 'class' => 'invisible'], BasicEvents::environment())->
-                            doIt(BasicEvents::ToggleClass, ['view' => 'wizard-' . ($key - 1), 'class' => 'invisible'], BasicEvents::environment())->
+                            doIt(BasicFunctions::ToggleClass, ['view' => $wizard, 'class' => 'invisible'], BasicFunctions::environment())->
+                            doIt(BasicFunctions::ToggleClass, ['view' => 'wizard-' . ($key - 1), 'class' => 'invisible'], BasicFunctions::environment())->
                             append($wizards[$key - 1]->getUpdateProtocol());
             }
             $nextButton = $controller->add(new ButtonHtmlView('next-' . $wizard->id(), 'next-' . $wizard->id()));
@@ -104,13 +104,13 @@ class WizardMagicHtmlView extends HtmlView {
             $nextButton->add(new ImageHtmlView('/webship/pic/next.svg'));
             if ($key !== array_key_last($wizards)) {
                 $nextButton->protocol(WEvent::CLICK)->
-                    doIt(BasicEvents::ToggleClass, ['view' => $wizard, 'class' => 'invisible'], BasicEvents::environment())->
-                    doIt(BasicEvents::ToggleClass, ['view' => 'wizard-' . ($key + 1), 'class' => 'invisible'], BasicEvents::environment())->
+                    doIt(BasicFunctions::ToggleClass, ['view' => $wizard, 'class' => 'invisible'], BasicFunctions::environment())->
+                    doIt(BasicFunctions::ToggleClass, ['view' => 'wizard-' . ($key + 1), 'class' => 'invisible'], BasicFunctions::environment())->
                     append($wizards[$key + 1]->getUpdateProtocol());
             } else {
-                $nextButton->protocol(WEvent::CLICK)->doIt(BasicEvents::Delete, [
+                $nextButton->protocol(WEvent::CLICK)->doIt(BasicFunctions::Delete, [
                     'view' => $view
-                ], BasicEvents::environment())->
+                ], BasicFunctions::environment())->
                     append($finishProtocol);
             }
 

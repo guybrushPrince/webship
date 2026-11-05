@@ -2,7 +2,7 @@
 
 namespace webship\inputs;
 
-use webship\controller\BasicEvents;
+use webship\controller\BasicFunctions;
 use webship\interoperability\WEvent;
 use Exception;
 use webship\WebRepresenter;
@@ -215,14 +215,14 @@ class ContentSelectHtmlView extends SelectHtmlView {
         if (is_null($maxSelections)) $maxSelections = 'null';
         if (is_null($default)) $default = 'null';
         $select->ref('con-select');
-        $select->protocol(WEvent::CLICK, ['sameTarget' => true])->doIt(BasicEvents::ToggleClass, [
+        $select->protocol(WEvent::CLICK, ['sameTarget' => true])->doIt(BasicFunctions::ToggleClass, [
             'view' => $select,
             'class' => 'open'
-        ], BasicEvents::environment());
-        $select->protocol(WEvent::CLICK_OUTSIDE)->doIt(BasicEvents::RemoveClass, [
+        ], BasicFunctions::environment());
+        $select->protocol(WEvent::CLICK_OUTSIDE)->doIt(BasicFunctions::RemoveClass, [
             'view' => $select,
             'class' => 'open'
-        ], BasicEvents::environment())->scrollTop($select->contentOptions);
+        ], BasicFunctions::environment())->scrollTop($select->contentOptions);
         $select->js('scaleChildren($("' . $select->idc() . '").children(".c-list"));');
         $select->js('addConSelectFunctionality($("' . $select->idc() . '"), ' . $maxSelections . ', ' . $default . ');');
         $select->js('applySelectChanges($("select' . $select->idc() . '"));');

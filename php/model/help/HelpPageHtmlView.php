@@ -2,7 +2,7 @@
 
 namespace webship\help;
 
-use webship\controller\BasicEvents;
+use webship\controller\BasicFunctions;
 use webship\interoperability\WEvent;
 use ship\interoperability\SLanguage as Language;
 use ship\views\View;
@@ -52,14 +52,14 @@ class HelpPageHtmlView extends StandardButtonHtmlView {
         $this->img($img);
         $this->onlyImg(true);
 
-        $this->protocol(WEvent::CLICK)->doIt(BasicEvents::OpenHelp, [
+        $this->protocol(WEvent::CLICK)->doIt(BasicFunctions::OpenHelp, [
             'package' => $package,
             'subpackage' => $subpackage,
             'doc' => $doc,
             'replace' => 'help-center',
             'add' => 'main-app',
             'error' => 'main-app'
-        ], BasicEvents::environment());
+        ], BasicFunctions::environment());
         self::addCSS();
     }
 

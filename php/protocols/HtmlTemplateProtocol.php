@@ -34,6 +34,16 @@ class HtmlTemplateProtocol extends TemplateProtocol {
     }
 
     /**
+     * Generate a new template.
+     * @param string $name The name.
+     * @param string $environment The environment.
+     * @return ModifyProtocol
+     */
+    public static function create(string $name, string $environment = 'global') : ModifyProtocol {
+        return self::_new($name, $environment);
+    }
+
+    /**
      * @inheritDoc
      */
     protected function createListener() : string {

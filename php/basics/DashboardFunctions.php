@@ -2,7 +2,7 @@
 
 namespace webship\controller;
 
-use ship\controllers\EventAdder;
+use ship\controllers\ProtocolFunctionEnvironment;
 use ship\interoperability\SLanguage as Language;
 use ship\template\TemplateObject;
 use webship\protocols\HtmlTemplateProtocol;
@@ -12,14 +12,14 @@ use webship\protocols\HtmlTemplateProtocol;
  *
  * <p>Implements UI functions to interact with dashboards.</p>
  *
- * @see EventAdder
+ * @see ProtocolFunctionEnvironment
  * @package webship
  * @subpackge php/basics
  *
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
  */
-class DashboardFunctions implements EventAdder {
+class DashboardFunctions implements ProtocolFunctionEnvironment {
 
     public const ENVIRONMENT = 'dashboards';
 

@@ -2,7 +2,7 @@
 
 namespace webship\dialogs;
 
-use webship\controller\BasicEvents;
+use webship\controller\BasicFunctions;
 use webship\interoperability\WEvent;
 use webship\buttons\StandardButtonHtmlView;
 use webship\containers\ContainerHtmlView;
@@ -96,10 +96,10 @@ class ErrorFileListHtmlView extends StandardButtonHtmlView {
         $v = ContainerHtmlView::createIt('invisible');
         $view->add($v);
         $v->ref('error');
-        $view->protocol(WEvent::CLICK)->doIt(BasicEvents::ToggleClass, [
+        $view->protocol(WEvent::CLICK)->doIt(BasicFunctions::ToggleClass, [
             'view' => $v,
             'class' => 'invisible'
-        ], BasicEvents::environment());
+        ], BasicFunctions::environment());
 
         $pV = $v->container();
         $subViews = [];

@@ -38,7 +38,7 @@ class BasicsController extends ShipController {
      * @ignore
      */
     public function getScope() : ?string {
-        return BasicEvents::environment();
+        return BasicFunctions::environment();
     }
 
 }

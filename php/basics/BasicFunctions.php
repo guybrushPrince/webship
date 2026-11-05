@@ -3,13 +3,13 @@
 namespace webship\controller;
 
 use webship\interoperability\WEvent;
-use ship\controllers\EventAdder;
+use ship\controllers\ProtocolFunctionEnvironment;
 use ship\interoperability\SLanguage as Language;
 use ship\template\TemplateObject;
 use webship\protocols\HtmlTemplateProtocol;
 
 /**
- * Class BasicEvents.
+ * Class BasicFunctions.
  *
  * <p>Provides events / scripts being usually required for typical web applications.</p>
  *
@@ -19,7 +19,7 @@ use webship\protocols\HtmlTemplateProtocol;
  * @author Dr. Dipl.-Inf. Thomas M. Prinz
  * @version 1.0.0
  */
-class BasicEvents implements EventAdder {
+class BasicFunctions implements ProtocolFunctionEnvironment {
 
     public const ENVIRONMENT = 'basics';
 

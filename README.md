@@ -178,8 +178,8 @@ $app->group('/v1', function (RouteCollectorProxy $group) {
         GreetingsController::class
     ]);
     // Register UI handlings.
-    $actionRegister->bindEvents([
-        GreetingsEvents::class
+    $actionRegister->bindTemplateFunctions([
+        GreetingFunctions::class
     ]);
 });
 
@@ -191,10 +191,7 @@ $app->run();
 #### Protocols
 
 As you may have recognized in the above code snippet, the ```ActionRegister``` is also used to bind a custom 
-```GreetingsEvents``` class.
-We recognize that *Event* is currently not the right term, and it will surely be renamed in the future.
-A better term may be *Protocol Function*, or similar.
-We did not find a final term yet.
+```GreetingsFunctions``` class.
 However, before we dive into what happens in the above snippet, we will investigate what a *WebShip* *Protocol* is.
 
 *Protocol*s are a powerful concept of *WebShip*, which allows for describing UI-related functionality in PHP.
@@ -463,110 +460,396 @@ the name.
 
 ### Creating Protocol Functions
 
-**TODO:**
+Assume that you want to call our ```greetYou``` endpoint with the same (or similar) UI effects in a different view.
+One option would be to copy-paste the ```Protocol```.
+However, this would lead to duplicated code and, once the protocol is changed, you have to adapt these changes 
+everywhere you use the same protocol.
+The second option is supported by *WebShip* is called *Protocol Function*s.
+
+Similarly to functions/methods in programming languages, you will create your *Protocol Function*s by defining 
+defining its *name*, its *scope*, and its *parameters*.
+Our example protocol from above can nearly 1:1 be transformed into a *Protocol Function*:
+
+```php
+HtmlTemplateProtocol::create(self::GreetYou, self::ENVIRONMENT)->
+    action(GreetingsController::class, 'greetYou', [
+        'name' => TemplateObject::create('name'),
+        'title' => TemplateObject::create('title')
+    ], [
+        SLanguage::ENGLISH => 'Call the greetings function',
+        SLanguage::GERMAN  => 'Rufe die Begrüßung auf'
+    ])->success()->
+        add(TemplateObject::create('append'))->
+        parent()->
+    error()->add(TemplateObject::create('error'));
+```
+
+A *Protocol Function* is a kind of *template* and, thus, is created as 
+```webship\protocols\HtmlTemplateProtocol```.
+The instantiation first requires the *name* of the template as string (here ```self::GreetYou```).
+*Note that it is recommended to use constants here so that you avoid spelling mistakes in your code and that you see
+where your *Protocol Functions* are being used.*
+In our example, we could have used ```public const GreetYou = 'GreetYou';```.
+The second parameter is the *namespace*/*environment*, in which this name appears.
+*Note that it is recommended to use a constant here and to collect *Protocol Function*s with a similar functionality
+in one environment.*
+In our example, we could have used ```public const ENVIRONMENT = 'greetings';```.
+
+The rest of the *Protocol Function* is looking very similar to the original direct protocol implementation.
+However, all dynamic inputs (such as *name*, *title*, the view to *append*, and the *error* view) were replaced by
+```ship\template\TemplateObject```s. 
+A ```TemplateObject``` usually requires just a *name* (in the example ```'name'```, ```'title'```, etc.).
+*Note that you can also set constants as fixed values and you do *not* have to use a ```TemplateObject``` for each
+dynamic part.*
+
+*WebShip* will create a JavaScript function out of the *Protocol Function* that can be called from different 
+contexts with different inputs.
+However, *WebShip* would not be *WebShip* if you can not call those functions/templates from your ```Protocol```.
+For this, you will use the ```ModifyProtocol``` method 
+```doIt(string $name, array $context = [], string $environment = 'global')```:
+
+```php
+$button->protocol(WEvent::CLICK)->doIt(GreetingFunctions::GreetYou, [
+    'name' => $nameInput,
+    'title' => $titleInput,
+    'append' => $container,
+    'error' => 'main-app'
+], GreetingFunctions::environment());
+```
+
+As you can see, the call is much more readable and can be reused whenever you want.
+Keep also in mind that you can define your own views that you can reuse where you want.
+
+The attentive reader may have recognized that the above code snippet uses a class ```GreetingFunctions``` that is 
+still undefined.
+We will change this now:
+
+```php
+use ship\controllers\ProtocolFunctionEnvironment;
+
+class GreetingFunctions implements ProtocolFunctionEnvironment {
+
+    public const ENVIRONMENT = 'greetings';
+    public const GreetYou = 'GreetYou';
+
+    /**
+     * @inheritDoc
+     */
+    public static function environment(): string {
+        return self::ENVIRONMENT;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function add(): bool {
+        HtmlTemplateProtocol::create(self::GreetYou, self::ENVIRONMENT)->
+            action(GreetingsController::class, 'greetYou', [
+                'name' => TemplateObject::create('name'),
+                'title' => TemplateObject::create('title')
+            ], [
+                SLanguage::ENGLISH => 'Call the greetings function',
+                SLanguage::GERMAN  => 'Rufe die Begrüßung auf'
+            ])->success()->
+                add(TemplateObject::create('append'))->
+                parent()->
+            error()->add(TemplateObject::create('error'));
+
+        return true;
+    }
+}
+```
+
+This class extends the *Ship* interface ```ship\controllers\ProtocolFunctionEnvironment```, which is a simple container 
+of *Protocol Functions*.
+It defines two constants, one for the name of the environment (```'greetings'```) and one for our *Protocol Function*
+```'GreetYou'```.
+Furthermore, it implements the inherited ```environment()``` method that we can call to get the name of the environment.
+The important part is the implementation of the inherited method ```add()```.
+This just defines the *Protocol Functions* that you need (in this environment) and you have access to the constants
+of this class.
+Although you can just use strings as names and environments, we highly recommend to use constants because then you 
+will see:
+
+1. Where is your *Protocol Function* used and
+2. you avoid spelling mistakes of your environments and function names.
+
 
 
 
 ### Binding Objects to Views
 
-**TODO**
+Imagine you have some views that are related to a specific object or to a specific field of an object.
+If some properties of your object or the value of the field changes, then you have to refresh all views that are 
+related to this object.
+Since your web application UI can be complex, calling API calls for all of these views sounds challenging.
 
+*WebShip* has a powerful mechanism to simplify updating your views: *binding objects to views*.
 
+To bind an object to a view, the class of your object has to implement the ```ship\interoperability\IShippable``` 
+interface.
+This interface requires nothing: No inherited function to specify. Nothing!
+Furthermore, you have to provide an implementation of the abstract ```ship\interoperability\AShipper``` class.
+This class requires implementations for some methods:
 
+- ```getKey(IShippable $shippable) : string|int```: Return a unique key of a given ```IShippable``` object (unique 
+  regarding its class).
+- ```hasStringKey(IShippable|string $shippable) : bool```: Decides if a given string class or ```IShippable``` object
+  requires a string or integer key.
+- ```getObject(string $class, string|int|array $key, bool $keyAsIs = false) : IShippable|null```: Given a class and a
+  key, this method should return the specific object for it.
+- ```exists(string $class, string|int|array $key, bool $keyAsIs = false) : bool```: Checks if an object with a given 
+  class and key exists.
+- ```hasActiveUserSession() : bool```: Checks if there is an active user session.
 
-### HtmlView.php
+*Note that if you have any storage (e.g., database) running in your web application, then implementing those methods
+is straight-forward.
 
-Most views of *WebShip* inherits properties from *HtmlView.php*.
-This class contains methods that are automatically invoked by the *(Web)Ship* engines to generate HTML, CSS, and JS code.
-Usually, you do not have to do anything to start code generation.
-
-
-### Protocol
-
-The most powerful thing you can do is to add functionality. 
-Typically, you want to add an action if a button is pressed. 
-In *(Web)Ship*, the entire concept is called *Protocol*. 
-With a *Protocol*, you start to describe what to do if some event occurs:
+If (1) your required object classes implement the ```IShippable``` interface *and* (2) you have an implementation of 
+the ```AShipper``` class and you have registered via ```ship\interoperability\ShipperRegister```:
 
 ```php
-use webship\core\HtmlView;$view = new HtmlView();
-$view->ref('list');
-
-$button = StandardButtonHtmlView::create('my-beautiful-button');
-$button->texts([
-    Language::ENGLISH => 'Please press me!',
-    Language::GERMAN  => 'Bitte drück mich!'
-]);
-// Add some action if the button is pressed
-$button->protocol(Event::CLICK)->doIt('LoadListOfBeautifulThings', [
-    'replace' => $view
-], 'beautifulThings');
+ShipperRegister::register(Shipper::class); // Shipper is your implementation of AShipper
 ```
 
-This example invokes the *Protocol Template* function ```LoadListOfBeautifulThings``` in the scope ```beautifulThings```. 
-The parameters are ```replace``` meaning that the result of ```LoadListOfBeautifulThings``` seems to return a view that replaces ```$view```.
+in your web application (e.g., in your entry *index.php*), then your *WebShip* is enabled to handle all your objects in 
+your web application.
 
-The *Protocol Template* function ```LoadListOfBeautifulThings``` is defined in a so-called *EventAdder.php* implementation. 
-You just require a class that extends *EventAdder.php*, which then contains the *Protocol Template*. 
-A *Protocol Template* is similar to a function that is created once but can be invoked whenever required. 
-It would also be possible to define some actions directly in the *Protocol*, however, this is not recommended.
+Now, we will return back to *binding of objects*.
+*Binding an object* to a view relates the object to this view.
+This means that you do not have to think about which views represents the object, because you can just inform the UI
+that your object has changed - and the UI reacts to it.
+So binding in *WebShip* is very related to a *reactive* UI style (such as in AngularJS, vue.js, etc.).
 
-For example, the *EventAdder.php* extension with the *Protocol Template* for ```LoadListOfBeautifulThings``` could look like this:
+Binding an object to a view is very easy, you just use the method ```bind(IShippable $obj, int[]|int|null $event, 
+ModifyProtocol|null $protocol, string|null $scope, /*...*/)``` that is available for each ```View```.
+This method requires first the object ```$obj``` to bind.
+Second, the binding is usually related to one or more *events* (such as ```WEvent::CONTENTMODIFY```).
+If you do not specify a specific event, the UI will react on any event on the object.
+Third, a ```ModifyProtocol``` specifies what shall happen.
+You can leave the parameter out, then nothing happens (if you want that).
+Finally, you can also specify a scope ```$scope```.
+Imagine you have a relatively complex object which is referred partially in some views (e.g., in a content list,
+in an editor, and just in a header).
+If you do not specify a *scope*, then whenever the object receives the specified event(s), all views are updated 
+although, for example, just the header has changed.
+The *scope* is just an ordinary string.
+*We recommend to use an enumeration or constant list to reuse different scopes and to enable the fast renaming of 
+scopes.*
 
+Let us consider an example where we assume a ```Customer``` object for storing the greeting information (where the
+class of course implements ```IShippable```):
 ```php
-use ship\controllers\ActionRegister;use ship\controllers\EventAdder;use ship\template\TemplateObject;use webship\containers\ContainerHtmlView;use webship\core\HtmlView;use webship\protocols\HtmlTemplateProtocol;class BeautifulEvents extends EventAdder {
+use \ship\controllers\ProtocolFunctionEnvironment;
+use \ship\controllers\ShipController;
+use \ship\interoperability\SLanguage;
+use \webship\containers\ContainerHtmlView;
+use \webship\interoperability\WEvent;
+use \webship\protocols\HtmlModifyProtocol;
+use \webship\titles\TitleHtmlView;
 
-    public const SCOPE = 'beautifulThings';
+public class CustomerHtmlView extends ContainerHtmlView {
+    
+    /**
+     * Create a view for a single customer. 
+     * @param Customer $customer The customer.
+     * @param string[]|string $classes Additional CSS classes (without '.').
+     * @return CustomerHtmlView
+     * @throws Exception
+     */
+    public static function create(Customer $customer, array|string $classes = []) : CustomerHtmlView {
+        $view = new CustomerHtmlView($classes);
+        
+        // Define a header with the name.
+        $title = self::createTitle($customer);
+        $view->add($title);
+        // We want to react on changes when the name of the customer changes.
+        $title->bind($customer, WEvent::CONTENTMODIFY, 
+            HtmlModifyProtocol::create($view)->doIt(CustomerFunctions::GetTitle, [
+                'customer' => $customer,
+                'replace' => $title,
+                'error' => 'main-app'
+            ], CustomerFunctions::environment()), CustomerFunctions::NAME_SCOPE);
+            
+        // Define a list of activities of the customer.
+        $information = self::createInformation($customer);
+        $view->add($information);
+        // We want to react on changes when there is anything new except the name.
+        $title->bind($customer, WEvent::CONTENTMODIFY, 
+            HtmlModifyProtocol::create($view)->doIt(CustomerFunctions::GetInformation, [
+                'customer' => $customer,
+                'replace' => $information,
+                'error' => 'main-app'
+            ], CustomerFunctions::environment()), CustomerFunctions::INFORMATION_SCOPE);
+            
+        return $view;
+    }
+    
+    /**
+     * Create a title for the view. 
+     * @param Customer $customer The customer.
+     * @return HtmlView
+     */
+    public static function createTitle(Customer $customer) : HtmlView {
+        return TitleHtmlView::create([
+            SLanguage::ENGLISH => 'Customer: ' . $customer->getName(),
+            SLanguage::GERMAN  => 'Kunde: ' . $customer->getName()      
+        ]);        
+    }
+    
+    /**
+     * Create a complicated customer portfolio with more information. 
+     * @param Customer $customer The customer.
+     * @return HtmlView
+     */
+    public static function createInformation(Customer $customer) : HtmlView {
+        /* ... */
+    }
+}
+
+public class CustomerFunctions implements ProtocolFunctionEnvironment {
+    public const ENVIRONMENT = 'customers';
+    
+    public const GetTitle = 'GetTitle';
+    public const GetInformation = 'GetInformation';
+    
+    public const NAME_SCOPE = 'name';
+    public const INFORMATION_SCOPE = 'information';
+    
+    /**
+     * @inheritDoc
+     */
+    public static function environment(): string {
+        return self::ENVIRONMENT;
+    }
 
     /**
      * @inheritDoc
      */
-    public static function add() : bool {
-        HtmlTemplateProtocol::_new('LoadListOfBeautifulThings', self::SCOPE)->
-            action(BeautifulController::class, 'loadListOfBeautifulThings', [], [
-                Language::ENGLISH => 'Load list of beautiful things ...',
-                Language::GERMAN  => 'Lade List wunderschöner Dinge ...'
-            ))->
-            success()->
-                replace(TemplateObject::_new('replace'))->
-            parent()->
-            fail()->
-                replace(TemplateObject::_new('fail'))
-            parent()->
-            error()->
-                add(TemplateObject::_new('error'))->
-            parent();    
-    
+    public static function add(): bool {
+        HtmlTemplateProtocol::create(self::GetTitle, self::ENVIRONMENT)->
+            action(CustomerController::class, 'getTitle', [
+                'customer' => TemplateObject::create('customer')
+            ], [
+                SLanguage::ENGLISH => 'Get the header for the customer',
+                SLanguage::GERMAN  => 'Hole die Überschrift für den Kunden'
+            ])->success()->
+                replace(TemplateObject::create('replace'))->
+                parent()->
+            error()->add(TemplateObject::create('error'));
+            
+        HtmlTemplateProtocol::create(self::GetInformation, self::ENVIRONMENT)->
+            action(CustomerController::class, 'getInformation', [
+                'customer' => TemplateObject::create('customer')
+            ], [
+                SLanguage::ENGLISH => 'Get the information for the customer',
+                SLanguage::GERMAN  => 'Hole die Informationen für den Kunden'
+            ])->success()->
+                replace(TemplateObject::create('replace'))->
+                parent()->
+            error()->add(TemplateObject::create('error'));
+
         return true;
     }
 }
 
-class BeautifulController {
-
-    public function loadListOfBeautifulThings() : HtmlView {
-        $list = new ContainerHtmlView(['ver', 'gap5']);
-        $list->each([1,2,3,4,5,6,7,8,9,10], function (ContainerHtmlView $l, int $nr) {
-            $beautifulThing = new HtmlView();
-            $beautifulThing->texts([
-                Language::ENGLISH => $nr . '. beautiful thing',
-                Language::GERMAN  => $nr . '. schönes Ding'
-            ]);
-            $l->add($beautifulThing);
-        });
-        return $list;
+public class CustomerController extends ShipController {
+    /**
+     * @inheritDoc
+     * @ignore
+     */
+    public function getScope() : string|null {
+        return CustomerFunctions::environment();
     }
 
+    /**
+     * Get the title view of a customer. 
+     * @param Customer $customer The customer.
+     * @return HtmlView
+     * @without  
+     */
+    public function getTitle(Customer $customer) : HtmlView {
+        return CustomerHtmlView::createTitle($customer);
+    }
+    
+    /**
+     * Get the information view of a customer. 
+     * @param Customer $customer The customer.
+     * @return HtmlView
+     * @without  
+     */
+    public function getInformation(Customer $customer) : HtmlView {
+        return CustomerHtmlView::createInformation($customer);
+    }
 }
+```
 
-$actionRegister = ActionRegister::instance($app);
-$actionRegister->register([
-    BeautifulController::class
-]);
-$actionRegister->bindEvents([
-    BeautifulEvents::class
+Of course, this example is a little bit bigger but shows the beautifulness of what is achievable quickly in *WebShip*.
+The more important: It focuses on *what to do* and not on *how to achieve it*.
+
+The example defines an own view ```CustomerHtmlView```, which basically is a ```ContainerHtmlView``` and, thus, inherits
+its look'n'feel as well as its possibilities (in arranging stuff).
+It defines a header with a ```TitleHtmlView``` and some arbitrary view providing other information about a 
+```Customer```.
+It binds the ```$customer``` object to both views.
+Whenever this object receives an ```WEvent::CONTENTMODIFY```, the UI (with *WebShip*) will react.
+However, it will only react if the defined scope is affected.
+For example, calling the ```GetTitle``` *Function Protocol* will only be triggered, when the scope is the 
+```NAME_SCOPE```.
+The *Function Protocol* is triggered by a ```HtmlModifyProtocol``` with a ```doIt()``` call. 
+This ```HtmlModifyProtocol``` is related to the customer view and, thus, is starting for searching for missing objects
+and values from this point.
+This is not necessary here, but each protocol is related to either a parent protocol or to a view.
+
+*We recommend to use separate (usually static) methods to describe views that can be changed (and, thus, can be 
+loaded separately).*
+In our example, we did for the header (```createTitle```) and the information (```createInformation```) views.
+
+The *Function Protocols* are defined as usual, here in the ```CustomerFunctions``` class.
+*Note that you can reuse these functions wherever you want.*
+The endpoint functions are defined in the ```CustomerController```.
+Here you may recognize why it is recommended to have own statically methods for changing views.
+The endpoints are very small.
+
+If you now somewhere throw a ```WEvent::CONTENTMODIFY``` in scope ```NAME_SCOPE``` to ```$customer``` object being 
+bound to any view currently in the browser, the header would be reloaded:
+
+```php
+use \webship\controller\BasicFunctions;
+/* Other part of your code */
+$button->protocol(WEvent::CLICK)->doIt(BasicFunctions::ThrowEventToObject, [
+    'event' => WEvent::CONTENTMODIFY,
+    'object' => $customer,
+    'scope' => CustomerFunctions::NAME_SCOPE
 ]);
 ```
 
-## Which persistent classes does WebShip contain?
+We hope the reader notice what must happen all in the background of *WebShip*.
+If not, here a short summary (starting with just pressing the above button):
 
-![](class_diagram.svg)
+1. Produce the HTML view for the button.
+2. Produce the JavaScript for the button event.
+3. In doing this, serialize the ```$customer``` object (or a *shadow*/reference of it.)
+4. If the button is clicked:
+   1. Call the ```ThrowEventToObject``` *Protocol Function* in JavaScript.
+   2. Identify if there are current bindings related to the object ```$customer``` regarding the ```$event``` and 
+      ```$scope```.
+   3. Identify the views behind it and call the bound *Protocol Function* (in JavaScript).
+   4. This calls the ```CustomerController::getTitle``` function.
+   5. In doing this, *WebShip* automatically loads the "real" objects behind the *shadows*.
+   6. Then it applies the parameters to the call and gets, in this case, a ```HtmlView``` as a result.
+   7. *WebShip* generates automatically the HTML, CSS, and JavaScript code of the view and returns it.
+   8. The browser's calling *Protocol Function* gets the response view and replaces it with the specified view.
+
+*Note that there are many steps behind it, but this is a short representation.*
+
+*Furthermore, note that you have to implement this all by hand in JavaScript and the PHP code. 
+None of the steps includes much overhead.
+This is just how distributed systems work.
+Just more amazing.*
+
+**Further note that we did not touch **any** HTML, CSS, or JavaScript code for this example.
+Our entire web application stayed in the same code base.**
+This is one of the core advantages in using *WebShip*.
+
+

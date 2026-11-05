@@ -2,7 +2,7 @@
 
 namespace webship\containers;
 
-use webship\controller\BasicEvents;
+use webship\controller\BasicFunctions;
 use webship\interoperability\WEvent;
 use webship\core\HtmlView;
 use webship\tabs\TabContainerHtmlView;
@@ -71,7 +71,7 @@ class EditorSplitHtmlView extends HtmlView {
         $this->add($this->editor);
 
         $separator->protocol(WEvent::CLICK)->
-            doIt(BasicEvents::ToggleClass, ['view' => $this->tools, 'class' => 'closed'], BasicEvents::environment());
+            doIt(BasicFunctions::ToggleClass, ['view' => $this->tools, 'class' => 'closed'], BasicFunctions::environment());
 
         self::addCSS();
     }
