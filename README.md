@@ -640,13 +640,13 @@ scopes.*
 Let us consider an example where we assume a ```Customer``` object for storing the greeting information (where the
 class of course implements ```IShippable```):
 ```php
-use \ship\controllers\ProtocolFunctionEnvironment;
-use \ship\controllers\ShipController;
-use \ship\interoperability\SLanguage;
-use \webship\containers\ContainerHtmlView;
-use \webship\interoperability\WEvent;
-use \webship\protocols\HtmlModifyProtocol;
-use \webship\titles\TitleHtmlView;
+use ship\controllers\ProtocolFunctionEnvironment;
+use ship\controllers\ShipController;
+use ship\interoperability\SLanguage;
+use webship\containers\ContainerHtmlView;
+use webship\interoperability\WEvent;
+use webship\protocols\HtmlModifyProtocol;
+use webship\titles\TitleHtmlView;
 
 public class CustomerHtmlView extends ContainerHtmlView {
     
@@ -815,7 +815,7 @@ If you now somewhere throw a ```WEvent::CONTENTMODIFY``` in scope ```NAME_SCOPE`
 bound to any view currently in the browser, the header would be reloaded:
 
 ```php
-use \webship\controller\BasicFunctions;
+use webship\controller\BasicFunctions;
 /* Other part of your code */
 $button->protocol(WEvent::CLICK)->doIt(BasicFunctions::ThrowEventToObject, [
     'event' => WEvent::CONTENTMODIFY,
@@ -853,3 +853,211 @@ Our entire web application stayed in the same code base.**
 This is one of the core advantages in using *WebShip*.
 
 
+### Broadcasting Events
+
+*Binding objects* is an *object*-related concept to react on events - instead of throwing events to views, they are
+thrown to objects and views react.
+
+Which mechanism is missing is that you want that views react on specific events but do not want to specify each 
+single view that shall react.
+This mechanism gap is closed by *WebShips* *broadcasting* of events.
+
+*Broadcasting events* is very similar to *binding an object* to a view; just without the object:
+
+```php
+bindBroadcast(array|int $event, ModifyProtocol|string|null $protocol = null,
+              string|null $scope = null, /*...*/) : static
+```
+
+Invoking this method on a ```View``` states that this view shall react to a specific *broadcast* ```$event```.
+When this ```$event``` occurs in the specified ```$scope```, then the specified ```ModifyProtocol``` ```$protocol```
+will be executed for this view.
+Note that you can also pass a string instead of a ```ModifyProtocol```, which may contain pure JavaScript code or 
+a previously generated ```ModifyProtocol```.
+
+We will consider an extension of our example ```CustomerHtmlView``` in 
+["Binding Objects to Views"](#binding-objects-to-views):
+
+```php
+use webship\containers\ContainerHtmlView;
+use webship\protocols\HtmlModifyProtocol;
+
+public class CustomerHtmlView extends ContainerHtmlView {
+    /*..*/
+    public static function createCustomerList() : HtmlView {
+        $customers = Customer::getAll(); // Imagine a magic method that retains all customers out of a storage.
+        
+        $list = ContainerHtmlView::createIt(['ver', 'gap10']);
+        // Add an entry for each customer with the WebShip-build-method 'each'
+        $list->each($customers, function (ContainerHtmlView $l, Customer $customer) {
+            $entry = ContainerHtmlView::createIt(['hor', 'vcent', 'gap5']);
+            $l->add($entry);
+            $entry->view()->texts($customer->getTitle());
+            $entry->view()->texts($customer->getName());
+            $entry->view()->texts($customer->getIdentifier());            
+        });
+        
+        $list->bindBroadcast(CustomerEvents::NEW_CUSTOMER, HtmlModifyProtocol::create($list)->doIt(CustomerFunctions::GetCustomerList, [
+            'replace' => $list,
+            'error' => 'main-app'
+        ], CustomerFunctions::environment()));
+        
+        return $list;
+    }
+    /*..*/
+}
+
+public class CustomerEvents {
+    public const NEW_CUSTOMER = 123;
+}
+```
+
+The view provides a list of all customers being registered on your web application.
+In doing this, it uses two ```ContainerHtmlView```s; one with a column-based ```ver```tical orientation and one for
+each customer with a ```hor```izontal orientation.
+
+Building up the list is achieved with the *Ship* method ```each(array|IShippable|null $array, Closure $callback)``` 
+being available for each ```View```.
+This method takes each element of the provided array ```$array``` and applies it to the *Closure* (aka anonymous method) 
+```$callback``` expecting a function with at most 3 parameters:
+
+1. ```$view```: A reference to a calling ```View```. In the above example, ```$l``` refers to ```$list```.
+2. ```$value```: The current single value of the array. In the above example, ```Customer $customer``` represents the
+   passed value.
+3. ```$key```: The current key of the array (if this is required). The above example omits this parameter.
+
+The exciting thing happens when we bind the broadcast starting with 
+```$list->bindBroadcast(CustomerEvents::NEW_CUSTOMER, /*...*/```.
+It binds an own defined ```NEW_CUSTOMER``` event that simply is an integer (see the attached class above).
+Whenever a new customer is added to the system, each ```CustomerHtmlView``` currently presenting the customer list 
+shall do something.
+What is done in this case is, again, specified by a ```ModifyProtocol```.
+In this case, the customer list shall be refreshed with the updated one.
+As the ```NEW_CUSTOMER``` event is very specific, we do not require a scope at this point and just react on any of this
+kind of event.
+
+*We hope that you recognize what you can achieve with *broadcasting*:
+Views that react to events without retain references to these views and throwing an event to all of them.*
+
+*Awesome, we know :).*
+
+
+### Handling Expected API Fails
+
+Imagine your web application has a form for adding new customers.
+Even though the information may be checked in the browser, wrong information can be passed to the API endpoint
+to finally create the new customer.
+If the new customer can be created successfully, then you would expect that the form is closed and a view is loaded
+showing the customer.
+If there is a server error, you expect that the user is informed about this error.
+However, where to specify to react on erroneous passed input data?
+*Ship*'s ```Fail``` mechanism is the answer.
+
+Basically, ```ship\outputs\Fail``` is a class that accepts any kind of ```$content``` although usually you will 
+have a ```HtmlView``` (or subclass) as content.
+For example:
+
+```php
+use ship\interoperability\SLanguage;
+use ship\outputs\Fail;
+use webship\alerts\ErrorHtmlView;
+
+new Fail(ErrorHtmlView::create([
+    SLanguage::ENGLISH => 'Please specify a name of your new customer.',
+    SLanguage::GERMAN  => 'Bitte gib einen Namen deines neuen Kunden an.'
+]));
+```
+
+Whenever an endpoint returns an object of class ```Fail``` you are enabled to use the ```fail()``` branch of an
+```ActionProtocol```.
+Remember, an ```ActionProtocol``` is used when calling an endpoint of your API.
+Until this point, we usually used the ```success()``` and the ```error()``` branches.
+Now, we use the ```fail()```-branch:
+
+```php
+use ship\controllers\ProtocolFunctionEnvironment;
+
+public class CustomerFunctions implements ProtocolFunctionEnvironment {
+    /* ... */
+    public static function add() : bool {
+        /* ... */
+        HtmlTemplateProtocol::create(self::CreateNewCustomer, self::ENVIRONMENT)->
+            action(CustomerController::class, 'createNewCustomer', [
+                'name' => TemplateObject::create('name'),
+                'title' => TemplateObject::create('title')
+            ], [
+                SLanguage::ENGLISH => 'Create customer',
+                SLanguage::GERMAN  => 'Lege Kunde an'
+            ])->success()->
+                clear(TemplateObject::create('form'))->
+                delete(TemplateObject::create('form'))->
+                add(TemplateObject::create('append'))->
+                parent()->
+            fail()->
+                replace(TemplateObject::create('info'))->
+                parent()->
+            error()->add(TemplateObject::create('error'));
+        /* ... */
+    }
+    /* ... */
+}
+```
+
+This can be read as follows:
+
+1. If the customer was created successfully, the ```'form'``` input fields shall be cleared, the ```'form'``` shall be 
+   closed (aka deleted), and the new customer representation shall be appended to the ```'append'``` view.
+2. If erroneous input data was provided, the user shall be informed by replacing the explanation to a specified
+   (and previous empty) ```'info'``` view.
+3. If the web application itself runs into an error, the error shall be appended to ```'error'```.
+
+In our controller, the endpoint could be added as follows:
+
+```php
+use ship\controllers\ShipController;
+use ship\interoperability\ShippingTools;
+use ship\interoperability\SLanguage;
+use ship\outputs\Fail;
+use webship\alerts\ErrorHtmlView;
+use webship\containers\ContainerHtmlView;
+
+public class CustomerController extends ShipController {
+    /* ... */
+    /**
+     * Create a new customer in the web application. 
+     * @param string|null $name The name of the new customer.
+     * @param string|null $title The title of the new customer.
+     * @return HtmlView|Fail
+     * @throws Exception
+     */
+    public function createNewCustomer(string|null $name, string|null $title = null) : HtmlView|Fail {
+        $errors = [];
+        if (is_null($name) || $name === '') {
+            $errors[] = [
+                SLanguage::ENGLISH => 'Please specify a name.',
+                SLanguage::GERMAN  => 'Bitte gib einen Namen an.'
+            ];
+        }
+        if (is_null($title) || $title === '') {
+            $errors[] = [
+                SLanguage::ENGLISH => 'Please specify a title.',
+                SLanguage::GERMAN  => 'Bitte gib eine Anrede an.'
+            ];
+        }
+        if (!ShippingTools::isEmpty($errors)) {
+            // Erroneous input data.
+            $container = ContainerHtmlView::createIt(['ver', 'gap10']);
+            $container->each($errors, function (HtmlView $c, array $error) {
+                $c->add(ErrorHtmlView::create($error));
+            });
+            return new Fail($container);
+        }
+        // Everything is ok.
+        $customer = new Customer($name, $title);
+        $customer->create();
+        
+        return CustomerHtmlView::create($customer, ['new']);
+    }
+    /* ... */
+}
+```
