@@ -648,7 +648,7 @@ use webship\interoperability\WEvent;
 use webship\protocols\HtmlModifyProtocol;
 use webship\titles\TitleHtmlView;
 
-public class CustomerHtmlView extends ContainerHtmlView {
+class CustomerHtmlView extends ContainerHtmlView {
     
     /**
      * Create a view for a single customer. 
@@ -707,7 +707,7 @@ public class CustomerHtmlView extends ContainerHtmlView {
     }
 }
 
-public class CustomerFunctions implements ProtocolFunctionEnvironment {
+class CustomerFunctions implements ProtocolFunctionEnvironment {
     public const ENVIRONMENT = 'customers';
     
     public const GetTitle = 'GetTitle';
@@ -753,7 +753,7 @@ public class CustomerFunctions implements ProtocolFunctionEnvironment {
     }
 }
 
-public class CustomerController extends ShipController {
+class CustomerController extends ShipController {
     /**
      * @inheritDoc
      * @ignore
@@ -855,12 +855,12 @@ This is one of the core advantages in using *WebShip*.
 
 ### Broadcasting Events
 
-*Binding objects* is an *object*-related concept to react on events - instead of throwing events to views, they are
-thrown to objects and views react.
+*Binding objects* is an *object*-related concept to react to events - instead of throwing events directly to views, they are
+thrown to objects, and the bound views react accordingly.
 
-Which mechanism is missing is that you want that views react on specific events but do not want to specify each 
-single view that shall react.
-This mechanism gap is closed by *WebShips* *broadcasting* of events.
+What is missing is a mechanism for when you want views to react to specific events without having to specify each
+individual view that should react.
+This mechanism gap is closed by *WebShips* event *broadcasting*.
 
 *Broadcasting events* is very similar to *binding an object* to a view; just without the object:
 
@@ -882,7 +882,7 @@ We will consider an extension of our example ```CustomerHtmlView``` in
 use webship\containers\ContainerHtmlView;
 use webship\protocols\HtmlModifyProtocol;
 
-public class CustomerHtmlView extends ContainerHtmlView {
+class CustomerHtmlView extends ContainerHtmlView {
     /*..*/
     public static function createCustomerList() : HtmlView {
         $customers = Customer::getAll(); // Imagine a magic method that retains all customers out of a storage.
@@ -907,7 +907,7 @@ public class CustomerHtmlView extends ContainerHtmlView {
     /*..*/
 }
 
-public class CustomerEvents {
+class CustomerEvents {
     public const NEW_CUSTOMER = 123;
 }
 ```
@@ -926,18 +926,19 @@ This method takes each element of the provided array ```$array``` and applies it
    passed value.
 3. ```$key```: The current key of the array (if this is required). The above example omits this parameter.
 
-The exciting thing happens when we bind the broadcast starting with 
-```$list->bindBroadcast(CustomerEvents::NEW_CUSTOMER, /*...*/```.
+The exciting part happens when we bind the broadcast starting with 
+```php
+$list->bindBroadcast(CustomerEvents::NEW_CUSTOMER, /*...*/);
+```
 It binds an own defined ```NEW_CUSTOMER``` event that simply is an integer (see the attached class above).
 Whenever a new customer is added to the system, each ```CustomerHtmlView``` currently presenting the customer list 
 shall do something.
 What is done in this case is, again, specified by a ```ModifyProtocol```.
 In this case, the customer list shall be refreshed with the updated one.
-As the ```NEW_CUSTOMER``` event is very specific, we do not require a scope at this point and just react on any of this
-kind of event.
+Since the ```NEW_CUSTOMER``` event is very specific, we do not require a scope here and just react to any occurrence of this event.
 
 *We hope that you recognize what you can achieve with *broadcasting*:
-Views that react to events without retain references to these views and throwing an event to all of them.*
+Views that react to events without retaining references to these views and throwing an event to all of them.*
 
 *Awesome, we know :).*
 
@@ -945,12 +946,12 @@ Views that react to events without retain references to these views and throwing
 ### Handling Expected API Fails
 
 Imagine your web application has a form for adding new customers.
-Even though the information may be checked in the browser, wrong information can be passed to the API endpoint
+Even though the data may be validated client-side in the browser, wrong data can still be passed to the API endpoint
 to finally create the new customer.
 If the new customer can be created successfully, then you would expect that the form is closed and a view is loaded
 showing the customer.
-If there is a server error, you expect that the user is informed about this error.
-However, where to specify to react on erroneous passed input data?
+If an unexpected server error occurs, you expect the user to be informed about this error.
+However, where do you specify how to react on erroneous input data that is passed?
 *Ship*'s ```Fail``` mechanism is the answer.
 
 Basically, ```ship\outputs\Fail``` is a class that accepts any kind of ```$content``` although usually you will 
@@ -977,7 +978,7 @@ Now, we use the ```fail()```-branch:
 ```php
 use ship\controllers\ProtocolFunctionEnvironment;
 
-public class CustomerFunctions implements ProtocolFunctionEnvironment {
+class CustomerFunctions implements ProtocolFunctionEnvironment {
     /* ... */
     public static function add() : bool {
         /* ... */
@@ -1021,7 +1022,7 @@ use ship\outputs\Fail;
 use webship\alerts\ErrorHtmlView;
 use webship\containers\ContainerHtmlView;
 
-public class CustomerController extends ShipController {
+class CustomerController extends ShipController {
     /* ... */
     /**
      * Create a new customer in the web application. 
