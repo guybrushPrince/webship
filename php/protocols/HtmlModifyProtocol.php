@@ -425,7 +425,8 @@ class HtmlModifyProtocol extends ModifyProtocol {
         // Although not beautiful, this code section is required to handle unknown variables, which cannot be
         // passed to a function in JS, unfortunately.
         // The best solution is to provide DOM actions in a template protocol.
-        $c = 'if (typeof(res) === "undefined") {var res = ';
+        $c = 'if (typeof(result) != "undefined" && typeof(xhr) != "undefined" && isJSR(xhr)) { eval(result); } else ';
+        $c .= 'if (typeof(res) === "undefined") {var res = ';
         if (!array_key_exists("new", $modify)) {
             if (!array_key_exists("value", $modify)) $c .= 'result';
             else $c .= '"' . $modify["value"] . '"';

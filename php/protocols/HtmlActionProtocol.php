@@ -74,17 +74,17 @@ class HtmlActionProtocol extends ActionProtocol {
             $name = null;
             if (preg_match('/@CSV(.*)/', $reflection->getDocComment(), $matches) >= 1) {
                 $name = trim($matches[1], " ,:\n\r" . PHP_EOL);
-                if ($name === "") $name = null;
+                if ($name === '') $name = null;
             }
             $isPDF = (preg_match('/@PDF(.*)/', $reflection->getDocComment(), $matches) >= 1);
             if ($isPDF) {
                 $name = trim($matches[1], " ,:\n\r" . PHP_EOL);
-                if ($name === "") $name = null;
+                if ($name === '') $name = null;
             }
             $isZIP = (preg_match('/@ZIP(.*)/', $reflection->getDocComment(), $matches) >= 1);
             if ($isZIP) {
                 $name = trim($matches[1], " ,:\n\r" . PHP_EOL);
-                if ($name === "") $name = null;
+                if ($name === '') $name = null;
             }
             $isJS = (preg_match('/@ECMA(.*)/', $reflection->getDocComment(), $matches) >= 1);
 
@@ -100,25 +100,24 @@ class HtmlActionProtocol extends ActionProtocol {
             $code .= '{taskId: taskId, title: "' . $this->title[View::getLanguage()] . '"})';
 
             $code .= implode(array_map(function (array $p) use ($isCSV, $isPDF, $isZIP, $isJS, $isJSON, $name) {
-                    if ($p["operation"] === "success" || $p["operation"] === "fail") {
-                        $func = '.done(function(result) {';
+                    if ($p['operation'] === 'success' || $p['operation'] === 'fail') {
+                        $func = '.done(function(result, status, xhr) {';
                         $hasFail = !WebshipTools::isEmpty(
                             array_filter($this->protocol, function (array $pr) {
                                 return $pr["operation"] === "fail";
                             })
                         );
                         $taskState = 'SUCCESS';
-                        if ($hasFail && $p["operation"] === "success") {
+                        if ($hasFail && $p['operation'] === 'success') {
                             $func .= 'if (isObject(result) && ("__intern_fail" in result)) return;';
                         }
-                        if ($hasFail && $p["operation"] === "fail") {
+                        if ($hasFail && $p['operation'] === 'fail') {
                             $func .= 'if (!(isObject(result) && "__intern_fail" in result)) return;';
                             $func .= 'result = result["content"];';
                             $taskState = 'FAIL';
                         }
-                        if ($isJS && $p["operation"] === "success") {
+                        if ($isJS && $p['operation'] === 'success') {
                             $func .= 'eval(result);';
-                            //$func .= '(function(result) {' . $p["protocol"]->generate() . '})("");';
                             $func .= '((result) => {' . $p["protocol"]->generate() . '})("");';
                         } else {
                             if (!$isJSON) $func .= 'result = extractStyle(result);';

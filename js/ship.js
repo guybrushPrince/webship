@@ -181,6 +181,13 @@ let request = function(
     return x;
 };
 
+let isHTMLR = function(xhr) {
+    return xhr.getResponseHeader('content-type').includes('text/html');
+};
+let isJSR = function(xhr) {
+    return xhr.getResponseHeader('content-type').includes('application/javascript');
+};
+
 let gc = function () {
     request(
         { views: $('[data-id]').toArray().map(d => $(d).data("id").split(" ")).flat() },
