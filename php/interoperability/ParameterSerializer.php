@@ -258,14 +258,12 @@ class ParameterSerializer {
      * @return string[]
      */
     public static function handleObject(IShippable $value, ?string $param = null) : array {
-        $key = ShipperRegister::getKey($value);
-        // Convert it
-        $key = (is_integer($key) ? ShipperRegister::convertKey($key) : $key);
+        $key = ShipperRegister::getConvertedKey($value);
         // Convert the type of the object
         $type = ShipperRegister::getClass($value);
         $type = self::escapeBackslashes($type);
         if ($param !== null) {
-            return ['"' . $param . '"' . ': ' . (is_string($key) ? '"' . $key . '"' : $key),
+            return ['"' . $param . '"' . ': "' . $key . '"',
                 '"' . $param . 'IClass' . '"' . ': "' . $type . '"'];
         } else {
             return ['value' => $key, 'IClass' => $type];
